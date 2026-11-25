@@ -4,7 +4,7 @@ Web estática en español, preparada para GitHub Pages. No necesita backend ni p
 
 ## Versión
 
-La esquina inferior derecha muestra **GUÍA · V3**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El identificador también está en el metadato HTML `guide-version`.
+La esquina inferior derecha muestra **GUÍA · V3.1**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El identificador también está en el metadato HTML `guide-version`. La leyenda de colores se muestra ahora justo debajo de los filtros y antes del mapa; aparece desplegada inicialmente y se puede plegar.
 
 ## Publicar en GitHub Pages
 
@@ -22,7 +22,7 @@ La web es la interfaz principal. No hace falta importar el KML ni abrir Google E
 3. Pulsa **Mi ubicación** para obtener una posición GPS puntual. El navegador pedirá permiso si todavía no lo has concedido.
 4. Pulsa **Seguir ubicación** para actualizar la posición mientras caminas. Pulsa **Detener seguimiento** para dejar de consultar el GPS.
 5. La lista lateral muestra los siete puntos visibles más cercanos, por distancia en línea recta. Cada uno tiene un enlace para abrir la navegación de Google Maps.
-6. Abre **Colores del mapa · leyenda** para identificar los marcadores.
+6. Consulta la leyenda plegable, situada inmediatamente debajo de los filtros y antes del mapa, para identificar los colores de los marcadores.
 
 La posición se procesa en el navegador, no se almacena ni se envía a un servidor. El seguimiento continuo solo funciona mientras la página esté abierta y el usuario lo mantenga activado; el navegador o el sistema operativo pueden limitar la ubicación en segundo plano.
 
@@ -34,7 +34,7 @@ La Geolocation API está ampliamente disponible en navegadores modernos, incluid
 
 El mapa usa Leaflet y cartografía de OpenStreetMap, cargados desde internet. Requiere conexión de datos. Desde cada marcador hay enlaces a Google Maps para consultar el lugar y obtener indicaciones. Si Google Maps está instalado, el sistema puede abrir la aplicación; si no, se abrirá la web.
 
-La leyenda plegable explica los colores: rojo (itinerario), dorado (eventos), verde (alternativas), azul oscuro (hotel), azul (posición actual) y círculo azul claro (precisión estimada del GPS).
+La leyenda plegable situada antes del mapa explica los colores: rojo (itinerario), dorado (eventos), verde (alternativas), azul oscuro (hotel), azul (posición actual) y círculo azul claro (precisión estimada del GPS).
 
 Algunos puntos alternativos y la ubicación del Centro Cultural Tōbu son aproximados. Los marcadores sirven para orientarse; abre Google Maps desde cada ficha antes de iniciar el trayecto.
 
