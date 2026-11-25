@@ -4,7 +4,7 @@ Web estática en español, preparada para GitHub Pages. No necesita backend ni p
 
 ## Versión
 
-La esquina inferior derecha muestra **GUÍA · V5**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El identificador también está en el metadato HTML `guide-version`. La leyenda de colores se muestra ahora justo debajo de los filtros y antes del mapa; aparece desplegada inicialmente y se puede plegar.
+La esquina inferior derecha muestra **GUÍA · V6**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El identificador también está en el metadato HTML `guide-version`. La leyenda de colores se muestra ahora justo debajo de los filtros y antes del mapa; aparece desplegada inicialmente y se puede plegar.
 
 ## Publicar en GitHub Pages
 
@@ -57,7 +57,7 @@ El botón **Imprimir / guardar PDF** abre el diálogo de impresión del navegado
 - [FAQ de Kanken](https://www.kanken.or.jp/kotoshinokanji/faq-contact/): el público no puede acceder al lugar de la caligrafía.
 
 
-## Sección gastronómica y colores del mapa (V5)
+## Sección gastronómica y colores del mapa (V6)
 
 - Nueva pestaña **Comer** con especialidades de Kioto, filtros y enlaces directos a Google Maps.
 - Los puntos del mapa usan un color distinto por jornada (11, 12, 13 y 14 de diciembre).
@@ -68,7 +68,7 @@ El botón **Imprimir / guardar PDF** abre el diálogo de impresión del navegado
 Para publicar, sustituye `index.html`, `README.md` y `kyoto-points.kml` en la raíz del repositorio y ejecuta `git add index.html README.md kyoto-points.kml && git commit -m "Add Kyoto food guide and day-based map colors" && git push`.
 
 
-## Directorio gastronómico y filtros por jornada (V5)
+## Directorio gastronómico y filtros por jornada (V6)
 
 - La pestaña **Comer** contiene 20 paradas gastronómicas agrupadas por las zonas y jornadas del viaje.
 - Hay filtros independientes por día y tipo de cocina para elegir sobre la marcha.
@@ -77,3 +77,16 @@ Para publicar, sustituye `index.html`, `README.md` y `kyoto-points.kml` en la ra
 - Los puntos del mapa mantienen un color por jornada: 11 (coral), 12 (azul), 13 (verde azulado) y 14 (violeta). Los puntos alternativos utilizan una paleta propia por categoría. El hotel y la ubicación GPS conservan colores independientes.
 
 Los horarios y disponibilidad de los restaurantes deben volver a comprobarse antes del viaje. Las recomendaciones son opciones cercanas a los barrios del itinerario, no un plan de comidas obligatorio.
+
+
+## Mapa gastronómico y filtros (V6)
+
+- Los 20 restaurantes y paradas gastronómicas de la pestaña **Comer** también aparecen como marcadores en el mapa.
+- Se representan con diamantes; los círculos siguen representando visitas, eventos, hotel y lugares alternativos.
+- El color de cada restaurante corresponde a su jornada: 11 (coral), 12 (azul), 13 (verde azulado) y 14 (violeta).
+- Hay dos filtros independientes: por jornada y por tipo de punto (**Todos los puntos**, **Solo visitas**, **Solo restaurantes**). Se pueden combinar; por ejemplo, 12 dic + Solo restaurantes.
+- La lista de lugares cercanos respeta ambos filtros. Al seleccionar un resultado cercano, la guía activa los filtros necesarios para mostrar su marcador.
+- Los marcadores gastronómicos tienen coordenadas orientativas para facilitar la exploración. El popup abre una búsqueda del establecimiento en Google Maps para comprobar la entrada y navegar.
+- El KML opcional también incluye una carpeta con los 20 lugares gastronómicos.
+
+Para publicar V6, sustituye `index.html`, `README.md`, `kyoto-points.kml` y `.nojekyll` en la raíz del repositorio.

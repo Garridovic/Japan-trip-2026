@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#182a35">
-  <meta name="guide-version" content="V5">
+  <meta name="guide-version" content="V6">
   <meta name="description" content="Guía compartida del viaje a Kioto del 11 al 15 de diciembre de 2026: itinerario, mapa GPS, gastronomía y lugares alternativos.">
   <title>Kioto · 11–15 diciembre 2026</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
@@ -168,7 +168,14 @@
     .legend i.accuracy { background:rgba(36,102,189,.16); border:1px solid rgba(36,102,189,.55); }
     .user-location-marker { background:transparent; border:0; }
     .user-location-marker span { display:block; width:18px; height:18px; border-radius:50%; background:#2466bd; border:3px solid #fff; box-shadow:0 1px 6px rgba(0,0,0,.4), 0 0 0 2px rgba(36,102,189,.2); }
+    .map-filter-group { margin:0 0 10px; }
+    .map-filter-label { color:var(--muted); font-size:.70rem; font-weight:850; letter-spacing:.08em; text-transform:uppercase; margin:0 0 6px; }
+    .map-filter-status { color:var(--muted); font-size:.76rem; margin:-2px 0 13px; }
     .map-toolbar { align-items:center; }
+    .restaurant-map-marker { background:transparent; border:0; }
+    .restaurant-map-marker span { display:block; width:14px; height:14px; border:2px solid #fff; border-radius:3px; background:var(--marker-color); transform:rotate(45deg); box-shadow:0 1px 5px rgba(0,0,0,.35); }
+    .legend i.restaurant-shape { background:#c45a4a; border:2px solid #fff; border-radius:2px; transform:rotate(45deg); box-shadow:0 0 0 1px #aab4b8; }
+    .legend i.visit-shape { border:2px solid #fff; box-shadow:0 0 0 1px #aab4b8; }
     .leaflet-popup-content { min-width:190px; }
     .popup-title { font-weight:850; margin-bottom:3px; color:var(--ink); }
     .popup-meta { color:var(--muted); font-size:.78rem; margin-bottom:7px; }
@@ -326,14 +333,26 @@
 
     <section id="mapa">
       <div class="section-head"><div><div class="kicker">Explora por proximidad</div><h2>Mapa de Kioto y puntos de interés</h2></div><p class="muted small">Filtra por día o categoría. Puedes localizarte desde el móvil para ver qué tienes más cerca.</p></div>
-      <div class="map-toolbar" role="group" aria-label="Filtrar puntos del mapa">
-        <button class="filter map-filter" data-map-filter="todos" aria-pressed="true">Todos</button>
-        <button class="filter map-filter" data-map-filter="11" aria-pressed="false">11 dic</button>
-        <button class="filter map-filter" data-map-filter="12" aria-pressed="false">12 dic</button>
-        <button class="filter map-filter" data-map-filter="13" aria-pressed="false">13 dic</button>
-        <button class="filter map-filter" data-map-filter="14" aria-pressed="false">14 dic · eventos</button>
-        <button class="filter map-filter" data-map-filter="extra" aria-pressed="false">Alternativas</button>
+      <div class="map-filter-group">
+        <div class="map-filter-label">Filtrar por jornada</div>
+        <div class="map-toolbar" role="group" aria-label="Filtrar puntos del mapa por jornada">
+          <button class="filter map-filter" data-map-filter="todos" aria-pressed="true">Todos los días</button>
+          <button class="filter map-filter" data-map-filter="11" aria-pressed="false">11 dic</button>
+          <button class="filter map-filter" data-map-filter="12" aria-pressed="false">12 dic</button>
+          <button class="filter map-filter" data-map-filter="13" aria-pressed="false">13 dic</button>
+          <button class="filter map-filter" data-map-filter="14" aria-pressed="false">14 dic · eventos</button>
+          <button class="filter map-filter" data-map-filter="extra" aria-pressed="false">Alternativas</button>
+        </div>
       </div>
+      <div class="map-filter-group">
+        <div class="map-filter-label">Qué quieres ver</div>
+        <div class="map-toolbar" role="group" aria-label="Filtrar puntos del mapa por tipo">
+          <button class="filter map-kind-filter" data-map-kind="todos" aria-pressed="true">Todos los puntos</button>
+          <button class="filter map-kind-filter" data-map-kind="visitas" aria-pressed="false">Solo visitas</button>
+          <button class="filter map-kind-filter" data-map-kind="restaurantes" aria-pressed="false">Solo restaurantes</button>
+        </div>
+      </div>
+      <p class="map-filter-status" id="map-filter-status" aria-live="polite">Mostrando todos los puntos: visitas, alternativas, eventos y restaurantes.</p>
       <details class="map-legend" open>
         <summary>Leyenda del mapa · color por jornada y alternativas</summary>
         <div class="legend">
@@ -341,6 +360,8 @@
           <span><i style="background:#3f70a5"></i> 12 dic · Fushimi e Higashiyama</span>
           <span><i style="background:#268577"></i> 13 dic · templos y Arashiyama</span>
           <span><i style="background:#8554a4"></i> 14 dic · Yamashina Gishi y eventos</span>
+          <span><i class="restaurant-shape"></i> Diamante · restaurantes y paradas gastronómicas (el color conserva la jornada)</span>
+          <span><i class="visit-shape" style="background:#8a9699"></i> Círculo · visitas y puntos de interés</span>
           <span><i style="background:#273d70"></i> Hotel · alojamiento del grupo</span>
           <span><i style="background:#bd8a9d"></i> Alternativas · templos y santuarios</span>
           <span><i style="background:#c58b44"></i> Alternativas · barrios y zonas</span>
@@ -353,7 +374,7 @@
       <div class="map-layout">
         <div class="map-panel">
           <div id="kyoto-map" role="application" aria-label="Mapa interactivo con hoteles, visitas y lugares de interés de Kioto"></div>
-          <div class="map-panel-foot">Mapa © OpenStreetMap · Toca cualquier marcador para abrir su ficha. Desde ahí puedes consultar el lugar o iniciar la navegación en Google Maps. Para usar GPS, abre esta página HTTPS en Safari (iPhone) o Chrome (Android) y concede permiso.</div>
+          <div class="map-panel-foot">Mapa © OpenStreetMap · Toca un círculo para abrir una visita o un diamante para abrir un restaurante. Desde cada ficha puedes consultar el lugar o iniciar la navegación en Google Maps. Para usar GPS, abre esta página HTTPS en Safari (iPhone) o Chrome (Android) y concede permiso.</div>
         </div>
         <aside class="nearby-panel">
           <h3>¿Qué hay cerca de mí?</h3>
@@ -795,7 +816,10 @@
       {id:'monkey',name:'Arashiyama Monkey Park Iwatayama',lat:35.00920,lng:135.67850,day:'extra',type:'alternative',altCategory:'naturaleza',desc:'Parque de macacos con subida a pie. Pin aproximado.',query:'Arashiyama Monkey Park Iwatayama'}
     ];
 
-    const dayMarkerColors = { '11':'#c45a4a', '12':'#3f70a5', '13':'#268577', '14':'#8554a4' };
+    const restaurantPoints = [{"id":"food-01","name":"Mercado Nishiki","lat":35.00503,"lng":135.76471,"day":"11","type":"restaurant","foodCategory":"mercado","desc":"La parada más sencilla para probar varias especialidades: tamagoyaki, encurtidos, yuba, namafu, tempura y dulces. No es un restaurante único: escoged varios puestos y compartid.","query":"Nishiki Market Kyoto","pinApproximate":true},{"id":"food-02","name":"Shunsai Imari","lat":35.00864,"lng":135.75684,"day":"11","type":"restaurant","foodCategory":"tradicional","desc":"Pequeño restaurante en una machiya, conocido por su desayuno de Kioto con arroz cocinado en cazuela (donabe) y por sus platos obanzai de temporada por la noche.","query":"Shunsai Imari Kyoto","pinApproximate":true},{"id":"food-03","name":"Kyomachiya Obanzai Kohaku","lat":35.0032,"lng":135.77035,"day":"11","type":"restaurant","foodCategory":"tradicional","desc":"Una opción para cenar compartiendo pequeños platos de cocina casera de Kioto, verduras de temporada y pescado, en una casa tradicional remodelada cerca de Pontocho y Kiyamachi.","query":"Kyomachiya Obanzai Kohaku Kyoto","pinApproximate":true},{"id":"food-04","name":"Nippon Ramen Rin Kyoto","lat":35.0051,"lng":135.76035,"day":"11","type":"restaurant","foodCategory":"fideos","desc":"Ramen de estilo moderno, con caldos claros y sabores delicados. Está en el centro, a una distancia razonable del hotel y de Nishiki; opción práctica para una comida caliente sin alargar demasiado la parada.","query":"Nippon Ramen Rin Kyoto","pinApproximate":true},{"id":"food-05","name":"Kyosai-aji Nomura · Nishiki","lat":35.00455,"lng":135.76448,"day":"11","type":"restaurant","foodCategory":"tradicional","desc":"Una forma cómoda de probar varios sabores de Kioto en una sola comida: el menú Yasaka combina seis pequeños obanzai con un bol de arroz con yuba y sopa de miso.","query":"Kyosai-aji Nomura Nishiki Kyoto","pinApproximate":true},{"id":"food-06","name":"Menami","lat":35.00856,"lng":135.76975,"day":"11","type":"restaurant","foodCategory":"tradicional","desc":"Izakaya conocida por sus platos obanzai de temporada y verduras locales. Buena alternativa para una cena japonesa informal en la zona de Kiyamachi, al norte de Pontocho.","query":"Menami Kyoto Kiyamachi","pinApproximate":true},{"id":"food-07","name":"Kanoko","lat":34.96715,"lng":135.77265,"day":"12","type":"restaurant","foodCategory":"fideos","desc":"Restaurante tradicional junto al acceso de Fushimi Inari. Ofrece soba y cha-soba (fideos con té verde), una opción cómoda para comer después de recorrer los torii.","query":"Kanoko 59 Fukakusa Inari Nakanocho Kyoto","pinApproximate":true},{"id":"food-08","name":"GYUKATSU Kyoto Katsugyu · Fushimi Inari","lat":34.96655,"lng":135.7722,"day":"12","type":"restaurant","foodCategory":"carne","desc":"Especialista en gyukatsu: filete de ternera empanado y frito, servido en formato de menú japonés. Alternativa contundente cerca del santuario.","query":"GYUKATSU Kyoto Katsugyu Fushimi Inari","pinApproximate":true},{"id":"food-09","name":"Sohonke Nishin Soba Matsuba","lat":35.00357,"lng":135.77076,"day":"12","type":"restaurant","foodCategory":"fideos","desc":"Casa histórica conocida por el nishin soba: fideos en caldo dashi con arenque seco cocinado hasta quedar tierno. Está junto al teatro Minamiza.","query":"Sohonke Nishin Soba Matsuba Kyoto","pinApproximate":true},{"id":"food-10","name":"Izuu","lat":35.0033,"lng":135.77658,"day":"12","type":"restaurant","foodCategory":"tradicional","desc":"Fundado en 1781 y famoso por su saba-zushi: sushi prensado de caballa curada, arroz y kombu. Una alternativa muy local al nigiri convencional.","query":"Izuu 367 Kiyomotocho Kyoto","pinApproximate":true},{"id":"food-11","name":"Saryo Tsujiri · Gion Honten","lat":35.0032,"lng":135.77552,"day":"12","type":"restaurant","foodCategory":"dulces","desc":"Parada para tomar matcha de Uji, parfaits y dulces de té verde. Buena pausa después de recorrer Higashiyama y Gion; puede haber cola en horas punta.","query":"Saryo Tsujiri Gion Honten Kyoto","pinApproximate":true},{"id":"food-12","name":"Kyoto Gyoza enen · Gion","lat":35.003,"lng":135.7731,"day":"12","type":"restaurant","foodCategory":"carne","desc":"Pequeño izakaya especializado en gyoza, ideal para compartir varias raciones y acompañarlas con otros platos y bebidas. Una opción más informal para la noche.","query":"Kyoto Gyoza enen Gion Main Branch","pinApproximate":true},{"id":"food-13","name":"Yudofu Takemura","lat":35.01605,"lng":135.67765,"day":"13","type":"restaurant","foodCategory":"tradicional","desc":"Restaurante tradicional de tofu caliente en Arashiyama. Entre noviembre y febrero sirve yuzu-gama tofu, preparado dentro de una yuzu: una especialidad muy apropiada para vuestro viaje.","query":"Yudofu Takemura Arashiyama Kyoto","pinApproximate":true},{"id":"food-14","name":"Shigetsu","lat":35.0158,"lng":135.67465,"day":"13","type":"restaurant","foodCategory":"tradicional","desc":"Comedor dentro del recinto de Tenryū-ji, especializado en shojin-ryori: cocina budista vegetariana basada en tofu, verduras, setas y productos de temporada.","query":"Shigetsu Tenryuji Kyoto","pinApproximate":true},{"id":"food-15","name":"Arashiyama Yoshimura","lat":35.0098,"lng":135.67755,"day":"13","type":"restaurant","foodCategory":"fideos","desc":"Restaurante de soba cerca del puente Togetsukyō. Algunas comidas combinan fideos, tempura y pequeños platos de temporada, con vistas al río Katsura.","query":"Arashiyama Yoshimura Kyoto","pinApproximate":true},{"id":"food-16","name":"Wagyu Volcano-Steak OAGARI","lat":35.01435,"lng":135.67725,"day":"13","type":"restaurant","foodCategory":"carne","desc":"Especializado en bowls de wagyu, con una presentación llamativa y una forma de comerlo por etapas, añadiendo caldo para terminar como ochazuke.","query":"Wagyu Volcano Steak OAGARI Arashiyama","pinApproximate":true},{"id":"food-17","name":"% ARABICA Kyoto Arashiyama","lat":35.00965,"lng":135.67725,"day":"13","type":"restaurant","foodCategory":"dulces","desc":"Cafetería de especialidad junto al río Katsura y el puente Togetsukyō. Buena parada para tomar café y descansar un rato entre visitas.","query":"Arabica Kyoto Arashiyama","pinApproximate":true},{"id":"food-18","name":"Tokumasa · Yamashina","lat":34.99165,"lng":135.8175,"day":"14","type":"restaurant","foodCategory":"curry","desc":"Pequeño local de curry japonés, práctico para una comida sencilla y caliente antes o después de los actos del festival.","query":"Tokumasa Yamashina Kyoto","pinApproximate":true},{"id":"food-19","name":"Kyo-Motsunabe Kamehachi · Yamashina","lat":34.99195,"lng":135.8171,"day":"14","type":"restaurant","foodCategory":"tradicional","desc":"Opción de cena para entrar en calor: hot pot de casquería con caldo de dashi y miso blanco al estilo de Kioto, pensado para compartir alrededor de la mesa.","query":"Kyo-Motsunabe Kamehachi Yamashina","pinApproximate":true},{"id":"food-20","name":"Yakitori Kanazawa Honkan","lat":34.9928,"lng":135.81795,"day":"14","type":"restaurant","foodCategory":"carne","desc":"Izakaya especializada en brochetas de pollo, con pollo de Kioto asado sobre carbón binchotan. Una cena informal para cerrar el día de Yamashina.","query":"Yakitori Kanazawa Honkan Yamashina Kyoto","pinApproximate":true}];
+    kyotoPoints.push(...restaurantPoints);
+
+    const dayMarkerColors = { '11':'#c45a4a' , '12':'#3f70a5', '13':'#268577', '14':'#8554a4' };
     const alternativeMarkerColors = { templos:'#bd8a9d', barrios:'#c58b44', naturaleza:'#78a47d', cultura:'#7887a6' };
     const hotelMarkerColor = '#273d70';
     function markerColorForPoint(point) {
@@ -813,13 +837,26 @@
     const markerById = new Map();
     const markerLayer = L.featureGroup().addTo(map);
     kyotoPoints.forEach((point) => {
-      const marker = L.circleMarker([point.lat,point.lng], {
-        radius: point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7,
-        color:'#fff', weight:2, fillColor:markerColorForPoint(point), fillOpacity:.95
-      });
+      const marker = point.type === 'restaurant'
+        ? L.marker([point.lat,point.lng], {
+            icon:L.divIcon({
+              className:'restaurant-map-marker',
+              html:`<span style="--marker-color:${markerColorForPoint(point)}" aria-hidden="true"></span>`,
+              iconSize:[20,20],
+              iconAnchor:[10,10]
+            }),
+            zIndexOffset:250
+          })
+        : L.circleMarker([point.lat,point.lng], {
+            radius: point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7,
+            color:'#fff', weight:2, fillColor:markerColorForPoint(point), fillOpacity:.95
+          });
       const googleSearch = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(point.query + ', Kyoto, Japan')}`;
       const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(point.query + ', Kyoto, Japan')}&travelmode=transit`;
-      marker.bindPopup(`<div class="popup-title">${point.name}</div><div class="popup-meta">${point.desc}</div><div class="popup-links"><a href="${googleSearch}" target="_blank" rel="noopener">Ver ficha en Google Maps ↗</a><a href="${directions}" target="_blank" rel="noopener">Cómo llegar ↗</a></div>`);
+      const markerNote = point.type === 'restaurant'
+        ? '<div class="popup-meta">Marcador orientativo. Abre Google Maps para confirmar la entrada exacta y navegar.</div>'
+        : '';
+      marker.bindPopup(`<div class="popup-title">${point.name}</div><div class="popup-meta">${point.desc}</div>${markerNote}<div class="popup-links"><a href="${googleSearch}" target="_blank" rel="noopener">Ver ficha en Google Maps ↗</a><a href="${directions}" target="_blank" rel="noopener">Cómo llegar ↗</a></div>`);
       marker.bindTooltip(point.name, {direction:'top',offset:[0,-7]});
       marker.pointData = point;
       markerById.set(point.id,marker);
@@ -828,6 +865,7 @@
     map.fitBounds(markerLayer.getBounds().pad(.08));
 
     let currentFilter = 'todos';
+    let currentKindFilter = 'todos';
     let userLatLng = null;
     let currentAccuracy = null;
     let watchId = null;
@@ -838,27 +876,51 @@
     const followButton = document.getElementById('follow-me');
     const userLocationLayer = L.layerGroup().addTo(map);
 
+    const mapFilterStatus = document.getElementById('map-filter-status');
     function visibleForFilter(point, filter) {
       if (filter === 'todos') return true;
       if (filter === 'extra') return point.day === 'extra';
       return point.day === filter || point.day.split(',').includes(filter);
     }
-    function applyMapFilter(filter) {
-      currentFilter = filter;
-      document.querySelectorAll('.map-filter').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mapFilter === filter)));
+    function visibleForKind(point, kind) {
+      if (kind === 'restaurantes') return point.type === 'restaurant';
+      if (kind === 'visitas') return point.type !== 'restaurant';
+      return true;
+    }
+    function filteredMapPoints() {
+      return kyotoPoints.filter((point) => visibleForFilter(point,currentFilter) && visibleForKind(point,currentKindFilter));
+    }
+    function refreshMapPoints() {
+      const visiblePoints = filteredMapPoints();
       markerLayer.clearLayers();
-      kyotoPoints.filter((point) => visibleForFilter(point,filter)).forEach((point) => markerLayer.addLayer(markerById.get(point.id)));
-      if (markerLayer.getLayers().length) {
+      visiblePoints.forEach((point) => markerLayer.addLayer(markerById.get(point.id)));
+      mapFilterStatus.textContent = currentKindFilter === 'restaurantes'
+        ? `Mostrando ${visiblePoints.length} restaurantes${currentFilter === 'todos' ? '' : ` · filtro ${currentFilter === 'extra' ? 'alternativas' : currentFilter + ' dic'}`}.`
+        : currentKindFilter === 'visitas'
+          ? `Mostrando ${visiblePoints.length} visitas y otros puntos${currentFilter === 'todos' ? '' : ` · filtro ${currentFilter === 'extra' ? 'alternativas' : currentFilter + ' dic'}`}.`
+          : `Mostrando ${visiblePoints.length} puntos, incluidos restaurantes${currentFilter === 'todos' ? '' : ` · filtro ${currentFilter === 'extra' ? 'alternativas' : currentFilter + ' dic'}`}.`;
+      if (visiblePoints.length) {
         const bounds = markerLayer.getBounds();
         if (userLatLng) {
-          const nearestPointDistance = Math.min(...kyotoPoints.map((point) => distanceKm(userLatLng,point)));
+          const nearestPointDistance = Math.min(...visiblePoints.map((point) => distanceKm(userLatLng,point)));
           if (nearestPointDistance < 15) bounds.extend([userLatLng.lat,userLatLng.lng]);
         }
         map.fitBounds(bounds.pad(.12));
       }
       if (userLatLng) renderNearby();
     }
+    function applyMapFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.map-filter').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mapFilter === filter)));
+      refreshMapPoints();
+    }
+    function applyMapKindFilter(kind) {
+      currentKindFilter = kind;
+      document.querySelectorAll('.map-kind-filter').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mapKind === kind)));
+      refreshMapPoints();
+    }
     document.querySelectorAll('.map-filter').forEach((button) => button.addEventListener('click', () => applyMapFilter(button.dataset.mapFilter)));
+    document.querySelectorAll('.map-kind-filter').forEach((button) => button.addEventListener('click', () => applyMapKindFilter(button.dataset.mapKind)));
 
     function distanceKm(a,b) {
       const toRad = (value) => value * Math.PI / 180;
@@ -871,7 +933,7 @@
     }
     function renderNearby() {
       if (!userLatLng) return;
-      const ordered = kyotoPoints.filter((point) => point.type !== 'hotel' && visibleForFilter(point,currentFilter))
+      const ordered = kyotoPoints.filter((point) => point.type !== 'hotel' && visibleForFilter(point,currentFilter) && visibleForKind(point,currentKindFilter))
         .map((point) => ({point,distance:distanceKm(userLatLng,point)}))
         .sort((a,b) => a.distance-b.distance).slice(0,7);
       nearbyList.innerHTML = '';
@@ -882,7 +944,10 @@
         button.innerHTML = `${point.name}<small>${point.desc}</small>`;
         button.addEventListener('click', () => {
           const marker = markerById.get(point.id);
-          if (!markerLayer.hasLayer(marker)) applyMapFilter('todos');
+          if (!markerLayer.hasLayer(marker)) {
+            if (!visibleForFilter(point,currentFilter)) applyMapFilter('todos');
+            if (!visibleForKind(point,currentKindFilter)) applyMapKindFilter('todos');
+          }
           map.setView([point.lat,point.lng],16);
           marker.openPopup();
         });
@@ -988,6 +1053,6 @@
       if (watchId !== null) navigator.geolocation.clearWatch(watchId);
     });
   </script>
-  <div class="version-indicator" title="Versión desplegada de la guía: V5" aria-label="Versión de la guía V5">GUÍA · V5</div>
+  <div class="version-indicator" title="Versión desplegada de la guía: V6" aria-label="Versión de la guía V6">GUÍA · V6</div>
 </body>
 </html>
