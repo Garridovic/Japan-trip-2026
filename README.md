@@ -2,51 +2,56 @@
 
 Web estática en español, preparada para GitHub Pages. No necesita backend ni proceso de compilación.
 
-## Identificador de versión
+## Versión
 
-La esquina inferior derecha de la web muestra **GUÍA · V2**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El valor también está indicado en el metadato HTML `guide-version`.
+La esquina inferior derecha muestra **GUÍA · V3**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El identificador también está en el metadato HTML `guide-version`.
 
 ## Publicar en GitHub Pages
 
-1. Sube `index.html`, `kyoto-points.kml` y `README.md` a la raíz del repositorio.
+1. Sube `index.html`, `kyoto-points.kml`, `README.md` y `.nojekyll` a la raíz del repositorio.
 2. En GitHub, abre **Settings → Pages**.
 3. Selecciona **Deploy from a branch**, rama `main` y carpeta `/ (root)`.
-4. Cuando el despliegue termine, comparte `https://TU-USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/`.
+4. Cuando termine el despliegue, comparte `https://TU-USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/`.
 
-## Cómo usar la guía durante el viaje
+## Uso durante el viaje
 
-La web es la interfaz principal; **no hace falta importar el KML ni abrir Google Earth o My Maps**.
+La web es la interfaz principal. No hace falta importar el KML ni abrir Google Earth o Google My Maps.
 
-1. Abre la web desde el móvil usando la URL HTTPS de GitHub Pages.
+1. Abre la URL HTTPS de GitHub Pages en Safari (iPhone) o Chrome (Android).
 2. Entra en **Mapa** y filtra por día o muestra todos los puntos.
-3. Pulsa **Encontrar lugares cerca de mí** y acepta el permiso de ubicación del navegador.
-4. La web ordenará los lugares visibles por distancia en línea recta. Pulsa un lugar para centrarlo en el mapa o usa **Cómo llegar con Google Maps** para abrir la navegación.
-5. También puedes tocar cualquier marcador del mapa para abrir su ficha en Google Maps o iniciar una ruta.
+3. Pulsa **Mi ubicación** para obtener una posición GPS puntual. El navegador pedirá permiso si todavía no lo has concedido.
+4. Pulsa **Seguir ubicación** para actualizar la posición mientras caminas. Pulsa **Detener seguimiento** para dejar de consultar el GPS.
+5. La lista lateral muestra los siete puntos visibles más cercanos, por distancia en línea recta. Cada uno tiene un enlace para abrir la navegación de Google Maps.
+6. Abre **Colores del mapa · leyenda** para identificar los marcadores.
 
-La ubicación del dispositivo se procesa en el navegador, no se almacena ni se envía a un servidor. Para que la geolocalización funcione, el sitio debe abrirse por HTTPS y el usuario debe conceder permiso. Si no deseas compartir ubicación, el mapa y los enlaces individuales a Google Maps siguen funcionando.
+La posición se procesa en el navegador, no se almacena ni se envía a un servidor. El seguimiento continuo solo funciona mientras la página esté abierta y el usuario lo mantenga activado; el navegador o el sistema operativo pueden limitar la ubicación en segundo plano.
+
+## Compatibilidad móvil
+
+La Geolocation API está ampliamente disponible en navegadores modernos, incluidos Safari en iOS y Chrome en Android. Requiere HTTPS y permiso explícito del usuario. En el teléfono también deben estar habilitados los servicios de localización y el permiso de ubicación para el navegador. Si la página se abre dentro de un navegador integrado de otra aplicación y la ubicación falla, ábrela directamente en Safari o Chrome.
 
 ## Mapa y dependencias
 
-El mapa web usa Leaflet y cartografía de OpenStreetMap, cargados desde internet. Requiere conexión de datos. Desde cada marcador hay enlaces a Google Maps para consultar el lugar y obtener indicaciones. La aplicación de Google Maps puede abrirse si está instalada; en caso contrario, se abrirá su versión web.
+El mapa usa Leaflet y cartografía de OpenStreetMap, cargados desde internet. Requiere conexión de datos. Desde cada marcador hay enlaces a Google Maps para consultar el lugar y obtener indicaciones. Si Google Maps está instalado, el sistema puede abrir la aplicación; si no, se abrirá la web.
+
+La leyenda plegable explica los colores: rojo (itinerario), dorado (eventos), verde (alternativas), azul oscuro (hotel), azul (posición actual) y círculo azul claro (precisión estimada del GPS).
 
 Algunos puntos alternativos y la ubicación del Centro Cultural Tōbu son aproximados. Los marcadores sirven para orientarse; abre Google Maps desde cada ficha antes de iniciar el trayecto.
 
 ## KML opcional
 
-`kyoto-points.kml` es una exportación separada con los puntos de interés. No es necesario para utilizar la web. Consérvalo como copia reutilizable para otras aplicaciones de mapas o para importarlo manualmente en Google Earth/My Maps si alguna vez lo necesitas.
+`kyoto-points.kml` es una exportación separada con los puntos de interés. No es necesario para utilizar la web. Consérvalo como copia reutilizable para otras aplicaciones de mapas o para importarlo manualmente en Google Earth/My Maps.
 
 Si editas los puntos del array `kyotoPoints` en `index.html`, recuerda actualizar también el KML para mantener ambos ficheros sincronizados.
 
 ## Editar y compartir
 
-Edita `index.html` para cambiar horarios, enlaces o la presentación. La lista de marcadores está definida en el array `kyotoPoints` del JavaScript. Comparte la URL pública de GitHub Pages con el grupo; todos verán la versión publicada más reciente.
+Edita `index.html` para cambiar horarios, enlaces o presentación. La lista de marcadores está definida en el array `kyotoPoints` del JavaScript. Comparte la URL pública de GitHub Pages con el grupo; todos verán la versión publicada más reciente.
 
 El botón **Imprimir / guardar PDF** abre el diálogo de impresión del navegador.
 
 ## Fuentes oficiales para los eventos del 14 de diciembre
 
-- [Kyoto City Tourism Navi · Yamashina Gishi Matsuri](https://ja.kyoto.travel/event/single.php?event_id=2335): 14 de diciembre de 2026, 10:00–15:00, del templo Bishamondō a Ōishi Jinja, con actuaciones en el Centro Cultural Tōbu.
+- [Kyoto City Tourism Navi · Yamashina Gishi Matsuri](https://ja.kyoto.travel/event/single.php?event_id=2335): 14 de diciembre de 2026, 10:00–15:00.
 - [Asociación Kanken · Kanji del Año](https://www.kanken.or.jp/kotoshinokanji/): anuncio del 14 de diciembre en Kiyomizu-dera.
 - [FAQ de Kanken](https://www.kanken.or.jp/kotoshinokanji/faq-contact/): el público no puede acceder al lugar de la caligrafía.
-
-Los horarios del desfile entre paradas son orientativos salvo que se indique fuente oficial; comprueba la información definitiva antes del viaje.
