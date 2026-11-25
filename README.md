@@ -2,6 +2,10 @@
 
 Web estática en español, preparada para GitHub Pages. No necesita backend ni proceso de compilación.
 
+## Identificador de versión
+
+La esquina inferior derecha de la web muestra **GUÍA · V2**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El valor también está indicado en el metadato HTML `guide-version`.
+
 ## Publicar en GitHub Pages
 
 1. Sube `index.html`, `kyoto-points.kml` y `README.md` a la raíz del repositorio.
