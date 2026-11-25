@@ -4,7 +4,7 @@ Web estática en español, preparada para GitHub Pages. No necesita backend ni p
 
 ## Versión
 
-La esquina inferior derecha muestra **GUÍA · V3.1**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El identificador también está en el metadato HTML `guide-version`. La leyenda de colores se muestra ahora justo debajo de los filtros y antes del mapa; aparece desplegada inicialmente y se puede plegar.
+La esquina inferior derecha muestra **GUÍA · V5**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El identificador también está en el metadato HTML `guide-version`. La leyenda de colores se muestra ahora justo debajo de los filtros y antes del mapa; aparece desplegada inicialmente y se puede plegar.
 
 ## Publicar en GitHub Pages
 
@@ -55,3 +55,25 @@ El botón **Imprimir / guardar PDF** abre el diálogo de impresión del navegado
 - [Kyoto City Tourism Navi · Yamashina Gishi Matsuri](https://ja.kyoto.travel/event/single.php?event_id=2335): 14 de diciembre de 2026, 10:00–15:00.
 - [Asociación Kanken · Kanji del Año](https://www.kanken.or.jp/kotoshinokanji/): anuncio del 14 de diciembre en Kiyomizu-dera.
 - [FAQ de Kanken](https://www.kanken.or.jp/kotoshinokanji/faq-contact/): el público no puede acceder al lugar de la caligrafía.
+
+
+## Sección gastronómica y colores del mapa (V5)
+
+- Nueva pestaña **Comer** con especialidades de Kioto, filtros y enlaces directos a Google Maps.
+- Los puntos del mapa usan un color distinto por jornada (11, 12, 13 y 14 de diciembre).
+- Los lugares alternativos se colorean por categoría: templos, barrios, naturaleza y cultura.
+- El hotel mantiene un color propio; la ubicación GPS y su círculo de precisión conservan el azul.
+- `kyoto-points.kml` se mantiene como exportación independiente.
+
+Para publicar, sustituye `index.html`, `README.md` y `kyoto-points.kml` en la raíz del repositorio y ejecuta `git add index.html README.md kyoto-points.kml && git commit -m "Add Kyoto food guide and day-based map colors" && git push`.
+
+
+## Directorio gastronómico y filtros por jornada (V5)
+
+- La pestaña **Comer** contiene 20 paradas gastronómicas agrupadas por las zonas y jornadas del viaje.
+- Hay filtros independientes por día y tipo de cocina para elegir sobre la marcha.
+- Cada ficha abre el lugar directamente en Google Maps; no es necesario importar el KML.
+- Las especialidades locales incluyen obanzai, yudofu/yuba, nishin soba, saba-zushi, matcha, shojin-ryori y platos de temporada.
+- Los puntos del mapa mantienen un color por jornada: 11 (coral), 12 (azul), 13 (verde azulado) y 14 (violeta). Los puntos alternativos utilizan una paleta propia por categoría. El hotel y la ubicación GPS conservan colores independientes.
+
+Los horarios y disponibilidad de los restaurantes deben volver a comprobarse antes del viaje. Las recomendaciones son opciones cercanas a los barrios del itinerario, no un plan de comidas obligatorio.

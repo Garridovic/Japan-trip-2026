@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#182a35">
-  <meta name="guide-version" content="V3.1">
-  <meta name="description" content="Guía compartida del viaje a Kioto del 11 al 15 de diciembre de 2026: itinerario, transportes, visitas nocturnas y lugares alternativos.">
+  <meta name="guide-version" content="V5">
+  <meta name="description" content="Guía compartida del viaje a Kioto del 11 al 15 de diciembre de 2026: itinerario, mapa GPS, gastronomía y lugares alternativos.">
   <title>Kioto · 11–15 diciembre 2026</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
@@ -110,6 +110,28 @@
     .extra-tag { display: inline-block; color: var(--red); font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px; }
     .extra-card p { color: var(--muted); font-size: .82rem; }
     .extra-card[hidden] { display: none; }
+    .food-intro { color:var(--muted); max-width:820px; margin:-4px 0 18px; font-size:.9rem; }
+    .food-highlights { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:0 0 21px; }
+    .food-highlight { padding:13px 14px; background:var(--card); border:1px solid var(--line); border-radius:14px; }
+    .food-highlight strong { display:block; font-size:.87rem; margin-bottom:3px; }
+    .food-highlight p { color:var(--muted); font-size:.77rem; line-height:1.45; margin:0; }
+    .food-filter-block { margin:0 0 14px; }
+    .food-filter-label { color:var(--muted); font-size:.72rem; font-weight:850; letter-spacing:.08em; text-transform:uppercase; margin:0 0 7px; }
+    .food-toolbar { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 13px; }
+    .food-count { color:var(--muted); font-size:.78rem; margin:0 0 10px; }
+    .food-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .food-card { padding:16px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); display:flex; flex-direction:column; min-width:0; }
+    .food-card[hidden] { display:none; }
+    .food-card-top { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:7px; margin-bottom:8px; }
+    .food-type { color:var(--red); font-size:.68rem; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
+    .food-day { border-radius:999px; padding:4px 8px; background:#f0eee8; color:#58666b; font-size:.68rem; font-weight:800; }
+    .food-card h3 { font-size:1.04rem; }
+    .food-card p { color:var(--muted); font-size:.82rem; }
+    .food-meta { margin-top:5px; padding-top:9px; border-top:1px solid var(--line); color:var(--muted); font-size:.75rem; }
+    .food-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:12px; }
+    .food-actions a { display:inline-flex; align-items:center; justify-content:center; border-radius:999px; padding:8px 11px; background:var(--ink); color:#fff; text-decoration:none; font-size:.76rem; font-weight:850; }
+    .food-actions a.secondary { background:#eef1f3; color:var(--ink); }
+    .food-note { background:#fbf5e9; border:1px solid #ead9b8; border-radius:12px; padding:12px 14px; color:#6e5633; font-size:.81rem; margin-top:15px; }
     .map-toolbar { display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 13px; }
     .map-layout { display:grid; grid-template-columns:minmax(0, 1.8fr) minmax(250px, .9fr); gap:14px; align-items:stretch; }
     .map-panel, .nearby-panel { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
@@ -168,7 +190,8 @@
       .hero { padding: 33px 18px 27px; }
       main { padding: 24px 16px 48px; }
       .nav-inner { padding-inline: 16px; gap: 16px; }
-      .quick-grid, .extras-grid, .notes-grid, .map-layout { grid-template-columns: 1fr; }
+      .quick-grid, .extras-grid, .notes-grid, .map-layout, .food-grid { grid-template-columns: 1fr; }
+      .food-highlights { grid-template-columns:repeat(2,minmax(0,1fr)); }
       #kyoto-map { height:430px; }
       .location-actions { grid-template-columns:1fr; }
       .nearby-panel { padding:14px; }
@@ -219,7 +242,7 @@
       body { background: white; font-size: 10pt; }
       .hero { padding: 18px 0; background: #182a35 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .hero-inner, main, .footer-inner { width: 100%; }
-      nav, .hero-actions, .extras-toolbar, .map-link, .map-toolbar, .location-actions, .location-hint, .version-indicator { display: none !important; }
+      nav, .hero-actions, .extras-toolbar, .food-toolbar, .map-link, .map-toolbar, .location-actions, .location-hint, .version-indicator { display: none !important; }
       #kyoto-map { height:360px; }
       main { padding: 18px 0; }
       .quick-grid { grid-template-columns: repeat(2,1fr); }
@@ -238,7 +261,7 @@
     <div class="hero-inner">
       <div class="eyebrow">Japón · guía compartida</div>
       <h1>Kioto<span style="color:#e2b46e">.</span></h1>
-      <p class="subtitle">Cuatro días para combinar templos, barrios históricos, gastronomía y dos eventos especiales el 14 de diciembre.</p>
+      <p class="subtitle">Cuatro días para combinar templos, barrios históricos, gastronomía local y dos eventos especiales el 14 de diciembre.</p>
       <div class="hero-meta">
         <span>11–15 diciembre 2026</span>
         <span>4 jornadas · 4 noches</span>
@@ -258,6 +281,7 @@
       <a href="#resumen">Vista rápida</a>
       <a href="#mapa">Mapa</a>
       <a href="#detalle">Día a día</a>
+      <a href="#comer">Comer</a>
       <a href="#alternativas">Otros lugares</a>
       <a href="#practico">Consejos</a>
       <a href="#fuentes">Fuentes</a>
@@ -311,13 +335,18 @@
         <button class="filter map-filter" data-map-filter="extra" aria-pressed="false">Alternativas</button>
       </div>
       <details class="map-legend" open>
-        <summary>Leyenda del mapa · qué significa cada color</summary>
+        <summary>Leyenda del mapa · color por jornada y alternativas</summary>
         <div class="legend">
-          <span><i style="background:#b84b3d"></i> Rojo · visitas del itinerario</span>
-          <span><i style="background:#bd8b39"></i> Dorado · eventos especiales</span>
-          <span><i style="background:#547466"></i> Verde · lugares alternativos</span>
-          <span><i style="background:#273d70"></i> Azul oscuro · vuestro hotel</span>
-          <span><i class="location"></i> Azul · tu ubicación GPS</span>
+          <span><i style="background:#c45a4a"></i> 11 dic · centro y Pontocho</span>
+          <span><i style="background:#3f70a5"></i> 12 dic · Fushimi e Higashiyama</span>
+          <span><i style="background:#268577"></i> 13 dic · templos y Arashiyama</span>
+          <span><i style="background:#8554a4"></i> 14 dic · Yamashina Gishi y eventos</span>
+          <span><i style="background:#273d70"></i> Hotel · alojamiento del grupo</span>
+          <span><i style="background:#bd8a9d"></i> Alternativas · templos y santuarios</span>
+          <span><i style="background:#c58b44"></i> Alternativas · barrios y zonas</span>
+          <span><i style="background:#78a47d"></i> Alternativas · naturaleza y parques</span>
+          <span><i style="background:#7887a6"></i> Alternativas · museos y cultura</span>
+          <span><i class="location"></i> Azul intenso · tu ubicación GPS</span>
           <span><i class="accuracy"></i> Azul claro · precisión estimada del GPS</span>
         </div>
       </details>
@@ -433,6 +462,189 @@
       </div>
     </section>
 
+
+    <section id="comer">
+      <div class="section-head">
+        <div><div class="kicker">20 paradas seleccionadas por zona</div><h2>Comer en Kioto</h2></div>
+        <p class="muted small">Platos típicos y sitios cerca de las visitas del itinerario. Cada ficha abre su ubicación en Google Maps.</p>
+      </div>
+      <p class="food-intro">No hace falta recorrer la ciudad para comer: estas 20 opciones están agrupadas por los barrios que visitaréis. Son ideas para elegir sobre la marcha, no reservas obligatorias. Los horarios, cierres semanales y menús pueden cambiar; comprobadlos antes de ir.</p>
+      <div class="food-highlights" aria-label="Comidas típicas de Kioto">
+        <article class="food-highlight"><strong>Obanzai</strong><p>Pequeños platos caseros con verduras y productos de temporada, normalmente para compartir.</p></article>
+        <article class="food-highlight"><strong>Yudofu y yuba</strong><p>Tofu caliente y piel de tofu. Especialmente apetecibles en diciembre.</p></article>
+        <article class="food-highlight"><strong>Nishin soba</strong><p>Fideos soba en caldo dashi con arenque dulce cocinado lentamente.</p></article>
+        <article class="food-highlight"><strong>Saba-zushi</strong><p>Sushi prensado de caballa curada, una especialidad de Kioto.</p></article>
+        <article class="food-highlight"><strong>Kyo-tsukemono</strong><p>Encurtidos locales como senmaizuke y shibazuke.</p></article>
+        <article class="food-highlight"><strong>Matcha y wagashi</strong><p>Té verde de Uji y dulces tradicionales japoneses.</p></article>
+        <article class="food-highlight"><strong>Shojin-ryori</strong><p>Cocina budista vegetariana, con tofu, verduras, setas y preparaciones de temporada.</p></article>
+        <article class="food-highlight"><strong>Kyo-kaiseki</strong><p>Comida estacional de varios pases. Una experiencia más formal y normalmente cara.</p></article>
+      </div>
+      <div class="food-filter-block">
+        <div class="food-filter-label">Filtrar por jornada</div>
+        <div class="food-toolbar" role="group" aria-label="Filtrar lugares para comer por jornada">
+          <button class="filter food-day-filter" data-food-day="todos" aria-pressed="true">Todos los días</button>
+          <button class="filter food-day-filter" data-food-day="11" aria-pressed="false">11 dic · centro</button>
+          <button class="filter food-day-filter" data-food-day="12" aria-pressed="false">12 dic · Fushimi y Gion</button>
+          <button class="filter food-day-filter" data-food-day="13" aria-pressed="false">13 dic · Arashiyama</button>
+          <button class="filter food-day-filter" data-food-day="14" aria-pressed="false">14 dic · Yamashina</button>
+        </div>
+        <div class="food-filter-label">Filtrar por tipo de comida</div>
+        <div class="food-toolbar" role="group" aria-label="Filtrar lugares para comer por tipo">
+          <button class="filter food-type-filter" data-food-type="todos" aria-pressed="true">Todos</button>
+          <button class="filter food-type-filter" data-food-type="mercado" aria-pressed="false">Mercado</button>
+          <button class="filter food-type-filter" data-food-type="tradicional" aria-pressed="false">Cocina tradicional</button>
+          <button class="filter food-type-filter" data-food-type="fideos" aria-pressed="false">Ramen y soba</button>
+          <button class="filter food-type-filter" data-food-type="dulces" aria-pressed="false">Té y café</button>
+          <button class="filter food-type-filter" data-food-type="carne" aria-pressed="false">Carne e izakaya</button>
+          <button class="filter food-type-filter" data-food-type="curry" aria-pressed="false">Curry</button>
+        </div>
+      </div>
+      <p class="muted small" id="food-count" aria-live="polite">Mostrando 20 lugares.</p>
+      <div class="food-grid" id="food-grid">
+        <article class="food-card" data-food-category="mercado" data-food-day="11">
+          <div class="food-card-top"><span class="food-type">Mercado · bocados locales</span><span class="food-day">11 dic · centro</span></div>
+          <h3>Mercado Nishiki</h3>
+          <p>La parada más sencilla para probar varias especialidades: tamagoyaki, encurtidos, yuba, namafu, tempura y dulces. No es un restaurante único: escoged varios puestos y compartid.</p>
+          <div class="food-meta">Mejor antes de media tarde; cada tienda tiene su propio horario. En el mercado se debe comer delante o dentro del puesto, no caminando.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Nishiki+Market+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a><a class="secondary" href="https://www.kyoto-nishiki.or.jp/en/manner/" target="_blank" rel="noopener">Normas del mercado ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="tradicional" data-food-day="11">
+          <div class="food-card-top"><span class="food-type">Obanzai · desayuno y cena</span><span class="food-day">11 dic · centro</span></div>
+          <h3>Shunsai Imari</h3>
+          <p>Pequeño restaurante en una machiya, conocido por su desayuno de Kioto con arroz cocinado en cazuela (donabe) y por sus platos obanzai de temporada por la noche.</p>
+          <div class="food-meta">Buena opción cerca del hotel. El servicio de desayuno y el de cena tienen horarios distintos; comprobad disponibilidad y reserva.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Shunsai+Imari+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="tradicional" data-food-day="11">
+          <div class="food-card-top"><span class="food-type">Obanzai · izakaya</span><span class="food-day">11 dic · Pontocho</span></div>
+          <h3>Kyomachiya Obanzai Kohaku</h3>
+          <p>Una opción para cenar compartiendo pequeños platos de cocina casera de Kioto, verduras de temporada y pescado, en una casa tradicional remodelada cerca de Pontocho y Kiyamachi.</p>
+          <div class="food-meta">Pensado para la noche del viernes, después del paseo por el centro. Comprobad si admite reserva y el horario de ese día.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Kyomachiya+Obanzai+Kohaku+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="fideos" data-food-day="11">
+          <div class="food-card-top"><span class="food-type">Ramen · comida informal</span><span class="food-day">11 dic · Karasuma</span></div>
+          <h3>Nippon Ramen Rin Kyoto</h3>
+          <p>Ramen de estilo moderno, con caldos claros y sabores delicados. Está en el centro, a una distancia razonable del hotel y de Nishiki; opción práctica para una comida caliente sin alargar demasiado la parada.</p>
+          <div class="food-meta">Comprobad el horario y posibles colas antes de ir.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Nippon+Ramen+Rin+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="tradicional" data-food-day="11">
+          <div class="food-card-top"><span class="food-type">Obanzai y yuba · comida</span><span class="food-day">11 dic · Nishiki</span></div>
+          <h3>Kyosai-aji Nomura · Nishiki</h3>
+          <p>Una forma cómoda de probar varios sabores de Kioto en una sola comida: el menú Yasaka combina seis pequeños obanzai con un bol de arroz con yuba y sopa de miso.</p>
+          <div class="food-meta">La información publicada indica servicio de 8:00 a 15:00. Encaja mejor como desayuno tardío o comida antes de continuar por el centro.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Kyosai-aji+Nomura+Nishiki+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a><a class="secondary" href="https://www.nomurafoods.jp/shops/nishiki/" target="_blank" rel="noopener">Web oficial ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="tradicional" data-food-day="11">
+          <div class="food-card-top"><span class="food-type">Obanzai · platos para compartir</span><span class="food-day">11 dic · Kiyamachi / Sanjo</span></div>
+          <h3>Menami</h3>
+          <p>Izakaya conocida por sus platos obanzai de temporada y verduras locales. Buena alternativa para una cena japonesa informal en la zona de Kiyamachi, al norte de Pontocho.</p>
+          <div class="food-meta">Interesante si preferís una cena con varios platos en el centro. Consultad disponibilidad y reserva.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Menami+Kyoto+Kiyamachi" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="fideos" data-food-day="12">
+          <div class="food-card-top"><span class="food-type">Soba y cha-soba</span><span class="food-day">12 dic · Fushimi Inari</span></div>
+          <h3>Kanoko</h3>
+          <p>Restaurante tradicional junto al acceso de Fushimi Inari. Ofrece soba y cha-soba (fideos con té verde), una opción cómoda para comer después de recorrer los torii.</p>
+          <div class="food-meta">A pocos minutos andando del santuario. Puede haber espera en las horas centrales.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Kanoko+59+Fukakusa+Inari+Nakanocho+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="carne" data-food-day="12">
+          <div class="food-card-top"><span class="food-type">Gyukatsu · ternera empanada</span><span class="food-day">12 dic · Fushimi Inari</span></div>
+          <h3>GYUKATSU Kyoto Katsugyu · Fushimi Inari</h3>
+          <p>Especialista en gyukatsu: filete de ternera empanado y frito, servido en formato de menú japonés. Alternativa contundente cerca del santuario.</p>
+          <div class="food-meta">A unos pocos minutos de la estación JR Inari y de la zona de acceso al santuario. En horas punta puede haber cola.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=GYUKATSU+Kyoto+Katsugyu+Fushimi+Inari" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="fideos" data-food-day="12">
+          <div class="food-card-top"><span class="food-type">Nishin soba · especialidad histórica</span><span class="food-day">12 dic · Gion-Shijo</span></div>
+          <h3>Sohonke Nishin Soba Matsuba</h3>
+          <p>Casa histórica conocida por el nishin soba: fideos en caldo dashi con arenque seco cocinado hasta quedar tierno. Está junto al teatro Minamiza.</p>
+          <div class="food-meta">El horario publicado es 10:30–21:00 (último pedido 20:30); cierra los miércoles. Confirmadlo antes del viaje.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Sohonke+Nishin+Soba+Matsuba+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a><a class="secondary" href="http://www.sobamatsuba.co.jp/" target="_blank" rel="noopener">Web oficial ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="tradicional" data-food-day="12">
+          <div class="food-card-top"><span class="food-type">Saba-zushi · sushi tradicional</span><span class="food-day">12 dic · Gion</span></div>
+          <h3>Izuu</h3>
+          <p>Fundado en 1781 y famoso por su saba-zushi: sushi prensado de caballa curada, arroz y kombu. Una alternativa muy local al nigiri convencional.</p>
+          <div class="food-meta">Tiene espacio para comer y también opciones para llevar. La web oficial publica horarios y días de cierre.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Izuu+367+Kiyomotocho+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a><a class="secondary" href="https://www.izuu.jp/en_eatin/" target="_blank" rel="noopener">Web oficial y menú ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="dulces" data-food-day="12">
+          <div class="food-card-top"><span class="food-type">Matcha · parfaits y té</span><span class="food-day">12 dic · Gion</span></div>
+          <h3>Saryo Tsujiri · Gion Honten</h3>
+          <p>Parada para tomar matcha de Uji, parfaits y dulces de té verde. Buena pausa después de recorrer Higashiyama y Gion; puede haber cola en horas punta.</p>
+          <div class="food-meta">Consultad los horarios de la sala de té en la web oficial antes de ir.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Saryo+Tsujiri+Gion+Honten+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a><a class="secondary" href="https://www.giontsujiri.co.jp/en/" target="_blank" rel="noopener">Web oficial ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="carne" data-food-day="12">
+          <div class="food-card-top"><span class="food-type">Gyoza · izakaya informal</span><span class="food-day">12 dic · Gion</span></div>
+          <h3>Kyoto Gyoza enen · Gion</h3>
+          <p>Pequeño izakaya especializado en gyoza, ideal para compartir varias raciones y acompañarlas con otros platos y bebidas. Una opción más informal para la noche.</p>
+          <div class="food-meta">Está en el entorno de Gion-Shijo. En horas punta conviene llegar pronto o comprobar si admite reserva.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Kyoto+Gyoza+enen+Gion+Main+Branch" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="tradicional" data-food-day="13">
+          <div class="food-card-top"><span class="food-type">Yudofu · especialidad de invierno</span><span class="food-day">13 dic · Arashiyama</span></div>
+          <h3>Yudofu Takemura</h3>
+          <p>Restaurante tradicional de tofu caliente en Arashiyama. Entre noviembre y febrero sirve yuzu-gama tofu, preparado dentro de una yuzu: una especialidad muy apropiada para vuestro viaje.</p>
+          <div class="food-meta">Recomiendan reservar, especialmente en temporada concurrida. Calculad tiempo para una comida sentados.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Yudofu+Takemura+Arashiyama+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a><a class="secondary" href="https://www.yudouhutakemura.com/en/" target="_blank" rel="noopener">Menú y reservas ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="tradicional" data-food-day="13">
+          <div class="food-card-top"><span class="food-type">Shojin-ryori · cocina budista</span><span class="food-day">13 dic · Tenryū-ji</span></div>
+          <h3>Shigetsu</h3>
+          <p>Comedor dentro del recinto de Tenryū-ji, especializado en shojin-ryori: cocina budista vegetariana basada en tofu, verduras, setas y productos de temporada.</p>
+          <div class="food-meta">La opción más temática para comer después de visitar el templo. Revisad el horario de servicio y reservad con antelación; no es un restaurante para una comida tardía.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Shigetsu+Tenryuji+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a><a class="secondary" href="https://www.tenryuji.com/en/shigetsu/" target="_blank" rel="noopener">Información ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="fideos" data-food-day="13">
+          <div class="food-card-top"><span class="food-type">Soba · tempura y vistas al río</span><span class="food-day">13 dic · Togetsukyō</span></div>
+          <h3>Arashiyama Yoshimura</h3>
+          <p>Restaurante de soba cerca del puente Togetsukyō. Algunas comidas combinan fideos, tempura y pequeños platos de temporada, con vistas al río Katsura.</p>
+          <div class="food-meta">Buena opción para comer durante el paseo de Arashiyama. Es popular y puede formarse cola.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Arashiyama+Yoshimura+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="carne" data-food-day="13">
+          <div class="food-card-top"><span class="food-type">Wagyu · arroz y caldo dashi</span><span class="food-day">13 dic · Arashiyama</span></div>
+          <h3>Wagyu Volcano-Steak OAGARI</h3>
+          <p>Especializado en bowls de wagyu, con una presentación llamativa y una forma de comerlo por etapas, añadiendo caldo para terminar como ochazuke.</p>
+          <div class="food-meta">Alternativa para quien prefiera carne a tofu o soba. Está cerca de Tenryū-ji y del puente.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Wagyu+Volcano+Steak+OAGARI+Arashiyama" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="dulces" data-food-day="13">
+          <div class="food-card-top"><span class="food-type">Café · pausa junto al río</span><span class="food-day">13 dic · Arashiyama</span></div>
+          <h3>% ARABICA Kyoto Arashiyama</h3>
+          <p>Cafetería de especialidad junto al río Katsura y el puente Togetsukyō. Buena parada para tomar café y descansar un rato entre visitas.</p>
+          <div class="food-meta">Es una cafetería, no una comida completa. Consultad el horario del local el mismo día.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Arabica+Kyoto+Arashiyama" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="curry" data-food-day="14">
+          <div class="food-card-top"><span class="food-type">Curry japonés · comida rápida</span><span class="food-day">14 dic · Yamashina</span></div>
+          <h3>Tokumasa · Yamashina</h3>
+          <p>Pequeño local de curry japonés, práctico para una comida sencilla y caliente antes o después de los actos del festival.</p>
+          <div class="food-meta">Está a unos minutos de la estación de Yamashina. La información publicada indica servicio de comida y cena; comprobad el horario concreto.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Tokumasa+Yamashina+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="tradicional" data-food-day="14">
+          <div class="food-card-top"><span class="food-type">Motsunabe · hot pot de Kioto</span><span class="food-day">14 dic · Yamashina</span></div>
+          <h3>Kyo-Motsunabe Kamehachi · Yamashina</h3>
+          <p>Opción de cena para entrar en calor: hot pot de casquería con caldo de dashi y miso blanco al estilo de Kioto, pensado para compartir alrededor de la mesa.</p>
+          <div class="food-meta">Cerca de la estación de Yamashina. Abre para el servicio de tarde-noche; es una opción para después del festival, no para una comida temprana.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Kyo-Motsunabe+Kamehachi+Yamashina" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+        <article class="food-card" data-food-category="carne" data-food-day="14">
+          <div class="food-card-top"><span class="food-type">Yakitori · pollo a la brasa</span><span class="food-day">14 dic · Yamashina</span></div>
+          <h3>Yakitori Kanazawa Honkan</h3>
+          <p>Izakaya especializada en brochetas de pollo, con pollo de Kioto asado sobre carbón binchotan. Una cena informal para cerrar el día de Yamashina.</p>
+          <div class="food-meta">Está en el entorno de la estación de Yamashina. Confirmad el horario y la disponibilidad antes de ir.</div>
+          <div class="food-actions"><a href="https://www.google.com/maps/search/?api=1&query=Yakitori+Kanazawa+Honkan+Yamashina+Kyoto" target="_blank" rel="noopener">Ver en Google Maps ↗</a></div>
+        </article>
+      </div>
+      <div class="food-note"><strong>Consejos para el grupo:</strong> en Nishiki Market no se debe caminar comiendo; consumid cada producto delante del puesto o dentro del establecimiento. Para Shigetsu, yudofu y las cenas de grupo, comprobad las reservas con antelación. Los 20 sitios son alternativas, no una ruta gastronómica que haya que completar. El día 14, las opciones de Yamashina están alrededor de la estación; el final del desfile puede requerir un desplazamiento adicional.</div>
+    </section>
+
     <section id="alternativas">
       <div class="section-head"><div><div class="kicker">Para improvisar o sustituir visitas</div><h2>Otros lugares de interés</h2></div></div>
       <div class="extras-toolbar" role="group" aria-label="Filtrar lugares por categoría">
@@ -474,6 +686,17 @@
         <summary>Ver webs oficiales y horarios consultados</summary>
         <ul>
           <li><a href="https://kyoto.travel/en/getting-around" target="_blank" rel="noopener">Kyoto Travel · transporte y cómo moverse por la ciudad</a></li>
+          <li><a href="https://www.kyoto-nishiki.or.jp/en/manner/" target="_blank" rel="noopener">Nishiki Market · normas para consumir comida en el mercado</a></li>
+          <li><a href="https://www.nomurafoods.jp/shops/nishiki/" target="_blank" rel="noopener">Kyosai-aji Nomura Nishiki · menú obanzai y yuba donburi</a></li>
+          <li><a href="https://kyoto.travel/en/food-and-drink/" target="_blank" rel="noopener">Kyoto Travel · especialidades gastronómicas de Kioto</a></li>
+          <li><a href="https://www.tenryuji.com/en/shigetsu/" target="_blank" rel="noopener">Shigetsu · shojin-ryori en Tenryū-ji</a></li>
+          <li><a href="https://www.yudouhutakemura.com/en/" target="_blank" rel="noopener">Yudofu Takemura · tofu de invierno y reservas</a></li>
+          <li><a href="https://www.giontsujiri.co.jp/en/" target="_blank" rel="noopener">Gion Tsujiri · té Uji, matcha y dulces</a></li>
+          <li><a href="http://www.sobamatsuba.co.jp/" target="_blank" rel="noopener">Sohonke Nishin Soba Matsuba · web oficial</a></li>
+          <li><a href="https://www.izuu.jp/en_eatin/" target="_blank" rel="noopener">Izuu · especialidad saba-zushi, horarios y tienda</a></li>
+          <li><a href="https://www.giontsujiri.co.jp/en/" target="_blank" rel="noopener">Gion Tsujiri / Saryo Tsujiri · té Uji y dulces</a></li>
+          <li><a href="https://www.yudouhutakemura.com/en/" target="_blank" rel="noopener">Yudofu Takemura · menú de invierno y reservas</a></li>
+          <li><a href="https://shun.kyoto-ichiba.jp/en/restaurant/287/" target="_blank" rel="noopener">Sohonke Nishin Soba Matsuba · historia y nishin soba</a></li>
           <li><a href="https://nijo-jocastle.city.kyoto.lg.jp/guide/annai/?lang=en" target="_blank" rel="noopener">Castillo Nijō · horarios y días de cierre</a></li>
           <li><a href="https://www.kiyomizudera.or.jp/en/visit/" target="_blank" rel="noopener">Kiyomizu-dera · horarios, eventos y visitas especiales</a></li>
           <li><a href="https://ja.kyoto.travel/event/single.php?event_id=2335" target="_blank" rel="noopener">Kyoto City Tourism Navi · Yamashina Gishi Matsuri 2026 (14 dic, 10:00–15:00)</a></li>
@@ -508,6 +731,33 @@
         });
       });
     });
+
+    const foodDayFilters = document.querySelectorAll('.food-day-filter');
+    const foodTypeFilters = document.querySelectorAll('.food-type-filter');
+    const foodCards = document.querySelectorAll('.food-card');
+    const foodCount = document.getElementById('food-count');
+    let selectedFoodDay = 'todos';
+    let selectedFoodType = 'todos';
+    function applyFoodFilters() {
+      let visibleCount = 0;
+      foodCards.forEach((card) => {
+        const dayMatches = selectedFoodDay === 'todos' || card.dataset.foodDay === selectedFoodDay;
+        const typeMatches = selectedFoodType === 'todos' || card.dataset.foodCategory === selectedFoodType;
+        card.hidden = !(dayMatches && typeMatches);
+        if (!card.hidden) visibleCount += 1;
+      });
+      foodCount.textContent = `Mostrando ${visibleCount} de ${foodCards.length} lugares.`;
+    }
+    foodDayFilters.forEach((button) => button.addEventListener('click', () => {
+      selectedFoodDay = button.dataset.foodDay;
+      foodDayFilters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      applyFoodFilters();
+    }));
+    foodTypeFilters.forEach((button) => button.addEventListener('click', () => {
+      selectedFoodType = button.dataset.foodType;
+      foodTypeFilters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      applyFoodFilters();
+    }));
   </script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
@@ -517,7 +767,7 @@
       {id:'nijo',name:'Castillo Nijō',lat:35.01397,lng:135.74851,day:'11',type:'itinerary',desc:'Castillo y palacio Ninomaru.',query:'Nijo Castle Kyoto'},
       {id:'pontocho',name:'Pontocho',lat:35.00425,lng:135.77121,day:'11',type:'itinerary',desc:'Callejón de restaurantes y bares junto al río.',query:'Pontocho Kyoto'},
       {id:'fushimi',name:'Fushimi Inari Taisha',lat:34.96754,lng:135.77944,day:'12',type:'itinerary',desc:'Santuario de los miles de torii rojos.',query:'Fushimi Inari Taisha Kyoto'},
-      {id:'kiyomizu',name:'Kiyomizu-dera',lat:34.99442,lng:135.78448,day:'12,14',type:'event',desc:'Visita turística el 12. El 14 se anuncia aquí el Kanji del Año, pero la zona de la caligrafía está restringida y no se puede presenciar el acto.',query:'Kiyomizu dera Kyoto'},
+      {id:'kiyomizu',name:'Kiyomizu-dera',lat:34.99442,lng:135.78448,day:'12',type:'itinerary',desc:'Visita turística el 12. El 14 se anuncia aquí el Kanji del Año, pero la zona de la caligrafía está restringida y no se puede presenciar el acto.',query:'Kiyomizu dera Kyoto'},
       {id:'sannenzaka',name:'Sannenzaka y Ninenzaka',lat:34.99740,lng:135.78132,day:'12',type:'itinerary',desc:'Calles históricas tradicionales, tiendas y casas de té.',query:'Sannenzaka Ninenzaka Kyoto'},
       {id:'yasaka',name:'Santuario Yasaka',lat:35.00349,lng:135.77839,day:'12',type:'itinerary',desc:'Santuario sintoísta en la entrada de Gion.',query:'Yasaka Shrine Kyoto'},
       {id:'kodaiji',name:'Kōdai-ji',lat:35.00032,lng:135.78135,day:'12',type:'itinerary',desc:'Templo y jardines con iluminación nocturna especial.',query:'Kodai ji Kyoto'},
@@ -531,21 +781,29 @@
       {id:'bishamondo',name:'Bishamondō · salida del desfile',lat:35.00119,lng:135.81892,day:'14',type:'event',desc:'Punto de salida del Yamashina Gishi Matsuri a las 10:00.',query:'Bishamondo Kyoto'},
       {id:'tobu',name:'Kyoto City Tōbu Culture Hall',lat:34.97250,lng:135.81390,day:'14',type:'event',desc:'Sede de las representaciones del festival. Dirección oficial: 1-8 Nishiura-cho, Nagitsuji, Yamashina-ku. Pin aproximado; abre el enlace para confirmar.',query:'Kyoto City Tobu Culture Hall'},
       {id:'oishi',name:'Ōishi Jinja · final del desfile',lat:34.97013,lng:135.79570,day:'14',type:'event',desc:'Punto final del recorrido del Yamashina Gishi Matsuri.',query:'Oishi Shrine Yamashina Kyoto'},
-      {id:'ninnaji',name:'Ninna-ji',lat:35.03120,lng:135.71380,day:'extra',type:'alternative',desc:'Gran complejo monumental y pagoda. Coordenada orientativa.',query:'Ninna ji Kyoto'},
-      {id:'ginkaku',name:'Ginkaku-ji · Pabellón de Plata',lat:35.02691,lng:135.79843,day:'extra',type:'alternative',desc:'Templo y jardines de arena y musgo.',query:'Ginkakuji Kyoto'},
-      {id:'philosopher',name:'Philosopher’s Path',lat:35.02360,lng:135.79450,day:'extra',type:'alternative',desc:'Paseo junto al canal en el noreste de Kioto. Pin aproximado del recorrido.',query:'Philosophers Path Kyoto'},
-      {id:'nanzenji',name:'Nanzen-ji',lat:35.01170,lng:135.79510,day:'extra',type:'alternative',desc:'Complejo zen con jardines y acueducto. Coordenada orientativa.',query:'Nanzenji Kyoto'},
-      {id:'sanjusangen',name:'Sanjūsangen-dō',lat:34.98790,lng:135.77180,day:'extra',type:'alternative',desc:'Templo conocido por sus 1.001 figuras de Kannon.',query:'Sanjusangendo Kyoto'},
-      {id:'heian',name:'Heian-jingū',lat:35.01617,lng:135.78290,day:'extra',type:'alternative',desc:'Santuario con gran torii y arquitectura de inspiración imperial.',query:'Heian Jingu Kyoto'},
-      {id:'imperial',name:'Kyoto Gyoen · Palacio Imperial',lat:35.02510,lng:135.76210,day:'extra',type:'alternative',desc:'Parque histórico y antiguo Palacio Imperial. Pin aproximado.',query:'Kyoto Imperial Palace'},
-      {id:'fushimisake',name:'Fushimi Sake District',lat:34.93220,lng:135.76310,day:'extra',type:'alternative',desc:'Distrito histórico de bodegas de sake y canales. Pin aproximado.',query:'Fushimi Sake District Kyoto'},
-      {id:'kamishichiken',name:'Kamishichiken',lat:35.03050,lng:135.74440,day:'extra',type:'alternative',desc:'Distrito histórico tradicional al norte de la ciudad. Pin aproximado.',query:'Kamishichiken Kyoto'},
-      {id:'manga',name:'Kyoto International Manga Museum',lat:35.01168,lng:135.75918,day:'extra',type:'alternative',desc:'Museo dedicado al manga.',query:'Kyoto International Manga Museum'},
-      {id:'railway',name:'Kyoto Railway Museum',lat:34.98730,lng:135.74660,day:'extra',type:'alternative',desc:'Museo ferroviario con locomotoras y trenes históricos. Pin aproximado.',query:'Kyoto Railway Museum'},
-      {id:'monkey',name:'Arashiyama Monkey Park Iwatayama',lat:35.00920,lng:135.67850,day:'extra',type:'alternative',desc:'Parque de macacos con subida a pie. Pin aproximado.',query:'Arashiyama Monkey Park Iwatayama'}
+      {id:'ninnaji',name:'Ninna-ji',lat:35.03120,lng:135.71380,day:'extra',type:'alternative',altCategory:'templos',desc:'Gran complejo monumental y pagoda. Coordenada orientativa.',query:'Ninna ji Kyoto'},
+      {id:'ginkaku',name:'Ginkaku-ji · Pabellón de Plata',lat:35.02691,lng:135.79843,day:'extra',type:'alternative',altCategory:'templos',desc:'Templo y jardines de arena y musgo.',query:'Ginkakuji Kyoto'},
+      {id:'philosopher',name:'Philosopher’s Path',lat:35.02360,lng:135.79450,day:'extra',type:'alternative',altCategory:'naturaleza',desc:'Paseo junto al canal en el noreste de Kioto. Pin aproximado del recorrido.',query:'Philosophers Path Kyoto'},
+      {id:'nanzenji',name:'Nanzen-ji',lat:35.01170,lng:135.79510,day:'extra',type:'alternative',altCategory:'templos',desc:'Complejo zen con jardines y acueducto. Coordenada orientativa.',query:'Nanzenji Kyoto'},
+      {id:'sanjusangen',name:'Sanjūsangen-dō',lat:34.98790,lng:135.77180,day:'extra',type:'alternative',altCategory:'templos',desc:'Templo conocido por sus 1.001 figuras de Kannon.',query:'Sanjusangendo Kyoto'},
+      {id:'heian',name:'Heian-jingū',lat:35.01617,lng:135.78290,day:'extra',type:'alternative',altCategory:'templos',desc:'Santuario con gran torii y arquitectura de inspiración imperial.',query:'Heian Jingu Kyoto'},
+      {id:'imperial',name:'Kyoto Gyoen · Palacio Imperial',lat:35.02510,lng:135.76210,day:'extra',type:'alternative',altCategory:'naturaleza',desc:'Parque histórico y antiguo Palacio Imperial. Pin aproximado.',query:'Kyoto Imperial Palace'},
+      {id:'fushimisake',name:'Fushimi Sake District',lat:34.93220,lng:135.76310,day:'extra',type:'alternative',altCategory:'barrios',desc:'Distrito histórico de bodegas de sake y canales. Pin aproximado.',query:'Fushimi Sake District Kyoto'},
+      {id:'kamishichiken',name:'Kamishichiken',lat:35.03050,lng:135.74440,day:'extra',type:'alternative',altCategory:'barrios',desc:'Distrito histórico tradicional al norte de la ciudad. Pin aproximado.',query:'Kamishichiken Kyoto'},
+      {id:'manga',name:'Kyoto International Manga Museum',lat:35.01168,lng:135.75918,day:'extra',type:'alternative',altCategory:'cultura',desc:'Museo dedicado al manga.',query:'Kyoto International Manga Museum'},
+      {id:'railway',name:'Kyoto Railway Museum',lat:34.98730,lng:135.74660,day:'extra',type:'alternative',altCategory:'cultura',desc:'Museo ferroviario con locomotoras y trenes históricos. Pin aproximado.',query:'Kyoto Railway Museum'},
+      {id:'monkey',name:'Arashiyama Monkey Park Iwatayama',lat:35.00920,lng:135.67850,day:'extra',type:'alternative',altCategory:'naturaleza',desc:'Parque de macacos con subida a pie. Pin aproximado.',query:'Arashiyama Monkey Park Iwatayama'}
     ];
 
-    const markerColors = { itinerary:'#b84b3d', event:'#bd8b39', alternative:'#547466', hotel:'#273d70' };
+    const dayMarkerColors = { '11':'#c45a4a', '12':'#3f70a5', '13':'#268577', '14':'#8554a4' };
+    const alternativeMarkerColors = { templos:'#bd8a9d', barrios:'#c58b44', naturaleza:'#78a47d', cultura:'#7887a6' };
+    const hotelMarkerColor = '#273d70';
+    function markerColorForPoint(point) {
+      if (point.type === 'hotel') return hotelMarkerColor;
+      if (point.day === 'extra') return alternativeMarkerColors[point.altCategory] || alternativeMarkerColors.cultura;
+      const primaryDay = String(point.day).split(',')[0];
+      return dayMarkerColors[primaryDay] || '#64748b';
+    }
     const map = L.map('kyoto-map', {scrollWheelZoom:false}).setView([35.005,135.765],12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom:19,
@@ -557,7 +815,7 @@
     kyotoPoints.forEach((point) => {
       const marker = L.circleMarker([point.lat,point.lng], {
         radius: point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7,
-        color:'#fff', weight:2, fillColor:markerColors[point.type], fillOpacity:.95
+        color:'#fff', weight:2, fillColor:markerColorForPoint(point), fillOpacity:.95
       });
       const googleSearch = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(point.query + ', Kyoto, Japan')}`;
       const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(point.query + ', Kyoto, Japan')}&travelmode=transit`;
@@ -730,6 +988,6 @@
       if (watchId !== null) navigator.geolocation.clearWatch(watchId);
     });
   </script>
-  <div class="version-indicator" title="Versión desplegada de la guía: V3.1" aria-label="Versión de la guía V3.1">GUÍA · V3.1</div>
+  <div class="version-indicator" title="Versión desplegada de la guía: V5" aria-label="Versión de la guía V5">GUÍA · V5</div>
 </body>
 </html>
