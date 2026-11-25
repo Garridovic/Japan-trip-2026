@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#182a35">
   <meta name="description" content="Guía compartida del viaje a Kioto del 11 al 15 de diciembre de 2026: itinerario, transportes, visitas nocturnas y lugares alternativos.">
   <title>Kioto · 11–15 diciembre 2026</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
     :root {
       --ink: #192b35;
@@ -108,6 +109,32 @@
     .extra-tag { display: inline-block; color: var(--red); font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px; }
     .extra-card p { color: var(--muted); font-size: .82rem; }
     .extra-card[hidden] { display: none; }
+    .map-toolbar { display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 13px; }
+    .map-layout { display:grid; grid-template-columns:minmax(0, 1.8fr) minmax(250px, .9fr); gap:14px; align-items:stretch; }
+    .map-panel, .nearby-panel { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+    #kyoto-map { width:100%; height:520px; background:#e9e7df; }
+    .map-panel-foot { padding:10px 14px; border-top:1px solid var(--line); color:var(--muted); font-size:.76rem; }
+    .map-panel-foot a { white-space:nowrap; }
+    .nearby-panel { padding:16px; }
+    .nearby-panel h3 { margin-bottom:5px; }
+    .nearby-status { color:var(--muted); font-size:.8rem; margin:0 0 12px; }
+    .locate-button { display:inline-flex; align-items:center; justify-content:center; width:100%; border:0; border-radius:999px; padding:10px 13px; background:var(--ink); color:white; font:inherit; font-size:.84rem; font-weight:800; cursor:pointer; }
+    .locate-button:disabled { opacity:.6; cursor:wait; }
+    .nearby-list { list-style:none; padding:0; margin:13px 0 0; display:grid; gap:8px; }
+    .nearby-list li { border-top:1px solid var(--line); padding-top:9px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:7px 9px; align-items:center; }
+    .nearby-list button { border:0; background:none; padding:0; color:var(--ink); text-align:left; font:inherit; cursor:pointer; font-weight:750; font-size:.83rem; min-width:0; }
+    .nearby-list small { display:block; color:var(--muted); font-size:.73rem; font-weight:400; }
+    .nearby-distance { color:var(--red); font-size:.78rem; font-weight:850; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .nearby-directions { grid-column:1 / -1; justify-self:start; display:inline-flex; align-items:center; border-radius:999px; padding:5px 10px; background:#eef1f3; color:var(--ink); font-size:.74rem; font-weight:850; text-decoration:none; }
+    .nearby-directions:hover { background:#dfe6e9; color:var(--ink); }
+    .legend { display:flex; flex-wrap:wrap; gap:8px 12px; margin:10px 0 0; color:var(--muted); font-size:.76rem; }
+    .legend span { display:inline-flex; gap:6px; align-items:center; }
+    .legend i { width:9px; height:9px; display:inline-block; border-radius:50%; }
+    .leaflet-popup-content { min-width:190px; }
+    .popup-title { font-weight:850; margin-bottom:3px; color:var(--ink); }
+    .popup-meta { color:var(--muted); font-size:.78rem; margin-bottom:7px; }
+    .popup-links { display:flex; gap:9px; font-size:.78rem; font-weight:800; }
+    .leaflet-container { font-family:inherit; }
     .notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
     .note-card { padding: 16px; box-shadow: none; }
     .note-card h3 { font-size: .95rem; }
@@ -124,7 +151,8 @@
       .hero { padding: 33px 18px 27px; }
       main { padding: 24px 16px 48px; }
       .nav-inner { padding-inline: 16px; gap: 16px; }
-      .quick-grid, .extras-grid, .notes-grid { grid-template-columns: 1fr; }
+      .quick-grid, .extras-grid, .notes-grid, .map-layout { grid-template-columns: 1fr; }
+      #kyoto-map { height:430px; }
       .quick-card { min-height: 0; }
       details.day-detail summary { grid-template-columns: 48px 1fr auto; gap: 11px; padding: 14px; }
       .day-number { width: 44px; height: 44px; border-radius: 12px; }
@@ -137,7 +165,8 @@
       body { background: white; font-size: 10pt; }
       .hero { padding: 18px 0; background: #182a35 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .hero-inner, main, .footer-inner { width: 100%; }
-      nav, .hero-actions, .extras-toolbar, .map-link { display: none !important; }
+      nav, .hero-actions, .extras-toolbar, .map-link, .map-toolbar, .locate-button { display: none !important; }
+      #kyoto-map { height:360px; }
       main { padding: 18px 0; }
       .quick-grid { grid-template-columns: repeat(2,1fr); }
       .quick-card, .day-detail, .extra-card, .note-card { box-shadow: none; break-inside: avoid; }
@@ -155,7 +184,7 @@
     <div class="hero-inner">
       <div class="eyebrow">Japón · guía compartida</div>
       <h1>Kioto<span style="color:#e2b46e">.</span></h1>
-      <p class="subtitle">Cuatro días para combinar templos, barrios históricos, gastronomía y dos noches de iluminación especial.</p>
+      <p class="subtitle">Cuatro días para combinar templos, barrios históricos, gastronomía y dos eventos especiales el 14 de diciembre.</p>
       <div class="hero-meta">
         <span>11–15 diciembre 2026</span>
         <span>4 jornadas · 4 noches</span>
@@ -163,7 +192,8 @@
       </div>
       <p class="hotel">Alojamiento: <strong>Agora Kyoto Karasuma</strong> · <a href="https://www.google.com/maps/search/?api=1&query=Agora+Kyoto+Karasuma" target="_blank" rel="noopener">Ver hotel en Google Maps ↗</a></p>
       <div class="hero-actions">
-        <a class="button primary" href="#resumen">Ver recorrido</a>
+        <a class="button primary" href="#mapa">Abrir mapa interactivo</a>
+        <a class="button" href="#resumen">Ver recorrido</a>
         <button class="button" onclick="window.print()" type="button">Imprimir / guardar PDF</button>
       </div>
     </div>
@@ -172,6 +202,7 @@
   <nav aria-label="Navegación principal">
     <div class="nav-inner">
       <a href="#resumen">Vista rápida</a>
+      <a href="#mapa">Mapa</a>
       <a href="#detalle">Día a día</a>
       <a href="#alternativas">Otros lugares</a>
       <a href="#practico">Consejos</a>
@@ -201,17 +232,48 @@
         <article class="quick-card">
           <div class="quick-top"><span class="date">Dom · 13 dic</span><span class="zone">Noroeste + sur</span></div>
           <h3>Templos e iluminación final</h3>
-          <p class="route">Kinkaku-ji <span>→</span> Ryoan-ji <span>→</span> Ninna-ji* <span>→</span> Tō-ji</p>
-          <div class="quick-foot"><small>*Ninna-ji opcional · Última noche de Tō-ji</small><a class="text-link" href="#dia13">Ver detalle ↓</a></div>
+          <p class="route">Kinkaku-ji <span>→</span> Ryoan-ji <span>→</span> Arashiyama <span>→</span> Tō-ji</p>
+          <div class="quick-foot"><small>Noroeste + oeste · Última noche de Tō-ji</small><a class="text-link" href="#dia13">Ver detalle ↓</a></div>
         </article>
         <article class="quick-card">
-          <div class="quick-top"><span class="date">Lun · 14 dic</span><span class="zone">Arashiyama</span></div>
-          <h3>Bambú, jardines y río</h3>
-          <p class="route">Tenryū-ji <span>→</span> Bosque de bambú <span>→</span> Okochi Sanso <span>→</span> Togetsukyō</p>
-          <div class="quick-foot"><small>Naturaleza y paseo relajado</small><a class="text-link" href="#dia14">Ver detalle ↓</a></div>
+          <div class="quick-top"><span class="date">Lun · 14 dic</span><span class="zone">Yamashina + Higashiyama</span></div>
+          <h3>Yamashina Gishi + Kanji del Año</h3>
+          <p class="route">Bishamondō <span>→</span> desfile <span>→</span> Centro Cultural <span>→</span> Ōishi Jinja</p>
+          <div class="quick-foot"><small>Festival 10:00–15:00 · anuncio del Kanji</small><a class="text-link" href="#dia14">Ver detalle ↓</a></div>
         </article>
       </div>
       <p class="muted small" style="margin-top:13px">Mar 15 dic: salida temprana hacia Osaka. No se programa ninguna visita.</p>
+    </section>
+
+
+    <section id="mapa">
+      <div class="section-head"><div><div class="kicker">Explora por proximidad</div><h2>Mapa de Kioto y puntos de interés</h2></div><p class="muted small">Filtra por día o categoría. Puedes localizarte desde el móvil para ver qué tienes más cerca.</p></div>
+      <div class="map-toolbar" role="group" aria-label="Filtrar puntos del mapa">
+        <button class="filter map-filter" data-map-filter="todos" aria-pressed="true">Todos</button>
+        <button class="filter map-filter" data-map-filter="11" aria-pressed="false">11 dic</button>
+        <button class="filter map-filter" data-map-filter="12" aria-pressed="false">12 dic</button>
+        <button class="filter map-filter" data-map-filter="13" aria-pressed="false">13 dic</button>
+        <button class="filter map-filter" data-map-filter="14" aria-pressed="false">14 dic · eventos</button>
+        <button class="filter map-filter" data-map-filter="extra" aria-pressed="false">Alternativas</button>
+      </div>
+      <div class="map-layout">
+        <div class="map-panel">
+          <div id="kyoto-map" role="application" aria-label="Mapa interactivo con hoteles, visitas y lugares de interés de Kioto"></div>
+          <div class="map-panel-foot">Mapa © OpenStreetMap · Toca cualquier marcador para abrir su ficha. Desde ahí puedes consultar el lugar o iniciar la navegación en Google Maps.</div>
+        </div>
+        <aside class="nearby-panel">
+          <h3>¿Qué hay cerca de mí?</h3>
+          <p class="nearby-status" id="nearby-status">Pulsa el botón para ordenar los puntos de interés según tu ubicación actual. La ubicación solo se utiliza en este navegador y no se guarda.</p>
+          <button class="locate-button" id="locate-me" type="button">⌖ Encontrar lugares cerca de mí</button>
+          <ol class="nearby-list" id="nearby-list"><li><span class="muted small">Al activar tu ubicación, aparecerán aquí los lugares más cercanos y un acceso directo para llegar con Google Maps.</span></li></ol>
+          <div class="legend">
+            <span><i style="background:#b84b3d"></i> Itinerario</span>
+            <span><i style="background:#bd8b39"></i> Eventos</span>
+            <span><i style="background:#547466"></i> Alternativas</span>
+            <span><i style="background:#273d70"></i> Hotel</span>
+          </div>
+        </aside>
+      </div>
     </section>
 
     <section id="detalle">
@@ -259,41 +321,46 @@
         <details class="day-detail" id="dia13">
           <summary>
             <span class="day-number">13<small>dom</small></span>
-            <span class="summary-copy"><h3>Kinkaku-ji, jardines zen y Tō-ji de noche</h3><span class="muted">Templos del noroeste y una última iluminación especial.</span></span>
+            <span class="summary-copy"><h3>Kinkaku-ji, Ryoan-ji, Arashiyama y Tō-ji</h3><span class="muted">Jornada intensa para encadenar el noroeste y el oeste; Ninna-ji queda como alternativa.</span></span>
             <span class="chevron">⌄</span>
           </summary>
           <div class="detail-body">
-            <p class="detail-lead">La visita de Ninna-ji es flexible: mantenedla si vais bien de tiempo y energía; si no, regresad antes al centro para descansar.</p>
+            <p class="detail-lead">Es el día más completo del itinerario. Para que funcione, limitad el tiempo en cada templo y utilizad taxi o tren Randen entre Ryoan-ji y Arashiyama. Okochi Sanso es la primera visita que eliminaría si vais justos.</p>
             <div class="stops">
+              <div class="stop"><span class="time">08:15–09:00</span><div><strong>Desplazamiento a Kinkaku-ji</strong><p>Salid temprano desde el hotel. Taxi o autobús; el taxi es más previsible para cumplir el horario.</p></div></div>
               <div class="stop"><span class="time">09:00–10:00</span><div><strong>Kinkaku-ji · Pabellón Dorado</strong><p>El pabellón cubierto de pan de oro y su estanque. Horario habitual: 9:00–17:00.</p></div></div>
-              <div class="stop"><span class="time">10:30–11:45</span><div><strong>Ryoan-ji</strong><p>Jardín zen de grava y piedras. Una visita más contemplativa y tranquila.</p></div></div>
-              <div class="stop"><span class="time">12:00–13:15</span><div><strong>Ninna-ji · opcional</strong><p>Complejo monumental, edificios históricos y pagoda. Si preferís ir con calma, podéis saltarlo.</p></div></div>
-              <div class="stop"><span class="time">13:15–16:30</span><div><strong>Comida + regreso al hotel</strong><p>Tiempo libre para comer y descansar antes de la visita nocturna.</p></div></div>
-              <div class="stop"><span class="time">18:00–20:00</span><div><strong>Tō-ji · iluminación nocturna</strong><p>Pagoda de cinco pisos, jardines y visita especial nocturna. La temporada 2026 termina precisamente el domingo 13; horario anunciado de 18:00 a 21:30, última entrada 21:00.</p></div></div>
+              <div class="stop"><span class="time">10:30–11:30</span><div><strong>Ryoan-ji</strong><p>Jardín zen de grava y piedras. Una visita breve pero imprescindible para conocer el paisajismo japonés.</p></div></div>
+              <div class="stop"><span class="time">11:30–12:15</span><div><strong>Traslado y comida temprana en Arashiyama</strong><p>Taxi directo o línea Randen con transbordo. Evitad añadir Ninna-ji este día para no ir demasiado ajustados.</p></div></div>
+              <div class="stop"><span class="time">12:15–13:15</span><div><strong>Tenryū-ji</strong><p>Templo zen y jardín Sōgenchi. Abre a las 8:30; la última admisión del jardín suele ser a las 16:50.</p></div></div>
+              <div class="stop"><span class="time">13:15–14:00</span><div><strong>Bosque de bambú</strong><p>Paseo por el famoso sendero; es gratuito y suele llenarse conforme avanza la mañana.</p></div></div>
+              <div class="stop"><span class="time">14:00–15:00</span><div><strong>Okochi Sanso · opcional</strong><p>Villa y jardines tradicionales con vistas sobre la zona. Saltadla si preferís dedicar más tiempo al río.</p></div></div>
+              <div class="stop"><span class="time">15:00–16:15</span><div><strong>Puente Togetsukyō + río Katsura</strong><p>Paseo por la orilla y tiempo para disfrutar del paisaje. El Monkey Park sería una alternativa, no una parada adicional.</p></div></div>
+              <div class="stop"><span class="time">16:15–17:30</span><div><strong>Regreso al hotel y descanso</strong><p>Volved al centro para descansar antes de la última iluminación especial de Tō-ji.</p></div></div>
+              <div class="stop"><span class="time">18:00–20:00</span><div><strong>Tō-ji · iluminación nocturna</strong><p>Pagoda de cinco pisos, jardines y visita especial nocturna. El 13 de diciembre es el último día anunciado de la iluminación 2026; horario previsto de 18:00 a 21:30, última entrada 21:00.</p></div></div>
             </div>
-            <div class="highlight"><strong>Última oportunidad:</strong> el 13 de diciembre es el último día anunciado tanto para la iluminación otoñal de Tō-ji como para la de Kōdai-ji. Tō-ji queda cerca de Kyoto Station y del hotel en taxi.</div>
-            <div class="detail-bottom"><span class="transport"><strong>Desplazamientos:</strong> hotel → Kinkaku-ji, bus o taxi. Entre Kinkaku-ji, Ryoan-ji y Ninna-ji, bus/taxi. Para Tō-ji, taxi o transporte público hacia Kyoto Station y caminata.</span><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Agora+Kyoto+Karasuma&destination=Toji+Temple,+Kyoto&waypoints=Kinkaku-ji,+Kyoto%7CRyoan-ji,+Kyoto%7CNinna-ji,+Kyoto&travelmode=transit" target="_blank" rel="noopener">Abrir recorrido ↗</a></div>
+            <div class="highlight"><strong>Prioridades si el día se alarga:</strong> mantened Kinkaku-ji, Ryoan-ji, Tenryū-ji, bosque de bambú y Tō-ji. Okochi Sanso es opcional y Ninna-ji queda fuera del recorrido principal.</div>
+            <div class="detail-bottom"><span class="transport"><strong>Desplazamientos:</strong> hotel → Kinkaku-ji en taxi o bus; Kinkaku-ji → Ryoan-ji en taxi/bus; Ryoan-ji → Arashiyama en taxi o Randen (vía Katabiranotsuji); regreso desde Saga-Arashiyama en JR Sagano Line. Para Tō-ji, taxi o transporte público vía Kyoto Station.</span><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Agora+Kyoto+Karasuma&destination=Toji+Temple,+Kyoto&waypoints=Kinkaku-ji,+Kyoto%7CRyoan-ji,+Kyoto%7CTenryu-ji,+Kyoto%7CArashiyama+Bamboo+Grove,+Kyoto%7CTogetsukyo+Bridge,+Kyoto&travelmode=transit" target="_blank" rel="noopener">Abrir recorrido ↗</a></div>
           </div>
         </details>
 
         <details class="day-detail" id="dia14">
           <summary>
             <span class="day-number">14<small>lun</small></span>
-            <span class="summary-copy"><h3>Arashiyama: bambú, templo y río</h3><span class="muted">Un día de paisaje y paseos; mejor evitar añadir demasiadas paradas.</span></span>
+            <span class="summary-copy"><h3>Yamashina Gishi Matsuri + Kanji del Año</h3><span class="muted">Dos acontecimientos especiales que coinciden este lunes en Kioto.</span></span>
             <span class="chevron">⌄</span>
           </summary>
           <div class="detail-body">
-            <p class="detail-lead">Arashiyama está al oeste de Kioto. Salid temprano y agrupad todas las visitas a pie para no perder tiempo cruzando la ciudad.</p>
+            <p class="detail-lead">Dedicad la mañana y primeras horas de la tarde al desfile de los 47 rōnin en Yamashina. El acto «Kanji del Año» también se celebra el 14 en Kiyomizu-dera, pero la organización restringe el acceso del público al lugar de la caligrafía: no se puede asistir a la ceremonia en sí.</p>
             <div class="stops">
-              <div class="stop"><span class="time">08:00–08:45</span><div><strong>Tren hasta Saga-Arashiyama</strong><p>Desde Kyoto Station, JR Sagano Line; calculad unos 15–20 minutos de tren más accesos y caminata.</p></div></div>
-              <div class="stop"><span class="time">09:00–10:15</span><div><strong>Tenryū-ji</strong><p>Templo zen y jardín Sōgenchi. Abre a las 8:30; última admisión del jardín a las 16:50.</p></div></div>
-              <div class="stop"><span class="time">10:15–10:50</span><div><strong>Bosque de bambú</strong><p>Paseo por el famoso sendero. Es gratuito y suele llenarse conforme avanza la mañana.</p></div></div>
-              <div class="stop"><span class="time">11:00–12:00</span><div><strong>Okochi Sanso</strong><p>Villa y jardines tradicionales con vistas sobre la zona. Opcional si preferís reservar más tiempo para el río.</p></div></div>
-              <div class="stop"><span class="time">12:00–13:00</span><div><strong>Comida en Arashiyama</strong><p>Soba, tempura, tofu local o algún menú japonés de temporada.</p></div></div>
-              <div class="stop"><span class="time">13:00–15:30</span><div><strong>Puente Togetsukyō + río Katsura</strong><p>Paseo por la orilla y tiempo libre. Como extra, podéis elegir Monkey Park Iwatayama o el tren panorámico Sagano, comprobando antes horarios y disponibilidad.</p></div></div>
-              <div class="stop"><span class="time">15:30–16:30</span><div><strong>Regreso al hotel</strong><p>Última tarde libre en Kioto, cena y preparación del equipaje para Osaka.</p></div></div>
+              <div class="stop"><span class="time">08:45–09:40</span><div><strong>Hotel → estación Yamashina → Bishamondō</strong><p>Metro Tozai hasta Yamashina y unos 20 minutos a pie hasta el templo. Llegad con margen para buscar un buen lugar desde el que ver la salida.</p></div></div>
+              <div class="stop"><span class="time">10:00</span><div><strong>Salida del desfile · Bishamondō</strong><p>Comienza el Yamashina Gishi Matsuri: vecinos vestidos como los 47 rōnin recorren lugares vinculados a la historia de Ōishi Kuranosuke.</p></div></div>
+              <div class="stop"><span class="time">11:45–12:30 aprox.</span><div><strong>Actuaciones · Kyoto City Tōbu Culture Hall</strong><p>Representaciones de escenas de la historia de los 47 rōnin, incluida «Matsu no Rōka». Hora orientativa publicada por la organización turística regional; confirmad el programa cercano a la fecha.</p></div></div>
+              <div class="stop"><span class="time">12:30–14:30</span><div><strong>Comida y continuación del festival</strong><p>Podéis seguir el recorrido hacia Iwayadera y Ōishi Jinja o terminar aquí y regresar al centro. Seguir todo el desfile supone caminar bastante.</p></div></div>
+              <div class="stop"><span class="time">14:30–15:00 aprox.</span><div><strong>Tramo final · Iwayadera / Ōishi Jinja</strong><p>El desfile termina en Ōishi Jinja. La llegada está publicada como aproximada; consultad el programa definitivo y el punto de observación más conveniente.</p></div></div>
+              <div class="stop"><span class="time">Tarde</span><div><strong>Regreso al centro y tiempo libre</strong><p>Volved al hotel, descansad y disfrutad de vuestra última tarde-noche en Kioto. Gion, Pontocho o Kiyamachi son buenas opciones para cenar.</p></div></div>
             </div>
-            <div class="detail-bottom"><span class="transport"><strong>Desplazamientos:</strong> metro/tren hasta Kyoto Station y JR Sagano Line hasta Saga-Arashiyama. Una vez allí, el itinerario es caminable.</span><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Agora+Kyoto+Karasuma&destination=Togetsukyo+Bridge,+Kyoto&waypoints=Tenryu-ji,+Kyoto%7CArashiyama+Bamboo+Forest,+Kyoto%7COkochi+Sanso,+Kyoto&travelmode=transit" target="_blank" rel="noopener">Abrir recorrido ↗</a></div>
+            <div class="highlight"><strong>También el 14: «Kanji del Año» en Kiyomizu-dera.</strong> La asociación oficial confirma la fecha y el lugar, pero advierte que el área de la caligrafía queda restringida a personas relacionadas con el acto. No planifiquéis desplazaros allí para presenciar la ceremonia: podéis seguir el anuncio en la web oficial. La visita turística a Kiyomizu-dera la mantenemos el sábado 12.</div>
+            <div class="detail-bottom"><span class="transport"><strong>Desplazamientos:</strong> hotel → Yamashina en metro Tozai; Yamashina → Bishamondō a pie (aprox. 20 min). Para volver desde Tōbu Culture Hall, metro desde Nagitsuji. Si acabáis en Ōishi Jinja, comprobad las conexiones de autobús antes de seguir el desfile.</span><a class="map-link" href="https://www.google.com/maps/dir/?api=1&origin=Agora+Kyoto+Karasuma&destination=Oishi+Shrine,+Kyoto&waypoints=Bishamondo,+Kyoto%7CKyoto+City+Tobu+Culture+Hall,+Kyoto&travelmode=transit" target="_blank" rel="noopener">Abrir recorrido ↗</a></div>
           </div>
         </details>
       </div>
@@ -346,22 +413,28 @@
           <li><a href="https://kyoto.travel/en/getting-around" target="_blank" rel="noopener">Kyoto Travel · transporte y cómo moverse por la ciudad</a></li>
           <li><a href="https://nijo-jocastle.city.kyoto.lg.jp/guide/annai/?lang=en" target="_blank" rel="noopener">Castillo Nijō · horarios y días de cierre</a></li>
           <li><a href="https://www.kiyomizudera.or.jp/en/visit/" target="_blank" rel="noopener">Kiyomizu-dera · horarios, eventos y visitas especiales</a></li>
+          <li><a href="https://ja.kyoto.travel/event/single.php?event_id=2335" target="_blank" rel="noopener">Kyoto City Tourism Navi · Yamashina Gishi Matsuri 2026 (14 dic, 10:00–15:00)</a></li>
+          <li><a href="https://www.kyoto-kankou.or.jp/event/1214" target="_blank" rel="noopener">Kyoto Prefecture Tourism Federation · horarios aproximados de desfile y actuaciones</a></li>
+          <li><a href="https://www.kanken.or.jp/kotoshinokanji/" target="_blank" rel="noopener">Asociación Kanken · «Kanji del Año» 2026 (14 dic, Kiyomizu-dera)</a></li>
+          <li><a href="https://www.kanken.or.jp/kotoshinokanji/faq-contact/" target="_blank" rel="noopener">Kanken · FAQ: el público no puede acceder a la caligrafía</a></li>
+          <li><a href="https://www.kyoto-ongeibun.jp/toubu/access/" target="_blank" rel="noopener">Kyoto City Tōbu Culture Hall · dirección y transporte</a></li>
           <li><a href="https://www.shokoku-ji.jp/es/kinkakuji/" target="_blank" rel="noopener">Kinkaku-ji · información oficial en español</a></li>
           <li><a href="https://www.tenryuji.com/en/visit/" target="_blank" rel="noopener">Tenryū-ji · entrada y acceso</a></li>
           <li><a href="https://www.kodaiji.com/saiji.html" target="_blank" rel="noopener">Kōdai-ji · visita nocturna 2026 (web oficial)</a></li>
           <li><a href="https://toji.or.jp/en/location/" target="_blank" rel="noopener">Tō-ji · acceso y calendario de visitas especiales</a></li>
           <li><a href="https://dailykyoto.com/en/koyo/night" target="_blank" rel="noopener">Daily Kyoto · calendario de iluminaciones de otoño 2026</a></li>
         </ul>
-        <p class="muted">Guía preparada el 25 de noviembre de 2026. Las fechas y horarios de eventos especiales pueden cambiar; prevalece siempre la información publicada por cada recinto.</p>
+        <p class="muted">Guía actualizada el 25 de noviembre de 2026. El mapa usa cartografía de OpenStreetMap; los puntos señalados como aproximados deben confirmarse en Google Maps antes de caminar hasta ellos. Las fechas y horarios de eventos especiales pueden cambiar; prevalece siempre la información publicada por cada recinto.</p>
       </details>
     </section>
   </main>
 
   <footer>
-    <div class="footer-inner"><span>Kioto · 11–15 diciembre 2026</span><span>Guía de viaje compartida · editable en <code>index.html</code></span></div>
+    <div class="footer-inner"><span>Kioto · 11–15 diciembre 2026</span><span>Guía de viaje compartida · editable en <code>index.html</code></span><span>Exportación opcional: <a href="kyoto-points.kml" download>descargar puntos KML</a></span></div>
   </footer>
+
   <script>
-    const filters = document.querySelectorAll('.filter');
+    const filters = document.querySelectorAll('.filter[data-filter]');
     const cards = document.querySelectorAll('.extra-card');
     filters.forEach((button) => {
       button.addEventListener('click', () => {
@@ -371,6 +444,148 @@
           card.hidden = selected !== 'todos' && card.dataset.category !== selected;
         });
       });
+    });
+  </script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const kyotoPoints = [
+      {id:'hotel',name:'Agora Kyoto Karasuma',lat:35.00315,lng:135.75670,day:'base',type:'hotel',desc:'Alojamiento del grupo. Punto de partida para los recorridos.',query:'Agora Kyoto Karasuma'},
+      {id:'nishiki',name:'Mercado Nishiki',lat:35.00503,lng:135.76471,day:'11',type:'itinerary',desc:'Mercado gastronómico cubierto del centro.',query:'Nishiki Market Kyoto'},
+      {id:'nijo',name:'Castillo Nijō',lat:35.01397,lng:135.74851,day:'11',type:'itinerary',desc:'Castillo y palacio Ninomaru.',query:'Nijo Castle Kyoto'},
+      {id:'pontocho',name:'Pontocho',lat:35.00425,lng:135.77121,day:'11',type:'itinerary',desc:'Callejón de restaurantes y bares junto al río.',query:'Pontocho Kyoto'},
+      {id:'fushimi',name:'Fushimi Inari Taisha',lat:34.96754,lng:135.77944,day:'12',type:'itinerary',desc:'Santuario de los miles de torii rojos.',query:'Fushimi Inari Taisha Kyoto'},
+      {id:'kiyomizu',name:'Kiyomizu-dera',lat:34.99442,lng:135.78448,day:'12,14',type:'event',desc:'Visita turística el 12. El 14 se anuncia aquí el Kanji del Año, pero la zona de la caligrafía está restringida y no se puede presenciar el acto.',query:'Kiyomizu dera Kyoto'},
+      {id:'sannenzaka',name:'Sannenzaka y Ninenzaka',lat:34.99740,lng:135.78132,day:'12',type:'itinerary',desc:'Calles históricas tradicionales, tiendas y casas de té.',query:'Sannenzaka Ninenzaka Kyoto'},
+      {id:'yasaka',name:'Santuario Yasaka',lat:35.00349,lng:135.77839,day:'12',type:'itinerary',desc:'Santuario sintoísta en la entrada de Gion.',query:'Yasaka Shrine Kyoto'},
+      {id:'kodaiji',name:'Kōdai-ji',lat:35.00032,lng:135.78135,day:'12',type:'itinerary',desc:'Templo y jardines con iluminación nocturna especial.',query:'Kodai ji Kyoto'},
+      {id:'kinkaku',name:'Kinkaku-ji',lat:35.03959,lng:135.72951,day:'13',type:'itinerary',desc:'Pabellón Dorado y estanque.',query:'Kinkakuji Kyoto'},
+      {id:'ryoanji',name:'Ryoan-ji',lat:35.03349,lng:135.71806,day:'13',type:'itinerary',desc:'Templo zen famoso por su jardín de rocas.',query:'Ryoanji Kyoto'},
+      {id:'toji',name:'Tō-ji',lat:34.98119,lng:135.74771,day:'13',type:'itinerary',desc:'Pagoda de cinco plantas e iluminación nocturna final del 13 de diciembre.',query:'Toji Temple Kyoto'},
+      {id:'tenryuji',name:'Tenryū-ji',lat:35.01617,lng:135.67462,day:'13',type:'itinerary',desc:'Templo zen y jardín Sōgenchi.',query:'Tenryuji Kyoto'},
+      {id:'bamboo',name:'Bosque de bambú de Arashiyama',lat:35.01701,lng:135.67169,day:'13',type:'itinerary',desc:'Sendero entre altos bambús.',query:'Arashiyama Bamboo Grove Kyoto'},
+      {id:'okoichi',name:'Ōkōchi Sansō',lat:35.01666,lng:135.66967,day:'13',type:'itinerary',desc:'Villa y jardín tradicional; visita opcional.',query:'Okochi Sanso Kyoto'},
+      {id:'togetsu',name:'Puente Togetsukyō',lat:35.00970,lng:135.67750,day:'13',type:'itinerary',desc:'Puente histórico y paseo junto al río Katsura.',query:'Togetsukyo Bridge Kyoto'},
+      {id:'bishamondo',name:'Bishamondō · salida del desfile',lat:35.00119,lng:135.81892,day:'14',type:'event',desc:'Punto de salida del Yamashina Gishi Matsuri a las 10:00.',query:'Bishamondo Kyoto'},
+      {id:'tobu',name:'Kyoto City Tōbu Culture Hall',lat:34.97250,lng:135.81390,day:'14',type:'event',desc:'Sede de las representaciones del festival. Dirección oficial: 1-8 Nishiura-cho, Nagitsuji, Yamashina-ku. Pin aproximado; abre el enlace para confirmar.',query:'Kyoto City Tobu Culture Hall'},
+      {id:'oishi',name:'Ōishi Jinja · final del desfile',lat:34.97013,lng:135.79570,day:'14',type:'event',desc:'Punto final del recorrido del Yamashina Gishi Matsuri.',query:'Oishi Shrine Yamashina Kyoto'},
+      {id:'ninnaji',name:'Ninna-ji',lat:35.03120,lng:135.71380,day:'extra',type:'alternative',desc:'Gran complejo monumental y pagoda. Coordenada orientativa.',query:'Ninna ji Kyoto'},
+      {id:'ginkaku',name:'Ginkaku-ji · Pabellón de Plata',lat:35.02691,lng:135.79843,day:'extra',type:'alternative',desc:'Templo y jardines de arena y musgo.',query:'Ginkakuji Kyoto'},
+      {id:'philosopher',name:'Philosopher’s Path',lat:35.02360,lng:135.79450,day:'extra',type:'alternative',desc:'Paseo junto al canal en el noreste de Kioto. Pin aproximado del recorrido.',query:'Philosophers Path Kyoto'},
+      {id:'nanzenji',name:'Nanzen-ji',lat:35.01170,lng:135.79510,day:'extra',type:'alternative',desc:'Complejo zen con jardines y acueducto. Coordenada orientativa.',query:'Nanzenji Kyoto'},
+      {id:'sanjusangen',name:'Sanjūsangen-dō',lat:34.98790,lng:135.77180,day:'extra',type:'alternative',desc:'Templo conocido por sus 1.001 figuras de Kannon.',query:'Sanjusangendo Kyoto'},
+      {id:'heian',name:'Heian-jingū',lat:35.01617,lng:135.78290,day:'extra',type:'alternative',desc:'Santuario con gran torii y arquitectura de inspiración imperial.',query:'Heian Jingu Kyoto'},
+      {id:'imperial',name:'Kyoto Gyoen · Palacio Imperial',lat:35.02510,lng:135.76210,day:'extra',type:'alternative',desc:'Parque histórico y antiguo Palacio Imperial. Pin aproximado.',query:'Kyoto Imperial Palace'},
+      {id:'fushimisake',name:'Fushimi Sake District',lat:34.93220,lng:135.76310,day:'extra',type:'alternative',desc:'Distrito histórico de bodegas de sake y canales. Pin aproximado.',query:'Fushimi Sake District Kyoto'},
+      {id:'kamishichiken',name:'Kamishichiken',lat:35.03050,lng:135.74440,day:'extra',type:'alternative',desc:'Distrito histórico tradicional al norte de la ciudad. Pin aproximado.',query:'Kamishichiken Kyoto'},
+      {id:'manga',name:'Kyoto International Manga Museum',lat:35.01168,lng:135.75918,day:'extra',type:'alternative',desc:'Museo dedicado al manga.',query:'Kyoto International Manga Museum'},
+      {id:'railway',name:'Kyoto Railway Museum',lat:34.98730,lng:135.74660,day:'extra',type:'alternative',desc:'Museo ferroviario con locomotoras y trenes históricos. Pin aproximado.',query:'Kyoto Railway Museum'},
+      {id:'monkey',name:'Arashiyama Monkey Park Iwatayama',lat:35.00920,lng:135.67850,day:'extra',type:'alternative',desc:'Parque de macacos con subida a pie. Pin aproximado.',query:'Arashiyama Monkey Park Iwatayama'}
+    ];
+
+    const markerColors = { itinerary:'#b84b3d', event:'#bd8b39', alternative:'#547466', hotel:'#273d70' };
+    const map = L.map('kyoto-map', {scrollWheelZoom:false}).setView([35.005,135.765],12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom:19,
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+    }).addTo(map);
+
+    const markerById = new Map();
+    const markerLayer = L.featureGroup().addTo(map);
+    kyotoPoints.forEach((point) => {
+      const marker = L.circleMarker([point.lat,point.lng], {
+        radius: point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7,
+        color:'#fff', weight:2, fillColor:markerColors[point.type], fillOpacity:.95
+      });
+      const googleSearch = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(point.query + ', Kyoto, Japan')}`;
+      const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(point.query + ', Kyoto, Japan')}&travelmode=transit`;
+      marker.bindPopup(`<div class="popup-title">${point.name}</div><div class="popup-meta">${point.desc}</div><div class="popup-links"><a href="${googleSearch}" target="_blank" rel="noopener">Ver ficha en Google Maps ↗</a><a href="${directions}" target="_blank" rel="noopener">Cómo llegar ↗</a></div>`);
+      marker.bindTooltip(point.name, {direction:'top',offset:[0,-7]});
+      marker.pointData = point;
+      markerById.set(point.id,marker);
+      markerLayer.addLayer(marker);
+    });
+    map.fitBounds(markerLayer.getBounds().pad(.08));
+
+    let currentFilter = 'todos';
+    let currentUserMarker = null;
+    let userLatLng = null;
+    const nearbyStatus = document.getElementById('nearby-status');
+    const nearbyList = document.getElementById('nearby-list');
+    const locateButton = document.getElementById('locate-me');
+
+    function visibleForFilter(point, filter) {
+      if (filter === 'todos') return true;
+      if (filter === 'extra') return point.day === 'extra';
+      return point.day === filter || point.day.split(',').includes(filter);
+    }
+    function applyMapFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.map-filter').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mapFilter === filter)));
+      markerLayer.clearLayers();
+      kyotoPoints.filter((point) => visibleForFilter(point,filter)).forEach((point) => markerLayer.addLayer(markerById.get(point.id)));
+      if (markerLayer.getLayers().length) map.fitBounds(markerLayer.getBounds().pad(.12));
+      if (userLatLng) renderNearby();
+    }
+    document.querySelectorAll('.map-filter').forEach((button) => button.addEventListener('click', () => applyMapFilter(button.dataset.mapFilter)));
+
+    function distanceKm(a,b) {
+      const toRad = (value) => value * Math.PI / 180;
+      const dLat = toRad(b.lat-a.lat), dLng = toRad(b.lng-a.lng);
+      const x = Math.sin(dLat/2)**2 + Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLng/2)**2;
+      return 6371 * 2 * Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
+    }
+    function renderNearby() {
+      if (!userLatLng) return;
+      const ordered = kyotoPoints.filter((point) => point.type !== 'hotel' && visibleForFilter(point,currentFilter))
+        .map((point) => ({point,distance:distanceKm(userLatLng,point)}))
+        .sort((a,b) => a.distance-b.distance).slice(0,7);
+      nearbyList.innerHTML = '';
+      ordered.forEach(({point,distance}) => {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.innerHTML = `${point.name}<small>${point.desc}</small>`;
+        button.addEventListener('click', () => {
+          const marker = markerById.get(point.id);
+          if (!markerLayer.hasLayer(marker)) applyMapFilter('todos');
+          map.setView([point.lat,point.lng],16);
+          marker.openPopup();
+        });
+        const span = document.createElement('span');
+        span.className = 'nearby-distance';
+        span.textContent = distance < 1 ? `${Math.round(distance*1000)} m` : `${distance.toFixed(1)} km`;
+        const directions = document.createElement('a');
+        directions.className = 'nearby-directions';
+        directions.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(point.query + ', Kyoto, Japan')}&travelmode=transit`;
+        directions.target = '_blank';
+        directions.rel = 'noopener';
+        directions.textContent = 'Cómo llegar con Google Maps ↗';
+        li.append(button,span,directions);
+        nearbyList.appendChild(li);
+      });
+      nearbyStatus.textContent = 'Ordenado por distancia en línea recta desde tu ubicación. La ruta real puede ser más larga.';
+    }
+    locateButton.addEventListener('click', () => {
+      if (!('geolocation' in navigator)) {
+        nearbyStatus.textContent = 'Este navegador no ofrece geolocalización. Abre la guía desde el móvil o usa Google Maps.';
+        return;
+      }
+      locateButton.disabled = true;
+      locateButton.textContent = 'Buscando ubicación…';
+      navigator.geolocation.getCurrentPosition((position) => {
+        userLatLng = {lat:position.coords.latitude,lng:position.coords.longitude};
+        if (currentUserMarker) map.removeLayer(currentUserMarker);
+        currentUserMarker = L.circleMarker([userLatLng.lat,userLatLng.lng],{radius:9,color:'#fff',weight:2,fillColor:'#2466bd',fillOpacity:1}).addTo(map).bindPopup('Estás aquí');
+        map.setView([userLatLng.lat,userLatLng.lng],13);
+        renderNearby();
+        locateButton.disabled = false;
+        locateButton.textContent = '⌖ Actualizar mi ubicación';
+      }, (error) => {
+        const messages = {1:'Has denegado el permiso de ubicación. Puedes activarlo en los ajustes del navegador.',2:'No se ha podido determinar tu ubicación. Comprueba el GPS o la conexión.',3:'La solicitud de ubicación ha agotado el tiempo.'};
+        nearbyStatus.textContent = messages[error.code] || 'No se ha podido acceder a tu ubicación.';
+        locateButton.disabled = false;
+        locateButton.textContent = '⌖ Volver a intentar';
+      }, {enableHighAccuracy:true,timeout:12000,maximumAge:60000});
     });
   </script>
 </body>
