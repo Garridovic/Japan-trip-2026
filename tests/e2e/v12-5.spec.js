@@ -153,6 +153,7 @@ test.describe('illustrations for places without a photo', () => {
   test('every restaurant card gets a drawing for what it serves, hidden from screen readers', async ({ page }) => {
     await page.goto('/#gastronomia');
     const cards = page.locator('.food-card');
+    await expect(cards.first()).toBeAttached();
     const total = await cards.count();
     expect(total).toBeGreaterThan(0);
     await expect(page.locator('.food-card .card-art')).toHaveCount(total);
@@ -165,6 +166,7 @@ test.describe('illustrations for places without a photo', () => {
   test('other places use the category drawing', async ({ page }) => {
     await page.goto('/#alternativas');
     const cards = page.locator('.extra-card');
+    await expect(cards.first()).toBeAttached();
     await expect(page.locator('.extra-card .card-art')).toHaveCount(await cards.count());
     await expect(page.locator('.extra-card[data-category="templos"] .card-art').first()).toHaveAttribute('data-art', 'temple');
   });
@@ -172,6 +174,7 @@ test.describe('illustrations for places without a photo', () => {
   test('the drawings are visible and sized in dark mode too', async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'dark' });
     await page.goto('/#gastronomia');
+    await expect(page.locator('.food-card .card-art svg').first()).toBeAttached();
     const box = await page.locator('.food-card .card-art svg').first().boundingBox();
     expect(box.width).toBeGreaterThan(40);
     const stroke = await page.locator('.food-card .card-art .s').first().evaluate((el) => getComputedStyle(el).stroke);
