@@ -2,7 +2,8 @@
 // One Leaflet map is created once; setCity() swaps in the data of the active city.
 import { byId, h, externalLink, setPressed } from './dom.js';
 import { cityKey } from './ids.js';
-import { TILE_URL, TILE_CACHE_NAME, planCityTiles, tileUrl } from './tiles.js';
+import { TILE_URL, planCityTiles } from './tiles.js';
+import { initMapOffline } from './map-offline.js';
 import { distanceKm, formatDistance, formatFarDistance, distanceIfFarFromCity } from './geo.js';
 
 const HOTEL_COLOR = '#273d70';
@@ -271,34 +272,8 @@ export function initMap({ openDetail }) {
   });
   window.addEventListener('pagehide', () => { if (watchId !== null) navigator.geolocation.clearWatch(watchId); });
 
-  // "Guardar mapa": a few tiles around the city, requested one by one (see tiles.js for the policy note).
-  const saveButton = byId('save-offline-map');
-  const saveStatus = byId('save-offline-status');
-  saveButton.hidden = !('caches' in window);
-  saveButton.addEventListener('click', async () => {
-    if (!config) return;
-    const tiles = planCityTiles({ center: config.center, points });
-    saveButton.disabled = true;
-    try {
-      const cache = await caches.open(TILE_CACHE_NAME);
-      let done = 0;
-      for (const { z, x, y } of tiles) {
-        const url = tileUrl(z, x, y);
-        if (!(await cache.match(url))) {
-          const response = await fetch(url, { mode: 'cors' });
-          if (response.ok) await cache.put(url, response);
-          await new Promise((resolve) => setTimeout(resolve, 150));
-        }
-        done += 1;
-        saveStatus.textContent = `Guardando el mapa… ${done}/${tiles.length}`;
-      }
-      saveStatus.textContent = `Mapa guardado para usar sin conexión (${tiles.length} teselas alrededor de la ciudad). Fuera de esa zona el fondo del mapa no estará disponible.`;
-    } catch (error) {
-      saveStatus.textContent = 'No se ha podido guardar el mapa. Comprueba la conexión e inténtalo de nuevo.';
-    } finally {
-      saveButton.disabled = false;
-    }
-  });
+  // "Guardar mapa": see map-offline.js (shared by every view that shows the control).
+  const mapOffline = initMapOffline({ button: byId('save-offline-map'), status: byId('save-offline-status'), progress: byId('save-offline-progress') });
 
   return {
     /** Replaces markers, filters and legend with the data of the given city. */
@@ -317,6 +292,7 @@ export function initMap({ openDetail }) {
       map.setView(config.center, config.zoom);
       map.invalidateSize();
       refreshMapPoints();
+      mapOffline.setPlan(planCityTiles({ center: config.center, points }), document.querySelector('[data-city-name]')?.textContent);
     },
     /** Call when the guide view becomes visible again: Leaflet cannot measure a hidden container. */
     refresh() { map.invalidateSize(); }

@@ -533,3 +533,10 @@ body:not([data-view="guia"]) .top-bar-title { display: block; }
 
 /* Day cards are link targets ("Ver detalle"): keep their title clear of the two sticky bars */
 .day-detail { scroll-margin-top: calc(var(--tabs-height) + 56px); }
+
+/* Save-map control: progress and result */
+#save-offline-progress { display: block; width: 100%; height: 8px; margin: 8px 0 0; accent-color: var(--red); }
+#save-offline-progress[hidden] { display: none; }
+#save-offline-map[data-state="complete"] { border-color: #2f6f4f; color: #2f6f4f; }
+#save-offline-map[data-state="error"] { border-color: #b84b3d; color: #b84b3d; }
+#save-offline-map:disabled { opacity: .6; cursor: not-allowed; }

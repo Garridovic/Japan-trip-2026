@@ -116,8 +116,9 @@
             <div id="city-map" role="application" aria-label="Mapa interactivo con hoteles, visitas y lugares de interés"></div>
             <div class="map-panel-foot">Mapa © OpenStreetMap · Toca un círculo para abrir una visita o un diamante para abrir un restaurante. Desde cada ficha puedes consultar el lugar o iniciar la navegación en Google Maps. Para usar GPS, abre esta página HTTPS en Safari (iPhone) o Chrome (Android) y concede permiso.</div>
             <div class="map-offline">
-              <button type="button" class="filter" id="save-offline-map">⬇ Guardar mapa para usar sin conexión</button>
-              <p class="muted small" id="save-offline-status" aria-live="polite">Descarga unas pocas teselas del centro de la ciudad (con conexión). El fondo que veas mientras navegas también se guarda solo.</p>
+              <button type="button" class="filter" id="save-offline-map">⬇ Guardar mapa</button>
+              <progress id="save-offline-progress" max="1" value="0" hidden aria-label="Progreso del guardado del mapa"></progress>
+              <p class="muted small" id="save-offline-status" aria-live="polite"></p>
             </div>
           </div>
           <aside class="nearby-panel">

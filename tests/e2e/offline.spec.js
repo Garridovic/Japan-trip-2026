@@ -84,7 +84,7 @@ test('map tiles you have seen are kept for offline use, and the save button stor
   await expect.poll(() => cacheSize(page, 'japan-tiles-')).toBeGreaterThan(0);
   const before = await cacheSize(page, 'japan-tiles-');
   await page.locator('#save-offline-map').click();
-  await expect(page.locator('#save-offline-status')).toContainText('Mapa guardado', { timeout: 60_000 });
+  await expect(page.locator('#save-offline-status')).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
   const after = await cacheSize(page, 'japan-tiles-');
   expect(after).toBeGreaterThan(before);
   expect(after).toBeLessThanOrEqual(700);
@@ -310,4 +310,116 @@ test('optional datasets that do not exist (a city without events.json) are skipp
   await page.goto('/?city=osaka');
   await expect(page.locator('#hero-title')).toHaveText('Osaka');
   await expect(page.locator('.quick-card')).toHaveCount(3);
+});
+
+test.describe('"Guardar mapa" control', () => {
+  test.beforeEach(() => { test.setTimeout(90_000); }); // saving ~100 tiles one by one, politely, takes a while
+  const save = (page) => page.locator('#save-offline-map');
+  const statusText = (page) => page.locator('#save-offline-status');
+  const loadedTiles = (page) => page.evaluate(() => [...document.querySelectorAll('#city-map img.leaflet-tile')].filter((img) => img.complete && img.naturalWidth > 0).length);
+
+  /** Tile server stand-in: refuses everything until `state.up`, can fail some tiles, and can be slow. */
+  async function tileServer(context, { up = false, delay = 0, failing = () => false } = {}) {
+    const state = { up, delay, failing, requests: 0 };
+    await context.route('**/tile.openstreetmap.org/**', async (route) => {
+      state.requests += 1;
+      if (state.delay) await new Promise((resolve) => setTimeout(resolve, state.delay));
+      if (!state.up || state.failing(route.request().url())) return route.fulfill({ status: 503, body: 'down' });
+      return route.fulfill({ status: 200, contentType: 'image/png', body: PNG, headers: { 'access-control-allow-origin': '*' } });
+    });
+    return state;
+  }
+  async function ready(page) {
+    await page.goto('/?city=kyoto');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.evaluate(() => navigator.serviceWorker.ready);
+    await expect.poll(() => cacheSize(page, 'japan-guide-'), { timeout: 30_000 }).toBeGreaterThan(100);
+    await page.reload();
+    await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker.controller))).toBe(true);
+    await expect(save(page)).toBeVisible();
+  }
+
+  test('before saving it says how big the map is; saving shows progress and ends with what was stored', async ({ page, context }) => {
+    const server = await tileServer(context, { up: true, delay: 40 });
+    await ready(page);
+    await expect(statusText(page)).toContainText('Mapa sin guardar');
+    await expect(statusText(page)).toContainText(/unas \d+ teselas \(≈ \d+ MB\) alrededor de Kioto/);
+    await expect(save(page)).toHaveText(/⬇ Guardar mapa \(≈ \d+ MB\)/);
+    await save(page).click();
+    await expect(save(page)).toBeDisabled();
+    await expect(page.locator('#save-offline-progress')).toBeVisible();
+    await expect(statusText(page)).toContainText(/Guardando el mapa… \d+\/\d+/);
+    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
+    await expect(statusText(page)).toContainText(/\(zoom 11–15, ≈ \d+ MB\)/);
+    await expect(statusText(page)).toContainText('alrededor de Kioto');
+    await expect(save(page)).toHaveAttribute('data-state', 'complete');
+    await expect(page.locator('#save-offline-progress')).toBeHidden();
+    expect(server.requests).toBeGreaterThan(20);
+  });
+
+  test('the saved map really shows offline at the default view, even though those tiles were never seen online', async ({ page, context }) => {
+    const server = await tileServer(context, { up: false }); // the map first opens while the tile server refuses everything
+    await ready(page);
+    expect(await loadedTiles(page)).toBe(0);
+    server.up = true;
+    await save(page).click();
+    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
+    await context.setOffline(true);
+    await page.goto('/?city=kyoto');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await expect.poll(() => loadedTiles(page), { timeout: 10_000 }).toBeGreaterThan(2);
+    // The saved state is remembered after a reload and shown again.
+    await expect(statusText(page)).toContainText('✓ Mapa guardado:');
+  });
+
+  test('failed tiles are reported, the rest is kept, and pressing again completes the map', async ({ page, context }) => {
+    const server = await tileServer(context, { up: true, failing: (url) => /\/13\//.test(url) });
+    await ready(page);
+    await save(page).click();
+    await expect(statusText(page)).toContainText(/No se pudieron guardar \d+ de \d+ teselas/, { timeout: 60_000 });
+    await expect(statusText(page)).toContainText(/Guardadas: \d+/);
+    await expect(save(page)).toHaveText('↻ Completar mapa');
+    await expect(save(page)).toHaveAttribute('data-state', 'error');
+    server.failing = () => false;
+    await save(page).click();
+    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
+  });
+
+  test('offline the button explains it needs a connection and does nothing', async ({ page, context }) => {
+    const server = await tileServer(context, { up: true });
+    await ready(page);
+    await context.setOffline(true);
+    await expect(save(page)).toBeDisabled();
+    await expect(statusText(page)).toContainText(/Sin conexión: el mapa se podrá guardar|Con conexión podrás completarlo/);
+    const before = server.requests;
+    await save(page).click({ force: true }).catch(() => {});
+    expect(server.requests).toBe(before);
+    await context.setOffline(false);
+    await expect(save(page)).toBeEnabled();
+  });
+
+  test('each city saves its own area (Osaka too)', async ({ page, context }) => {
+    await tileServer(context, { up: true });
+    await ready(page);
+    await page.getByRole('tab', { name: 'Osaka' }).click();
+    await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'osaka');
+    // the tiles seen while browsing are kept, but the city is not saved until you ask
+    await expect(save(page)).not.toHaveAttribute('data-state', 'complete');
+    await save(page).click();
+    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
+    await page.getByRole('tab', { name: 'Kioto' }).click();
+    await expect(save(page)).not.toHaveAttribute('data-state', 'complete'); // Kioto was not saved: the control does not claim it was
+  });
+
+  test('on a phone the control, progress and result fit and are easy to tap', async ({ page, context }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await tileServer(context, { up: true });
+    await ready(page);
+    const box = await save(page).boundingBox();
+    expect(box.height).toBeGreaterThanOrEqual(44);
+    expect(box.x + box.width).toBeLessThanOrEqual(320);
+    await save(page).click();
+    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  });
 });

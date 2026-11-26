@@ -94,7 +94,7 @@ test('tile maths and the small, capped tile plan', () => {
   const kyoto = { center: [35.0116, 135.7681], points: [{ lat: 35.0, lng: 135.67 }, { lat: 35.04, lng: 135.80 }, { lat: 34.96, lng: 135.77 }] };
   const plan = planCityTiles(kyoto);
   assert.ok(plan.length > 10 && plan.length <= MAX_SAVED_TILES, `${plan.length} tiles`);
-  assert.deepEqual([...new Set(plan.map(({ z }) => z))].sort(), [13, 14, 15]);
+  assert.deepEqual([...new Set(plan.map(({ z }) => z))].sort((a, b) => a - b), [11, 12, 13, 14, 15]);
   assert.equal(new Set(plan.map(({ z, x, y }) => `${z}/${x}/${y}`)).size, plan.length, 'no duplicates');
   const huge = planCityTiles({ center: [35, 135.7], points: [{ lat: 30, lng: 130 }, { lat: 40, lng: 141 }] });
   assert.equal(huge.length, MAX_SAVED_TILES, 'a huge area is capped, never a bulk download');

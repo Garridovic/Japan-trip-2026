@@ -36,17 +36,54 @@ export function boxOfPoints(points, paddingKm = 1) {
   return { north: Math.max(...lats) + dLat, south: Math.min(...lats) - dLat, west: Math.min(...lngs) - dLng, east: Math.max(...lngs) + dLng };
 }
 
+export const AVERAGE_TILE_BYTES = 18 * 1024;
+export const MIN_ZOOM = 11;
+
 /**
- * The tiles worth keeping for a city: the whole area of its points at overview zooms (13-14),
- * plus the centre in detail (15). Capped at MAX_SAVED_TILES; the largest zoom is dropped first.
+ * The tiles worth keeping for a city. The map opens at an overview zoom (about 11–12, it fits all the points), so
+ * the overview levels (11–14) cover the whole area of the points and zoom 15 adds the centre in detail.
+ * Capped at MAX_SAVED_TILES: the most detailed tiles are dropped first, never the overview ones.
  */
 export function planCityTiles({ center, points }) {
   const area = points.length ? boxOfPoints(points, 1) : boxAround(center, 4);
-  const plans = [
-    [...tilesForBox(area, 13), ...tilesForBox(area, 14)],
-    tilesForBox(boxAround(center, 1.6), 15)
-  ];
+  const overview = [11, 12, 13, 14].flatMap((zoom) => tilesForBox(area, zoom));
+  const plans = [overview, tilesForBox(boxAround(center, 1.6), 15)];
   const unique = new Map();
   for (const tile of plans.flat()) unique.set(`${tile.z}/${tile.x}/${tile.y}`, tile);
   return [...unique.values()].sort((a, b) => a.z - b.z).slice(0, MAX_SAVED_TILES);
+}
+
+export const estimateMegabytes = (count) => Math.max(1, Math.round((count * AVERAGE_TILE_BYTES) / 1024 / 1024));
+
+export function zoomRange(plan) {
+  const zooms = plan.map(({ z }) => z);
+  return zooms.length ? [Math.min(...zooms), Math.max(...zooms)] : [0, 0];
+}
+
+/**
+ * Text and button for the "Guardar mapa" control.
+ * state: { kind: 'none' | 'saving' | 'partial' | 'complete' | 'error', total, saved?, done?, failed? }
+ */
+export function describeSaveState(state, { online = true, city = 'la ciudad', range = [MIN_ZOOM, 15] } = {}) {
+  const mb = estimateMegabytes(state.total);
+  const zooms = `zoom ${range[0]}–${range[1]}`;
+  switch (state.kind) {
+    case 'saving': return { text: `Guardando el mapa… ${state.done}/${state.total}`, button: 'Guardando…', disabled: true, tone: 'busy' };
+    case 'complete': return {
+      text: `✓ Mapa guardado: ${state.total} teselas (${zooms}, ≈ ${mb} MB). Se ve sin conexión alrededor de ${city}; fuera de esa zona el fondo del mapa saldrá en blanco.`,
+      button: '✓ Mapa guardado · comprobar', disabled: !online, tone: 'ok'
+    };
+    case 'partial': return {
+      text: online ? `Mapa guardado a medias: ${state.saved} de ${state.total} teselas. Pulsa «Completar mapa» para terminar.` : `Mapa guardado a medias (${state.saved} de ${state.total} teselas). Con conexión podrás completarlo.`,
+      button: '↻ Completar mapa', disabled: !online, tone: 'partial'
+    };
+    case 'error': return {
+      text: `No se pudieron guardar ${state.failed} de ${state.total} teselas (comprueba la conexión o inténtalo en un rato). Guardadas: ${state.saved}. Vuelve a pulsar para completar.`,
+      button: '↻ Completar mapa', disabled: !online, tone: 'error'
+    };
+    default: return {
+      text: online ? `Mapa sin guardar. Pulsa para guardar unas ${state.total} teselas (≈ ${mb} MB) alrededor de ${city} y verlo sin conexión.` : 'Sin conexión: el mapa se podrá guardar cuando vuelvas a tener internet.',
+      button: `⬇ Guardar mapa (≈ ${mb} MB)`, disabled: !online, tone: 'none'
+    };
+  }
 }
