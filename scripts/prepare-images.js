@@ -4,14 +4,7 @@ import sharp from 'sharp';
 
 const root = process.cwd();
 const apiUrl = 'https://commons.wikimedia.org/w/api.php';
-const catalog = JSON.parse(await readFile(path.join(root, 'data/image-catalog.json'), 'utf8'));
-const places = JSON.parse(await readFile(path.join(root, 'data/places.json'), 'utf8'));
-const details = JSON.parse(await readFile(path.join(root, 'data/details.json'), 'utf8'));
-const placeById = new Map(places.map((place) => [place.id, place]));
-const detailsById = new Map(details.map((detail) => [detail.id, detail]));
-const credits = [];
-const issues = [];
-const usedPageIds = new Set();
+const journey = JSON.parse(await readFile(path.join(root, 'data/journey.json'), 'utf8'));
 
 const cleanHtml = (value = '') => value.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 const metadataValue = (metadata, key) => cleanHtml(metadata?.[key]?.value || '');
@@ -24,12 +17,12 @@ const isReusableLicense = (license) => {
 };
 const requestJson = async (url) => {
   const response = await fetch(url, {
-    headers: { 'User-Agent': 'KyotoGuide/10.0 (personal travel guide; image attribution included)' }
+    headers: { 'User-Agent': 'JapanTripGuide/11.0 (personal travel guide; image attribution included)' }
   });
   if (!response.ok) throw new Error(`HTTP ${response.status} from ${url}`);
   return response.json();
 };
-const searchImages = async (query) => {
+const searchImages = async (catalog, query) => {
   const url = new URL(apiUrl);
   Object.entries({
     action: 'query',
@@ -46,7 +39,7 @@ const searchImages = async (query) => {
   const result = await requestJson(url);
   return Object.values(result.query?.pages || {});
 };
-const searchCategoryImages = async (category) => {
+const searchCategoryImages = async (catalog, category) => {
   if (!category) return [];
   const url = new URL(apiUrl);
   Object.entries({
@@ -66,122 +59,158 @@ const searchCategoryImages = async (category) => {
 };
 const download = async (url) => {
   const response = await fetch(url, {
-    headers: { 'User-Agent': 'KyotoGuide/10.0 (personal travel guide; image attribution included)' }
+    headers: { 'User-Agent': 'JapanTripGuide/11.0 (personal travel guide; image attribution included)' }
   });
   if (!response.ok) throw new Error(`Image download failed: HTTP ${response.status}`);
   return Buffer.from(await response.arrayBuffer());
 };
-const imageDirectory = path.join(root, 'assets', 'images');
-await mkdir(imageDirectory, { recursive: true });
-for (const filename of await readdir(imageDirectory).catch(() => [])) {
-  if (filename.endsWith('.webp')) await unlink(path.join(imageDirectory, filename));
-}
 
-for (const entry of catalog.places) {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  const place = placeById.get(entry.id);
-  const detail = detailsById.get(entry.id);
-  if (!place || !detail) {
-    issues.push({ placeId: entry.id, placeName: place?.name || entry.id, status: 'error', reason: 'Place or detail record is missing.' });
-    console.error(`[IMAGE WARNING] ${entry.id}: place or detail record is missing.`);
-    continue;
+const prepareCity = async (cityId) => {
+  const cityDirectory = path.join(root, 'data', 'cities', cityId);
+  const catalog = JSON.parse(await readFile(path.join(cityDirectory, 'image-catalog.json'), 'utf8'));
+  const places = JSON.parse(await readFile(path.join(cityDirectory, 'places.json'), 'utf8'));
+  const details = JSON.parse(await readFile(path.join(cityDirectory, 'details.json'), 'utf8'));
+  const placeById = new Map(places.map((place) => [place.id, place]));
+  const detailsById = new Map(details.map((detail) => [detail.id, detail]));
+  const credits = [];
+  const usedPageIds = new Set();
+  const imageDirectory = path.join(root, 'assets', 'images', cityId);
+  await mkdir(imageDirectory, { recursive: true });
+  for (const filename of await readdir(imageDirectory).catch(() => [])) {
+    if (filename.endsWith('.webp')) await unlink(path.join(imageDirectory, filename));
   }
 
-  const photos = [];
-  try {
-    const primaryCandidates = await searchImages(entry.query);
-    const categoryCandidates = await searchCategoryImages(entry.category);
-    const candidates = [...new Map(
-      [...primaryCandidates, ...categoryCandidates].map((page) => [page.pageid, page])
-    ).values()];
-    const selected = candidates.filter((page) => {
-      const info = page.imageinfo?.[0];
-      const metadata = info?.extmetadata || {};
-      const license = metadataValue(metadata, 'LicenseShortName');
-      return info && info.width >= 1400 && info.mime?.startsWith('image/') &&
-        !info.mime.includes('svg') && isReusableLicense(license) &&
-        !usedPageIds.has(page.pageid) && info.thumburl;
-    }).slice(0, entry.count);
-
-    if (selected.length < entry.count) {
-      issues.push({
-        placeId: entry.id,
-        placeName: place.name,
-        status: 'incomplete',
-        expected: entry.count,
-        found: selected.length,
-        reason: `Only ${selected.length}/${entry.count} reusable images found after text and category search.`
-      });
-      console.warn(`[IMAGE WARNING] ${entry.id}: ${selected.length}/${entry.count} reusable images found.`);
+  for (const entry of catalog.places) {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    const place = placeById.get(entry.id);
+    const detail = detailsById.get(entry.id);
+    if (!place || !detail) {
+      issues.push({ city: cityId, placeId: entry.id, placeName: place?.name || entry.id, status: 'error', reason: 'Place or detail record is missing.' });
+      console.error(`[IMAGE WARNING] ${cityId}/${entry.id}: place or detail record is missing.`);
+      continue;
     }
 
-    for (const [index, page] of selected.entries()) {
-      try {
-        const info = page.imageinfo[0];
-        const metadata = info.extmetadata || {};
-        const imageId = `${entry.id}-${index + 1}`;
-        const source = await download(info.thumburl);
-        const image = sharp(source, { failOn: 'error' }).rotate();
-        const metadataInfo = await image.metadata();
-        if (!metadataInfo.width || !metadataInfo.height) throw new Error(`Invalid image dimensions: ${page.title}`);
-
-        const variants = [];
-        for (const width of catalog.variants) {
-          const filename = `${imageId}-${width}.webp`;
-          const outputPath = path.join(imageDirectory, filename);
-          await sharp(source).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 84, effort: 5 }).toFile(outputPath);
-          variants.push({ width, path: `assets/images/${filename}` });
-        }
-
+    const photos = [];
+    try {
+      const primaryCandidates = await searchImages(catalog, entry.query);
+      const categoryCandidates = await searchCategoryImages(catalog, entry.category);
+      const candidates = [...new Map(
+        [...primaryCandidates, ...categoryCandidates].map((page) => [page.pageid, page])
+      ).values()];
+      const selected = candidates.filter((page) => {
+        const info = page.imageinfo?.[0];
+        const metadata = info?.extmetadata || {};
         const license = metadataValue(metadata, 'LicenseShortName');
-        const author = metadataValue(metadata, 'Artist') || metadataValue(metadata, 'Credit') || info.user || 'Autor no identificado';
-        const description = metadataValue(metadata, 'ImageDescription') || page.title.replace(/^File:/, '');
-        const photo = {
-          src: variants[variants.length - 1].path,
-          srcSet: variants.map(({ path: filePath, width }) => `${filePath} ${width}w`).join(', '),
-          alt: `${place.name} — ${description}`
-        };
-        photos.push(photo);
-        credits.push({
+        return info && info.width >= 1400 && info.mime?.startsWith('image/') &&
+          !info.mime.includes('svg') && isReusableLicense(license) &&
+          !usedPageIds.has(page.pageid) && info.thumburl;
+      }).slice(0, entry.count);
+
+      if (selected.length < entry.count) {
+        issues.push({
           placeId: entry.id,
           placeName: place.name,
-          fileTitle: page.title,
-          description,
-          author,
-          license,
-          licenseUrl: metadataValue(metadata, 'LicenseUrl'),
-          sourcePage: info.descriptionurl,
-          originalUrl: info.descriptionurl,
-          width: info.width,
-          height: info.height
+          status: 'incomplete',
+          expected: entry.count,
+          found: selected.length,
+          reason: `Only ${selected.length}/${entry.count} reusable images found after text and category search.`
         });
-        usedPageIds.add(page.pageid);
-      } catch (error) {
-        issues.push({ placeId: entry.id, placeName: place.name, status: 'image-error', reason: error.message, source: page.title });
-        console.warn(`[IMAGE WARNING] ${entry.id}: failed to process ${page.title}: ${error.message}`);
+        console.warn(`[IMAGE WARNING] ${cityId}/${entry.id}: ${selected.length}/${entry.count} reusable images found.`);
       }
+
+      for (const [index, page] of selected.entries()) {
+        try {
+          const info = page.imageinfo[0];
+          const metadata = info.extmetadata || {};
+          const imageId = `${entry.id}-${index + 1}`;
+          const source = await download(info.thumburl);
+          const image = sharp(source, { failOn: 'error' }).rotate();
+          const metadataInfo = await image.metadata();
+          if (!metadataInfo.width || !metadataInfo.height) throw new Error(`Invalid image dimensions: ${page.title}`);
+
+          const variants = [];
+          for (const width of catalog.variants) {
+            const filename = `${imageId}-${width}.webp`;
+            const outputPath = path.join(imageDirectory, filename);
+            await sharp(source).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 84, effort: 5 }).toFile(outputPath);
+            variants.push({ width, path: `assets/images/${cityId}/${filename}` });
+          }
+
+          const license = metadataValue(metadata, 'LicenseShortName');
+          const author = metadataValue(metadata, 'Artist') || metadataValue(metadata, 'Credit') || info.user || 'Autor no identificado';
+          const description = metadataValue(metadata, 'ImageDescription') || page.title.replace(/^File:/, '');
+          const photo = {
+            src: variants[variants.length - 1].path,
+            srcSet: variants.map(({ path: filePath, width }) => `${filePath} ${width}w`).join(', '),
+            alt: `${place.name} — ${description}`
+          };
+          photos.push(photo);
+          credits.push({
+            city: cityId,
+            placeId: entry.id,
+            placeName: place.name,
+            fileTitle: page.title,
+            description,
+            author,
+            license,
+            licenseUrl: metadataValue(metadata, 'LicenseUrl'),
+            sourcePage: info.descriptionurl,
+            originalUrl: info.descriptionurl,
+            width: info.width,
+            height: info.height
+          });
+          usedPageIds.add(page.pageid);
+        } catch (error) {
+          issues.push({ city: cityId, placeId: entry.id, placeName: place.name, status: 'image-error', reason: error.message, source: page.title });
+          console.warn(`[IMAGE WARNING] ${cityId}/${entry.id}: failed to process ${page.title}: ${error.message}`);
+        }
+      }
+    } catch (error) {
+      issues.push({ city: cityId, placeId: entry.id, placeName: place.name, status: 'search-error', reason: error.message });
+      console.warn(`[IMAGE WARNING] ${cityId}/${entry.id}: image search failed: ${error.message}`);
     }
-  } catch (error) {
-    issues.push({ placeId: entry.id, placeName: place.name, status: 'search-error', reason: error.message });
-    console.warn(`[IMAGE WARNING] ${entry.id}: image search failed: ${error.message}`);
+
+    detail.photos = photos;
+    console.log(`${cityId}/${entry.id}: ${photos.length}/${entry.count} image(s) prepared`);
   }
 
-  detail.photos = photos;
-  console.log(`${entry.id}: ${photos.length}/${entry.count} image(s) prepared`);
+
+  for (const detail of details) {
+    if (!catalog.places.some(({ id }) => id === detail.id)) detail.photos = [];
+  }
+
+  await writeFile(path.join(cityDirectory, 'details.json'), `${JSON.stringify(details, null, 2)}\n`);
+  await writeFile(path.join(cityDirectory, 'image-credits.json'), `${JSON.stringify(credits, null, 2)}\n`);
+  return {
+    city: cityId,
+    placesChecked: catalog.places.length,
+    placesWithImages: catalog.places.filter(({ id }) => detailsById.get(id)?.photos?.length).length,
+    totalImages: credits.length
+  };
+};
+
+const issues = [];
+const cityReports = [];
+for (const { id: cityId, enabled } of journey.cities) {
+  if (!enabled) continue;
+  try {
+    await readFile(path.join(root, 'data', 'cities', cityId, 'image-catalog.json'), 'utf8');
+  } catch {
+    cityReports.push({ city: cityId, skipped: 'No image-catalog.json for this city.' });
+    console.warn(`[IMAGE WARNING] ${cityId}: no image-catalog.json, skipping image preparation.`);
+    continue;
+  }
+  cityReports.push(await prepareCity(cityId));
 }
 
-for (const detail of details) {
-  if (!catalog.places.some(({ id }) => id === detail.id)) detail.photos = [];
-}
-
-await writeFile(path.join(root, 'data', 'details.json'), `${JSON.stringify(details, null, 2)}\n`);
-await writeFile(path.join(root, 'data', 'image-credits.json'), `${JSON.stringify(credits, null, 2)}\n`);
+const prepared = cityReports.filter((entry) => !entry.skipped);
 const report = {
   generatedAt: new Date().toISOString(),
-  provider: catalog.provider,
-  placesChecked: catalog.places.length,
-  placesWithImages: catalog.places.filter(({ id }) => detailsById.get(id)?.photos?.length).length,
-  totalImages: credits.length,
+  provider: 'Wikimedia Commons',
+  cities: cityReports,
+  placesChecked: prepared.reduce((sum, entry) => sum + entry.placesChecked, 0),
+  placesWithImages: prepared.reduce((sum, entry) => sum + entry.placesWithImages, 0),
+  totalImages: prepared.reduce((sum, entry) => sum + entry.totalImages, 0),
   placesWithIssues: issues.length,
   issues
 };
@@ -190,14 +219,14 @@ const markdown = [
   '# Image preparation report',
   '',
   `- Generated: ${report.generatedAt}`,
+  `- Cities: ${cityReports.map((entry) => entry.city).join(', ')}`,
   `- Places checked: ${report.placesChecked}`,
   `- Places with at least one image: ${report.placesWithImages}`,
   `- Images prepared: ${report.totalImages}`,
   `- Places with warnings: ${report.placesWithIssues}`,
   '',
-  ...(issues.length ? issues.map((issue) => `- **${issue.placeName} (${issue.placeId})** — ${issue.status}: ${issue.reason}`) : ['All configured places have their requested images.'])
+  ...(issues.length ? issues.map((issue) => `- **${issue.city} · ${issue.placeName} (${issue.placeId})** — ${issue.status}: ${issue.reason}`) : ['All configured places have their requested images.'])
 ].join('\n');
 await writeFile(path.join(root, 'image-preparation-report.md'), `${markdown}\n`);
-console.log(`Prepared ${credits.length} local images. ${issues.length} place(s) have image warnings.`);
+console.log(`Prepared ${report.totalImages} local images. ${issues.length} place(s) have image warnings.`);
 if (issues.length) console.warn('See image-preparation-report.md and image-preparation-report.json for details.');
-
