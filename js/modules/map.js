@@ -4,6 +4,7 @@ import { byId, h, externalLink, setPressed } from './dom.js';
 import { cityKey } from './ids.js';
 import { TILE_URL, planCityTiles } from './tiles.js';
 import { initMapOffline } from './map-offline.js';
+import { visitedStore, isVisitable, countVisited } from './visited.js';
 import { distanceKm, formatDistance, formatFarDistance, distanceIfFarFromCity } from './geo.js';
 
 const HOTEL_COLOR = '#273d70';
@@ -17,6 +18,9 @@ export function initMap({ openDetail }) {
   L.tileLayer(TILE_URL, { maxZoom: 19, attribution: OSM_ATTRIBUTION, crossOrigin: 'anonymous' }).addTo(map);
   const markerLayer = L.featureGroup().addTo(map);
   const userLocationLayer = L.layerGroup().addTo(map);
+
+  const visited = visitedStore();
+  const visitButtons = new Map(); // point id -> popup button, repainted when the mark changes
 
   // Active city state
   let cityId = null;
@@ -57,12 +61,25 @@ export function initMap({ openDetail }) {
   const googleSearchUrl = (point) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${point.query}, ${config.queryContext}`)}`;
   const googleDirectionsUrl = (point) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${point.query}, ${config.queryContext}`)}&travelmode=transit`;
 
+  function paintVisitButton(button, point) {
+    const done = visited.has(cityId, point.id);
+    button.setAttribute('aria-pressed', String(done));
+    button.textContent = done ? '✓ Visitado · quitar marca' : 'Marcar como visitado';
+  }
+  function buildVisitButton(point) {
+    const button = h('button', { type: 'button', class: 'popup-visit-button', onclick: () => visited.toggle(cityId, point.id) });
+    visitButtons.set(point.id, button);
+    paintVisitButton(button, point);
+    return button;
+  }
+
   function buildPopup(point) {
     const isRestaurant = point.type === 'restaurant';
     return h('div', {},
       h('div', { class: 'popup-title' }, point.name),
       h('div', { class: 'popup-meta' }, point.desc),
       isRestaurant && h('div', { class: 'popup-meta' }, 'Marcador orientativo. Abre Google Maps para confirmar la entrada exacta y navegar.'),
+      isVisitable(point) && buildVisitButton(point),
       h('div', { class: 'popup-links' },
         !isRestaurant && h('button', { type: 'button', class: 'popup-detail-button', onclick: () => openDetail(point.id) }, 'Ver ficha del lugar'),
         externalLink(googleSearchUrl(point), 'Ver ficha en Google Maps ↗'),
@@ -71,16 +88,18 @@ export function initMap({ openDetail }) {
     );
   }
 
+  const restaurantIcon = (color, done) => L.divIcon({
+    className: `restaurant-map-marker${done ? ' is-visited' : ''}`,
+    html: `<span style="--marker-color:${color}" aria-hidden="true"></span>`,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
+
   function buildMarker(point) {
     const color = markerColorForPoint(point);
     const marker = point.type === 'restaurant'
       ? L.marker([point.lat, point.lng], {
-        icon: L.divIcon({
-          className: 'restaurant-map-marker',
-          html: `<span style="--marker-color:${color}" aria-hidden="true"></span>`,
-          iconSize: [20, 20],
-          iconAnchor: [10, 10]
-        }),
+        icon: restaurantIcon(color, visited.has(cityId, point.id)),
         zIndexOffset: 250
       })
       : L.circleMarker([point.lat, point.lng], {
@@ -92,6 +111,17 @@ export function initMap({ openDetail }) {
     return marker;
   }
 
+  /** Visited places fade out and get a check in their label; pending ones stay as bright as before. */
+  function paintMarker(point) {
+    const marker = markerByKey.get(cityKey(cityId, point.id));
+    if (!marker) return;
+    const done = visited.has(cityId, point.id);
+    if (point.type === 'restaurant') marker.setIcon(restaurantIcon(markerColorForPoint(point), done));
+    else if (point.type !== 'hotel') marker.setStyle({ fillOpacity: done ? 0.3 : 0.95 });
+    marker.setTooltipContent(done ? `✓ ${point.name}` : point.name);
+  }
+  const paintAllMarkers = () => points.forEach(paintMarker);
+
   const visibleForFilter = (point, filter) => {
     if (filter === 'todos') return true;
     if (filter === 'extra') return point.day === 'extra';
@@ -99,6 +129,7 @@ export function initMap({ openDetail }) {
   };
   const visibleForKind = (point, kind) => {
     if (kind === 'restaurantes') return point.type === 'restaurant';
+    if (kind === 'pendientes') return isVisitable(point) && !visited.has(cityId, point.id);
     if (kind === 'visitas') return point.type !== 'restaurant';
     return true;
   };
@@ -109,7 +140,9 @@ export function initMap({ openDetail }) {
     markerLayer.clearLayers();
     visiblePoints.forEach((point) => markerLayer.addLayer(markerByKey.get(cityKey(cityId, point.id))));
     const suffix = currentFilter === 'todos' ? '' : ` · filtro ${filterShortLabel(currentFilter)}`;
-    mapFilterStatus.textContent = currentKindFilter === 'restaurantes'
+    mapFilterStatus.textContent = currentKindFilter === 'pendientes'
+      ? `Mostrando ${visiblePoints.length} puntos pendientes de visitar${suffix}.`
+      : currentKindFilter === 'restaurantes'
       ? `Mostrando ${visiblePoints.length} restaurantes${suffix}.`
       : currentKindFilter === 'visitas'
         ? `Mostrando ${visiblePoints.length} visitas y otros puntos${suffix}.`
@@ -123,7 +156,32 @@ export function initMap({ openDetail }) {
       map.fitBounds(bounds.pad(0.12));
     }
     if (userLatLng) renderNearby();
+    announce();
   }
+
+  const KIND_LABELS = { visitas: 'Solo visitas', restaurantes: 'Solo restaurantes', pendientes: 'Pendientes' };
+  const visitedSummary = byId('visited-summary');
+  const activeFilters = () => [
+    ...(currentFilter !== 'todos' ? [{ key: 'day', label: config?.dayFilters.find((item) => item.value === currentFilter)?.label ?? (currentFilter === 'extra' ? 'Alternativas' : currentFilter) }] : []),
+    ...(currentKindFilter !== 'todos' ? [{ key: 'kind', label: KIND_LABELS[currentKindFilter] ?? currentKindFilter }] : [])
+  ];
+  /** Tells the rest of the page (full-screen map chips, counters) what the map is showing. */
+  function announce() {
+    const count = cityId ? countVisited(visited, cityId, points) : { done: 0, total: 0 };
+    if (visitedSummary) {
+      visitedSummary.textContent = count.total ? `${count.done} de ${count.total} lugares visitados` : '';
+      visitedSummary.dataset.done = String(count.done);
+    }
+    document.dispatchEvent(new CustomEvent('map:state', { detail: { visited: count, filters: activeFilters() } }));
+  }
+  visited.subscribe(({ id }) => {
+    const point = points.find((item) => item.id === id);
+    if (!point) return;
+    paintMarker(point);
+    const button = visitButtons.get(id);
+    if (button) paintVisitButton(button, point);
+    if (currentKindFilter === 'pendientes') refreshMapPoints(); else announce();
+  });
 
   function applyMapFilter(filter) {
     currentFilter = filter;
@@ -283,6 +341,7 @@ export function initMap({ openDetail }) {
       points = index.points;
       mapElement.dataset.city = cityId;
       markerLayer.clearLayers();
+      visitButtons.clear();
       markerByKey = new Map(points.map((point) => [cityKey(cityId, point.id), buildMarker(point)]));
       currentFilter = 'todos';
       currentKindFilter = 'todos';
@@ -292,11 +351,15 @@ export function initMap({ openDetail }) {
       map.setView(config.center, config.zoom);
       map.invalidateSize();
       refreshMapPoints();
+      paintAllMarkers();
       mapOffline.setPlan(planCityTiles({ center: config.center, points }), document.querySelector('[data-city-name]')?.textContent);
     },
     /** Call when the guide view becomes visible again: Leaflet cannot measure a hidden container. */
     refresh() { map.invalidateSize(); },
     /** After the map moves into the full-screen view: re-measure and fit the visible points again. */
-    refit() { map.invalidateSize(); refreshMapPoints(); }
+    refit() { map.invalidateSize(); refreshMapPoints(); },
+    /** Removes one active filter ('day' or 'kind'), used by the chips over the full-screen map. */
+    clearFilter(key) { if (key === 'day') applyMapFilter('todos'); else if (key === 'kind') applyMapKindFilter('todos'); },
+    announce
   };
 }

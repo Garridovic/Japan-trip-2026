@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
-import { SVG_MARKERS, RESTAURANT_MARKERS } from './helpers.js';
+import { SVG_MARKERS, RESTAURANT_MARKERS, selectCity, citySelect } from './helpers.js';
 
 const read = (file) => JSON.parse(readFileSync(new URL(`../../data/cities/osaka/${file}.json`, import.meta.url), 'utf8'));
 const places = read('places');
@@ -11,7 +11,7 @@ test('Osaka is a real city tab, selected by ?city=osaka, with its own hero, hote
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
   await page.goto('/?city=osaka');
-  await expect(page.getByRole('tab', { name: 'Osaka' })).toHaveAttribute('aria-selected', 'true');
+  await expect(citySelect(page)).toContainText('Osaka');
   await expect(page.locator('#hero-title')).toHaveText('Osaka');
   await expect(page).toHaveTitle('Osaka · 15–17 diciembre 2026');
   await expect(page.locator('#hero-hotel')).toContainText('The Bridge Hotel Shinsaibashi');
@@ -27,13 +27,13 @@ test('Osaka is a real city tab, selected by ?city=osaka, with its own hero, hote
 test('switching between Kioto and Osaka keeps both complete and isolated', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#hero-title')).toHaveText('Kioto');
-  await page.getByRole('tab', { name: 'Osaka' }).click();
+  await selectCity(page, 'Osaka');
   await expect(page).toHaveURL(/\?city=osaka$/);
   await expect(page.locator('#hero-title')).toHaveText('Osaka');
   await expect(page.locator('.quick-card')).toHaveCount(3);
   await expect(page.locator('.food-card')).toHaveCount(restaurants.length);
   await expect(page.locator('.sources li').first()).toBeAttached();
-  await page.getByRole('tab', { name: 'Kioto' }).click();
+  await selectCity(page, 'Kioto');
   await expect(page.locator('#hero-title')).toHaveText('Kioto');
   await expect(page.locator('#hero-hotel')).toContainText('Agora Kyoto Karasuma');
   await expect(page.locator('body')).not.toContainText('Dotonbori');

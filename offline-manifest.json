@@ -1,7 +1,7 @@
 {
-  "version": "c598afe34e",
+  "version": "ef1250384d",
   "sizes": {
-    "required": 667578,
+    "required": 688123,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -76,8 +76,10 @@
     "js/modules/tabs.js",
     "js/modules/theme.js",
     "js/modules/tiles.js",
+    "js/modules/updates.js",
     "js/modules/version.js",
     "js/modules/views.js",
+    "js/modules/visited.js",
     "kyoto-points.kml",
     "manifest.webmanifest"
   ],

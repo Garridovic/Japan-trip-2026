@@ -2,6 +2,7 @@
 import { byId, h, externalLink } from './dom.js';
 import { findPoint, findDetail } from './city-index.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
+import { visitedStore, isVisitable } from './visited.js';
 
 export function initDetails() {
   const modal = byId('poi-modal');
@@ -10,6 +11,19 @@ export function initDetails() {
   let photos = [];
   let photoIndex = 0;
   let previousFocus = null;
+  let openId = null; // local id of the place being shown
+  const visited = visitedStore();
+  const visitedButton = byId('poi-visited');
+  function paintVisited() {
+    const point = openId && cityIndex ? findPoint(cityIndex, openId) : null;
+    visitedButton.hidden = !point || !isVisitable(point);
+    if (visitedButton.hidden) return;
+    const done = visited.has(cityIndex.cityId, openId);
+    visitedButton.setAttribute('aria-pressed', String(done));
+    visitedButton.textContent = done ? '✓ Visitado' : 'Marcar como visitado';
+  }
+  visitedButton.addEventListener('click', () => { if (openId && cityIndex) visited.toggle(cityIndex.cityId, openId); });
+  visited.subscribe(paintVisited);
 
   function renderPhoto() {
     const photo = photos[photoIndex];
@@ -35,6 +49,7 @@ export function initDetails() {
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     releaseOverlay('poi');
+    openId = null;
     previousFocus?.focus?.();
   }
 
@@ -89,6 +104,8 @@ export function initDetails() {
 
     renderSources(detail);
     renderEvent(point, cityIndex.events);
+    openId = localId;
+    paintVisited();
     modal.hidden = false;
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';

@@ -2,7 +2,7 @@
 // There is only one Leaflet map. Entering the view MOVES the map element and its panels (filters, nearby places,
 // offline button) into this view; leaving puts every node back exactly where it was in the guide, so the map in the
 // guide section keeps working as before. Filters, "Cerca de mí" and "Guardar mapa" live in one bottom sheet.
-import { byId } from './dom.js';
+import { byId, h } from './dom.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 
 export const SHEETS = {
@@ -73,13 +73,27 @@ export function initMapView({ map, doc = document }) {
   byId('map-sheet-close').addEventListener('click', () => closeSheet());
   doc.addEventListener('keydown', (event) => { if (event.key === 'Escape' && openSheet && doc.getElementById('poi-modal')?.hidden) closeSheet(); });
 
+  // Active filters as chips over the map ("13 dic ✕"), the count on the Filtros button and the visited counter in the title.
+  const chips = byId('map-active-filters');
+  const filtersButton = byId('map-filters-button');
+  let cityName = 'la ciudad';
+  let lastState = { visited: { done: 0, total: 0 }, filters: [] };
+  function paintState() {
+    const { visited, filters } = lastState;
+    filtersButton.textContent = filters.length ? `Filtros (${filters.length})` : 'Filtros';
+    chips.replaceChildren(...filters.map(({ key, label }) => h('button', { type: 'button', class: 'map-chip', 'aria-label': `Quitar filtro ${label}`, onclick: () => map.clearFilter(key) }, `${label} ✕`)));
+    byId('map-view-title').textContent = `Mapa de ${cityName}${visited.total ? ` · ${visited.done}/${visited.total}` : ''}`;
+  }
+  doc.addEventListener('map:state', (event) => { lastState = event.detail; paintState(); });
+
   function enter() {
     if (inside) return;
     inside = true;
     moves.forEach(({ home, target }) => target.appendChild(home.node));
     filtersWereOpen = filtersDetails.open;
     filtersDetails.open = true;
-    byId('map-view-title').textContent = `Mapa de ${doc.getElementById('hero-title')?.textContent || 'la ciudad'}`;
+    cityName = doc.getElementById('hero-title')?.textContent || 'la ciudad';
+    paintState();
     map.refit();
   }
 

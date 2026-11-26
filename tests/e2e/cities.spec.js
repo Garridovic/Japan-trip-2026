@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { kyoto, SVG_MARKERS, RESTAURANT_MARKERS, addTestCities } from './helpers.js';
+import { kyoto, SVG_MARKERS, RESTAURANT_MARKERS, addTestCities, selectCity, citySelect, openCities } from './helpers.js';
 
 // These tests add fictional cities through network interception, so the multi-city behaviour is
 // verified without publishing any invented content. The fictional city reuses the place id "fushimi".
@@ -12,11 +12,11 @@ test('city tabs switch the whole context and Kyoto is restored intact', async ({
   await addTestCities(page, ['testville']);
   await page.goto('/');
 
-  const tabs = page.getByRole('tab');
-  await expect(tabs).toHaveText(['Kioto', 'Testville', 'Osaka']);
+  const options = await openCities(page);
+  await expect(options).toHaveText(['Kioto', 'Testville', 'Osaka']);
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
 
-  await page.getByRole('tab', { name: 'Testville' }).click();
+  await selectCity(page, 'Testville');
   await expect(page).toHaveURL(/\?city=testville$/);
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'testville');
   await expect(page.locator('#hero-title')).toHaveText('Testville');
@@ -36,7 +36,7 @@ test('city tabs switch the whole context and Kyoto is restored intact', async ({
   // Global content is shown once, in every city.
   await expect(page.locator('#notes-grid .note-card')).toHaveCount(4);
 
-  await page.getByRole('tab', { name: 'Kioto' }).click();
+  await selectCity(page, 'Kioto');
   await expect(page).toHaveURL(/\?city=kyoto$/);
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount);
@@ -59,7 +59,7 @@ test('a shared place id resolves the details of the active city only', async ({ 
   await expect(page.locator('#poi-description')).toHaveText('Descripción exclusiva de Testville');
   await page.keyboard.press('Escape');
 
-  await page.getByRole('tab', { name: 'Kioto' }).click();
+  await selectCity(page, 'Kioto');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount);
   const fushimi = kyoto.places.find(({ id }) => id === 'fushimi');
   await page.context().grantPermissions(['geolocation']);
@@ -76,7 +76,7 @@ test('switching city resets the map filters', async ({ page }) => {
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
   await page.getByRole('button', { name: 'Solo restaurantes' }).click();
   await expect(page.locator(SVG_MARKERS)).toHaveCount(0);
-  await page.getByRole('tab', { name: 'Testville' }).click();
+  await selectCity(page, 'Testville');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(2);
   await expect(page.getByRole('button', { name: 'Todos los puntos' })).toHaveAttribute('aria-pressed', 'true');
 });
@@ -85,25 +85,31 @@ test('browser back and forward follow the selected city', async ({ page }) => {
   await addTestCities(page, ['testville']);
   await page.goto('/');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
-  await page.getByRole('tab', { name: 'Testville' }).click();
+  await selectCity(page, 'Testville');
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'testville');
   await page.goBack();
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
-  await expect(page.getByRole('tab', { name: 'Kioto' })).toHaveAttribute('aria-selected', 'true');
+  await expect(citySelect(page)).toContainText('Kioto');
   await page.goForward();
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'testville');
 });
 
-test('tabs are keyboard accessible', async ({ page }) => {
+test('the city selector is keyboard accessible', async ({ page }) => {
   await addTestCities(page, ['testville']);
   await page.goto('/');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
-  await page.getByRole('tab', { name: 'Kioto' }).focus();
-  await page.keyboard.press('ArrowRight');
-  await expect(page.getByRole('tab', { name: 'Testville' })).toBeFocused();
+  await citySelect(page).focus();
+  await page.keyboard.press('ArrowDown'); // opens the list on the current city
+  await expect(page.getByRole('option', { name: 'Kioto' })).toBeFocused();
+  await page.keyboard.press('ArrowDown');
+  await expect(page.getByRole('option', { name: 'Testville' })).toBeFocused();
+  await page.keyboard.press('Enter');
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'testville');
-  await page.keyboard.press('Home');
-  await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
+  await expect(citySelect(page)).toContainText('Testville');
+  await citySelect(page).click();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('option').first()).toBeHidden();
+  await expect(citySelect(page)).toBeFocused();
 });
 
 test('a configured but disabled city in the URL falls back to a valid city and is never downloaded', async ({ page }) => {
@@ -117,7 +123,8 @@ test('a configured but disabled city in the URL falls back to a valid city and i
   page.on('request', (request) => requested.push(request.url()));
   await page.goto('/?city=hakone');
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
-  await expect(page.getByRole('tab', { name: 'Hakone' })).toHaveCount(0);
+  await openCities(page);
+  await expect(page.getByRole('option', { name: 'Hakone' })).toHaveCount(0);
   expect(requested.some((address) => /data\/cities\/hakone/.test(address))).toBe(false);
 });
 
@@ -143,9 +150,9 @@ test('a city whose data fails to load shows an error without breaking the tabs',
   await page.route('**/data/cities/testville/places.json', (route) => route.fulfill({ status: 500, body: 'boom' }));
   await page.goto('/');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
-  await page.getByRole('tab', { name: 'Testville' }).click();
+  await selectCity(page, 'Testville');
   await expect(page.locator('#app-status')).toContainText('No se han podido cargar');
-  await page.getByRole('tab', { name: 'Kioto' }).click();
+  await selectCity(page, 'Kioto');
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
   await expect(page.locator('#app-status')).toBeHidden();
 });

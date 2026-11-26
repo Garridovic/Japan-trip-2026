@@ -19,6 +19,7 @@ import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
 import { initMapView } from './modules/map-view.js';
+import { initUpdates } from './modules/updates.js';
 
 const status = byId('app-status');
 const showStatus = (message, isError = false) => {
@@ -33,6 +34,7 @@ initCollapsibles();
 initDayLinks();
 initOffline();
 initTheme();
+initUpdates();
 
 async function start() {
   const [journey, global] = await Promise.all([loadJourney(), loadGlobalContent()]);

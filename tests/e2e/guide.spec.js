@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { kyoto, version, journey, SVG_MARKERS, RESTAURANT_MARKERS, countFor } from './helpers.js';
+import { kyoto, version, journey, SVG_MARKERS, RESTAURANT_MARKERS, countFor, citySelect, openCities } from './helpers.js';
 
 const visitCount = kyoto.places.length;
 const restaurantCount = kyoto.restaurants.length;
@@ -20,12 +20,13 @@ test('Kyoto loads its map, markers, tabs and full version', async ({ page }) => 
   expect(pageErrors).toEqual([]);
 });
 
-test('only enabled cities get a tab, in journey order: Kioto and Osaka', async ({ page }) => {
+test('only enabled cities are in the city selector, in journey order: Kioto and Osaka', async ({ page }) => {
   await page.goto('/');
-  const tabs = page.getByRole('tab');
-  await expect(tabs).toHaveCount(journey.cities.filter((city) => city.enabled).length);
-  await expect(tabs).toHaveText(['Kioto', 'Osaka']);
-  await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
+  await expect(citySelect(page)).toContainText('Kioto');
+  const options = await openCities(page);
+  await expect(options).toHaveCount(journey.cities.filter((city) => city.enabled).length);
+  await expect(options).toHaveText(['Kioto', 'Osaka']);
+  await expect(options.first()).toHaveAttribute('aria-selected', 'true');
 });
 
 test('the Kyoto content migrated to data is fully rendered', async ({ page }) => {

@@ -21,7 +21,7 @@
 </head>
 <body>
   <header class="top-bar" id="top-bar">
-    <div class="city-tabs" id="city-tabs" role="tablist" aria-label="Ciudades del viaje" hidden></div>
+    <div class="city-tabs" id="city-tabs" hidden></div>
     <span class="top-bar-title" id="top-bar-title">Japón · 2026</span>
     <button type="button" class="offline-chip" id="offline-chip" data-state="none" aria-haspopup="dialog" aria-expanded="false" aria-controls="offline-popover" hidden><span class="offline-chip-icon" id="offline-chip-icon" aria-hidden="true">⬇</span><span class="offline-chip-label" id="offline-chip-label">Sin conexión</span><span class="offline-chip-short" id="offline-chip-short">Sin conexión</span></button>
     <button type="button" class="theme-button" id="theme-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="theme-popover" aria-label="Apariencia: automática"><svg viewBox="0 0 24 24" aria-hidden="true" id="theme-button-icon"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17A8.5 8.5 0 0 0 12 3.5Z" fill="currentColor"/></svg></button>
@@ -93,20 +93,22 @@
         <div class="section-head"><div><div class="kicker">Explora por proximidad</div><h2>Mapa de <span data-city-name>…</span> y puntos de interés</h2></div><p class="muted small">Filtra por día o categoría. Puedes localizarte desde el móvil para ver qué tienes más cerca.</p></div>
         <details class="collapsible-filters map-filters" id="map-filters" data-open-on-wide>
           <summary>Filtros del mapa</summary>
-        <div class="map-filter-group">
-          <div class="map-filter-label">Filtrar por jornada</div>
+        <details class="map-filter-group" open>
+          <summary class="map-filter-label">Filtrar por jornada</summary>
           <div class="map-toolbar" id="map-day-filters" role="group" aria-label="Filtrar puntos del mapa por jornada"></div>
-        </div>
-        <div class="map-filter-group">
-          <div class="map-filter-label">Qué quieres ver</div>
+        </details>
+        <details class="map-filter-group" open>
+          <summary class="map-filter-label">Qué quieres ver</summary>
           <div class="map-toolbar" role="group" aria-label="Filtrar puntos del mapa por tipo">
             <button class="filter map-kind-filter" data-map-kind="todos" aria-pressed="true">Todos los puntos</button>
             <button class="filter map-kind-filter" data-map-kind="visitas" aria-pressed="false">Solo visitas</button>
             <button class="filter map-kind-filter" data-map-kind="restaurantes" aria-pressed="false">Solo restaurantes</button>
+            <button class="filter map-kind-filter" data-map-kind="pendientes" aria-pressed="false">Pendientes</button>
           </div>
-        </div>
+        </details>
         </details>
         <p class="map-filter-status" id="map-filter-status" aria-live="polite">Mostrando todos los puntos: visitas, alternativas, eventos y restaurantes.</p>
+        <p class="visited-summary" id="visited-summary" aria-live="polite"></p>
         <details class="map-legend">
           <summary id="map-legend-summary">Leyenda del mapa</summary>
           <div class="legend" id="map-legend"></div>
@@ -202,6 +204,12 @@
         <p class="muted small lodging-pdf-hint">«Descargar PDF» abre la vista de impresión de esta pantalla: elige «Guardar como PDF» (en iPhone: Compartir › Guardar en Archivos).</p>
         <div class="lodging-list" id="lodging-list"></div>
         <p class="phrase-notice lodging-privacy" id="lodging-privacy"></p>
+        <div class="update-card">
+          <h3>Versión de la guía</h3>
+          <p class="muted small">Versión en pantalla: <strong id="update-version">…</strong></p>
+          <p class="small" id="update-status" role="status" aria-live="polite"></p>
+          <button type="button" class="filter" id="update-check">Buscar actualización</button>
+        </div>
       </section>
     </main>
   </div>
@@ -263,9 +271,10 @@
     <div class="map-view-canvas" id="map-view-canvas"></div>
     <div class="map-view-controls">
       <span class="map-view-title" id="map-view-title">Mapa</span>
-      <button type="button" class="map-view-button" data-map-sheet="filters" aria-expanded="false">Filtros</button>
+      <button type="button" class="map-view-button" data-map-sheet="filters" aria-expanded="false" id="map-filters-button">Filtros</button>
       <button type="button" class="map-view-button" data-map-sheet="nearby" aria-expanded="false">Cerca de mí</button>
       <button type="button" class="map-view-button" data-map-sheet="offline" aria-expanded="false">Sin conexión</button>
+      <div class="map-active-filters" id="map-active-filters" role="group" aria-label="Filtros activos"></div>
     </div>
     <section class="map-sheet" id="map-sheet" role="dialog" aria-labelledby="map-sheet-title" hidden>
       <div class="map-sheet-grab" aria-hidden="true"></div>
@@ -276,6 +285,12 @@
         <div data-sheet-section="offline" hidden></div>
       </div>
     </section>
+  </div>
+
+  <div class="update-banner" id="update-banner" role="status" aria-live="polite" hidden>
+    <span id="update-banner-text">Hay una versión nueva</span>
+    <button type="button" class="update-action" id="update-reload">Actualizar</button>
+    <button type="button" class="update-later" id="update-later" aria-label="Más tarde">Más tarde</button>
   </div>
 
   <p class="offline-banner" id="offline-banner" role="status" aria-live="polite" hidden>Sin conexión · usando la guía guardada</p>
@@ -304,6 +319,7 @@
         </div>
         <h2 id="poi-title"></h2>
         <p class="poi-description" id="poi-description"></p>
+        <button type="button" class="filter visited-toggle" id="poi-visited" aria-pressed="false" hidden>Marcar como visitado</button>
         <section class="poi-event" id="poi-event" hidden></section>
         <section class="poi-links-section">
           <h3>Cómo llegar</h3>

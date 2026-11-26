@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { kyoto, SVG_MARKERS } from './helpers.js';
+import { kyoto, SVG_MARKERS, selectCity, citySelect } from './helpers.js';
 
 // This is the only spec that lets the service worker run (see playwright.config.js).
 test.use({ serviceWorkers: 'allow' });
@@ -281,11 +281,11 @@ test.describe('chip text and layout', () => {
     await expect.poll(() => page.locator('#offline-chip').getAttribute('data-state')).toBe('essentials');
     await expect(page.locator('.offline-chip-short')).toBeVisible();
     await expect(page.locator('.offline-chip-label')).toBeHidden();
-    const tabs = await page.locator('#city-tabs').boundingBox();
+    const tabs = await page.locator('#city-select').boundingBox();
     const chip = await page.locator('#offline-chip').boundingBox();
     expect(tabs.x + tabs.width).toBeLessThanOrEqual(chip.x + 1); // side by side, no overlap
     expect(chip.x + chip.width).toBeLessThanOrEqual(320);
-    await expect(page.getByRole('tab', { name: 'Kioto' })).toBeVisible();
+    await expect(citySelect(page)).toContainText('Kioto');
 
     await page.setViewportSize({ width: 430, height: 800 });
     await expect(page.locator('.offline-chip-label')).toBeVisible();
@@ -404,13 +404,13 @@ test.describe('"Guardar mapa" control', () => {
   test('each city saves its own area (Osaka too)', async ({ page, context }) => {
     await tileServer(context, { up: true });
     await ready(page);
-    await page.getByRole('tab', { name: 'Osaka' }).click();
+    await selectCity(page, 'Osaka');
     await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'osaka');
     // the tiles seen while browsing are kept, but the city is not saved until you ask
     await expect(save(page)).not.toHaveAttribute('data-state', 'complete');
     await save(page).click();
     await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
-    await page.getByRole('tab', { name: 'Kioto' }).click();
+    await selectCity(page, 'Kioto');
     await expect(save(page)).not.toHaveAttribute('data-state', 'complete'); // Kioto was not saved: the control does not claim it was
   });
 

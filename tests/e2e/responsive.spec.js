@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { kyoto, SVG_MARKERS, addTestCities } from './helpers.js';
+import { kyoto, SVG_MARKERS, addTestCities, citySelect, openCities } from './helpers.js';
 
 // CSS viewport size, pixel density and touch are validated separately: a hi-res phone still has a
 // narrow CSS viewport.
@@ -23,17 +23,15 @@ for (const { name, viewport, deviceScaleFactor, isMobile, hasTouch } of devices)
       expect(await page.evaluate(() => window.devicePixelRatio)).toBe(deviceScaleFactor);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);
 
-      const tabs = page.getByRole('tab');
-      await expect(tabs).toHaveCount(8); // Kioto, Osaka and the six fictional test cities
-      const tablist = page.locator('#city-tabs');
-      const first = await tabs.first().boundingBox();
-      expect(first.height).toBeGreaterThanOrEqual(36);
-      // Tabs scroll horizontally when they do not fit; the page itself never overflows.
-      const { scrollWidth, clientWidth } = await tablist.evaluate((node) => ({ scrollWidth: node.scrollWidth, clientWidth: node.clientWidth }));
-      if (viewport.width < 700) expect(scrollWidth).toBeGreaterThan(clientWidth);
-      await tabs.last().click();
-      await expect(tabs.last()).toHaveAttribute('aria-selected', 'true');
-      await expect(tabs.last()).toBeInViewport();
+      const select = citySelect(page);
+      expect((await select.boundingBox()).height).toBeGreaterThanOrEqual(40);
+      const options = await openCities(page);
+      await expect(options).toHaveCount(8); // Kioto, Osaka and the six fictional test cities: the header stays the same size
+      const menu = await page.locator('#city-menu').boundingBox();
+      expect(menu.x).toBeGreaterThanOrEqual(0);
+      expect(menu.x + menu.width).toBeLessThanOrEqual(viewport.width);
+      await page.getByRole('option', { name: 'Sixth-city' }).click();
+      await expect(select).toContainText('Sixth-city');
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);
 
       const mapBox = await page.locator('#city-map').boundingBox();

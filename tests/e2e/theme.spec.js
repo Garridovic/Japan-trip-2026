@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { selectCity, citySelect } from './helpers.js';
 
 const html = (page) => page.locator('html');
 const themeButton = (page) => page.locator('#theme-button');
@@ -100,7 +101,7 @@ test.describe('bottom bar with the central map button', () => {
   test('on 320 px the city tabs, offline chip and theme button share the header without overlap', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 640 });
     await page.goto('/');
-    await expect(page.getByRole('tab', { name: 'Kioto' })).toBeVisible();
+    await expect(citySelect(page)).toContainText('Kioto');
     const chip = page.locator('#offline-chip');
     if (await chip.isVisible()) {
       const [c, t] = await Promise.all([chip.boundingBox(), themeButton(page).boundingBox()]);

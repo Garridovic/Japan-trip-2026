@@ -1,6 +1,6 @@
 // Service worker: makes the guide work without a connection after the first visit.
 // VERSION is stamped by scripts/build-offline.js; a new version installs a fresh cache and removes the old one.
-const VERSION = 'c598afe34e';
+const VERSION = 'ef1250384d';
 const APP_CACHE = `japan-guide-${VERSION}`;
 const TILE_CACHE = 'japan-tiles-v1';
 const MAX_TILES = 700;
@@ -91,10 +91,24 @@ async function tileResponse(request) {
   return response;
 }
 
+/** version.json?fresh=...: the newest deployed version, straight from the network; the saved copy only when there is no network. */
+async function freshResponse(request) {
+  try {
+    return await fetch(request.url, { cache: 'no-store' });
+  } catch (error) {
+    const cache = await caches.open(APP_CACHE);
+    return (await cache.match(request, { ignoreSearch: true })) ?? Response.error();
+  }
+}
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
+  if (url.origin === self.location.origin && url.pathname.endsWith('/data/version.json') && url.searchParams.has('fresh')) {
+    event.respondWith(freshResponse(request));
+    return;
+  }
   if (url.hostname === TILE_HOST) event.respondWith(tileResponse(request));
   else if (url.origin === self.location.origin && url.href.startsWith(self.registration.scope)) {
     event.respondWith(request.mode === 'navigate' ? navigationResponse(request) : assetResponse(request));

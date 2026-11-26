@@ -78,3 +78,14 @@ export async function addTestCities(page, ids) {
 }
 
 export const countFor = (points, day) => points.filter((point) => point.day === day || point.day.split(',').includes(day)).length;
+
+/** City selector: one button that opens a list of cities (keeps the header the same size for 2 or 10 cities). */
+export const citySelect = (page) => page.locator('#city-select');
+export async function openCities(page) {
+  if ((await citySelect(page).getAttribute('aria-expanded')) !== 'true') await citySelect(page).click();
+  return page.getByRole('option');
+}
+export async function selectCity(page, name) {
+  await openCities(page);
+  await page.getByRole('option', { name, exact: true }).click();
+}
