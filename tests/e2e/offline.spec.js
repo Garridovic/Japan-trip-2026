@@ -310,6 +310,8 @@ test.describe('"Guardar mapa" control', () => {
     return state;
   }
   async function ready(page) {
+    // Tests-only hook (see pauseScale in map-offline.js): no polite 120 ms pause between tiles, the tile server stand-in has its own delay.
+    await page.addInitScript(() => { window.__tilePauseScale = 0; });
     await page.goto('/?city=kyoto');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await page.evaluate(() => navigator.serviceWorker.ready);

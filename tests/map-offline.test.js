@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { planCityTiles, describeSaveState, estimateMegabytes, zoomRange, tileX, tileY, tileUrl, MAX_SAVED_TILES, TILE_CACHE_NAME } from '../js/modules/tiles.js';
-import { initMapOffline } from '../js/modules/map-offline.js';
+import { initMapOffline, pauseScale } from '../js/modules/map-offline.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const load = async (city) => {
@@ -115,4 +115,12 @@ test('the control is hidden where the Cache API does not exist', () => {
   const button = { hidden: false, textContent: '', dataset: {}, addEventListener() {} };
   initMapOffline({ button, status: { textContent: '' }, win: { navigator: { onLine: true }, addEventListener() {} }, cacheStorage: undefined, fetchFn: async () => ({}) });
   assert.equal(button.hidden, true);
+});
+
+test('the test-only pause scale defaults to 1 and only accepts non-negative numbers', () => {
+  assert.equal(pauseScale({}), 1);
+  assert.equal(pauseScale({ __tilePauseScale: 0 }), 0);
+  assert.equal(pauseScale({ __tilePauseScale: 0.25 }), 0.25);
+  assert.equal(pauseScale({ __tilePauseScale: -1 }), 1);
+  assert.equal(pauseScale({ __tilePauseScale: '0' }), 1);
 });

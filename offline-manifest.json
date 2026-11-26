@@ -1,7 +1,7 @@
 {
-  "version": "2004039ace",
+  "version": "c7897f5132",
   "sizes": {
-    "required": 903120,
+    "required": 882724,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -28,7 +28,6 @@
     "data/cities/kyoto/events.json",
     "data/cities/kyoto/extras.json",
     "data/cities/kyoto/food.json",
-    "data/cities/kyoto/image-credits.json",
     "data/cities/kyoto/itinerary.json",
     "data/cities/kyoto/places.json",
     "data/cities/kyoto/restaurants.json",
