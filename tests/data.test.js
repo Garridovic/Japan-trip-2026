@@ -49,7 +49,7 @@ test('event plan has a start, finish and route stops', () => {
 });
 
 test('application version metadata is present', () => {
-  assert.match(version.version, /^V\d+\.\d+$/);
+  assert.match(version.version, /^V\d+\.\d+\.\d+$/);
   assert.ok(version.updated);
 });
 

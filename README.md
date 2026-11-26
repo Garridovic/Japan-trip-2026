@@ -73,8 +73,8 @@ Only Public Domain, CC0, CC BY and CC BY-SA licenses are accepted. Images with N
 
 ### Image search fallback (V10.2)
 
-### Version display and tolerant image preparation (V10.3)
+### Version display and tolerant image preparation (V10.3.1)
 
-The visible version indicator reads the full version (for example `V10.3`) from `data/version.json`. Image search, download and conversion failures are recorded per place in `image-preparation-report.md` and `.json`; they do not stop image preparation or deployment. The GitHub Actions run publishes these reports as the `image-preparation-report` artifact, available for 30 days.
+The visible version indicator reads the full version (for example `V10.3.1`) from `data/version.json`. Image search, download and conversion failures are recorded per place in `image-preparation-report.md` and `.json`; they do not stop image preparation or deployment. The GitHub Actions run publishes these reports as the `image-preparation-report` artifact, available for 30 days.
 
 The image preparation script searches Wikimedia Commons by text and, when needed, by the configured Commons category. It still validates dimensions, MIME type and reusable license metadata before downloading.
