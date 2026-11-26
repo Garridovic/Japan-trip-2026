@@ -118,3 +118,19 @@ test.describe('full-screen map view', () => {
     }
   });
 });
+
+test('"Guardar mapa" works from the full-screen map and keeps working after leaving it', async ({ page, context }) => {
+  test.setTimeout(90_000);
+  const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
+  await context.route('**/tile.openstreetmap.org/**', (route) => route.fulfill({ status: 200, contentType: 'image/png', body: PNG, headers: { 'access-control-allow-origin': '*' } }));
+  await page.goto('/?view=mapa');
+  await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+  await page.getByRole('button', { name: 'Sin conexión' }).click();
+  const save = page.locator('#map-sheet #save-offline-map');
+  await expect(save).toBeVisible();
+  await expect(save).toBeEnabled();
+  await expect(page.locator('#map-sheet #save-offline-status')).not.toBeEmpty();
+  await page.keyboard.press('Escape');
+  await page.locator('[data-view-target="guia"]').click();
+  await expect(page.locator('#mapa #save-offline-map')).toBeVisible(); // the control is back in the guide
+});

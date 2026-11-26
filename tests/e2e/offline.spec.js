@@ -342,6 +342,9 @@ test.describe('"Guardar mapa" control', () => {
   test('before saving it says how big the map is; saving shows progress and ends with what was stored', async ({ page, context }) => {
     const server = await tileServer(context, { up: true, delay: 40 });
     await ready(page);
+    // The tiles the map happens to show are cached while browsing (and, on a slow CI machine, before the first check),
+    // which would turn "sin guardar" into "a medias". Start from a really empty tile cache.
+    await page.evaluate(async () => { await caches.delete('japan-tiles-v1'); window.dispatchEvent(new Event('online')); });
     await expect(statusText(page)).toContainText('Mapa sin guardar');
     await expect(statusText(page)).toContainText(/unas \d+ teselas \(≈ \d+ MB\) alrededor de Kioto/);
     await expect(save(page)).toHaveText(/⬇ Guardar mapa \(≈ \d+ MB\)/);
