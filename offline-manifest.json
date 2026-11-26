@@ -1,7 +1,7 @@
 {
-  "version": "837fad90ae",
+  "version": "b6c0307495",
   "sizes": {
-    "required": 652034,
+    "required": 654314,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -47,6 +47,7 @@
     "data/version.json",
     "index.html",
     "js/main.js",
+    "js/modules/anchors.js",
     "js/modules/city-index.js",
     "js/modules/collapsible.js",
     "js/modules/data.js",

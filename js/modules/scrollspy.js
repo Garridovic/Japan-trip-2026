@@ -7,6 +7,7 @@
 const OFFSET = 140; // sticky city tabs + section nav + some breathing room
 const SETTLE_MS = 160; // quiet time without scroll events that marks the end of a scroll
 const TOLERANCE = 3;
+const MAX_WAITS = 12; // × SETTLE_MS: about 2 s of patience before forcing the position
 
 export function initScrollSpy(win = window, doc = document) {
   const links = [...doc.querySelectorAll('.nav-inner a[href^="#"]')];
@@ -63,22 +64,20 @@ export function initScrollSpy(win = window, doc = document) {
     if (!target) return;
     const { section } = target;
     const wanted = Math.min(destination(section), Math.max(0, maxScroll()));
-    // The layout may have moved while scrolling: correct once, without animation.
-    if (Math.abs(win.scrollY - wanted) > TOLERANCE) win.scrollTo({ top: wanted, behavior: 'instant' });
+    const off = Math.abs(win.scrollY - wanted) > TOLERANCE;
+    // A busy page can pause the smooth scroll for a moment: if it has not arrived, keep waiting (a few times)
+    // before correcting the position directly, so the highlight never jumps to another section meanwhile.
+    if (off && target.waits < MAX_WAITS) { target.waits += 1; armSettle(); return; }
+    if (off) win.scrollTo({ top: wanted, behavior: 'instant' });
     target = null;
     schedule();
   }
-  const armSettle = () => {
-    win.clearTimeout(settleTimer);
-    settleTimer = win.setTimeout(finishClickScroll, SETTLE_MS);
-  };
-
   function onNavClick(event) {
     const link = event.currentTarget;
     const section = sectionOf(link);
     if (!section || section.hidden || event.metaKey || event.ctrlKey || event.shiftKey || event.button) return;
     event.preventDefault();
-    target = { link, section };
+    target = { link, section, waits: 0 };
     highlight(link);
     win.history.replaceState(win.history.state, '', `${win.location.pathname}${win.location.search}${link.getAttribute('href')}`);
     win.scrollTo({ top: Math.min(destination(section), Math.max(0, maxScroll())), behavior: 'smooth' });

@@ -101,3 +101,54 @@ test.describe('full-screen sheets put the back button on the left', () => {
     await expectLeft(page, '#poi-modal .poi-back');
   });
 });
+
+for (const city of ['kyoto', 'osaka']) {
+  for (const [name, viewport, mobile] of [['phone', { width: 390, height: 844 }, true], ['desktop', { width: 1440, height: 900 }, false]]) {
+    test.describe(`"Ver detalle" · ${city} · ${name}`, () => {
+      test.use({ viewport, isMobile: mobile, hasTouch: mobile });
+
+      test('each link opens its day and shows its title clear of the two sticky bars', async ({ page }) => {
+        await page.goto(`/?city=${city}`);
+        await expect(page.locator('.quick-card .text-link').first()).toBeVisible();
+        const count = await page.locator('.quick-card .text-link').count();
+        expect(count).toBeGreaterThanOrEqual(3);
+        for (let i = 0; i < count; i++) {
+          await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+          const link = page.locator('.quick-card .text-link').nth(i);
+          const target = await link.getAttribute('href');
+          await link.scrollIntoViewIfNeeded();
+          await link.click();
+          const day = page.locator(target);
+          await expect.poll(() => day.evaluate((element) => element.open)).toBe(true);
+          // The day title ends up below the sticky city bar and the section navigation, fully visible.
+          await expect.poll(async () => {
+            const box = await day.locator('summary').boundingBox();
+            return box.y >= 96 - 1 && box.y < 400;
+          }, { timeout: 8000 }).toBe(true);
+          const covered = await day.locator('summary').evaluate((summary) => {
+            const rect = summary.getBoundingClientRect();
+            const top = document.elementFromPoint(rect.left + rect.width / 2, rect.top + 10);
+            return !summary.contains(top);
+          });
+          expect(covered).toBe(false);
+          await expect(page).toHaveURL(new RegExp(`${target}$`));
+        }
+      });
+    });
+  }
+}
+
+test('a plain #anchor link (hero buttons) lands on its section and the scroll is not reset by the app', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Abrir mapa interactivo' }).click();
+  await expectAligned(page, 'mapa');
+  const y = await page.evaluate(() => Math.round(window.scrollY));
+  await page.waitForTimeout(600);
+  expect(Math.abs((await page.evaluate(() => Math.round(window.scrollY))) - y)).toBeLessThanOrEqual(2);
+});
+
+test('opening the page with #diaN in the URL opens that day under the bars', async ({ page }) => {
+  await page.goto('/?city=kyoto#dia12');
+  await expect.poll(() => page.locator('#dia12').evaluate((element) => element.open)).toBe(true);
+  await expect.poll(async () => (await page.locator('#dia12 summary').boundingBox()).y).toBeGreaterThanOrEqual(95);
+});

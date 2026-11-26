@@ -543,3 +543,6 @@ body:not([data-view="guia"]) .top-bar-title { display: block; }
   .lodging-print-line { margin: 2pt 0; font-size: 11pt; }
   .lodging-print-maps { display: block; margin: 4pt 0 0; font-size: 8.5pt; color: #444; word-break: break-all; }
 }
+
+/* Day cards are link targets ("Ver detalle"): keep their title clear of the two sticky bars */
+.day-detail { scroll-margin-top: calc(var(--tabs-height) + 56px); }

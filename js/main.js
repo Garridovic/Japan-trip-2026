@@ -15,6 +15,7 @@ import { initOverlayHistory, popstateWasOverlay, whenOverlaySettled } from './mo
 import { initCollapsibles } from './modules/collapsible.js';
 import { initOffline } from './modules/offline.js';
 import { initLodging } from './modules/lodging-ui.js';
+import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 
 const status = byId('app-status');
@@ -27,6 +28,7 @@ const showStatus = (message, isError = false) => {
 initOverlayHistory(); // registered first so overlays handle Back before navigation does
 
 initCollapsibles();
+initDayLinks();
 initOffline();
 
 async function start() {
@@ -108,12 +110,17 @@ async function start() {
 
   window.addEventListener('popstate', () => {
     if (popstateWasOverlay()) return;
+    // A change of #anchor on the same page is not navigation: leave the scroll position to the browser.
+    if (viewFromSearch(window.location.search) === activeView && cityFromLocation() === activeCityId) return;
     applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation());
   });
   views.setActive(activeView);
   await showCity(cityFromLocation());
   // Honour an in-page anchor (for example #mapa) once the content exists.
-  if (activeView === 'guia' && window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
+  if (activeView === 'guia' && window.location.hash) {
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (target) openDay(target, { smooth: false });
+  }
 }
 
 start().catch((error) => {
