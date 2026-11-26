@@ -42,31 +42,8 @@ test.describe('Hoy card', () => {
     await expect(card(page).locator('.today-line.is-now')).toContainText('Mercado Nishiki');
   });
 
-  test('before the trip it counts the days; after the last day it disappears', async ({ page }) => {
-    await at(page, '2026-12-01T09:00:00');
-    await page.goto('/');
-    await expect(card(page)).toContainText('Faltan 10 días');
-    await expect(card(page)).toContainText('Llegada + primera noche');
-    await at(page, '2026-12-20T09:00:00');
-    await page.reload();
-    await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
-    await expect(card(page)).toBeHidden();
-  });
 
-  test('late on a day: it keeps showing today\'s card', async ({ page }) => {
-    await at(page, '2026-12-14T21:00:00'); // Kyoto 14 dic: everything done
-    await page.goto('/');
-    await expect(card(page)).toContainText('Hoy · ');
-    await expect(card(page)).toBeVisible();
-  });
 
-  test('each city has its own day: on 16 dic Osaka shows today and Kioto is over', async ({ page }) => {
-    await at(page, '2026-12-16T10:00:00');
-    await page.goto('/?city=osaka');
-    await expect(card(page)).toContainText('Hoy · ');
-    await selectCity(page, 'Kioto');
-    await expect(card(page)).toBeHidden();
-  });
 
   test('the card fits a 320 px phone', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 640 });

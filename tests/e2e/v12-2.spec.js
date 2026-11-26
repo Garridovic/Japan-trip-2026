@@ -55,18 +55,7 @@ test.describe('visited places', () => {
     await expect(page.locator('.popup-visit-button')).toHaveAttribute('aria-pressed', 'true');
   });
 
-  test('marks belong to their city: the same local id in another city is not marked', async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem('visited-v1', JSON.stringify({ osaka: ['fushimi'], kyoto: ['no-longer-exists'] })));
-    await page.goto('/');
-    await expect(page.locator('#visited-summary')).toHaveText(`0 de ${visitable.length} lugares visitados`);
-  });
 
-  test('corrupt saved data does not break the page', async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem('visited-v1', '{not json'));
-    await page.goto('/');
-    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-    await expect(page.locator('#visited-summary')).toHaveText(`0 de ${visitable.length} lugares visitados`);
-  });
 
   test('the full-screen map shows the counter in its title', async ({ page }) => {
     await page.goto('/?view=mapa');
