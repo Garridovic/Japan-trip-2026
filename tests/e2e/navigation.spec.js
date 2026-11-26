@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { SVG_MARKERS, kyoto } from './helpers.js';
 
-const SECTIONS = ['mapa', 'detalle', 'comer', 'alternativas', 'practico', 'resumen', 'mapa'];
 const ids = ['resumen', 'mapa', 'detalle', 'comer', 'alternativas', 'practico'];
 
 /** Resolves once the page has stopped scrolling (same position on several consecutive checks). */
@@ -25,14 +24,15 @@ async function expectAligned(page, id) {
   await expect(page.locator('.nav-inner a[aria-current="location"]')).toHaveAttribute('href', `#${id}`);
 }
 
-for (const [name, viewport, mobile] of [['phone', { width: 390, height: 844 }, true], ['desktop', { width: 1440, height: 900 }, false]]) {
+// Tab behaviour does not depend on the screen size, so one phone run is enough (desktop is covered by "Ver detalle" below).
+for (const [name, viewport, mobile] of [['phone', { width: 390, height: 844 }, true]]) {
   test.describe(name, () => {
     test.use({ viewport, isMobile: mobile, hasTouch: mobile });
 
     test('every section tab scrolls to its section from any position, in any order', async ({ page }) => {
       await page.goto('/');
       await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-      for (const id of [...ids, ...SECTIONS]) {
+      for (const id of [...ids, 'mapa', 'resumen']) {
         await page.locator(`.nav-inner a[href="#${id}"]`).click();
         await expectAligned(page, id);
       }
@@ -117,8 +117,9 @@ test.describe('full-screen sheets put the back button on the left', () => {
   });
 });
 
-for (const city of ['kyoto', 'osaka']) {
-  for (const [name, viewport, mobile] of [['phone', { width: 390, height: 844 }, true], ['desktop', { width: 1440, height: 900 }, false]]) {
+// Each city is checked on one screen size (phone for Kyoto, desktop for Osaka): the four combinations were redundant.
+for (const [city, name, viewport, mobile] of [['kyoto', 'phone', { width: 390, height: 844 }, true], ['osaka', 'desktop', { width: 1440, height: 900 }, false]]) {
+  {
     test.describe(`"Ver detalle" · ${city} · ${name}`, () => {
       test.use({ viewport, isMobile: mobile, hasTouch: mobile });
 

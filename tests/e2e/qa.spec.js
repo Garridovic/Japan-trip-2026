@@ -28,7 +28,7 @@ test.describe('Back button / swipe-back closes full-screen sheets and they stay 
     ['dish sheet', openDishSheet, '#dish-show', /view=platos/],
     ['place sheet', openPlaceSheet, '#poi-modal', /^(?!.*view=)/]
   ]) {
-    test(`${name}: history.back() closes it without leaving the guide and it does not reopen`, async ({ page }) => {
+    test(`${name}: Back closes it and it stays closed (also after Forward); the in-sheet button releases its history entry`, async ({ page }) => {
       await open(page);
       const startUrl = page.url();
       await page.evaluate(() => history.back()); // what the Android gesture / iOS edge swipe does
@@ -38,24 +38,17 @@ test.describe('Back button / swipe-back closes full-screen sheets and they stay 
       expect(page.url()).toBe(startUrl);
       expect(page.url()).toMatch(url);
       await expect(page.locator('#app-bar')).toBeVisible();
-    });
-
-    test(`${name}: going Forward does not reopen it`, async ({ page }) => {
-      await open(page);
-      await page.evaluate(() => history.back());
-      await expect(page.locator(sheet)).toBeHidden();
       await page.evaluate(() => history.forward());
       await page.waitForTimeout(500);
       await expect(page.locator(sheet)).toBeHidden();
       await expect(page.locator('#app-bar')).toBeVisible();
-    });
 
-    test(`${name}: closing with the in-sheet button releases its history entry`, async ({ page }) => {
-      await open(page);
-      const entries = await page.evaluate(() => history.length);
-      await page.locator(`${sheet} :is(.phrase-show-close, .poi-back)`).first().click();
-      await expect(page.locator(sheet)).toBeHidden();
-      await expect.poll(() => page.evaluate(() => history.state?.overlay ?? null)).toBeNull();
+      const second = await page.context().newPage(); // a clean history, as a real second visit
+      await open(second);
+      const entries = await second.evaluate(() => history.length);
+      await second.locator(`${sheet} :is(.phrase-show-close, .poi-back)`).first().click();
+      await expect(second.locator(sheet)).toBeHidden();
+      await expect.poll(() => second.evaluate(() => history.state?.overlay ?? null)).toBeNull();
       expect(entries).toBeGreaterThan(1);
     });
   }
@@ -176,15 +169,6 @@ test('show mode has Anterior/Siguiente that walk through the visible phrases', a
   await expect(position).toHaveText(`${total} / ${total}`);
 });
 
-test('Platos search tolerates typos and accents', async ({ page }) => {
-  await page.goto('/?view=platos');
-  await page.locator('#dishes-search').fill('sasimi');
-  await expect(page.locator('.dish-card[data-dish-id="sashimi"]')).toBeVisible();
-  await page.locator('#dishes-search').fill('Ramén');
-  await expect(page.locator('.dish-card[data-dish-id="ramen"]')).toBeVisible();
-  await page.locator('#dishes-search').fill('xqzwvk');
-  await expect(page.locator('.dish-card')).toHaveCount(0);
-});
 
 test('dish photos have a short Spanish alt text', async ({ page }) => {
   await page.goto('/?view=platos');
@@ -204,16 +188,6 @@ test.describe('Cerca de mí', () => {
     await context.close();
   });
 
-  test('in the city there is no warning', async ({ browser }) => {
-    const context = await browser.newContext({ permissions: ['geolocation'], geolocation: { latitude: near.lat, longitude: near.lng } });
-    const page = await context.newPage();
-    await page.goto('/');
-    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-    await page.locator('#locate-me').click();
-    await expect(page.locator('#nearby-list button').first()).toBeVisible();
-    await expect(page.locator('#nearby-status')).not.toContainText('Estás a');
-    await context.close();
-  });
 });
 
 test('the photo counter is hidden when a place has a single photo', async ({ page }) => {

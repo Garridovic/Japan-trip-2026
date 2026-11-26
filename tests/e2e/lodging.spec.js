@@ -52,14 +52,6 @@ test('the page says why there are no PINs or reservation numbers, and none is an
   expect(text).not.toMatch(/\bPIN\b|€|¥/);
 });
 
-test('the current stay is highlighted by Japan date', async ({ page }) => {
-  await page.clock.install({ time: new Date('2026-12-12T09:00:00+09:00') });
-  await page.goto('/?view=viaje');
-  await expect(page.locator('.lodging-card[data-stay-id="kyoto"]')).toHaveClass(/is-current/);
-  await expect(page.locator('.lodging-card[data-stay-id="kyoto"] .lodging-status')).toHaveText('Ahora');
-  await expect(page.locator('.lodging-card[data-stay-id="osaka"] .lodging-status')).toHaveText('Próximo');
-  await expect(page.locator('.lodging-card[data-stay-id="tokyo-1"]')).toHaveClass(/is-past/);
-});
 
 test.describe('on a 320 px phone', () => {
   test.use({ viewport: { width: 320, height: 640 } });

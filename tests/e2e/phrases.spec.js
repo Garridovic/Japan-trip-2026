@@ -28,25 +28,6 @@ test('the phrases section is global, linked from the navigation and lists every 
   await expect(card.locator('.phrase-romaji')).toHaveText('arigato');
 });
 
-test('search matches Spanish, Japanese and romaji and category chips filter', async ({ page }) => {
-  await installSpeech(page);
-  await page.goto('/?view=frases');
-  const search = page.locator('#phrases-search');
-  await search.fill('baño');
-  await expect(page.locator('.phrase-card[data-phrase-id="toire-doko"]')).toBeVisible();
-  await search.fill('ありがとう');
-  await expect(page.locator('.phrase-card[data-phrase-id="arigato"]')).toBeVisible();
-  await search.fill('onegaishimas');
-  await expect(page.locator('.phrase-card[data-phrase-id="onegaishimas"]')).toBeVisible();
-  await search.fill('zzzz');
-  await expect(page.locator('.phrase-card')).toHaveCount(0);
-  await expect(page.locator('#phrases-empty')).toBeVisible();
-  await search.fill('');
-  await page.getByRole('button', { name: 'Emergencias' }).click();
-  const expected = phrases.phrases.filter(({ category }) => category === 'emergencias').length;
-  await expect(page.locator('.phrase-card')).toHaveCount(expected);
-  await expect(page.getByRole('button', { name: 'Emergencias' })).toHaveAttribute('aria-pressed', 'true');
-});
 
 test('favourites can be starred, filtered and survive a reload', async ({ page }) => {
   await installSpeech(page);

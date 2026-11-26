@@ -4,7 +4,13 @@ import { TILE_CACHE_NAME, tileUrl, describeSaveState, zoomRange } from './tiles.
 
 const PAUSE_MS = 120; // one tile at a time, politely
 
-export function initMapOffline({ button, status, progress, win = window, cacheStorage = win.caches, fetchFn = (...args) => win.fetch(...args), pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms)) }) {
+/**
+ * Pauses are multiplied by window.__tilePauseScale when a test sets it (e.g. 0 so a browser test does not wait
+ * minutes). Nothing sets it in the app, so in production the pauses are exactly PAUSE_MS.
+ */
+export const pauseScale = (win) => (typeof win.__tilePauseScale === 'number' && win.__tilePauseScale >= 0 ? win.__tilePauseScale : 1);
+
+export function initMapOffline({ button, status, progress, win = window, cacheStorage = win.caches, fetchFn = (...args) => win.fetch(...args), pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms * pauseScale(win))) }) {
   let plan = [];
   let city = 'la ciudad';
   let state = { kind: 'none', total: 0 };
