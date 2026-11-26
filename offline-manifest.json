@@ -1,7 +1,7 @@
 {
-  "version": "b6c0307495",
+  "version": "6e7aefa7fd",
   "sizes": {
-    "required": 654314,
+    "required": 653490,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -11,6 +11,7 @@
     "assets/icons/icon-512.png",
     "assets/icons/icon-maskable-512.png",
     "assets/styles.css",
+    "assets/theme.css",
     "assets/vendor/leaflet/LICENSE",
     "assets/vendor/leaflet/images/layers-2x.png",
     "assets/vendor/leaflet/images/layers.png",
@@ -24,7 +25,6 @@
     "data/cities/kyoto/events.json",
     "data/cities/kyoto/extras.json",
     "data/cities/kyoto/food.json",
-    "data/cities/kyoto/image-credits.json",
     "data/cities/kyoto/itinerary.json",
     "data/cities/kyoto/places.json",
     "data/cities/kyoto/restaurants.json",
@@ -62,6 +62,7 @@
     "js/modules/lodging-ui.js",
     "js/modules/lodging.js",
     "js/modules/map.js",
+    "js/modules/offline-texts.js",
     "js/modules/offline.js",
     "js/modules/overlay-history.js",
     "js/modules/phrases-ui.js",
@@ -71,6 +72,7 @@
     "js/modules/scrollspy.js",
     "js/modules/speech.js",
     "js/modules/tabs.js",
+    "js/modules/theme.js",
     "js/modules/tiles.js",
     "js/modules/version.js",
     "js/modules/views.js",

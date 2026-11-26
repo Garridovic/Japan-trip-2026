@@ -130,25 +130,35 @@ test('the saved copy is judged file by file: incomplete, essentials or ready', (
   assert.equal(stateFromReport(report({ required: 2, optional: 3 })).missing, 5);
 });
 
-test('the header chip says in plain words what is saved, with a short version for narrow phones', () => {
+test('the header chip says in plain words that the guide works without internet, with a short version for narrow phones', () => {
   const states = [{ kind: 'ready' }, { kind: 'essentials' }, { kind: 'saving', done: 5, total: 10 }, { kind: 'installing' }, { kind: 'incomplete', missing: 2 }, { kind: 'none' }];
   for (const state of states) {
-    const view = chipView(state);
-    assert.ok(view.label.length <= 34, `${state.kind}: label too long`);
-    assert.ok(view.short.length <= 17, `${state.kind}: short label must fit a 320 px header`);
-    assert.ok(view.tone && view.aria.length > 20);
-    assert.doesNotMatch(`${view.label} ${view.short} ${view.aria}`, /básico/i, 'the confusing word "Básico" is gone');
+    for (const online of [true, false]) {
+      const view = chipView(state, { online });
+      assert.ok(view.label.length <= 34, `${state.kind}: label too long`);
+      assert.ok(view.short.length <= 17, `${state.kind}: short label must fit a 320 px header`);
+      assert.ok(view.tone && view.aria.length > 20);
+      assert.doesNotMatch(`${view.label} ${view.short} ${view.aria}`, /básico|lista sin conexión/i, 'the confusing wording is gone');
+    }
   }
-  assert.deepEqual([chipView({ kind: 'ready' }).label, chipView({ kind: 'ready' }).tone], ['Lista sin conexión', 'ok']);
-  assert.deepEqual([chipView({ kind: 'essentials' }).label, chipView({ kind: 'essentials' }).tone], ['Sin conexión · fotos pendientes', 'partial']);
-  assert.equal(chipView({ kind: 'saving', done: 5, total: 10 }).label, 'Guardando… 50%');
+  assert.deepEqual([chipView({ kind: 'ready' }).label, chipView({ kind: 'ready' }).tone], ['Funciona sin internet', 'ok']);
+  assert.deepEqual([chipView({ kind: 'essentials' }).label, chipView({ kind: 'essentials' }).tone], ['Sin fotos grandes', 'partial']);
+  assert.equal(chipView({ kind: 'saving', done: 5, total: 10 }).label, 'Guardando 50%');
   assert.equal(chipView({ kind: 'saving', done: 5, total: 10 }).short, '50%');
-  assert.equal(chipView({ kind: 'incomplete', missing: 1 }).label, 'Copia incompleta · tocar');
+  assert.equal(chipView({ kind: 'incomplete', missing: 1 }).label, 'Descarga incompleta');
   assert.equal(chipView({ kind: 'incomplete', missing: 1 }).tone, 'error');
-  assert.equal(chipView({ kind: 'none' }).label, 'Sin copia · descargar');
-  assert.equal(chipView({ kind: 'ready' }).short, 'Sin conexión');
-  assert.equal(chipView({ kind: 'essentials' }).short, 'Fotos pendientes');
+  assert.equal(chipView({ kind: 'none' }).label, 'Descargar guía');
+  assert.equal(chipView({ kind: 'ready' }).short, 'Sin internet');
   assert.equal(chipView({ kind: 'unsupported' }), null, 'no chip where nothing can be saved');
+});
+
+test('with no network right now, a saved guide says so in blue instead of pretending nothing happened', () => {
+  for (const kind of ['ready', 'essentials']) {
+    const view = chipView({ kind }, { online: false });
+    assert.equal(view.tone, 'net');
+    assert.equal(view.label, 'Sin red · guía guardada');
+  }
+  assert.equal(chipView({ kind: 'none' }, { online: false }).tone, 'none', 'no copy: nothing to promise');
 });
 
 test('the popover offers the right actions for each state', () => {

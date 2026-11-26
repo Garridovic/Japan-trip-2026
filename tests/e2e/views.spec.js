@@ -4,10 +4,10 @@ import { kyoto, SVG_MARKERS } from './helpers.js';
 const bar = (page) => page.locator('#app-bar');
 const button = (page, view) => page.locator(`[data-view-target="${view}"]`);
 
-test('the bottom bar has Guía, Viaje, Frases and Platos and starts on the guide', async ({ page }) => {
+test('the bottom bar has Guía, Viaje, a central Mapa button, Frases and Platos and starts on the guide', async ({ page }) => {
   await page.goto('/');
   await expect(bar(page)).toBeVisible();
-  await expect(bar(page).getByRole('button')).toHaveText([/Guía/, /Viaje/, /Frases/, /Platos/]);
+  await expect(bar(page).getByRole('button')).toHaveText([/Guía/, /Viaje/, /Mapa/, /Frases/, /Platos/]);
   await expect(button(page, 'guia')).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('#city-view')).toBeVisible();
   await expect(page.locator('#view-frases')).toBeHidden();

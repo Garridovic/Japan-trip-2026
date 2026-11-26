@@ -142,7 +142,7 @@ test.describe('offline indicator in the header', () => {
     await expect(chip(page)).toHaveAttribute('data-tone', 'partial');
     await chip(page).click();
     await expect(popover(page)).toBeVisible();
-    await expect(chip(page)).toContainText('Sin conexión · fotos pendientes');
+    await expect(chip(page)).toContainText('Sin fotos grandes');
     await expect(popover(page)).toContainText('Guía guardada para usarla sin internet. Faltan las fotos grandes');
     await expect(popover(page).locator('#offline-facts')).toContainText('Copia guardada');
     await expect(popover(page).locator('#offline-facts')).toContainText('V');
@@ -151,7 +151,7 @@ test.describe('offline indicator in the header', () => {
     await popover(page).locator('#offline-download-all').click();
     await expect.poll(() => stateOf(page), { timeout: 60_000 }).toBe('ready');
     await expect(chip(page)).toHaveAttribute('data-tone', 'ok');
-    await expect(chip(page)).toContainText('Lista sin conexión');
+    await expect(chip(page)).toContainText('Funciona sin internet');
     await expect(popover(page)).toContainText('Todo guardado para usar sin internet');
     await expect(popover(page).locator('#offline-download-all')).toBeHidden();
     const files = await popover(page).locator('#offline-facts').textContent();
@@ -171,7 +171,7 @@ test.describe('offline indicator in the header', () => {
     await chip(page).click(); // opening the popover re-checks the cache
     await expect.poll(() => stateOf(page)).toBe('incomplete');
     await expect(chip(page)).toHaveAttribute('data-tone', 'error');
-    await expect(chip(page)).toContainText('Copia incompleta · tocar');
+    await expect(chip(page)).toContainText('Descarga incompleta');
     await expect(popover(page)).toContainText('La copia guardada está incompleta');
     await expect(popover(page)).toContainText('Faltan 2 archivos');
     await popover(page).locator('#offline-retry').click();
@@ -213,7 +213,7 @@ test.describe('offline indicator in the header', () => {
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
     }
     await expect(page.locator('#top-bar-title')).toBeVisible(); // Platos has no city tabs: the header shows the app name
-    await expect(chip(page)).toContainText('Fotos pendientes'); // short text on a 320 px phone
+    await expect(chip(page)).toContainText('Sin fotos HD'); // short text on a 320 px phone
     await context.setOffline(true);
     await expect(page.locator('#offline-banner')).toBeVisible();
     await expect(chip(page)).toBeVisible();
@@ -260,7 +260,7 @@ test.describe('offline indicator in the header', () => {
     await popover(page).locator('#offline-close').click();
     await expect(popover(page)).toBeHidden();
     await chip(page).click();
-    await page.locator('.app-bar').click({ position: { x: 5, y: 5 } });
+    await page.locator('.app-bar').click({ position: { x: 40, y: 6 } });
     await expect(popover(page)).toBeHidden();
   });
 
@@ -290,7 +290,7 @@ test.describe('chip text and layout', () => {
     await page.setViewportSize({ width: 430, height: 800 });
     await expect(page.locator('.offline-chip-label')).toBeVisible();
     await expect(page.locator('.offline-chip-short')).toBeHidden();
-    await expect(page.locator('#offline-chip')).toContainText('Sin conexión · fotos pendientes');
+    await expect(page.locator('#offline-chip')).toContainText('Sin fotos grandes');
     const wide = await page.locator('#offline-chip').boundingBox();
     expect(wide.x + wide.width).toBeLessThanOrEqual(430);
   });

@@ -63,14 +63,14 @@ test('the current stay is highlighted by Japan date', async ({ page }) => {
 
 test.describe('on a 320 px phone', () => {
   test.use({ viewport: { width: 320, height: 640 } });
-  test('cards fit, tap targets are 44 px and the four-button bar fits', async ({ page }) => {
+  test('cards fit, tap targets are 44 px and the five-button bar fits', async ({ page }) => {
     await page.goto('/?view=viaje');
     await expect(page.locator('.lodging-card').first()).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
     for (const selector of ['.lodging-map', '.lodging-copy']) expect((await page.locator(selector).first().boundingBox()).height).toBeGreaterThanOrEqual(44);
     const bar = await page.locator('#app-bar').boundingBox();
     expect(bar.width).toBeLessThanOrEqual(320);
-    for (const button of await page.locator('.app-bar-button').all()) expect((await button.boundingBox()).width).toBeGreaterThanOrEqual(64);
+    for (const button of await page.locator('.app-bar-button').all()) expect((await button.boundingBox()).width).toBeGreaterThanOrEqual(56);
     // the bar does not cover the last card
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
     const last = await page.locator('#lodging-privacy').boundingBox();

@@ -17,6 +17,7 @@ import { initOffline } from './modules/offline.js';
 import { initLodging } from './modules/lodging-ui.js';
 import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
+import { initTheme } from './modules/theme.js';
 
 const status = byId('app-status');
 const showStatus = (message, isError = false) => {
@@ -30,6 +31,7 @@ initOverlayHistory(); // registered first so overlays handle Back before navigat
 initCollapsibles();
 initDayLinks();
 initOffline();
+initTheme();
 
 async function start() {
   const [journey, global] = await Promise.all([loadJourney(), loadGlobalContent()]);
@@ -113,6 +115,11 @@ async function start() {
     // A change of #anchor on the same page is not navigation: leave the scroll position to the browser.
     if (viewFromSearch(window.location.search) === activeView && cityFromLocation() === activeCityId) return;
     applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation());
+  });
+  // Centre button of the bar: the map lives inside the guide, so go there first (from any view) and scroll to it.
+  document.querySelector('[data-action="map"]')?.addEventListener('click', async () => {
+    if (activeView !== 'guia') await navigateView('guia');
+    document.getElementById('mapa')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   });
   views.setActive(activeView);
   await showCity(cityFromLocation());

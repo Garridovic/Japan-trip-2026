@@ -1,6 +1,7 @@
 // Offline support: registers the service worker, verifies that the saved copy is really complete,
 // shows its state in a header chip and offers a small popover (download everything, retry, check, delete).
 // Recovery fallback: ?reset-offline.
+import { OFFLINE_TEXTS } from './offline-texts.js';
 export const RESET_PARAM = 'reset-offline';
 
 /** Wifi or ethernet are the only links where downloading the bigger photos by itself is polite. */
@@ -34,17 +35,19 @@ export function stateFromReport(report) {
  * What the header chip shows for a state. `label` is the full text; `short` is used when the header is narrow
  * (the CSS switches at 420 px) so it never overlaps the city tabs on a 320 px phone.
  */
-export function chipView(state) {
+export function chipView(state, { online = true } = {}) {
+  const T = OFFLINE_TEXTS;
+  const view = (key, icon, tone, extra = {}) => ({ icon, label: T[key].label, short: T[key].short, tone, aria: T[key].aria, ...extra });
   switch (state.kind) {
-    case 'ready': return { icon: '✓', label: 'Lista sin conexión', short: 'Sin conexión', tone: 'ok', aria: 'Guía lista para usar sin conexión: todo guardado' };
-    case 'essentials': return { icon: '✓', label: 'Sin conexión · fotos pendientes', short: 'Fotos pendientes', tone: 'partial', aria: 'Guía guardada para usar sin conexión, faltan las fotos grandes' };
+    case 'ready': return online ? view('ready', '✓', 'ok') : view('network', '✓', 'net');
+    case 'essentials': return online ? view('essentials', '✓', 'partial') : view('network', '✓', 'net');
     case 'saving': {
-      const percent = state.total ? ` ${Math.round((state.done / state.total) * 100)}%` : '…';
-      return { icon: '⬇', label: `Guardando${state.total ? '…' : ''}${percent}`.replace('……', '…'), short: state.total ? `${Math.round((state.done / state.total) * 100)}%` : '…', tone: 'busy', aria: 'Descargando la guía para usarla sin conexión' };
+      const percent = state.total ? `${Math.round((state.done / state.total) * 100)}%` : '…';
+      return view('saving', '⬇', 'busy', { label: `${T.saving.label} ${percent}`, short: percent });
     }
-    case 'installing': return { icon: '⬇', label: 'Guardando…', short: '…', tone: 'busy', aria: 'Guardando la guía para usarla sin conexión' };
-    case 'incomplete': return { icon: '⚠', label: 'Copia incompleta · tocar', short: 'Incompleta', tone: 'error', aria: 'La copia para usar sin conexión está incompleta: toca para repararla' };
-    case 'none': return { icon: '☁', label: 'Sin copia · descargar', short: 'Sin copia', tone: 'none', aria: 'Todavía no hay copia para usar sin conexión: toca para descargarla' };
+    case 'installing': return view('installing', '⬇', 'busy');
+    case 'incomplete': return view('incomplete', '⚠', 'error');
+    case 'none': return view('none', '☁', 'none');
     default: return null; // unsupported: no chip
   }
 }
@@ -101,7 +104,7 @@ export async function initOffline({ win = window, doc = document } = {}) {
   const send = (type) => worker()?.postMessage({ type });
 
   function render() {
-    const view = chipView(state);
+    const view = chipView(state, { online: nav.onLine !== false });
     chip.hidden = !view;
     if (view) {
       chip.dataset.state = state.kind;
