@@ -21,6 +21,9 @@ export function initMap({ openDetail }) {
   const userLocationLayer = L.layerGroup().addTo(map);
 
   const visited = visitedStore();
+  const inMapView = () => document.body.dataset.view === 'mapa';
+  const routeLayer = L.layerGroup().addTo(map);
+  let routeOn = false;
   const visitButtons = new Map(); // point id -> popup button, repainted when the mark changes
 
   // Active city state
@@ -109,6 +112,8 @@ export function initMap({ openDetail }) {
         color: '#fff', weight: 2, fillColor: color, fillOpacity: 0.95
       });
     marker.bindPopup(buildPopup(point));
+    // In the full-screen map the place goes to the bottom card instead of a popup.
+    marker.on('popupopen', () => { if (inMapView()) { marker.closePopup(); selectPoint(point); } });
     marker.bindTooltip(point.name, { direction: 'top', offset: [0, -7] });
     return marker;
   }
@@ -137,6 +142,31 @@ export function initMap({ openDetail }) {
   };
   const filteredPoints = () => points.filter((point) => visibleForFilter(point, currentFilter) && visibleForKind(point, currentKindFilter));
 
+  /** Day route: the day's stops joined in order (only when a single day is filtered). */
+  const routeStops = () => (/^\d+$/.test(currentFilter)
+    ? points.filter((point) => visibleForFilter(point, currentFilter) && point.type !== 'restaurant' && point.type !== 'hotel')
+    : []);
+  function paintRoute() {
+    routeLayer.clearLayers();
+    const stops = routeStops();
+    if (!routeOn || stops.length < 2) return;
+    const color = markerColorForPoint(stops[0]);
+    routeLayer.addLayer(L.polyline(stops.map((stop) => [stop.lat, stop.lng]), { color, weight: 4, opacity: 0.75, dashArray: '2 8', lineCap: 'round' }));
+    stops.forEach((stop, i) => routeLayer.addLayer(L.marker([stop.lat, stop.lng], {
+      interactive: false, zIndexOffset: 500,
+      icon: L.divIcon({ className: 'route-number', html: `<span style="--marker-color:${color}">${i + 1}</span>`, iconSize: [22, 22], iconAnchor: [11, 11] })
+    })));
+  }
+  /** Bottom card of the full-screen map: the place, its actions and the nearest places as a carousel. */
+  function selectPoint(point) {
+    const nearest = points
+      .filter((other) => other.id !== point.id && other.day !== 'extra')
+      .map((other) => ({ other, km: distanceKm(point, other) }))
+      .sort((a, b) => a.km - b.km).slice(0, 6)
+      .map(({ other, km }) => ({ point: other, label: formatDistance(km) }));
+    document.dispatchEvent(new CustomEvent('map:select', { detail: { point, content: buildPopup(point), nearby: nearest } }));
+  }
+
   function refreshMapPoints() {
     const visiblePoints = filteredPoints();
     markerLayer.clearLayers();
@@ -158,6 +188,7 @@ export function initMap({ openDetail }) {
       map.fitBounds(bounds.pad(0.12));
     }
     if (userLatLng) renderNearby();
+    paintRoute();
     announce();
   }
 
@@ -174,7 +205,7 @@ export function initMap({ openDetail }) {
       visitedSummary.textContent = count.total ? `${count.done} de ${count.total} lugares visitados` : '';
       visitedSummary.dataset.done = String(count.done);
     }
-    document.dispatchEvent(new CustomEvent('map:state', { detail: { visited: count, filters: activeFilters() } }));
+    document.dispatchEvent(new CustomEvent('map:state', { detail: { visited: count, filters: activeFilters(), route: { available: routeStops().length >= 2, on: routeOn } } }));
   }
   visited.subscribe(({ id }) => {
     const point = points.find((item) => item.id === id);
@@ -347,6 +378,8 @@ export function initMap({ openDetail }) {
       markerByKey = new Map(points.map((point) => [cityKey(cityId, point.id), buildMarker(point)]));
       currentFilter = 'todos';
       currentKindFilter = 'todos';
+      routeOn = false;
+      routeLayer.clearLayers();
       setPressed(kindButtons, (button) => button.dataset.mapKind === 'todos');
       renderDayFilters();
       renderLegend();
@@ -361,6 +394,10 @@ export function initMap({ openDetail }) {
     /** After the map moves into the full-screen view: re-measure and fit the visible points again. */
     refit() { map.invalidateSize(); refreshMapPoints(); },
     /** Removes one active filter ('day' or 'kind'), used by the chips over the full-screen map. */
+    /** Shows or hides the day route; returns whether it is on. */
+    setRoute(on) { routeOn = Boolean(on); paintRoute(); announce(); return routeOn; },
+    /** Opens the card of a place (used by the carousel). */
+    select(id) { const point = points.find((item) => item.id === id); if (!point) return; map.panTo([point.lat, point.lng]); selectPoint(point); },
     clearFilter(key) { if (key === 'day') applyMapFilter('todos'); else if (key === 'kind') applyMapKindFilter('todos'); },
     announce
   };

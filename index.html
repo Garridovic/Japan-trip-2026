@@ -294,8 +294,14 @@
       <button type="button" class="map-view-button" data-map-sheet="filters" aria-expanded="false" id="map-filters-button">Filtros</button>
       <button type="button" class="map-view-button" data-map-sheet="nearby" aria-expanded="false">Cerca de mí</button>
       <button type="button" class="map-view-button" data-map-sheet="offline" aria-expanded="false">Sin conexión</button>
+      <button type="button" class="map-view-button" id="map-route-button" aria-pressed="false" hidden>Ruta del día</button>
       <div class="map-active-filters" id="map-active-filters" role="group" aria-label="Filtros activos"></div>
     </div>
+    <section class="map-card" id="map-card" aria-label="Lugar seleccionado" hidden>
+      <button type="button" class="map-card-close" id="map-card-close" aria-label="Cerrar">✕</button>
+      <div class="map-card-body" id="map-card-body"></div>
+      <div class="map-card-nearby" id="map-card-nearby" role="group" aria-label="Lugares cercanos"></div>
+    </section>
     <section class="map-sheet" id="map-sheet" role="dialog" aria-labelledby="map-sheet-title" hidden>
       <div class="map-sheet-grab" aria-hidden="true"></div>
       <header class="map-sheet-header"><h2 id="map-sheet-title">Filtros del mapa</h2><button type="button" class="filter" id="map-sheet-close">Cerrar</button></header>

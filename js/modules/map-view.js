@@ -55,6 +55,7 @@ export function initMapView({ map, doc = document }) {
 
   function showSheet(name) {
     if (openSheet === name) { closeSheet(); return; }
+    hideCard();
     const wasOpen = Boolean(openSheet);
     openSheet = name;
     sheetTitle.textContent = SHEETS[name];
@@ -84,7 +85,31 @@ export function initMapView({ map, doc = document }) {
     chips.replaceChildren(...filters.map(({ key, label }) => h('button', { type: 'button', class: 'map-chip', 'aria-label': `Quitar filtro ${label}`, onclick: () => map.clearFilter(key) }, `${label} ✕`)));
     byId('map-view-title').textContent = `Mapa de ${cityName}${visited.total ? ` · ${visited.done}/${visited.total}` : ''}`;
   }
-  doc.addEventListener('map:state', (event) => { lastState = event.detail; paintState(); });
+  const routeButton = byId('map-route-button');
+  const paintRouteButton = () => {
+    const { route } = lastState;
+    routeButton.hidden = !route?.available;
+    routeButton.setAttribute('aria-pressed', String(Boolean(route?.on)));
+  };
+  routeButton.addEventListener('click', () => map.setRoute(routeButton.getAttribute('aria-pressed') !== 'true'));
+  doc.addEventListener('map:state', (event) => { lastState = event.detail; paintState(); paintRouteButton(); });
+
+  // Bottom card for the selected place, with the nearest places as a carousel.
+  const card = byId('map-card');
+  const cardBody = byId('map-card-body');
+  const cardNearby = byId('map-card-nearby');
+  const hideCard = () => { card.hidden = true; cardBody.replaceChildren(); cardNearby.replaceChildren(); };
+  byId('map-card-close').addEventListener('click', hideCard);
+  doc.addEventListener('map:select', (event) => {
+    if (!inside) return;
+    const { point, content, nearby } = event.detail;
+    if (openSheet) closeSheet();
+    cardBody.replaceChildren(content);
+    cardNearby.replaceChildren(...nearby.map((item) => h('button', { type: 'button', class: 'map-near-chip', onclick: () => map.select(item.point.id) },
+      h('strong', {}, item.point.name), h('span', {}, item.label))));
+    card.hidden = false;
+    card.scrollTop = 0;
+  });
 
   function enter() {
     if (inside) return;
@@ -100,6 +125,7 @@ export function initMapView({ map, doc = document }) {
   function leave() {
     if (!inside) return;
     closeSheet();
+    hideCard();
     inside = false;
     [...moves].reverse().forEach(({ home }) => restoreHome(home));
     filtersDetails.open = filtersWereOpen;
@@ -108,6 +134,7 @@ export function initMapView({ map, doc = document }) {
 
   return {
     /** Called whenever the active view changes (and once at start). */
+    hideCard() { hideCard(); },
     sync(activeView) { if (activeView === 'mapa') enter(); else leave(); },
     isOpen: () => inside
   };

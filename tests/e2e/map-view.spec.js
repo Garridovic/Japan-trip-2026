@@ -111,7 +111,7 @@ test.describe('full-screen map view', () => {
     const [bar, canvas] = await Promise.all([page.locator('#app-bar').boundingBox(), page.locator('#city-map').boundingBox()]);
     expect(canvas.y + canvas.height).toBeLessThanOrEqual(bar.y + bar.height);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
-    for (const button of await page.locator('.map-view-button').all()) {
+    for (const button of await page.locator('.map-view-button:visible').all()) {
       const b = await button.boundingBox();
       expect(b.x + b.width).toBeLessThanOrEqual(320);
       expect(b.height).toBeGreaterThanOrEqual(44);

@@ -72,8 +72,8 @@ test.describe('taxi mode', () => {
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     expect(kyoto.places[0].type).toBe('hotel');
     await page.locator(SVG_MARKERS).nth(0).dispatchEvent('click');
-    await expect(page.locator('.leaflet-popup .taxi-button')).toBeVisible();
-    await page.locator('.popup-detail-button').first().click();
+    await expect(page.locator('#map-card .taxi-button')).toBeVisible();
+    await page.locator('#map-card .popup-detail-button').click();
     await expect(page.locator('#poi-taxi')).toBeVisible();
     await page.locator('#poi-taxi').click();
     await expect(page.locator('#taxi-show .taxi-es')).toContainText('Agora Kyoto Karasuma');
@@ -83,9 +83,9 @@ test.describe('taxi mode', () => {
     await page.goto('/?view=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
-    await expect(page.locator('.leaflet-popup .popup-title')).toBeVisible();
-    await expect(page.locator('.leaflet-popup .taxi-button')).toHaveCount(0);
-    await page.locator('.popup-detail-button').first().click();
+    await expect(page.locator('#map-card .popup-title')).toBeVisible();
+    await expect(page.locator('#map-card .taxi-button')).toHaveCount(0);
+    await page.locator('#map-card .popup-detail-button').click();
     await expect(page.locator('#poi-taxi')).toBeHidden();
   });
 
@@ -208,18 +208,18 @@ test.describe('feedback and loading (V12.6)', () => {
     await page.goto('/?view=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
-    await page.locator('.popup-visit-button').first().click();
+    await page.locator('#map-card .popup-visit-button').click();
     const toast = page.locator('.toast');
     await expect(toast).toContainText('Marcado como visitado');
     await toast.getByRole('button', { name: 'Deshacer' }).click();
-    await expect(page.locator('.popup-visit-button').first()).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('#map-card .popup-visit-button')).toHaveAttribute('aria-pressed', 'false');
   });
 
   test('the toast sits above the bottom bar and disappears by itself', async ({ page }) => {
     await page.goto('/?view=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
-    await page.locator('.popup-visit-button').first().click();
+    await page.locator('#map-card .popup-visit-button').click();
     const toast = page.locator('.toast');
     await page.waitForTimeout(400); // let the entrance animation finish
     const bar = await page.locator('.app-bar').boundingBox();
@@ -297,5 +297,63 @@ test.describe('global search (V12.6)', () => {
     await page.goBack();
     await expect(page.locator('#search-sheet')).toBeHidden();
     await expect(page).toHaveURL(/view=viaje/);
+  });
+});
+
+test.describe('map card and day route (V12.6)', () => {
+  test('tapping a marker in the full-screen map opens the bottom card, not a popup', async ({ page }) => {
+    await page.goto('/?view=mapa');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
+    const card = page.locator('#map-card');
+    await expect(card).toBeVisible();
+    await expect(card.locator('.popup-title')).toHaveText(kyoto.places[1].name);
+    await expect(page.locator('.leaflet-popup')).toHaveCount(0);
+    await expect(card.locator('a', { hasText: 'Cómo llegar' })).toHaveAttribute('href', /^https:\/\//);
+    await card.getByRole('button', { name: 'Cerrar' }).click();
+    await expect(card).toBeHidden();
+  });
+
+  test('the card lists nearby places as a carousel and tapping one switches the card', async ({ page }) => {
+    await page.goto('/?view=mapa');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
+    const chips = page.locator('#map-card .map-near-chip');
+    expect(await chips.count()).toBeGreaterThanOrEqual(3);
+    const first = await chips.first().locator('strong').innerText();
+    await chips.first().click();
+    await expect(page.locator('#map-card .popup-title')).toHaveText(first);
+  });
+
+  test('opening the filters sheet hides the card; the guide map still uses popups', async ({ page }) => {
+    await page.goto('/?view=mapa');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
+    await expect(page.locator('#map-card')).toBeVisible();
+    await page.locator('#map-filters-button').click();
+    await expect(page.locator('#map-card')).toBeHidden();
+    await page.goto('/');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
+    await expect(page.locator('.leaflet-popup')).toBeVisible();
+  });
+
+  test('the day route button appears only with a single day filtered and draws numbered stops', async ({ page }) => {
+    await page.goto('/?view=mapa');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    const button = page.locator('#map-route-button');
+    await expect(button).toBeHidden();
+    await page.locator('#map-filters-button').click();
+    await page.locator('.map-filter[data-map-filter="12"]').click();
+    await expect(button).toBeVisible();
+    await button.click();
+    await expect(button).toHaveAttribute('aria-pressed', 'true');
+    const stops = kyoto.places.filter((p) => String(p.day) === '12' && p.type !== 'restaurant' && p.type !== 'hotel').length;
+    await expect(page.locator('.route-number')).toHaveCount(stops);
+    await expect(page.locator('.route-number').first()).toHaveText('1');
+    await button.click();
+    await expect(page.locator('.route-number')).toHaveCount(0);
+    await page.locator('.map-filter[data-map-filter="todos"]').click();
+    await expect(button).toBeHidden();
   });
 });
