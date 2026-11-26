@@ -13,7 +13,7 @@ test('city tabs switch the whole context and Kyoto is restored intact', async ({
   await page.goto('/');
 
   const options = await openCities(page);
-  await expect(options).toHaveText(['Kioto', 'Testville', 'Osaka']);
+  await expect(options).toHaveText(['Kioto', 'Testville', 'Osaka', 'Tokio']);
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
 
   await selectCity(page, 'Testville');
