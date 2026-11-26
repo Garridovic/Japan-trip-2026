@@ -20,6 +20,16 @@ jobs:
           node-version: 22
       - run: npm install --no-package-lock
       - run: npm run prepare:images
+      - name: Upload image preparation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-preparation-report
+          path: |
+            image-preparation-report.md
+            image-preparation-report.json
+          if-no-files-found: warn
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
           name: prepared-site

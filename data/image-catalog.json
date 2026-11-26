@@ -36,8 +36,9 @@
     },
     {
       "id": "sannenzaka",
-      "query": "Sannenzaka Ninenzaka Kyoto historic street",
-      "count": 1
+      "query": "Sannei-zaka Sannenzaka Kyoto Japan",
+      "count": 1,
+      "category": "Category:Sannei-zaka"
     },
     {
       "id": "yasaka",

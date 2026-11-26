@@ -8,7 +8,7 @@ test('the guide loads its map and all map markers', async ({ page }) => {
   await expect(page.locator('#kyoto-map')).toBeVisible();
   await expect(page.locator('.leaflet-overlay-pane svg path')).toHaveCount(32, { timeout: 20_000 });
   await expect(page.locator('.restaurant-map-marker')).toHaveCount(20);
-  await expect(page.locator('#version-indicator')).toContainText('V9');
+  await expect(page.locator('#version-indicator')).toContainText('V10.3');
   expect(pageErrors).toEqual([]);
 });
 

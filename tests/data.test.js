@@ -5,6 +5,7 @@ import restaurants from '../data/restaurants.json' with { type: 'json' };
 import details from '../data/details.json' with { type: 'json' };
 import events from '../data/events.json' with { type: 'json' };
 import version from '../data/version.json' with { type: 'json' };
+import imageCatalog from '../data/image-catalog.json' with { type: 'json' };
 
 const isValidCoordinate = (lat, lng) =>
   Number.isFinite(lat) && lat >= -90 && lat <= 90 &&
@@ -48,7 +49,7 @@ test('event plan has a start, finish and route stops', () => {
 });
 
 test('application version metadata is present', () => {
-  assert.match(version.version, /^V\d+$/);
+  assert.match(version.version, /^V\d+\.\d+$/);
   assert.ok(version.updated);
 });
 
@@ -58,8 +59,10 @@ test('all generated place photos use local responsive assets with credits', asyn
   const { resolve } = await import('node:path');
   const credits = JSON.parse(await readFile(new URL('../data/image-credits.json', import.meta.url), 'utf8'));
   const photoRecords = details.flatMap(({ id, photos }) => photos.map((photo) => ({ id, photo })));
-  assert.ok(photoRecords.length > 0, 'Image preparation must produce local photos');
   assert.equal(photoRecords.length, credits.length, 'Every photo must have a credit record');
+  const report = JSON.parse(await readFile(new URL('../image-preparation-report.json', import.meta.url), 'utf8'));
+  assert.equal(report.placesChecked, imageCatalog.places.length);
+  assert.ok(Array.isArray(report.issues), 'Image preparation report must include an issues array');
 
   for (const { id, photo } of photoRecords) {
     assert.equal(typeof photo, 'object', `Photo for ${id} must contain responsive image metadata`);

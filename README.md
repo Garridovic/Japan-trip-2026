@@ -66,6 +66,15 @@ npm run test:e2e
 
 `data/image-catalog.json` contains the curated place-specific Commons search terms and image counts. The preparation script uses the Wikimedia Commons API to select reusable files, downloads them, creates 480/960/1600px WebP variants in `assets/images/`, writes local responsive photo references to `data/details.json`, and generates `data/image-credits.json`.
 
-The workflow uploads one prepared-site artifact. Unit tests and Playwright validate that exact artifact, and GitHub Pages deploys that same artifact only after both test jobs pass. If Commons cannot provide enough appropriately licensed high-resolution images, preparation fails and deployment is skipped.
+The workflow uploads one prepared-site artifact. Unit tests and Playwright validate that exact artifact, and GitHub Pages deploys that same artifact only after both test jobs pass. If Commons cannot provide enough appropriately licensed high-resolution images for a place, preparation records a warning and continues. The workflow uploads `image-preparation-report` as a downloadable artifact (Markdown and JSON) for 30 days. Missing photos do not block deployment; browser and data tests still must pass.
 
 Only Public Domain, CC0, CC BY and CC BY-SA licenses are accepted. Images with NonCommercial or NoDerivatives restrictions are excluded. Attribution metadata is retained in `data/image-credits.json`.
+
+
+### Image search fallback (V10.2)
+
+### Version display and tolerant image preparation (V10.3)
+
+The visible version indicator reads the full version (for example `V10.3`) from `data/version.json`. Image search, download and conversion failures are recorded per place in `image-preparation-report.md` and `.json`; they do not stop image preparation or deployment. The GitHub Actions run publishes these reports as the `image-preparation-report` artifact, available for 30 days.
+
+The image preparation script searches Wikimedia Commons by text and, when needed, by the configured Commons category. It still validates dimensions, MIME type and reusable license metadata before downloading.
