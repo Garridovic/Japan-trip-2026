@@ -8,14 +8,19 @@ const read = async (file) => JSON.parse(await readFile(new URL(`../${file}`, imp
 const global = await read('data/global/tips.json');
 const journey = await read('data/journey.json');
 const cities = journey.cities.filter(({ enabled }) => enabled);
-const cityTips = new Map(await Promise.all(cities.map(async ({ id }) => [id, await read(`data/cities/${id}/tips.json`)])));
+// A city without friend tips yet (for example Tokyo, which only has extras) simply has no tips.json, as in the app.
+const cityTips = new Map((await Promise.all(cities.map(async ({ id }) =>
+  [id, await read(`data/cities/${id}/tips.json`).catch(() => null)]))).filter(([, data]) => data));
 
 test('the real tips data is valid (categories, unique ids, texts, https links, sources)', () => {
   assert.deepEqual(validateTips(global.practical, cityTips), []);
 });
 
-test('every enabled city has a tips file', () => {
-  cities.forEach(({ id }) => assert.ok(cityTips.get(id)?.items?.length > 0, `${id} has no tips`));
+test('every city with an itinerary has a tips file', async () => {
+  for (const { id } of cities) {
+    const { days } = await read(`data/cities/${id}/itinerary.json`);
+    if (days.length > 0) assert.ok(cityTips.get(id)?.items?.length > 0, `${id} has no tips`);
+  }
 });
 
 test('global tips are not repeated inside a city file and vice versa', () => {

@@ -16,6 +16,13 @@
       "enabled": true,
       "arrivalDate": "2026-12-15",
       "departureDate": "2026-12-17"
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokio",
+      "enabled": true,
+      "arrivalDate": "2026-12-08",
+      "departureDate": "2026-12-22"
     }
   ],
   "connections": [

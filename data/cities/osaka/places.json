@@ -118,5 +118,16 @@
     "type": "itinerary",
     "desc": "Gran santuario con el puente arqueado Sorihashi. Visita extra opcional la mañana del 17.",
     "query": "Sumiyoshi Taisha Osaka"
+  },
+  {
+    "id": "kaiyukan",
+    "name": "Acuario Kaiyukan (visita extra)",
+    "lat": 34.65514,
+    "lng": 135.42876,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "extra",
+    "desc": "Uno de los acuarios más grandes del mundo, con el tanque del tiburón ballena. Visita extra opcional, en el puerto de Osaka.",
+    "query": "Osaka Aquarium Kaiyukan"
   }
 ]
