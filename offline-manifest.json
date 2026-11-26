@@ -1,9 +1,9 @@
 {
-  "version": "98bbc2d2b9",
+  "version": "2d5d133279",
   "sizes": {
-    "required": 882724,
-    "optional": 4066138,
-    "warm": 14431338
+    "required": 912180,
+    "optional": 3612410,
+    "warm": 12657692
   },
   "required": [
     "assets/auth-config.js",
@@ -28,6 +28,7 @@
     "data/cities/kyoto/events.json",
     "data/cities/kyoto/extras.json",
     "data/cities/kyoto/food.json",
+    "data/cities/kyoto/image-credits.json",
     "data/cities/kyoto/itinerary.json",
     "data/cities/kyoto/places.json",
     "data/cities/kyoto/restaurants.json",
@@ -211,6 +212,7 @@
     "assets/images/kyoto/sannenzaka-1-480.webp",
     "assets/images/kyoto/tenryuji-1-480.webp",
     "assets/images/kyoto/togetsu-1-480.webp",
+    "assets/images/kyoto/toji-1-480.webp",
     "assets/images/kyoto/yasaka-1-480.webp",
     "assets/images/manga-1-480.webp",
     "assets/images/monkey-1-480.webp",
@@ -333,6 +335,7 @@
     "assets/images/kyoto/sannenzaka-1-960.webp",
     "assets/images/kyoto/tenryuji-1-960.webp",
     "assets/images/kyoto/togetsu-1-960.webp",
+    "assets/images/kyoto/toji-1-960.webp",
     "assets/images/kyoto/yasaka-1-960.webp",
     "assets/images/manga-1-960.webp",
     "assets/images/monkey-1-960.webp",
