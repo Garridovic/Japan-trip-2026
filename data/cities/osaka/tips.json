@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "id": "platos",
+      "title": "Okonomiyaki y oden",
+      "text": "Dos platos para probar en Osaka: el okonomiyaki (tortilla-crepe a la plancha) y el oden (caldo con ingredientes cocidos).",
+      "source": "Consejo de un amigo"
+    },
+    {
+      "id": "ookini",
+      "title": "«Ookini» en vez de «arigato»",
+      "text": "En Osaka se da las gracias con «ookini». A los locales les gusta oírlo.",
+      "source": "Consejo de un amigo",
+      "links": [
+        {
+          "label": "Osaka Info",
+          "href": "https://osaka-info.jp/en/"
+        }
+      ]
+    }
+  ]
+}

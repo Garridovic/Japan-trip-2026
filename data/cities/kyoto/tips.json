@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "id": "fushimi-sin-prisa",
+      "title": "Fushimi Inari, sin prisa",
+      "text": "Merece la pena recorrerlo con calma: puestos de comida, el tofu del dios zorro y templos pequeños fuera del camino principal. En los alrededores hay buen matcha y helado.",
+      "source": "Consejo de un amigo"
+    },
+    {
+      "id": "maiko",
+      "title": "Espectáculo de maikos",
+      "text": "Hay espectáculos con maikos (aprendices de geisha). Conviene reservar con tiempo.",
+      "source": "Consejo de un amigo",
+      "verify": true
+    },
+    {
+      "id": "reservas",
+      "title": "Reserva en muchos sitios",
+      "text": "Bastantes restaurantes y experiencias de Kioto requieren reserva previa. No lo dejes para el mismo día.",
+      "source": "Consejo de un amigo",
+      "verify": true
+    },
+    {
+      "id": "zonas-restringidas",
+      "title": "Zonas con acceso restringido",
+      "text": "En algunos barrios históricos hay calles privadas donde se limita el paso de turistas. Respeta los carteles y no entres donde lo indiquen.",
+      "source": "Consejo de un amigo"
+    }
+  ]
+}

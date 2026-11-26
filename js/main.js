@@ -15,6 +15,7 @@ import { initOverlayHistory, popstateWasOverlay, whenOverlaySettled } from './mo
 import { initCollapsibles } from './modules/collapsible.js';
 import { initOffline } from './modules/offline.js';
 import { initLodging } from './modules/lodging-ui.js';
+import { initTips } from './modules/tips-ui.js';
 import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
@@ -43,6 +44,7 @@ async function start() {
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
   initLodging(global.lodging);
+  const tips = initTips(global.tips?.practical, cities); // city tips.json files are fetched the first time Viaje opens
   initDishes(global.dishes, global.dishCredits);
   initPhrases(global.phrases); // global content: rendered once, shared by every city
   const mapView = initMapView({ map });
@@ -64,6 +66,7 @@ async function start() {
     activeView = view;
     views.setActive(view);
     mapView.sync(view);
+    if (view === 'viaje') tips.show();
     if (view === 'guia') { map.refresh(); scrollSpy.refresh(); }
     window.scrollTo({ top: scrollByView.get(view) ?? 0, behavior: 'instant' });
   }
@@ -127,6 +130,7 @@ async function start() {
   views.setActive(activeView);
   await showCity(cityFromLocation());
   mapView.sync(activeView); // opened directly on ?view=mapa
+  if (activeView === 'viaje') tips.show();
   // Honour an in-page anchor (for example #mapa) once the content exists.
   if (activeView === 'guia' && window.location.hash) {
     const target = document.getElementById(window.location.hash.slice(1));

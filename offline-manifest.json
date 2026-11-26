@@ -1,7 +1,7 @@
 {
-  "version": "62b20e9d78",
+  "version": "867eca901c",
   "sizes": {
-    "required": 699874,
+    "required": 713099,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -29,6 +29,7 @@
     "data/cities/kyoto/places.json",
     "data/cities/kyoto/restaurants.json",
     "data/cities/kyoto/sources.json",
+    "data/cities/kyoto/tips.json",
     "data/cities/osaka/city.json",
     "data/cities/osaka/details.json",
     "data/cities/osaka/extras.json",
@@ -38,6 +39,7 @@
     "data/cities/osaka/places.json",
     "data/cities/osaka/restaurants.json",
     "data/cities/osaka/sources.json",
+    "data/cities/osaka/tips.json",
     "data/global/dish-credits.json",
     "data/global/dishes.json",
     "data/global/lodging.json",
@@ -77,6 +79,8 @@
     "js/modules/tabs.js",
     "js/modules/theme.js",
     "js/modules/tiles.js",
+    "js/modules/tips-ui.js",
+    "js/modules/tips.js",
     "js/modules/today.js",
     "js/modules/updates.js",
     "js/modules/version.js",

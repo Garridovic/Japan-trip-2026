@@ -215,6 +215,27 @@
       ]
     },
     {
+      "id": "ki-o-tsukete",
+      "category": "cortesia",
+      "source": "added",
+      "es": "Cuídate (a quien se va)",
+      "ja": "気をつけて",
+      "romaji": "ki o tsukete",
+      "note": "Se dice a quien se marcha; no se contesta igual.",
+      "examples": [
+        {
+          "es": "Cuídate.",
+          "ja": "気をつけてね。",
+          "romaji": "Ki o tsukete ne."
+        },
+        {
+          "es": "Cuídate mucho, nos vemos pronto.",
+          "ja": "気をつけて。また会いましょう。",
+          "romaji": "Ki o tsukete. Mata aimashou."
+        }
+      ]
+    },
+    {
       "id": "onegaishimas",
       "category": "cortesia",
       "source": "pdf",

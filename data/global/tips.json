@@ -18,5 +18,102 @@
       "title": "🕒 Horarios",
       "text": "Los horarios de esta guía son orientativos. Revisad la web oficial del templo el día anterior, especialmente los eventos nocturnos, cierres y última admisión."
     }
-  ]
+  ],
+  "practical": {
+    "kicker": "Antes y durante el viaje",
+    "title": "Consejos prácticos",
+    "lead": "Costumbres y trucos de gente que ya ha estado. Son orientativos: lo que lleva «Confirmar antes de ir» conviene comprobarlo en la fuente oficial.",
+    "categories": [
+      {
+        "id": "etiqueta",
+        "label": "Etiqueta"
+      },
+      {
+        "id": "antes-y-durante",
+        "label": "Antes y durante el viaje"
+      }
+    ],
+    "items": [
+      {
+        "id": "colas",
+        "category": "etiqueta",
+        "title": "Colas en metro y tren",
+        "text": "En los andenes la gente hace cola en las marcas del suelo y deja salir antes de subir. Colócate en la fila, no en medio.",
+        "source": "Consejo de un amigo"
+      },
+      {
+        "id": "bandeja",
+        "category": "etiqueta",
+        "title": "Pagar en la bandejita",
+        "text": "En tiendas y restaurantes el dinero se deja en la bandejita junto a la caja, en vez de dárselo al cajero en la mano. El cambio también te lo devuelven ahí.",
+        "source": "Consejo de un amigo"
+      },
+      {
+        "id": "devolver-bandeja",
+        "category": "etiqueta",
+        "title": "No devuelvas la bandeja",
+        "text": "Salvo en cafeterías o donde un dibujo indique lo contrario, deja la bandeja en la mesa: lo normal es que la recojan ellos.",
+        "source": "Consejo de un amigo"
+      },
+      {
+        "id": "ki-o-tsukete",
+        "category": "etiqueta",
+        "title": "«Ki o tsukete»",
+        "text": "Se dice a quien se va («cuídate»). No se responde con las mismas palabras. Saber unas frases básicas ayuda y se agradece.",
+        "source": "Consejo de un amigo"
+      },
+      {
+        "id": "sim",
+        "category": "antes-y-durante",
+        "title": "SIM o eSIM",
+        "text": "Compra la SIM online antes de salir y recógela en el aeropuerto al llegar, así tienes datos desde el primer minuto.",
+        "source": "Consejo de un amigo",
+        "verify": true
+      },
+      {
+        "id": "jr-pass",
+        "category": "antes-y-durante",
+        "title": "JR Pass solo si sale a cuenta",
+        "text": "Calcula antes los trayectos que vais a hacer: con el precio actual no siempre compensa frente a billetes sueltos.",
+        "source": "Consejo de un amigo",
+        "verify": true,
+        "links": [
+          {
+            "label": "Cálculo en japan-guide",
+            "href": "https://www.japan-guide.com/e/e2361.html"
+          }
+        ]
+      },
+      {
+        "id": "horarios-tiendas",
+        "category": "antes-y-durante",
+        "title": "Tiendas cerradas a las 17:00",
+        "text": "Muchas tiendas normales cierran sobre las 17:00. Los konbini (tiendas 24 h) siguen abiertos para lo que haga falta.",
+        "source": "Consejo de un amigo",
+        "verify": true
+      },
+      {
+        "id": "sellos",
+        "category": "antes-y-durante",
+        "title": "Sellos gratis",
+        "text": "En estaciones y atracciones hay sellos para estampar gratis. Lleva una libreta pequeña en el bolsillo.",
+        "source": "Consejo de un amigo"
+      },
+      {
+        "id": "goshuin",
+        "category": "antes-y-durante",
+        "title": "Goshuin en los templos",
+        "text": "Son los sellos caligrafiados de templos y santuarios. Necesitas tu propia libreta (goshuincho) y se paga una pequeña ofrenda, de precio orientativo.",
+        "source": "Consejo de un amigo",
+        "verify": true
+      },
+      {
+        "id": "matsuri",
+        "category": "antes-y-durante",
+        "title": "Mira si hay matsuris",
+        "text": "Antes de cada ciudad comprueba si coincide con algún matsuri (fiesta local): suelen ser de lo mejor del viaje.",
+        "source": "Consejo de un amigo"
+      }
+    ]
+  }
 }

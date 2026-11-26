@@ -288,3 +288,20 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 .phrase-actions .phrase-btn.is-primary { flex: 1 1 auto; min-height: 48px; background: var(--accent); color: var(--accent-ink); font-size: .95rem; }
 .phrase-actions .phrase-btn.is-compact { min-width: 48px; min-height: 48px; }
 .phrase-show-hint { margin: 0; color: #aab6b6; font-size: .78rem; text-align: center; }
+
+/* ====== Consejos prácticos (vista Viaje) ====== */
+.tips-practical { margin-bottom: 28px; }
+.tips-groups { display: grid; gap: 10px; }
+.tips-group { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+.tips-group > summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 48px; padding: 0 16px; font-weight: 800; cursor: pointer; list-style: none; }
+.tips-group > summary::-webkit-details-marker { display: none; }
+.tips-group > summary::after { content: "+"; margin-left: auto; color: var(--muted); font-size: 1.3rem; font-weight: 600; }
+.tips-group[open] > summary::after { content: "–"; }
+.tips-count { padding: 2px 9px; border-radius: 99px; background: var(--surface-2); color: var(--muted); font-size: .78rem; font-weight: 800; }
+.tips-list { display: grid; gap: 12px; padding: 0 16px 14px; }
+.tip-item h4 { margin: 0 0 3px; font-size: .98rem; }
+.tip-item p { margin: 0; color: var(--muted); font-size: .88rem; }
+.tip-item .tip-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 4px; font-size: .76rem; font-style: italic; }
+.tip-verify { padding: 0 8px; border-radius: 99px; background: var(--warn-soft); color: var(--warn); font-style: normal; font-weight: 800; }
+.tip-links a { font-size: .86rem; font-weight: 700; }
+@media print { .tips-practical { display: none !important; } }
