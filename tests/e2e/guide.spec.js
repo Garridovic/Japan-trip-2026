@@ -39,7 +39,7 @@ test('the Kyoto content migrated to data is fully rendered', async ({ page }) =>
   await expect(page.locator('#notes-grid .note-card')).toHaveCount(4);
   await expect(page.locator('.sources li')).toHaveCount(24);
   await expect(page.locator('.connection-card')).toContainText('Kioto → Osaka');
-  await expect(page.getByRole('button', { name: 'Imprimir / guardar PDF' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Imprimir|PDF/ })).toHaveCount(0); // only the Viaje view can be saved as PDF
   const kmlHref = await page.locator('#footer-kml-link').getAttribute('href');
   expect((await page.request.get(kmlHref)).ok()).toBe(true);
 });

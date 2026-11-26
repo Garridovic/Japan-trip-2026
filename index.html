@@ -47,7 +47,6 @@
         <div class="hero-actions">
           <a class="button primary" href="#mapa">Abrir mapa interactivo</a>
           <a class="button" href="#resumen">Ver recorrido</a>
-          <button class="button" onclick="window.print()" type="button">Imprimir / guardar PDF</button>
         </div>
       </div>
     </header>
@@ -170,7 +169,22 @@
     <main>
       <section id="viaje" hidden>
         <div class="section-head"><div><div class="kicker" id="lodging-kicker"></div><h2 id="lodging-title"></h2></div><p class="muted small" id="lodging-lead"></p></div>
+        <p class="lodging-print-title" id="lodging-print-title">Viaje a Japón · diciembre 2026 · alojamientos<br><small>Documento personal con datos privados: no lo compartas.</small></p>
         <p class="muted small" id="lodging-count" aria-live="polite"></p>
+        <div class="lodging-toolbar" id="lodging-toolbar">
+          <button type="button" class="filter" id="lodging-pdf">Descargar PDF</button>
+          <details class="lodging-backup">
+            <summary>Copia de seguridad de mis datos privados</summary>
+            <p class="muted small">Se guarda un archivo en este dispositivo (nada se sube a ningún sitio). Útil para pasar tus PINs y reservas a otro móvil o recuperarlos si borras los datos del navegador.</p>
+            <div class="lodging-backup-actions">
+              <button type="button" class="filter" id="lodging-export">Exportar copia</button>
+              <label class="filter lodging-import">Importar copia<input type="file" id="lodging-import" accept="application/json,.json" hidden></label>
+              <button type="button" class="filter is-danger" id="lodging-clear">Borrar mis datos privados</button>
+            </div>
+            <p class="small" id="lodging-backup-status" role="status" aria-live="polite"></p>
+          </details>
+        </div>
+        <p class="muted small lodging-pdf-hint">«Descargar PDF» abre la vista de impresión de esta pantalla: elige «Guardar como PDF» (en iPhone: Compartir › Guardar en Archivos).</p>
         <div class="lodging-list" id="lodging-list"></div>
         <p class="phrase-notice lodging-privacy" id="lodging-privacy"></p>
       </section>

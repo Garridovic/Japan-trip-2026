@@ -37,6 +37,7 @@ test('addresses and map links are the ones given in the trip document', () => {
   assert.equal(byId.kyoto.mapsUrl, 'https://maps.app.goo.gl/vGFBKz2eG2h4FQJs5');
   assert.equal(byId['tokyo-1'].mapsUrl, byId['tokyo-2'].mapsUrl, 'same hotel for both Tokyo stays');
   assert.equal(byId.osaka.freeCancellationUntil, '2026-12-08');
+  assert.equal(byId.osaka.checkInHint, 'Check-in orientativo 12:00–14:00 (por confirmar)');
   assert.equal(byId.nara.freeCancellationUntil, '2026-12-10');
 });
 

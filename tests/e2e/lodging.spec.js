@@ -27,7 +27,7 @@ test('every stay is listed in chronological order with dates, nights, address an
   await expect(osaka.locator('.lodging-dates')).toContainText('Mar 15 → Jue 17 dic');
   await expect(osaka.locator('.lodging-dates')).toContainText('2 noches');
   await expect(osaka.locator('.lodging-address')).toHaveText('Chuo-ku Nishi Shinsaibashi 1-10-24, Osaka 542-0086');
-  await expect(osaka.locator('.lodging-note')).toContainText('Cancelación gratuita hasta el 8 de diciembre');
+  await expect(osaka.locator('.lodging-note', { hasText: 'Cancelación' })).toContainText('Cancelación gratuita hasta el 8 de diciembre');
   await expect(osaka.getByRole('link', { name: /Google Maps/ })).toHaveAttribute('href', 'https://maps.app.goo.gl/ohmM1sY272qXbuhj7');
   await expect(page.locator('.lodging-card[data-stay-id="tokyo-1"] .lodging-dates')).toContainText('Mar 8 → Jue 10 dic');
   await expect(page.locator('#lodging-count')).toHaveText('6 alojamientos · 14 noches');

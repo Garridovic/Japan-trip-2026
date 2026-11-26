@@ -232,7 +232,7 @@ test.describe('offline indicator in the header', () => {
     await chip(page).click();
 
     // Cancel: nothing is deleted.
-    page.once('dialog', (dialog) => { expect(dialog.message()).toContain('favoritos no se borran'); dialog.dismiss(); });
+    page.once('dialog', (dialog) => { expect(dialog.message()).toContain('favoritos y tus datos privados del viaje no se borran'); dialog.dismiss(); });
     await popover(page).locator('#offline-reset').click();
     expect(await page.evaluate(() => caches.keys())).toContain('zz-test-cache');
     expect(await page.evaluate(() => window.__sameDocument)).toBe(true);

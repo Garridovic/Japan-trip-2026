@@ -142,7 +142,7 @@ export async function initOffline({ win = window, doc = document } = {}) {
   $('offline-retry').addEventListener('click', () => { state = { kind: 'installing' }; render(); send('repair'); });
   $('offline-verify').addEventListener('click', () => send('verify'));
   $('offline-reset').addEventListener('click', async () => {
-    const accepted = win.confirm('¿Borrar los datos guardados para usar la guía sin conexión y recargar? Tus favoritos no se borran. Necesitarás conexión para volver a guardarla.');
+    const accepted = win.confirm('¿Borrar los datos guardados para usar la guía sin conexión y recargar? Tus favoritos y tus datos privados del viaje no se borran. Necesitarás conexión para volver a guardarla.');
     if (!accepted) return;
     await resetOfflineData(win);
     win.location.reload();

@@ -237,24 +237,7 @@
     /* Keep Leaflet attribution clear of the fixed version label. */
     .leaflet-bottom.leaflet-right { left: 0; right: auto; }
     .leaflet-control-attribution { margin-left: 8px !important; margin-right: 0 !important; }
-    @media print {
-      :root { --paper: white; --card: white; }
-      body { background: white; font-size: 10pt; }
-      .hero { padding: 18px 0; background: #182a35 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-      .hero-inner, main, .footer-inner { width: 100%; }
-      #city-view > nav, .app-bar, .city-tabs, .hero-actions, .extras-toolbar, .food-toolbar, .map-link, .map-toolbar, .location-actions, .location-hint, .version-indicator { display: none !important; }
-      #city-map { height:360px; }
-      main { padding: 18px 0; }
-      .quick-grid { grid-template-columns: repeat(2,1fr); }
-      .quick-card, .day-detail, .extra-card, .note-card { box-shadow: none; break-inside: avoid; }
-      details.day-detail > summary { padding: 10px; }
-      details.day-detail:not([open]) > .detail-body { display: block; }
-      .detail-body { padding: 0 10px 12px 70px; }
-      section { margin-bottom: 22px; }
-      footer { padding: 12px 0; }
-      a { color: inherit; }
-    }
-
+    
 
 /* POI detail view */
 .poi-modal[hidden] { display:none; }
@@ -289,7 +272,6 @@
  .poi-gallery { margin-left:-16px; margin-right:-16px; }
 }
 
-
 /* Map popup detail action */
 .popup-detail-button {
   display: block;
@@ -309,7 +291,6 @@
 .popup-detail-button:focus-visible {
   background: #24485c;
 }
-
 
 /* City tabs (V11): one tab per enabled city of the journey */
 .city-tabs { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 8px; box-sizing: border-box; height: var(--tabs-height); padding: 0 max(22px, calc((100vw - 1080px) / 2 + 22px)); overflow-x: auto; white-space: nowrap; scrollbar-width: none; background: #182a35; border-bottom: 1px solid rgba(255,255,255,.12); }
@@ -374,7 +355,6 @@ body.phrase-show-open { overflow:hidden; }
 .phrase-show .phrase-btn { background:#f2e5c9; color:#24333a; min-height:48px; font-size:1rem; padding:10px 20px; }
 .phrase-show .phrase-btn.is-slow { background:rgba(255,255,255,.14); color:#fff; }
 @media (max-width: 700px) { .phrase-grid { grid-template-columns:1fr; } }
-@media print { .phrase-search, .phrase-chips, .phrase-actions, .phrase-fav, .phrase-show { display:none !important; } .phrase-card { box-shadow:none; break-inside:avoid; } }
 
 /* ---------- Platos (global dish guide) ---------- */
 .dish-toolbar { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 0 10px; }
@@ -416,7 +396,6 @@ body.phrase-show-open { overflow:hidden; }
 .dish-credit a { color:#f0d7a7; }
 @media (max-width: 1000px) { .dish-grid.is-photos { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media (max-width: 700px) { .dish-grid.is-photos { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; } .dish-ja { font-size:1.05rem; } }
-@media print { .dish-views, #dishes-protein, .dish-fav { display:none !important; } .dish-card { box-shadow:none; break-inside:avoid; } }
 
 /* ---------- App views and bottom bar (Guía · Frases · Platos) ---------- */
 body { padding-bottom: calc(var(--bar-height) + env(safe-area-inset-bottom)); }
@@ -435,7 +414,6 @@ body:not([data-view="guia"]) .city-tabs { display: none; }
   body { padding-bottom: calc(var(--bar-height) + 28px); }
   .version-indicator { bottom: 22px; }
 }
-@media print { body { padding-bottom: 0; } }
 
 /* ---------- QA polish (V11.4) ---------- */
 /* Section tabs: 44 px targets and a fade at the edge that still has more tabs to scroll to */
@@ -465,7 +443,6 @@ body:not([data-view="guia"]) .city-tabs { display: none; }
   .version-indicator { position: static; display: flex; width: fit-content; margin: 0 auto 10px; background: none; border: 0; box-shadow: none; backdrop-filter: none; color: var(--muted); }
   .version-indicator::before { background: var(--gold); }
 }
-@media print { .collapsible-filters > summary, .fav-shortcut, .phrase-show-pager { display: none !important; } .collapsible-filters > :not(summary) { display: revert; } }
 
 /* ---------- Offline: header chip, popover and banner ---------- */
 .top-bar { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; box-sizing: border-box; height: var(--tabs-height); background: #182a35; border-bottom: 1px solid rgba(255,255,255,.12); }
@@ -497,12 +474,11 @@ body:not([data-view="guia"]) .top-bar-title { display: block; }
   .top-bar-title { padding: 0 16px; }
   .offline-chip { margin-right: 10px; padding: 0 10px; }
 }
-@media print { .top-bar, .offline-banner, .offline-popover { display: none !important; } }
+
 .map-offline { padding: 10px 14px 12px; border-top: 1px solid var(--line); }
 .map-offline p { margin: 6px 0 0; }
 #save-offline-map { min-height: 44px; }
 #save-offline-map[hidden] { display: none; }
-@media print { .map-offline { display: none !important; } }
 
 /* Offline chip: full text on wider headers, short text on narrow phones */
 .offline-chip-short { display: none; }
@@ -528,9 +504,42 @@ body:not([data-view="guia"]) .top-bar-title { display: block; }
 .lodging-copy { min-height: 44px; padding: 0 14px; }
 .lodging-privacy { margin-top: 18px; }
 @media (max-width: 700px) { .lodging-list { grid-template-columns: 1fr; } .app-bar-label { font-size: .74rem; } }
-@media print { .lodging-actions { display: none !important; } }
 
 /* Osaka content: suggestions, sources */
 .stop-suggestion { margin-top: 6px; padding: 7px 10px; border-left: 3px solid var(--gold); border-radius: 8px; background: #fbf5e9; color: #6e5633 !important; font-size: .82rem; }
 .poi-sources-section ul { margin: 6px 0 0; padding-left: 18px; font-size: .86rem; }
 .poi-verification { margin: 6px 0; padding: 7px 10px; border-radius: 8px; background: #fbf5e9; color: #6e5633; font-size: .82rem; }
+
+/* ---------- Viaje: private data, backup, PDF ---------- */
+.lodging-toolbar { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px; margin: 0 0 8px; }
+.lodging-toolbar > .filter { min-height: 44px; padding: 0 16px; }
+.lodging-backup { flex: 1 1 260px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+.lodging-backup summary { display: flex; align-items: center; min-height: 44px; padding: 0 14px; cursor: pointer; font-size: .84rem; font-weight: 850; }
+.lodging-backup > :not(summary) { margin-left: 14px; margin-right: 14px; }
+.lodging-backup-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.lodging-backup-actions .filter { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; cursor: pointer; }
+.lodging-backup-actions .is-danger { color: #8e3d32; border-color: #e1b9b2; }
+.lodging-pdf-hint { margin: 0 0 14px; }
+.lodging-private { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 4px; }
+.lodging-private summary { display: flex; align-items: center; min-height: 44px; cursor: pointer; font-size: .84rem; font-weight: 850; }
+.lodging-field { display: grid; gap: 4px; margin: 0 0 10px; }
+.lodging-field span { color: var(--muted); font-size: .72rem; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
+.lodging-field input, .lodging-field textarea { width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); padding: 10px 12px; font: inherit; font-size: 1rem; min-height: 44px; }
+.lodging-field input:focus-visible, .lodging-field textarea:focus-visible { outline: 3px solid rgba(36,102,189,.35); outline-offset: 1px; }
+.lodging-print-title, .lodging-print-private, .lodging-print-maps { display: none; }
+
+/* ---------- Print: only the Viaje view can be saved as PDF ---------- */
+@media print {
+  body { padding-bottom: 0; background: #fff; color: #000; font-size: 11pt; }
+  body > :not(#view-viaje) { display: none !important; }
+  #view-viaje main { padding: 0; width: 100%; }
+  #view-viaje .section-head p, .lodging-toolbar, .lodging-pdf-hint, .lodging-actions, .lodging-private, .lodging-privacy, #lodging-count { display: none !important; }
+  .lodging-print-title { display: block; margin: 0 0 10pt; font-size: 15pt; font-weight: 800; }
+  .lodging-print-title small { font-size: 9pt; font-weight: 600; color: #444; }
+  .lodging-list { display: block; }
+  .lodging-card { break-inside: avoid; margin: 0 0 10pt; padding: 8pt 10pt; border: 1px solid #999; border-radius: 6pt; box-shadow: none; opacity: 1; }
+  .lodging-status { display: none; }
+  .lodging-print-private { display: block; margin-top: 6pt; padding-top: 4pt; border-top: 1px dashed #999; }
+  .lodging-print-line { margin: 2pt 0; font-size: 11pt; }
+  .lodging-print-maps { display: block; margin: 4pt 0 0; font-size: 8.5pt; color: #444; word-break: break-all; }
+}

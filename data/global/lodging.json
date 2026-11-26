@@ -44,7 +44,8 @@
       "mapsUrl": "https://maps.app.goo.gl/ohmM1sY272qXbuhj7",
       "checkIn": "2026-12-15",
       "checkOut": "2026-12-17",
-      "freeCancellationUntil": "2026-12-08"
+      "freeCancellationUntil": "2026-12-08",
+      "checkInHint": "Check-in orientativo 12:00–14:00 (por confirmar)"
     },
     {
       "id": "nara",
