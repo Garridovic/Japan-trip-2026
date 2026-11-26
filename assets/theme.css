@@ -434,7 +434,7 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 
 /* ====== Transiciones (se anulan con «reducir movimiento», ver más arriba) ====== */
 .app-view:not([hidden]) { animation: view-in .22s ease-out; }
-@keyframes view-in { from { opacity: 0; transform: translateY(6px); } }
+@keyframes view-in { from { opacity: 0; } } /* opacity only: a transform would turn the view into the containing block of its fixed and sticky children */
 .phrase-show:not([hidden]) { animation: sheet-in .22s ease-out; }
 @keyframes sheet-in { from { opacity: 0; } }
 .tips-group[open] .tips-list, .checklist-group[open] .checklist-items { animation: view-in .18s ease-out; }
