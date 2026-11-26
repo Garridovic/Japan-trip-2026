@@ -24,6 +24,12 @@ export function initDetails() {
   }
   visitedButton.addEventListener('click', () => { if (openId && cityIndex) visited.toggle(cityIndex.cityId, openId); });
   visited.subscribe(paintVisited);
+  const taxiTrigger = byId('poi-taxi');
+  function paintTaxi(point, cityName) {
+    taxiTrigger.hidden = point.type !== 'hotel';
+    taxiTrigger.dataset.taxiName = point.name;
+    taxiTrigger.dataset.taxiCity = cityName ?? '';
+  }
 
   function renderPhoto() {
     const photo = photos[photoIndex];
@@ -106,6 +112,7 @@ export function initDetails() {
     renderEvent(point, cityIndex.events);
     openId = localId;
     paintVisited();
+    paintTaxi(point, byId('hero-title')?.textContent);
     modal.hidden = false;
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';

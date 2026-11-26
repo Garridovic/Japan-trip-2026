@@ -1,4 +1,5 @@
 // Renders the content of the active city (and the shared global content) into the static page shell.
+import { taxiButton } from './taxi-ui.js';
 import { byId, h, externalLink } from './dom.js';
 import { connectionsFrom } from './journey.js';
 import { renderFood, renderExtras } from './filters.js';
@@ -19,7 +20,8 @@ function renderHero(journey, cityEntry, city) {
   if (city.hero.hotel) {
     hotel.replaceChildren(
       'Alojamiento: ', h('strong', {}, city.hero.hotel.name), ' · ',
-      externalLink(city.hero.hotel.mapUrl, 'Ver hotel en Google Maps ↗')
+      externalLink(city.hero.hotel.mapUrl, 'Ver hotel en Google Maps ↗'), ' ',
+      taxiButton({ name: city.hero.hotel.name, city: cityEntry.name, label: '🚕 Taxi', className: 'taxi-chip taxi-button' })
     );
   }
   document.querySelectorAll('[data-city-name]').forEach((node) => { node.textContent = cityEntry.name; });

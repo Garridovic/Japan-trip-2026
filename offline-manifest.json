@@ -1,7 +1,7 @@
 {
-  "version": "867eca901c",
+  "version": "e2e27522cc",
   "sizes": {
-    "required": 713099,
+    "required": 725376,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -77,6 +77,8 @@
     "js/modules/speech.js",
     "js/modules/swipe.js",
     "js/modules/tabs.js",
+    "js/modules/taxi-ui.js",
+    "js/modules/taxi.js",
     "js/modules/theme.js",
     "js/modules/tiles.js",
     "js/modules/tips-ui.js",

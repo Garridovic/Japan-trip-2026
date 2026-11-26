@@ -1,5 +1,6 @@
 // Interactive map, marker filters, nearby places and geolocation.
 // One Leaflet map is created once; setCity() swaps in the data of the active city.
+import { taxiButton } from './taxi-ui.js';
 import { byId, h, externalLink, setPressed } from './dom.js';
 import { cityKey } from './ids.js';
 import { TILE_URL, planCityTiles } from './tiles.js';
@@ -80,6 +81,7 @@ export function initMap({ openDetail }) {
       h('div', { class: 'popup-meta' }, point.desc),
       isRestaurant && h('div', { class: 'popup-meta' }, 'Marcador orientativo. Abre Google Maps para confirmar la entrada exacta y navegar.'),
       isVisitable(point) && buildVisitButton(point),
+      point.type === 'hotel' && taxiButton({ name: point.name, city: config.queryContext?.split(',')[0], className: 'popup-visit-button taxi-button' }),
       h('div', { class: 'popup-links' },
         !isRestaurant && h('button', { type: 'button', class: 'popup-detail-button', onclick: () => openDetail(point.id) }, 'Ver ficha del lugar'),
         externalLink(googleSearchUrl(point), 'Ver ficha en Google Maps ↗'),

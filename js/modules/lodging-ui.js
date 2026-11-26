@@ -1,4 +1,5 @@
 // "Viaje" view: where we sleep, in order. Static data, so it also works offline.
+import { taxiButton } from './taxi-ui.js';
 import { byId, h, externalLink } from './dom.js';
 import { nights, formatRange, formatDay, statusFor, copyText } from './lodging.js';
 import { FIELDS, createPrivateStore, serializeBackup, parseBackup } from './private-notes.js';
@@ -73,7 +74,7 @@ export function initLodging(data, { today = todayInJapan(), clipboard = navigato
       stay.checkInHint && h('p', { class: 'lodging-note' }, stay.checkInHint),
       stay.freeCancellationUntil && h('p', { class: 'lodging-note' }, `Cancelación gratuita hasta el ${formatDay(stay.freeCancellationUntil)}.`),
       stay.reminder && h('p', { class: 'lodging-note' }, stay.reminder),
-      h('div', { class: 'lodging-actions' }, externalLink(stay.mapsUrl, 'Abrir en Google Maps ↗', 'lodging-map'), copyButton(stay)),
+      h('div', { class: 'lodging-actions' }, externalLink(stay.mapsUrl, 'Abrir en Google Maps ↗', 'lodging-map'), copyButton(stay), taxiButton({ stayId: stay.id, name: stay.name, city: stay.cityName })),
       privateBlock(stay),
       h('div', { class: 'lodging-print-private' }, printLines(stay)),
       h('p', { class: 'lodging-print-maps' }, `Mapa: ${stay.mapsUrl}`)

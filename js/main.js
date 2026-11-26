@@ -16,6 +16,7 @@ import { initCollapsibles } from './modules/collapsible.js';
 import { initOffline } from './modules/offline.js';
 import { initLodging } from './modules/lodging-ui.js';
 import { initTips } from './modules/tips-ui.js';
+import { initTaxi } from './modules/taxi-ui.js';
 import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
@@ -43,6 +44,7 @@ async function start() {
   const cities = enabledCities(journey);
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
+  initTaxi(global.lodging?.stays); // the taxi screen opens from any button with data-taxi
   initLodging(global.lodging);
   const tips = initTips(global.tips?.practical, cities); // city tips.json files are fetched the first time Viaje opens
   initDishes(global.dishes, global.dishCredits);
