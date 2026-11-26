@@ -6,7 +6,7 @@ test('the guide loads its map and all map markers', async ({ page }) => {
 
   await page.goto('/');
   await expect(page.locator('#kyoto-map')).toBeVisible();
-  await expect(page.locator('.leaflet-pane .leaflet-marker-pane path')).toHaveCount(32, { timeout: 20_000 });
+  await expect(page.locator('.leaflet-overlay-pane svg path')).toHaveCount(32, { timeout: 20_000 });
   await expect(page.locator('.restaurant-map-marker')).toHaveCount(20);
   await expect(page.locator('#version-indicator')).toContainText('V9');
   expect(pageErrors).toEqual([]);
@@ -14,8 +14,8 @@ test('the guide loads its map and all map markers', async ({ page }) => {
 
 test('a place marker opens its detail sheet', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('.leaflet-pane .leaflet-marker-pane path').first()).toBeVisible({ timeout: 20_000 });
-  await page.locator('.leaflet-pane .leaflet-marker-pane path').first().click();
+  await expect(page.locator('.leaflet-overlay-pane svg path').first()).toBeVisible({ timeout: 20_000 });
+  await page.locator('.leaflet-overlay-pane svg path').first().click();
   await expect(page.locator('.leaflet-popup')).toBeVisible();
   await page.getByRole('button', { name: 'Ver ficha del lugar' }).click();
   await expect(page.locator('#poi-modal')).toHaveAttribute('aria-hidden', 'false');
