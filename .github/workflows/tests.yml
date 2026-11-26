@@ -38,11 +38,11 @@ jobs:
       - name: Download and optimize local images (only when the cache missed)
         if: steps.photos.outputs.cache-hit != 'true'
         run: npm run prepare:images
-      - name: Save prepared photos only when every photo was found
+      - name: Cache the result unless a download or search failed (places with no free photo are expected)
         if: steps.photos.outputs.cache-hit != 'true' && hashFiles('image-preparation-report.json') != ''
         run: |
-          node -e "const r=JSON.parse(require('fs').readFileSync('image-preparation-report.json','utf8'));process.exit(r.issues.length?1:0)" \
-            && echo "SAVE_PHOTOS=true" >> "$GITHUB_ENV" || echo "Report has warnings: not caching this result."
+          node -e "const r=JSON.parse(require('fs').readFileSync('image-preparation-report.json','utf8'));process.exit(r.issues.some((i)=>/error/.test(i.status))?1:0)" \
+            && echo "SAVE_PHOTOS=true" >> "$GITHUB_ENV" || echo "Some downloads or searches failed: not caching this result."
       - name: Save photo cache
         if: env.SAVE_PHOTOS == 'true'
         uses: actions/cache/save@v5
@@ -129,7 +129,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     steps:
       - uses: actions/download-artifact@v8
         with:
@@ -152,4 +152,13 @@ jobs:
           echo "github-pages artifact still not listed; trying the deployment anyway."
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+      # The Pages API sometimes does not see the artifact yet: wait and try once more (a real failure still fails the job).
+      - name: Wait before retrying the deployment
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+      - name: Deploy to GitHub Pages (retry)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
