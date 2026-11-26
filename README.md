@@ -1,92 +1,52 @@
-# Guía de Kioto · 11–15 diciembre 2026
+# Kyoto Guide · GitHub Pages
 
-Web estática en español, preparada para GitHub Pages. No necesita backend ni proceso de compilación.
+Guía estática para el viaje a Kioto (11–15 diciembre 2026). No requiere servidor, build ni dependencias locales. GitHub Pages sirve directamente los archivos.
 
-## Versión
+## Estructura
 
-La esquina inferior derecha muestra **GUÍA · V6**. Comprueba esa etiqueta después de publicar para confirmar que estás viendo esta versión. El identificador también está en el metadato HTML `guide-version`. La leyenda de colores se muestra ahora justo debajo de los filtros y antes del mapa; aparece desplegada inicialmente y se puede plegar.
+- `index.html`: interfaz y estructura de la guía.
+- `assets/styles.css`: estilos.
+- `data/places.json`: hotel, visitas, eventos y lugares alternativos del mapa.
+- `data/restaurants.json`: los 20 establecimientos gastronómicos y sus marcadores.
+- `data/itinerary.json`: resumen estructurado de las jornadas (referencia editable; el texto editorial detallado del itinerario sigue en `index.html`).
+- `data/details.json`: descripciones ampliadas, galerías, enlaces de llegada y audioguías cuando hay recursos identificados.
+- `data/events.json`: recorrido y planificación del Yamashina Gishi Matsuri, separando horarios oficiales de estimaciones.
+- `data/version.json`: versión visible en la esquina de la web.
+- `kyoto-points.kml`: exportación independiente para otras aplicaciones cartográficas.
 
-## Publicar en GitHub Pages
+## Cambios habituales desde el iPhone
 
-1. Sube `index.html`, `kyoto-points.kml`, `README.md` y `.nojekyll` a la raíz del repositorio.
-2. En GitHub, abre **Settings → Pages**.
-3. Selecciona **Deploy from a branch**, rama `main` y carpeta `/ (root)`.
-4. Cuando termine el despliegue, comparte `https://TU-USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/`.
+1. Abre el repositorio en Safari: https://github.com/Garridovic/Japan-trip-2026
+2. Entra en `data/places.json` o `data/restaurants.json`.
+3. Pulsa el lápiz **Edit**.
+4. Modifica el JSON sin borrar comas, llaves ni corchetes. Mantén los campos `id` únicos.
+5. Pulsa **Commit changes**. GitHub Pages publicará el cambio automáticamente.
+6. Recarga la guía. Si ves datos antiguos, prueba una recarga completa o añade `?refresh=1` a la URL.
 
-## Uso durante el viaje
+### Añadir un restaurante
 
-La web es la interfaz principal. No hace falta importar el KML ni abrir Google Earth o Google My Maps.
+Copia un objeto existente de `data/restaurants.json`, pégalo dentro del array y cambia al menos `id`, `name`, `lat`, `lng`, `day`, `foodCategory`, `desc` y `query`. Usa `day` igual a `11`, `12`, `13` o `14`. Las coordenadas son latitud (`lat`) y longitud (`lng`).
 
-1. Abre la URL HTTPS de GitHub Pages en Safari (iPhone) o Chrome (Android).
-2. Entra en **Mapa** y filtra por día o muestra todos los puntos.
-3. Pulsa **Mi ubicación** para obtener una posición GPS puntual. El navegador pedirá permiso si todavía no lo has concedido.
-4. Pulsa **Seguir ubicación** para actualizar la posición mientras caminas. Pulsa **Detener seguimiento** para dejar de consultar el GPS.
-5. La lista lateral muestra los siete puntos visibles más cercanos, por distancia en línea recta. Cada uno tiene un enlace para abrir la navegación de Google Maps.
-6. Consulta la leyenda plegable, situada inmediatamente debajo de los filtros y antes del mapa, para identificar los colores de los marcadores.
+### Añadir un punto de interés
 
-La posición se procesa en el navegador, no se almacena ni se envía a un servidor. El seguimiento continuo solo funciona mientras la página esté abierta y el usuario lo mantenga activado; el navegador o el sistema operativo pueden limitar la ubicación en segundo plano.
+Añade un objeto en `data/places.json`. Para visitas usa `type: "itinerary"`; para eventos `type: "event"`; para alternativas `type: "alternative"` y un `altCategory` como `templos`, `barrios`, `naturaleza` o `cultura`. El hotel usa `type: "hotel"`.
 
-## Compatibilidad móvil
+### Cambiar la versión
 
-La Geolocation API está ampliamente disponible en navegadores modernos, incluidos Safari en iOS y Chrome en Android. Requiere HTTPS y permiso explícito del usuario. En el teléfono también deben estar habilitados los servicios de localización y el permiso de ubicación para el navegador. Si la página se abre dentro de un navegador integrado de otra aplicación y la ubicación falla, ábrela directamente en Safari o Chrome.
+Edita `data/version.json`, por ejemplo `{"version":"V7.1","updated":"2026-12-12"}`. El indicador inferior derecho se actualiza leyendo ese archivo, sin modificar el HTML.
 
-## Mapa y dependencias
+## Cambios funcionales
 
-El mapa usa Leaflet y cartografía de OpenStreetMap, cargados desde internet. Requiere conexión de datos. Desde cada marcador hay enlaces a Google Maps para consultar el lugar y obtener indicaciones. Si Google Maps está instalado, el sistema puede abrir la aplicación; si no, se abrirá la web.
+Para cambiar el comportamiento del mapa, GPS, filtros o diseño, edita `index.html` y/o `assets/styles.css`. Para estos cambios puedes usar el editor web de GitHub o https://github.dev/Garridovic/Japan-trip-2026.
 
-La leyenda plegable situada antes del mapa explica los colores: rojo (itinerario), dorado (eventos), verde (alternativas), azul oscuro (hotel), azul (posición actual) y círculo azul claro (precisión estimada del GPS).
+## Publicación
 
-Algunos puntos alternativos y la ubicación del Centro Cultural Tōbu son aproximados. Los marcadores sirven para orientarse; abre Google Maps desde cada ficha antes de iniciar el trayecto.
+GitHub → Settings → Pages → **Deploy from a branch** → `main` → `/ (root)`. Cada commit en `main` se publica automáticamente.
 
-## KML opcional
+## Validación local opcional
 
-`kyoto-points.kml` es una exportación separada con los puntos de interés. No es necesario para utilizar la web. Consérvalo como copia reutilizable para otras aplicaciones de mapas o para importarlo manualmente en Google Earth/My Maps.
+No abras `index.html` mediante `file://`, porque el navegador bloquea `fetch()` de JSON local. Usa GitHub Pages o un servidor local estático.
 
-Si editas los puntos del array `kyotoPoints` en `index.html`, recuerda actualizar también el KML para mantener ambos ficheros sincronizados.
+## Fichas de detalle (V8)
 
-## Editar y compartir
-
-Edita `index.html` para cambiar horarios, enlaces o presentación. La lista de marcadores está definida en el array `kyotoPoints` del JavaScript. Comparte la URL pública de GitHub Pages con el grupo; todos verán la versión publicada más reciente.
-
-El botón **Imprimir / guardar PDF** abre el diálogo de impresión del navegador.
-
-## Fuentes oficiales para los eventos del 14 de diciembre
-
-- [Kyoto City Tourism Navi · Yamashina Gishi Matsuri](https://ja.kyoto.travel/event/single.php?event_id=2335): 14 de diciembre de 2026, 10:00–15:00.
-- [Asociación Kanken · Kanji del Año](https://www.kanken.or.jp/kotoshinokanji/): anuncio del 14 de diciembre en Kiyomizu-dera.
-- [FAQ de Kanken](https://www.kanken.or.jp/kotoshinokanji/faq-contact/): el público no puede acceder al lugar de la caligrafía.
-
-
-## Sección gastronómica y colores del mapa (V6)
-
-- Nueva pestaña **Comer** con especialidades de Kioto, filtros y enlaces directos a Google Maps.
-- Los puntos del mapa usan un color distinto por jornada (11, 12, 13 y 14 de diciembre).
-- Los lugares alternativos se colorean por categoría: templos, barrios, naturaleza y cultura.
-- El hotel mantiene un color propio; la ubicación GPS y su círculo de precisión conservan el azul.
-- `kyoto-points.kml` se mantiene como exportación independiente.
-
-Para publicar, sustituye `index.html`, `README.md` y `kyoto-points.kml` en la raíz del repositorio y ejecuta `git add index.html README.md kyoto-points.kml && git commit -m "Add Kyoto food guide and day-based map colors" && git push`.
-
-
-## Directorio gastronómico y filtros por jornada (V6)
-
-- La pestaña **Comer** contiene 20 paradas gastronómicas agrupadas por las zonas y jornadas del viaje.
-- Hay filtros independientes por día y tipo de cocina para elegir sobre la marcha.
-- Cada ficha abre el lugar directamente en Google Maps; no es necesario importar el KML.
-- Las especialidades locales incluyen obanzai, yudofu/yuba, nishin soba, saba-zushi, matcha, shojin-ryori y platos de temporada.
-- Los puntos del mapa mantienen un color por jornada: 11 (coral), 12 (azul), 13 (verde azulado) y 14 (violeta). Los puntos alternativos utilizan una paleta propia por categoría. El hotel y la ubicación GPS conservan colores independientes.
-
-Los horarios y disponibilidad de los restaurantes deben volver a comprobarse antes del viaje. Las recomendaciones son opciones cercanas a los barrios del itinerario, no un plan de comidas obligatorio.
-
-
-## Mapa gastronómico y filtros (V6)
-
-- Los 20 restaurantes y paradas gastronómicas de la pestaña **Comer** también aparecen como marcadores en el mapa.
-- Se representan con diamantes; los círculos siguen representando visitas, eventos, hotel y lugares alternativos.
-- El color de cada restaurante corresponde a su jornada: 11 (coral), 12 (azul), 13 (verde azulado) y 14 (violeta).
-- Hay dos filtros independientes: por jornada y por tipo de punto (**Todos los puntos**, **Solo visitas**, **Solo restaurantes**). Se pueden combinar; por ejemplo, 12 dic + Solo restaurantes.
-- La lista de lugares cercanos respeta ambos filtros. Al seleccionar un resultado cercano, la guía activa los filtros necesarios para mostrar su marcador.
-- Los marcadores gastronómicos tienen coordenadas orientativas para facilitar la exploración. El popup abre una búsqueda del establecimiento en Google Maps para comprobar la entrada y navegar.
-- El KML opcional también incluye una carpeta con los 20 lugares gastronómicos.
-
-Para publicar V6, sustituye `index.html`, `README.md`, `kyoto-points.kml` y `.nojekyll` en la raíz del repositorio.
+Los marcadores del mapa y la lista de lugares cercanos abren fichas con galería, descripción y enlaces de Google Maps (búsqueda, transporte público y a pie). Los enlaces de audioguía se muestran como catálogos externos cuando no hay una pista individual verificada en español. El evento Yamashina Gishi Matsuri incluye salida, paradas y final; el horario global 10:00–15:00 procede de Kyoto City, mientras que los horarios intermedios se identifican como aproximados. No se dibuja una ruta peatonal exacta no verificada.

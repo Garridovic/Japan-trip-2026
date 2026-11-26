@@ -1,0 +1,556 @@
+[
+  {
+    "id": "hotel",
+    "description": "Alojamiento del grupo. Punto de partida para los recorridos.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.00315,135.7567",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.00315,135.7567&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.00315,135.7567&travelmode=walking"
+    }
+  },
+  {
+    "id": "nishiki",
+    "description": "Un mercado cubierto histórico en el centro de Kioto, conocido por sus puestos de comida, encurtidos, dulces y productos locales. Es ideal para probar pequeñas especialidades; recuerda que algunos puestos esperan que comas frente a ellos y no caminando.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Nishiki%20Market%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Nishiki%20Market%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.00503,135.76471",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.00503,135.76471&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.00503,135.76471&travelmode=walking"
+    }
+  },
+  {
+    "id": "nijo",
+    "description": "Antigua residencia del shōgun Tokugawa en Kioto y uno de los grandes conjuntos históricos de la ciudad. No te pierdas el palacio Ninomaru, sus pinturas, los jardines y los famosos suelos «ruiseñor», diseñados para delatar intrusos.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Nijō%20Castle%20Kyoto.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Nijo%20Castle%20Ninomaru%20Palace%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.01397,135.74851",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.01397,135.74851&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.01397,135.74851&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "pontocho",
+    "description": "Estrecho callejón tradicional junto al río Kamo, con restaurantes y casas de té en edificios de madera. Lo mejor es recorrerlo al anochecer y disfrutar del ambiente; no todas las calles laterales son de acceso público.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Pontocho%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Pontocho%20alley%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.00425,135.77121",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.00425,135.77121&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.00425,135.77121&travelmode=walking"
+    }
+  },
+  {
+    "id": "fushimi",
+    "description": "Uno de los santuarios sintoístas más conocidos de Japón, dedicado a Inari. Su sendero asciende por la montaña entre miles de puertas torii rojas. La zona inferior suele estar concurrida; caminar más arriba permite encontrar tramos más tranquilos.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi%20Inari-taisha%20torii.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi%20Inari%20Taisha%20Kyoto%20Japan.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.96754,135.77944",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.96754,135.77944&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.96754,135.77944&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "kiyomizu",
+    "description": "Templo budista fundado en el siglo VIII y célebre por su gran terraza de madera sostenida por pilares, con vistas sobre Kioto. Explora el salón principal, la pagoda y la cascada Otowa. El acceso a zonas concretas puede variar por obras o ceremonias.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kiyomizu-dera%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kiyomizu-dera%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.99442,135.78448",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.99442,135.78448&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.99442,135.78448&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "sannenzaka",
+    "description": "Conjunto de calles empedradas y tradicionales que conectan el entorno de Kiyomizu-dera con el barrio de Higashiyama. Tiendas, casas históricas y fachadas de madera hacen que el paseo sea tan importante como el destino.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Sannenzaka%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Ninenzaka%20Kyoto%20Japan.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.9974,135.78132",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.9974,135.78132&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.9974,135.78132&travelmode=walking"
+    }
+  },
+  {
+    "id": "yasaka",
+    "description": "Santuario sintoísta en el límite de Gion y el parque Maruyama. Su puerta y el pabellón central iluminado son especialmente atractivos al atardecer; es un buen punto para enlazar con Gion.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Yasaka%20Shrine%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Yasaka%20Jinja%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.00349,135.77839",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.00349,135.77839&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.00349,135.77839&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "kodaiji",
+    "description": "Templo zen fundado en memoria de Toyotomi Hideyoshi. Destaca por sus jardines, estanques, arquitectura y bambusal. En determinadas temporadas ofrece iluminación nocturna; confirma horarios y entradas para la fecha de visita.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kodai-ji%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kodai-ji%20temple%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.00032,135.78135",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.00032,135.78135&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.00032,135.78135&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "kinkaku",
+    "description": "El Pabellón Dorado es el edificio más conocido del templo Rokuon-ji. Su revestimiento dorado se refleja en el estanque Kyōko-chi, dentro de un jardín paisajístico pensado para contemplarse siguiendo el recorrido señalizado.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kinkaku-ji%20Kyoto.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kinkakuji%20Kyoto%20Japan.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.03959,135.72951",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.03959,135.72951&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.03959,135.72951&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "ryoanji",
+    "description": "Templo zen famoso por su jardín karesansui de quince rocas sobre grava blanca. La composición cambia según el punto de observación y, tradicionalmente, no se pueden ver todas las rocas a la vez desde una posición.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Ryoanji%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Ryoan-ji%20rock%20garden%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.03349,135.71806",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.03349,135.71806&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.03349,135.71806&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "toji",
+    "description": "Templo budista asociado a la escuela Shingon, conocido por su pagoda de cinco plantas, una de las más altas de Japón. El recinto alberga importantes edificios y tesoros; las aperturas interiores y las iluminaciones son estacionales.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Toji%20Temple%20Kyoto%20pagoda.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/To-ji%20Kyoto%20Japan.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.98119,135.74771",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.98119,135.74771&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.98119,135.74771&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "tenryuji",
+    "description": "Templo zen de Arashiyama declarado Patrimonio Mundial. Su jardín Sōgenchi conserva un diseño paisajístico histórico que integra el estanque con las montañas de fondo. La visita al jardín y la entrada a los edificios pueden tener tarifas distintas.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Tenryu-ji%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Tenryuji%20garden%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.01617,135.67462",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.01617,135.67462&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.01617,135.67462&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "bamboo",
+    "description": "Sendero público de Arashiyama que atraviesa un bosque de bambú alto y muy fotogénico. Es un paseo corto y concurrido; llegar temprano suele mejorar la experiencia. No es un recinto cerrado ni requiere entrada.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Arashiyama%20Bamboo%20Grove%20Kyoto.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Arashiyama%20bamboo%20forest%20Kyoto%20Japan.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.01701,135.67169",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.01701,135.67169&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.01701,135.67169&travelmode=walking"
+    }
+  },
+  {
+    "id": "okoichi",
+    "description": "Villa y jardín paisajístico que pertenecieron al actor Ōkōchi Denjirō. El recorrido ofrece vistas de Arashiyama y una experiencia más tranquila que el bosque de bambú; la entrada suele incluir té y un dulce.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Okochi%20Sanso%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Okochi%20Sanso%20garden.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.01666,135.66967",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.01666,135.66967&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.01666,135.66967&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "togetsu",
+    "description": "Puente emblemático sobre el río Katsura, con vistas a las montañas de Arashiyama. Es un lugar agradable para pasear por la ribera y observar el paisaje; el aspecto cambia mucho con la estación y la luz.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Togetsukyo%20Bridge%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Togetsu-kyo%20bridge%20Arashiyama.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.0097,135.6775",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.0097,135.6775&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.0097,135.6775&travelmode=walking"
+    }
+  },
+  {
+    "id": "bishamondo",
+    "description": "Templo monzeki situado en la ladera de Yamashina. En el Yamashina Gishi Matsuri es el punto de salida de la procesión de los 47 rōnin. Conviene llegar antes de las 10:00 para encontrar un lugar desde el que verla arrancar.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Bishamondo%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Bishamon-do%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.00119,135.81892",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.00119,135.81892&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.00119,135.81892&travelmode=walking"
+    }
+  },
+  {
+    "id": "tobu",
+    "description": "Centro cultural municipal de Yamashina. Durante el Yamashina Gishi Matsuri acoge representaciones escénicas relacionadas con la historia de los 47 rōnin. Es una parada del programa, distinta del recorrido exterior de la procesión.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.9725,135.8139",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.9725,135.8139&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.9725,135.8139&travelmode=walking"
+    }
+  },
+  {
+    "id": "oishi",
+    "description": "Santuario vinculado a Ōishi Kuranosuke y a la historia de los 47 rōnin. Es el destino final anunciado para la procesión del Yamashina Gishi Matsuri; el programa general publicado indica que el festival se desarrolla de 10:00 a 15:00.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Oishi%20Shrine%20Kyoto.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Oishi%20Jinja%20Kyoto%20Japan.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.97013,135.7957",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.97013,135.7957&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.97013,135.7957&travelmode=walking"
+    }
+  },
+  {
+    "id": "ninnaji",
+    "description": "Gran complejo budista de la escuela Shingon y Patrimonio Mundial, con pagoda, puertas monumentales y jardines. Fue históricamente residencia de abades imperiales y ofrece una visita amplia y menos apresurada que otros templos.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Ninna-ji%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Ninnaji%20pagoda%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.0312,135.7138",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.0312,135.7138&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.0312,135.7138&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "ginkaku",
+    "description": "El llamado Pabellón de Plata es un templo zen célebre por su jardín de musgo, el jardín seco de arena y el pabellón de madera. Aunque nunca llegó a cubrirse de plata, es una de las visitas más refinadas de Kioto.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Ginkakuji%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Ginkaku-ji%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.02691,135.79843",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.02691,135.79843&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.02691,135.79843&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "philosopher",
+    "description": "Paseo junto a un canal arbolado en el noreste de Kioto, entre templos y pequeños barrios. Es especialmente conocido por los cerezos en flor, pero también funciona como ruta tranquila para conectar Ginkaku-ji con Nanzen-ji.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Philosophers%20Path%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Philosopher's%20Walk%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.0236,135.7945",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.0236,135.7945&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.0236,135.7945&travelmode=walking"
+    }
+  },
+  {
+    "id": "nanzenji",
+    "description": "Uno de los grandes templos zen de Kioto. El complejo combina puertas monumentales, jardines y el llamativo acueducto de ladrillo rojo de la era Meiji. Reserva tiempo para recorrer sus distintos espacios.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Nanzen-ji%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Nanzenji%20aqueduct%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.0117,135.7951",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.0117,135.7951&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.0117,135.7951&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "sanjusangen",
+    "description": "Templo famoso por su sala principal de madera, donde se alinean mil estatuas de Kannon y una figura central de gran tamaño. La fotografía en el interior está restringida; la visita destaca por la escala y el detalle de las esculturas.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Sanjusangendo%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Sanjusangen-do%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.9879,135.7718",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.9879,135.7718&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.9879,135.7718&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "heian",
+    "description": "Santuario sintoísta construido para conmemorar la historia imperial de Kioto. Su gran torii y la arquitectura inspirada en el antiguo Palacio Heian lo hacen muy reconocible; el jardín Shin-en requiere entrada independiente.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Heian%20Shrine%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Heian%20Jingu%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.01617,135.7829",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.01617,135.7829&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.01617,135.7829&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "imperial",
+    "description": "El amplio parque Kyoto Gyoen rodea el Palacio Imperial y antiguas residencias aristocráticas. Es un espacio verde público; el acceso al interior del Palacio Imperial sigue un régimen y horarios propios.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Imperial%20Palace%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Gyoen%20National%20Garden.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.0251,135.7621",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.0251,135.7621&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.0251,135.7621&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "fushimisake",
+    "description": "Barrio histórico de bodegas de sake, canales y almacenes tradicionales al sur de Kioto. Es un buen lugar para conocer la cultura cervecera local y pasear junto al agua; comprueba qué bodegas ofrecen visitas ese día.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi%20sake%20district%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi%20canal%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.9322,135.7631",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.9322,135.7631&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.9322,135.7631&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "kamishichiken",
+    "description": "Uno de los cinco distritos tradicionales de geishas de Kioto, al norte de la ciudad. Conserva calles tranquilas, casas de té y una atmósfera histórica; respeta la privacidad de residentes y trabajadores.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kamishichiken%20Kyoto%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kamishichiken%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.0305,135.7444",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.0305,135.7444&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.0305,135.7444&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "manga",
+    "description": "Museo dedicado a la historia y cultura del manga, ubicado en una antigua escuela primaria. Su colección incluye publicaciones y exposiciones; consulta las exposiciones temporales y el día de cierre antes de ir.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20International%20Manga%20Museum.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Manga%20Museum%20Japan.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.01168,135.75918",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.01168,135.75918&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.01168,135.75918&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "railway",
+    "description": "Museo ferroviario con locomotoras históricas, trenes de distintas épocas y exposiciones interactivas. Es una visita especialmente interesante para aficionados al ferrocarril y familias.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Railway%20Museum%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Railway%20Museum%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.9873,135.7466",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.9873,135.7466&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.9873,135.7466&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "monkey",
+    "description": "Parque natural en la ladera de Arashiyama donde viven macacos japoneses en libertad. Para llegar al mirador hay una subida a pie de unos 20 minutos; sigue las normas y no alimentes ni toques a los animales.",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Arashiyama%20Monkey%20Park%20Iwatayama%20Japan.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Iwatayama%20Monkey%20Park%20Kyoto.jpg"
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.0092,135.6785",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.0092,135.6785&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.0092,135.6785&travelmode=walking"
+    },
+    "audioGuides": [
+      {
+        "label": "Consultar audioguías en español de Kioto (catálogo externo)",
+        "url": "https://rootsearth.com/cities/kyoto/audio-guide",
+        "note": "Comprueba que el monumento tenga pista en español y sus condiciones antes de iniciar la visita."
+      }
+    ]
+  },
+  {
+    "id": "iwaya",
+    "description": "Templo histórico de Yamashina vinculado a la historia de Ōishi Kuranosuke. Forma parte del recorrido anunciado del Yamashina Gishi Matsuri, entre la parada de Tōbu Culture Hall y el santuario Ōishi.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=Iwaya-dera+Kyoto",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=Iwaya-dera+Kyoto&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=Iwaya-dera+Kyoto&travelmode=walking"
+    }
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "trip": "Kioto",
+  "year": 2026,
+  "dates": "11–15 diciembre",
+  "hotel": "Agora Kyoto Karasuma",
+  "days": [
+    {
+      "date": "2026-12-11",
+      "label": "11 diciembre",
+      "route": "Hakone → Kioto",
+      "focus": "Llegada a media mañana; centro, Nishiki, Castillo Nijō y Pontocho"
+    },
+    {
+      "date": "2026-12-12",
+      "label": "12 diciembre",
+      "route": "Fushimi Inari → Higashiyama → Gion",
+      "focus": "Santuarios, calles tradicionales e iluminación nocturna de Kōdai-ji"
+    },
+    {
+      "date": "2026-12-13",
+      "label": "13 diciembre",
+      "route": "Kinkaku-ji → Ryoan-ji → Arashiyama → Tō-ji",
+      "focus": "Templos zen, bosque de bambú y visita nocturna"
+    },
+    {
+      "date": "2026-12-14",
+      "label": "14 diciembre",
+      "route": "Yamashina",
+      "focus": "Yamashina Gishi Matsuri y actividades relacionadas con el Kanji del Año"
+    },
+    {
+      "date": "2026-12-15",
+      "label": "15 diciembre",
+      "route": "Kioto → Osaka",
+      "focus": "Salida temprano"
+    }
+  ]
+}

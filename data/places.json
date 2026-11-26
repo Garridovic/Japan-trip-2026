@@ -1,0 +1,334 @@
+[
+  {
+    "id": "hotel",
+    "name": "Agora Kyoto Karasuma",
+    "lat": 35.00315,
+    "lng": 135.7567,
+    "day": "base",
+    "type": "hotel",
+    "desc": "Alojamiento del grupo. Punto de partida para los recorridos.",
+    "query": "Agora Kyoto Karasuma"
+  },
+  {
+    "id": "nishiki",
+    "name": "Mercado Nishiki",
+    "lat": 35.00503,
+    "lng": 135.76471,
+    "day": "11",
+    "type": "itinerary",
+    "desc": "Mercado gastronómico cubierto del centro.",
+    "query": "Nishiki Market Kyoto"
+  },
+  {
+    "id": "nijo",
+    "name": "Castillo Nijō",
+    "lat": 35.01397,
+    "lng": 135.74851,
+    "day": "11",
+    "type": "itinerary",
+    "desc": "Castillo y palacio Ninomaru.",
+    "query": "Nijo Castle Kyoto"
+  },
+  {
+    "id": "pontocho",
+    "name": "Pontocho",
+    "lat": 35.00425,
+    "lng": 135.77121,
+    "day": "11",
+    "type": "itinerary",
+    "desc": "Callejón de restaurantes y bares junto al río.",
+    "query": "Pontocho Kyoto"
+  },
+  {
+    "id": "fushimi",
+    "name": "Fushimi Inari Taisha",
+    "lat": 34.96754,
+    "lng": 135.77944,
+    "day": "12",
+    "type": "itinerary",
+    "desc": "Santuario de los miles de torii rojos.",
+    "query": "Fushimi Inari Taisha Kyoto"
+  },
+  {
+    "id": "kiyomizu",
+    "name": "Kiyomizu-dera",
+    "lat": 34.99442,
+    "lng": 135.78448,
+    "day": "12",
+    "type": "itinerary",
+    "desc": "Visita turística el 12. El 14 se anuncia aquí el Kanji del Año, pero la zona de la caligrafía está restringida y no se puede presenciar el acto.",
+    "query": "Kiyomizu dera Kyoto"
+  },
+  {
+    "id": "sannenzaka",
+    "name": "Sannenzaka y Ninenzaka",
+    "lat": 34.9974,
+    "lng": 135.78132,
+    "day": "12",
+    "type": "itinerary",
+    "desc": "Calles históricas tradicionales, tiendas y casas de té.",
+    "query": "Sannenzaka Ninenzaka Kyoto"
+  },
+  {
+    "id": "yasaka",
+    "name": "Santuario Yasaka",
+    "lat": 35.00349,
+    "lng": 135.77839,
+    "day": "12",
+    "type": "itinerary",
+    "desc": "Santuario sintoísta en la entrada de Gion.",
+    "query": "Yasaka Shrine Kyoto"
+  },
+  {
+    "id": "kodaiji",
+    "name": "Kōdai-ji",
+    "lat": 35.00032,
+    "lng": 135.78135,
+    "day": "12",
+    "type": "itinerary",
+    "desc": "Templo y jardines con iluminación nocturna especial.",
+    "query": "Kodai ji Kyoto"
+  },
+  {
+    "id": "kinkaku",
+    "name": "Kinkaku-ji",
+    "lat": 35.03959,
+    "lng": 135.72951,
+    "day": "13",
+    "type": "itinerary",
+    "desc": "Pabellón Dorado y estanque.",
+    "query": "Kinkakuji Kyoto"
+  },
+  {
+    "id": "ryoanji",
+    "name": "Ryoan-ji",
+    "lat": 35.03349,
+    "lng": 135.71806,
+    "day": "13",
+    "type": "itinerary",
+    "desc": "Templo zen famoso por su jardín de rocas.",
+    "query": "Ryoanji Kyoto"
+  },
+  {
+    "id": "toji",
+    "name": "Tō-ji",
+    "lat": 34.98119,
+    "lng": 135.74771,
+    "day": "13",
+    "type": "itinerary",
+    "desc": "Pagoda de cinco plantas e iluminación nocturna final del 13 de diciembre.",
+    "query": "Toji Temple Kyoto"
+  },
+  {
+    "id": "tenryuji",
+    "name": "Tenryū-ji",
+    "lat": 35.01617,
+    "lng": 135.67462,
+    "day": "13",
+    "type": "itinerary",
+    "desc": "Templo zen y jardín Sōgenchi.",
+    "query": "Tenryuji Kyoto"
+  },
+  {
+    "id": "bamboo",
+    "name": "Bosque de bambú de Arashiyama",
+    "lat": 35.01701,
+    "lng": 135.67169,
+    "day": "13",
+    "type": "itinerary",
+    "desc": "Sendero entre altos bambús.",
+    "query": "Arashiyama Bamboo Grove Kyoto"
+  },
+  {
+    "id": "okoichi",
+    "name": "Ōkōchi Sansō",
+    "lat": 35.01666,
+    "lng": 135.66967,
+    "day": "13",
+    "type": "itinerary",
+    "desc": "Villa y jardín tradicional; visita opcional.",
+    "query": "Okochi Sanso Kyoto"
+  },
+  {
+    "id": "togetsu",
+    "name": "Puente Togetsukyō",
+    "lat": 35.0097,
+    "lng": 135.6775,
+    "day": "13",
+    "type": "itinerary",
+    "desc": "Puente histórico y paseo junto al río Katsura.",
+    "query": "Togetsukyo Bridge Kyoto"
+  },
+  {
+    "id": "bishamondo",
+    "name": "Bishamondō · salida del desfile",
+    "lat": 35.00119,
+    "lng": 135.81892,
+    "day": "14",
+    "type": "event",
+    "desc": "Punto de salida del Yamashina Gishi Matsuri a las 10:00.",
+    "query": "Bishamondo Kyoto"
+  },
+  {
+    "id": "tobu",
+    "name": "Kyoto City Tōbu Culture Hall",
+    "lat": 34.9725,
+    "lng": 135.8139,
+    "day": "14",
+    "type": "event",
+    "desc": "Sede de las representaciones del festival. Dirección oficial: 1-8 Nishiura-cho, Nagitsuji, Yamashina-ku. Pin aproximado; abre el enlace para confirmar.",
+    "query": "Kyoto City Tobu Culture Hall"
+  },
+  {
+    "id": "oishi",
+    "name": "Ōishi Jinja · final del desfile",
+    "lat": 34.97013,
+    "lng": 135.7957,
+    "day": "14",
+    "type": "event",
+    "desc": "Punto final del recorrido del Yamashina Gishi Matsuri.",
+    "query": "Oishi Shrine Yamashina Kyoto"
+  },
+  {
+    "id": "iwaya",
+    "name": "Iwaya-dera · parada del desfile",
+    "lat": 34.97135,
+    "lng": 135.8025,
+    "day": "14",
+    "type": "event",
+    "desc": "Templo histórico en el recorrido del Yamashina Gishi Matsuri, entre Tōbu Culture Hall y Ōishi Jinja.",
+    "query": "Iwaya-dera Kyoto"
+  },
+  {
+    "id": "ninnaji",
+    "name": "Ninna-ji",
+    "lat": 35.0312,
+    "lng": 135.7138,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "templos",
+    "desc": "Gran complejo monumental y pagoda. Coordenada orientativa.",
+    "query": "Ninna ji Kyoto"
+  },
+  {
+    "id": "ginkaku",
+    "name": "Ginkaku-ji · Pabellón de Plata",
+    "lat": 35.02691,
+    "lng": 135.79843,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "templos",
+    "desc": "Templo y jardines de arena y musgo.",
+    "query": "Ginkakuji Kyoto"
+  },
+  {
+    "id": "philosopher",
+    "name": "Philosopher’s Path",
+    "lat": 35.0236,
+    "lng": 135.7945,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "naturaleza",
+    "desc": "Paseo junto al canal en el noreste de Kioto. Pin aproximado del recorrido.",
+    "query": "Philosophers Path Kyoto"
+  },
+  {
+    "id": "nanzenji",
+    "name": "Nanzen-ji",
+    "lat": 35.0117,
+    "lng": 135.7951,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "templos",
+    "desc": "Complejo zen con jardines y acueducto. Coordenada orientativa.",
+    "query": "Nanzenji Kyoto"
+  },
+  {
+    "id": "sanjusangen",
+    "name": "Sanjūsangen-dō",
+    "lat": 34.9879,
+    "lng": 135.7718,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "templos",
+    "desc": "Templo conocido por sus 1.001 figuras de Kannon.",
+    "query": "Sanjusangendo Kyoto"
+  },
+  {
+    "id": "heian",
+    "name": "Heian-jingū",
+    "lat": 35.01617,
+    "lng": 135.7829,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "templos",
+    "desc": "Santuario con gran torii y arquitectura de inspiración imperial.",
+    "query": "Heian Jingu Kyoto"
+  },
+  {
+    "id": "imperial",
+    "name": "Kyoto Gyoen · Palacio Imperial",
+    "lat": 35.0251,
+    "lng": 135.7621,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "naturaleza",
+    "desc": "Parque histórico y antiguo Palacio Imperial. Pin aproximado.",
+    "query": "Kyoto Imperial Palace"
+  },
+  {
+    "id": "fushimisake",
+    "name": "Fushimi Sake District",
+    "lat": 34.9322,
+    "lng": 135.7631,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "barrios",
+    "desc": "Distrito histórico de bodegas de sake y canales. Pin aproximado.",
+    "query": "Fushimi Sake District Kyoto"
+  },
+  {
+    "id": "kamishichiken",
+    "name": "Kamishichiken",
+    "lat": 35.0305,
+    "lng": 135.7444,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "barrios",
+    "desc": "Distrito histórico tradicional al norte de la ciudad. Pin aproximado.",
+    "query": "Kamishichiken Kyoto"
+  },
+  {
+    "id": "manga",
+    "name": "Kyoto International Manga Museum",
+    "lat": 35.01168,
+    "lng": 135.75918,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "cultura",
+    "desc": "Museo dedicado al manga.",
+    "query": "Kyoto International Manga Museum"
+  },
+  {
+    "id": "railway",
+    "name": "Kyoto Railway Museum",
+    "lat": 34.9873,
+    "lng": 135.7466,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "cultura",
+    "desc": "Museo ferroviario con locomotoras y trenes históricos. Pin aproximado.",
+    "query": "Kyoto Railway Museum"
+  },
+  {
+    "id": "monkey",
+    "name": "Arashiyama Monkey Park Iwatayama",
+    "lat": 35.0092,
+    "lng": 135.6785,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "naturaleza",
+    "desc": "Parque de macacos con subida a pie. Pin aproximado.",
+    "query": "Arashiyama Monkey Park Iwatayama"
+  }
+]

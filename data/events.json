@@ -1,0 +1,42 @@
+{
+  "title": "Yamashina Gishi Matsuri",
+  "date": "14 diciembre 2026",
+  "officialHours": "10:00–15:00",
+  "recommendedArrival": "09:30",
+  "start": "Bishamondō",
+  "finish": "Ōishi Jinja",
+  "routeStops": [
+    {
+      "id": "bishamondo",
+      "name": "Bishamondō · salida",
+      "time": "10:00",
+      "kind": "start",
+      "note": "Punto de inicio oficial. Recomendamos llegar sobre las 09:30 para colocarse y ver la salida."
+    },
+    {
+      "id": "tobu",
+      "name": "Kyoto City Tōbu Culture Hall",
+      "time": "11:45 aprox.",
+      "kind": "performance",
+      "note": "Parada con representaciones relacionadas con la historia de los 47 rōnin. Hora orientativa publicada por fuentes secundarias; confirmar programa el mismo día."
+    },
+    {
+      "id": "iwaya",
+      "name": "Iwaya-dera",
+      "time": "Durante la tarde",
+      "kind": "stop",
+      "note": "Lugar histórico del recorrido entre Tōbu Culture Hall y Ōishi Jinja. No se ha publicado una hora oficial de paso."
+    },
+    {
+      "id": "oishi",
+      "name": "Ōishi Jinja · llegada y final",
+      "time": "14:30–15:00 aprox.",
+      "kind": "finish",
+      "note": "Destino final. La información oficial fija el horario general del festival hasta las 15:00; la hora de llegada concreta es orientativa."
+    }
+  ],
+  "officialSource": "https://ja.kyoto.travel/event/single.php?event_id=2335",
+  "routeSource": "https://roamkyoto.com/events/december-2026/",
+  "routeUrl": "https://www.google.com/maps/dir/?api=1&origin=Bishamondo%2C+Kyoto&destination=Oishi+Jinja%2C+Kyoto&waypoints=Kyoto+City+Tobu+Culture+Hall%7CIwaya-dera&travelmode=walking",
+  "note": "El ayuntamiento confirma la fecha, el horario global (10:00–15:00) y el eje Bishamondō–Iwaya-dera–Ōishi Jinja. Los horarios intermedios son estimaciones de fuentes secundarias, no un cronograma oficial."
+}

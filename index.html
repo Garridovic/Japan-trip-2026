@@ -4,264 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#182a35">
-  <meta name="guide-version" content="V6">
+  <meta name="guide-version" content="V7">
   <meta name="description" content="Guía compartida del viaje a Kioto del 11 al 15 de diciembre de 2026: itinerario, mapa GPS, gastronomía y lugares alternativos.">
   <title>Kioto · 11–15 diciembre 2026</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <style>
-    :root {
-      --ink: #192b35;
-      --muted: #61717a;
-      --paper: #f6f4ef;
-      --card: #fffefa;
-      --line: #e5e1d8;
-      --red: #b84b3d;
-      --red-soft: #f6e9e5;
-      --gold: #bd8b39;
-      --green: #547466;
-      --shadow: 0 12px 32px rgba(26, 39, 44, .07);
-      --radius: 18px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: var(--paper);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.55;
-    }
-    a { color: #8e3d32; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-    a:hover { color: #5d211b; }
-    .hero {
-      color: #fffaf1;
-      background: radial-gradient(circle at 88% 12%, rgba(189,139,57,.27), transparent 28%), linear-gradient(130deg, #182a35 0%, #243d49 58%, #4b3534 100%);
-      padding: 42px 22px 34px;
-      overflow: hidden;
-    }
-    .hero-inner, main, .footer-inner { width: min(1080px, 100%); margin: 0 auto; }
-    .eyebrow { color: #e5c58d; font-size: .75rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-    h1 { margin: 9px 0 7px; font-size: clamp(2.1rem, 6vw, 4.1rem); letter-spacing: -.055em; line-height: 1.02; }
-    .subtitle { color: #e8e6de; max-width: 640px; font-size: 1.02rem; margin: 0 0 22px; }
-    .hero-meta { display: flex; flex-wrap: wrap; gap: 9px; margin: 20px 0 0; }
-    .hero-meta span { border: 1px solid rgba(255,255,255,.2); border-radius: 999px; padding: 6px 11px; font-size: .82rem; color: #f4eee3; background: rgba(255,255,255,.06); }
-    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
-    .button { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; padding: 10px 15px; border: 1px solid rgba(255,255,255,.28); color: white; text-decoration: none; font-weight: 700; font-size: .88rem; background: rgba(255,255,255,.08); cursor: pointer; }
-    .button.primary { background: #f2e5c9; color: #24333a; border-color: #f2e5c9; }
-    .button:hover { transform: translateY(-1px); color: white; }
-    .button.primary:hover { color: #24333a; }
-    .hotel { color: #d2d8d7; font-size: .9rem; margin-top: 14px; }
-    .hotel a { color: #f0d7a7; }
-    nav { position: sticky; top: 0; z-index: 5; background: rgba(246,244,239,.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-    .nav-inner { width: min(1080px, 100%); margin: auto; display: flex; gap: 20px; overflow-x: auto; padding: 11px 22px; white-space: nowrap; }
-    nav a { text-decoration: none; color: var(--muted); font-weight: 750; font-size: .82rem; }
-    nav a:hover { color: var(--red); }
-    main { padding: 30px 22px 64px; }
-    section { scroll-margin-top: 72px; margin-bottom: 38px; }
-    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 0 0 17px; }
-    .kicker { color: var(--red); text-transform: uppercase; font-size: .72rem; font-weight: 850; letter-spacing: .13em; }
-    h2 { font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.035em; margin: 3px 0 0; line-height: 1.15; }
-    h3 { font-size: 1.08rem; margin: 0; letter-spacing: -.015em; }
-    p { margin: 7px 0; }
-    .muted { color: var(--muted); }
-    .small { font-size: .86rem; }
-    .quick-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    .quick-card, .day-detail, .extra-card, .note-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
-    .quick-card { padding: 17px 18px; display: flex; flex-direction: column; min-height: 205px; }
-    .quick-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 10px; }
-    .date { color: var(--red); font-size: .76rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
-    .zone { font-size: .73rem; font-weight: 800; background: #f0eee8; color: #58666b; border-radius: 999px; padding: 5px 9px; }
-    .quick-card h3 { font-size: 1.12rem; }
-    .route { font-weight: 700; line-height: 1.8; font-size: .91rem; margin: 9px 0 8px; }
-    .route span { color: var(--red); padding: 0 3px; }
-    .quick-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 11px; margin-top: auto; }
-    .quick-foot small { color: var(--muted); font-size: .78rem; }
-    .text-link { font-size: .82rem; font-weight: 800; white-space: nowrap; }
-    .day-list { display: grid; gap: 13px; }
-    details.day-detail { overflow: hidden; }
-    details.day-detail summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 62px 1fr auto; gap: 15px; align-items: center; padding: 17px 19px; }
-    details.day-detail summary::-webkit-details-marker { display: none; }
-    .day-number { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 15px; background: var(--red-soft); color: var(--red); font-size: 1.05rem; font-weight: 900; line-height: 1.05; }
-    .day-number small { display: block; font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; }
-    .summary-copy { min-width: 0; }
-    .summary-copy .muted { font-size: .83rem; }
-    .chevron { color: var(--muted); font-size: 1.2rem; transition: transform .2s; }
-    details[open] .chevron { transform: rotate(180deg); }
-    .detail-body { padding: 0 20px 20px 96px; }
-    .detail-lead { max-width: 720px; color: var(--muted); font-size: .91rem; margin: 0 0 15px; }
-    .stops { display: grid; gap: 0; border-left: 2px solid #e8d7cb; margin: 7px 0 15px 5px; }
-    .stop { position: relative; display: grid; grid-template-columns: 85px 1fr; gap: 12px; padding: 0 0 15px 17px; }
-    .stop:last-child { padding-bottom: 0; }
-    .stop::before { content: ""; position: absolute; left: -6px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--red); border: 2px solid var(--card); }
-    .time { font-size: .81rem; color: var(--red); font-weight: 850; font-variant-numeric: tabular-nums; }
-    .stop strong { display: block; font-size: .92rem; }
-    .stop p { color: var(--muted); font-size: .83rem; margin: 2px 0 0; }
-    .detail-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 13px; margin-top: 16px; }
-    .transport { color: var(--muted); font-size: .82rem; max-width: 600px; }
-    .map-link { display: inline-flex; text-decoration: none; border-radius: 999px; padding: 8px 12px; background: var(--ink); color: #fff; font-size: .8rem; font-weight: 800; }
-    .map-link:hover { color: #fff; background: #314d5a; }
-    .highlight { background: #fbf5e9; border: 1px solid #ead9b8; border-radius: 12px; padding: 11px 13px; margin-top: 12px; font-size: .85rem; }
-    .highlight strong { color: #80561a; }
-    .extras-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-    .filter { border: 1px solid var(--line); color: var(--muted); background: var(--card); border-radius: 999px; padding: 7px 12px; font: inherit; font-size: .8rem; font-weight: 800; cursor: pointer; }
-    .filter[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: white; }
-    .extras-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
-    .extra-card { padding: 14px 15px; box-shadow: none; }
-    .extra-tag { display: inline-block; color: var(--red); font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px; }
-    .extra-card p { color: var(--muted); font-size: .82rem; }
-    .extra-card[hidden] { display: none; }
-    .food-intro { color:var(--muted); max-width:820px; margin:-4px 0 18px; font-size:.9rem; }
-    .food-highlights { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:0 0 21px; }
-    .food-highlight { padding:13px 14px; background:var(--card); border:1px solid var(--line); border-radius:14px; }
-    .food-highlight strong { display:block; font-size:.87rem; margin-bottom:3px; }
-    .food-highlight p { color:var(--muted); font-size:.77rem; line-height:1.45; margin:0; }
-    .food-filter-block { margin:0 0 14px; }
-    .food-filter-label { color:var(--muted); font-size:.72rem; font-weight:850; letter-spacing:.08em; text-transform:uppercase; margin:0 0 7px; }
-    .food-toolbar { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 13px; }
-    .food-count { color:var(--muted); font-size:.78rem; margin:0 0 10px; }
-    .food-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-    .food-card { padding:16px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); display:flex; flex-direction:column; min-width:0; }
-    .food-card[hidden] { display:none; }
-    .food-card-top { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:7px; margin-bottom:8px; }
-    .food-type { color:var(--red); font-size:.68rem; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
-    .food-day { border-radius:999px; padding:4px 8px; background:#f0eee8; color:#58666b; font-size:.68rem; font-weight:800; }
-    .food-card h3 { font-size:1.04rem; }
-    .food-card p { color:var(--muted); font-size:.82rem; }
-    .food-meta { margin-top:5px; padding-top:9px; border-top:1px solid var(--line); color:var(--muted); font-size:.75rem; }
-    .food-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:12px; }
-    .food-actions a { display:inline-flex; align-items:center; justify-content:center; border-radius:999px; padding:8px 11px; background:var(--ink); color:#fff; text-decoration:none; font-size:.76rem; font-weight:850; }
-    .food-actions a.secondary { background:#eef1f3; color:var(--ink); }
-    .food-note { background:#fbf5e9; border:1px solid #ead9b8; border-radius:12px; padding:12px 14px; color:#6e5633; font-size:.81rem; margin-top:15px; }
-    .map-toolbar { display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 13px; }
-    .map-layout { display:grid; grid-template-columns:minmax(0, 1.8fr) minmax(250px, .9fr); gap:14px; align-items:stretch; }
-    .map-panel, .nearby-panel { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
-    #kyoto-map { width:100%; height:520px; background:#e9e7df; }
-    .map-panel-foot { padding:10px 14px; border-top:1px solid var(--line); color:var(--muted); font-size:.76rem; }
-    .map-panel-foot a { white-space:nowrap; }
-    .nearby-panel { padding:16px; }
-    .nearby-panel h3 { margin-bottom:5px; }
-    .nearby-status { color:var(--muted); font-size:.8rem; margin:0 0 12px; }
-    .locate-button { display:inline-flex; align-items:center; justify-content:center; width:100%; border:0; border-radius:999px; padding:10px 13px; background:var(--ink); color:white; font:inherit; font-size:.84rem; font-weight:800; cursor:pointer; }
-    .locate-button:disabled { opacity:.6; cursor:wait; }
-    .nearby-list { list-style:none; padding:0; margin:13px 0 0; display:grid; gap:8px; }
-    .nearby-list li { border-top:1px solid var(--line); padding-top:9px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:7px 9px; align-items:center; }
-    .nearby-list button { border:0; background:none; padding:0; color:var(--ink); text-align:left; font:inherit; cursor:pointer; font-weight:750; font-size:.83rem; min-width:0; }
-    .nearby-list small { display:block; color:var(--muted); font-size:.73rem; font-weight:400; }
-    .nearby-distance { color:var(--red); font-size:.78rem; font-weight:850; font-variant-numeric:tabular-nums; white-space:nowrap; }
-    .nearby-directions { grid-column:1 / -1; justify-self:start; display:inline-flex; align-items:center; border-radius:999px; padding:5px 10px; background:#eef1f3; color:var(--ink); font-size:.74rem; font-weight:850; text-decoration:none; }
-    .nearby-directions:hover { background:#dfe6e9; color:var(--ink); }
-    .location-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:11px; }
-    .locate-button, .follow-button { min-height:44px; }
-    .follow-button { display:inline-flex; align-items:center; justify-content:center; width:100%; border:1px solid var(--line); border-radius:999px; padding:10px 13px; background:#fffefa; color:var(--ink); font:inherit; font-size:.84rem; font-weight:800; cursor:pointer; }
-    .follow-button[aria-pressed="true"] { background:#e8effa; border-color:#9bb8e4; color:#174b91; }
-    .locate-button:focus-visible, .follow-button:focus-visible, .filter:focus-visible { outline:3px solid rgba(36,102,189,.35); outline-offset:2px; }
-    .location-hint { color:var(--muted); font-size:.74rem; margin:8px 0 0; }
-    .map-legend { margin:0 0 13px; padding:11px 14px; border:1px solid var(--line); border-radius:14px; background:var(--card); box-shadow:var(--shadow); }
-    .map-legend summary { display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; list-style:none; color:var(--ink); font-size:.84rem; font-weight:850; }
-    .map-legend summary::-webkit-details-marker { display:none; }
-    .map-legend summary::after { content:"Ocultar"; color:var(--muted); font-size:.74rem; font-weight:750; }
-    .map-legend:not([open]) summary::after { content:"Mostrar"; }
-    .legend { display:grid; grid-template-columns:repeat(auto-fit,minmax(205px,1fr)); gap:8px 16px; margin:11px 0 1px; color:var(--muted); font-size:.76rem; }
-    .legend span { display:flex; gap:8px; align-items:center; min-width:0; }
-    .legend i { width:11px; height:11px; display:inline-block; border-radius:50%; flex:0 0 11px; }
-    .legend i.location { background:#2466bd; border:2px solid #fff; box-shadow:0 0 0 1px #2466bd; }
-    .legend i.accuracy { background:rgba(36,102,189,.16); border:1px solid rgba(36,102,189,.55); }
-    .user-location-marker { background:transparent; border:0; }
-    .user-location-marker span { display:block; width:18px; height:18px; border-radius:50%; background:#2466bd; border:3px solid #fff; box-shadow:0 1px 6px rgba(0,0,0,.4), 0 0 0 2px rgba(36,102,189,.2); }
-    .map-filter-group { margin:0 0 10px; }
-    .map-filter-label { color:var(--muted); font-size:.70rem; font-weight:850; letter-spacing:.08em; text-transform:uppercase; margin:0 0 6px; }
-    .map-filter-status { color:var(--muted); font-size:.76rem; margin:-2px 0 13px; }
-    .map-toolbar { align-items:center; }
-    .restaurant-map-marker { background:transparent; border:0; }
-    .restaurant-map-marker span { display:block; width:14px; height:14px; border:2px solid #fff; border-radius:3px; background:var(--marker-color); transform:rotate(45deg); box-shadow:0 1px 5px rgba(0,0,0,.35); }
-    .legend i.restaurant-shape { background:#c45a4a; border:2px solid #fff; border-radius:2px; transform:rotate(45deg); box-shadow:0 0 0 1px #aab4b8; }
-    .legend i.visit-shape { border:2px solid #fff; box-shadow:0 0 0 1px #aab4b8; }
-    .leaflet-popup-content { min-width:190px; }
-    .popup-title { font-weight:850; margin-bottom:3px; color:var(--ink); }
-    .popup-meta { color:var(--muted); font-size:.78rem; margin-bottom:7px; }
-    .popup-links { display:flex; gap:9px; font-size:.78rem; font-weight:800; }
-    .leaflet-container { font-family:inherit; }
-    .notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
-    .note-card { padding: 16px; box-shadow: none; }
-    .note-card h3 { font-size: .95rem; }
-    .note-card p, .note-card li { color: var(--muted); font-size: .84rem; }
-    .note-card ul { padding-left: 18px; margin: 7px 0 0; }
-    .sources { font-size: .83rem; }
-    .sources summary { cursor: pointer; font-weight: 800; }
-    .sources ul { padding-left: 20px; }
-    .sources li { margin: 5px 0; }
-    footer { background: #182a35; color: #d7dfdc; padding: 22px; font-size: .8rem; }
-    footer a { color: #f0d7a7; }
-    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
-    @media (max-width: 700px) {
-      .hero { padding: 33px 18px 27px; }
-      main { padding: 24px 16px 48px; }
-      .nav-inner { padding-inline: 16px; gap: 16px; }
-      .quick-grid, .extras-grid, .notes-grid, .map-layout, .food-grid { grid-template-columns: 1fr; }
-      .food-highlights { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      #kyoto-map { height:430px; }
-      .location-actions { grid-template-columns:1fr; }
-      .nearby-panel { padding:14px; }
-      .quick-card { min-height: 0; }
-      details.day-detail summary { grid-template-columns: 48px 1fr auto; gap: 11px; padding: 14px; }
-      .day-number { width: 44px; height: 44px; border-radius: 12px; }
-      .detail-body { padding: 0 14px 16px; }
-      .stop { grid-template-columns: 72px 1fr; gap: 8px; }
-      .section-head { align-items: start; flex-direction: column; gap: 5px; }
-    }
-
-    .version-indicator {
-      position: fixed;
-      right: max(12px, env(safe-area-inset-right));
-      bottom: max(12px, env(safe-area-inset-bottom));
-      z-index: 1000;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 9px;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 999px;
-      color: rgba(255,250,241,.9);
-      background: rgba(24,42,53,.78);
-      box-shadow: 0 2px 10px rgba(18,30,36,.16);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      font-size: .67rem;
-      font-weight: 800;
-      letter-spacing: .08em;
-      line-height: 1.2;
-      pointer-events: none;
-      user-select: none;
-    }
-    .version-indicator::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #d5b06b;
-      box-shadow: 0 0 0 2px rgba(213,176,107,.16);
-    }
-    /* Keep Leaflet attribution clear of the fixed version label. */
-    .leaflet-bottom.leaflet-right { left: 0; right: auto; }
-    .leaflet-control-attribution { margin-left: 8px !important; margin-right: 0 !important; }
-    @media print {
-      :root { --paper: white; --card: white; }
-      body { background: white; font-size: 10pt; }
-      .hero { padding: 18px 0; background: #182a35 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-      .hero-inner, main, .footer-inner { width: 100%; }
-      nav, .hero-actions, .extras-toolbar, .food-toolbar, .map-link, .map-toolbar, .location-actions, .location-hint, .version-indicator { display: none !important; }
-      #kyoto-map { height:360px; }
-      main { padding: 18px 0; }
-      .quick-grid { grid-template-columns: repeat(2,1fr); }
-      .quick-card, .day-detail, .extra-card, .note-card { box-shadow: none; break-inside: avoid; }
-      details.day-detail > summary { padding: 10px; }
-      details.day-detail:not([open]) > .detail-body { display: block; }
-      .detail-body { padding: 0 10px 12px 70px; }
-      section { margin-bottom: 22px; }
-      footer { padding: 12px 0; }
-      a { color: inherit; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
   <header class="hero">
@@ -737,8 +484,39 @@
   </main>
 
   <footer>
-    <div class="footer-inner"><span>Kioto · 11–15 diciembre 2026</span><span>Guía de viaje compartida · editable en <code>index.html</code></span><span>Exportación opcional: <a href="kyoto-points.kml" download>descargar puntos KML</a></span></div>
+    <div class="footer-inner"><span>Kioto · 11–15 diciembre 2026</span><span>Guía de viaje compartida · contenido editable en <code>data/</code></span><span>Exportación opcional: <a href="kyoto-points.kml" download>descargar puntos KML</a></span></div>
   </footer>
+
+
+  <div class="poi-modal" id="poi-modal" hidden aria-hidden="true">
+    <div class="poi-modal-backdrop" data-close-detail></div>
+    <section class="poi-detail" role="dialog" aria-modal="true" aria-labelledby="poi-title">
+      <header class="poi-detail-header">
+        <button type="button" class="poi-back" data-close-detail aria-label="Volver">← Volver</button>
+        <span class="poi-kicker">GUÍA DE KIOTO</span>
+      </header>
+      <div class="poi-detail-content">
+        <div class="poi-gallery" id="poi-gallery">
+          <img id="poi-photo" alt="" />
+          <button type="button" class="poi-gallery-nav prev" id="poi-photo-prev" aria-label="Foto anterior">‹</button>
+          <button type="button" class="poi-gallery-nav next" id="poi-photo-next" aria-label="Foto siguiente">›</button>
+          <span class="poi-photo-count" id="poi-photo-count"></span>
+        </div>
+        <h2 id="poi-title"></h2>
+        <p class="poi-description" id="poi-description"></p>
+        <section class="poi-event" id="poi-event" hidden></section>
+        <section class="poi-links-section">
+          <h3>Cómo llegar</h3>
+          <div class="poi-action-links" id="poi-directions"></div>
+        </section>
+        <section class="poi-audio-section" id="poi-audio-section" hidden>
+          <h3>Audioguía en español</h3>
+          <div id="poi-audio-links"></div>
+        </section>
+        <p class="poi-source-note">Las fotografías se sirven desde Wikimedia Commons. Los enlaces externos pueden abrirse en otra pestaña.</p>
+      </div>
+    </section>
+  </div>
 
   <script>
     const filters = document.querySelectorAll('.filter[data-filter]');
@@ -782,42 +560,98 @@
   </script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
-    const kyotoPoints = [
-      {id:'hotel',name:'Agora Kyoto Karasuma',lat:35.00315,lng:135.75670,day:'base',type:'hotel',desc:'Alojamiento del grupo. Punto de partida para los recorridos.',query:'Agora Kyoto Karasuma'},
-      {id:'nishiki',name:'Mercado Nishiki',lat:35.00503,lng:135.76471,day:'11',type:'itinerary',desc:'Mercado gastronómico cubierto del centro.',query:'Nishiki Market Kyoto'},
-      {id:'nijo',name:'Castillo Nijō',lat:35.01397,lng:135.74851,day:'11',type:'itinerary',desc:'Castillo y palacio Ninomaru.',query:'Nijo Castle Kyoto'},
-      {id:'pontocho',name:'Pontocho',lat:35.00425,lng:135.77121,day:'11',type:'itinerary',desc:'Callejón de restaurantes y bares junto al río.',query:'Pontocho Kyoto'},
-      {id:'fushimi',name:'Fushimi Inari Taisha',lat:34.96754,lng:135.77944,day:'12',type:'itinerary',desc:'Santuario de los miles de torii rojos.',query:'Fushimi Inari Taisha Kyoto'},
-      {id:'kiyomizu',name:'Kiyomizu-dera',lat:34.99442,lng:135.78448,day:'12',type:'itinerary',desc:'Visita turística el 12. El 14 se anuncia aquí el Kanji del Año, pero la zona de la caligrafía está restringida y no se puede presenciar el acto.',query:'Kiyomizu dera Kyoto'},
-      {id:'sannenzaka',name:'Sannenzaka y Ninenzaka',lat:34.99740,lng:135.78132,day:'12',type:'itinerary',desc:'Calles históricas tradicionales, tiendas y casas de té.',query:'Sannenzaka Ninenzaka Kyoto'},
-      {id:'yasaka',name:'Santuario Yasaka',lat:35.00349,lng:135.77839,day:'12',type:'itinerary',desc:'Santuario sintoísta en la entrada de Gion.',query:'Yasaka Shrine Kyoto'},
-      {id:'kodaiji',name:'Kōdai-ji',lat:35.00032,lng:135.78135,day:'12',type:'itinerary',desc:'Templo y jardines con iluminación nocturna especial.',query:'Kodai ji Kyoto'},
-      {id:'kinkaku',name:'Kinkaku-ji',lat:35.03959,lng:135.72951,day:'13',type:'itinerary',desc:'Pabellón Dorado y estanque.',query:'Kinkakuji Kyoto'},
-      {id:'ryoanji',name:'Ryoan-ji',lat:35.03349,lng:135.71806,day:'13',type:'itinerary',desc:'Templo zen famoso por su jardín de rocas.',query:'Ryoanji Kyoto'},
-      {id:'toji',name:'Tō-ji',lat:34.98119,lng:135.74771,day:'13',type:'itinerary',desc:'Pagoda de cinco plantas e iluminación nocturna final del 13 de diciembre.',query:'Toji Temple Kyoto'},
-      {id:'tenryuji',name:'Tenryū-ji',lat:35.01617,lng:135.67462,day:'13',type:'itinerary',desc:'Templo zen y jardín Sōgenchi.',query:'Tenryuji Kyoto'},
-      {id:'bamboo',name:'Bosque de bambú de Arashiyama',lat:35.01701,lng:135.67169,day:'13',type:'itinerary',desc:'Sendero entre altos bambús.',query:'Arashiyama Bamboo Grove Kyoto'},
-      {id:'okoichi',name:'Ōkōchi Sansō',lat:35.01666,lng:135.66967,day:'13',type:'itinerary',desc:'Villa y jardín tradicional; visita opcional.',query:'Okochi Sanso Kyoto'},
-      {id:'togetsu',name:'Puente Togetsukyō',lat:35.00970,lng:135.67750,day:'13',type:'itinerary',desc:'Puente histórico y paseo junto al río Katsura.',query:'Togetsukyo Bridge Kyoto'},
-      {id:'bishamondo',name:'Bishamondō · salida del desfile',lat:35.00119,lng:135.81892,day:'14',type:'event',desc:'Punto de salida del Yamashina Gishi Matsuri a las 10:00.',query:'Bishamondo Kyoto'},
-      {id:'tobu',name:'Kyoto City Tōbu Culture Hall',lat:34.97250,lng:135.81390,day:'14',type:'event',desc:'Sede de las representaciones del festival. Dirección oficial: 1-8 Nishiura-cho, Nagitsuji, Yamashina-ku. Pin aproximado; abre el enlace para confirmar.',query:'Kyoto City Tobu Culture Hall'},
-      {id:'oishi',name:'Ōishi Jinja · final del desfile',lat:34.97013,lng:135.79570,day:'14',type:'event',desc:'Punto final del recorrido del Yamashina Gishi Matsuri.',query:'Oishi Shrine Yamashina Kyoto'},
-      {id:'ninnaji',name:'Ninna-ji',lat:35.03120,lng:135.71380,day:'extra',type:'alternative',altCategory:'templos',desc:'Gran complejo monumental y pagoda. Coordenada orientativa.',query:'Ninna ji Kyoto'},
-      {id:'ginkaku',name:'Ginkaku-ji · Pabellón de Plata',lat:35.02691,lng:135.79843,day:'extra',type:'alternative',altCategory:'templos',desc:'Templo y jardines de arena y musgo.',query:'Ginkakuji Kyoto'},
-      {id:'philosopher',name:'Philosopher’s Path',lat:35.02360,lng:135.79450,day:'extra',type:'alternative',altCategory:'naturaleza',desc:'Paseo junto al canal en el noreste de Kioto. Pin aproximado del recorrido.',query:'Philosophers Path Kyoto'},
-      {id:'nanzenji',name:'Nanzen-ji',lat:35.01170,lng:135.79510,day:'extra',type:'alternative',altCategory:'templos',desc:'Complejo zen con jardines y acueducto. Coordenada orientativa.',query:'Nanzenji Kyoto'},
-      {id:'sanjusangen',name:'Sanjūsangen-dō',lat:34.98790,lng:135.77180,day:'extra',type:'alternative',altCategory:'templos',desc:'Templo conocido por sus 1.001 figuras de Kannon.',query:'Sanjusangendo Kyoto'},
-      {id:'heian',name:'Heian-jingū',lat:35.01617,lng:135.78290,day:'extra',type:'alternative',altCategory:'templos',desc:'Santuario con gran torii y arquitectura de inspiración imperial.',query:'Heian Jingu Kyoto'},
-      {id:'imperial',name:'Kyoto Gyoen · Palacio Imperial',lat:35.02510,lng:135.76210,day:'extra',type:'alternative',altCategory:'naturaleza',desc:'Parque histórico y antiguo Palacio Imperial. Pin aproximado.',query:'Kyoto Imperial Palace'},
-      {id:'fushimisake',name:'Fushimi Sake District',lat:34.93220,lng:135.76310,day:'extra',type:'alternative',altCategory:'barrios',desc:'Distrito histórico de bodegas de sake y canales. Pin aproximado.',query:'Fushimi Sake District Kyoto'},
-      {id:'kamishichiken',name:'Kamishichiken',lat:35.03050,lng:135.74440,day:'extra',type:'alternative',altCategory:'barrios',desc:'Distrito histórico tradicional al norte de la ciudad. Pin aproximado.',query:'Kamishichiken Kyoto'},
-      {id:'manga',name:'Kyoto International Manga Museum',lat:35.01168,lng:135.75918,day:'extra',type:'alternative',altCategory:'cultura',desc:'Museo dedicado al manga.',query:'Kyoto International Manga Museum'},
-      {id:'railway',name:'Kyoto Railway Museum',lat:34.98730,lng:135.74660,day:'extra',type:'alternative',altCategory:'cultura',desc:'Museo ferroviario con locomotoras y trenes históricos. Pin aproximado.',query:'Kyoto Railway Museum'},
-      {id:'monkey',name:'Arashiyama Monkey Park Iwatayama',lat:35.00920,lng:135.67850,day:'extra',type:'alternative',altCategory:'naturaleza',desc:'Parque de macacos con subida a pie. Pin aproximado.',query:'Arashiyama Monkey Park Iwatayama'}
-    ];
+    (async () => {
+      const [kyotoPoints, restaurantPoints, poiDetails, eventPlan] = await Promise.all([
+        fetch('data/places.json').then((response) => {
+          if (!response.ok) throw new Error('No se pudo cargar data/places.json');
+          return response.json();
+        }),
+        fetch('data/restaurants.json').then((response) => {
+          if (!response.ok) throw new Error('No se pudo cargar data/restaurants.json');
+          return response.json();
+        }),
+        fetch('data/details.json').then((response) => { if (!response.ok) throw new Error('No se pudo cargar data/details.json'); return response.json(); }),
+        fetch('data/events.json').then((response) => { if (!response.ok) throw new Error('No se pudo cargar data/events.json'); return response.json(); })
+      ]);
+      kyotoPoints.push(...restaurantPoints);
+      const detailById = new Map(poiDetails.map((item) => [item.id,item]));
+      const poiModal = document.getElementById('poi-modal');
+      const poiPhoto = document.getElementById('poi-photo');
+      let activePhotos = [];
+      let activePhotoIndex = 0;
+      let previousFocus = null;
+      function renderPhoto() {
+        const photo = activePhotos[activePhotoIndex];
+        poiPhoto.classList.remove('is-fallback');
+        poiPhoto.src = photo || '';
+        poiPhoto.alt = photo ? 'Fotografía del lugar' : 'Fotografía no disponible';
+        poiPhoto.onerror = () => { poiPhoto.classList.add('is-fallback'); };
+        document.getElementById('poi-photo-count').textContent = activePhotos.length ? `${activePhotoIndex + 1} / ${activePhotos.length}` : 'Foto no disponible';
+        document.getElementById('poi-photo-prev').hidden = activePhotos.length < 2;
+        document.getElementById('poi-photo-next').hidden = activePhotos.length < 2;
+      }
+      function closeDetail() {
+        poiModal.hidden = true;
+        poiModal.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        if (previousFocus && previousFocus.focus) previousFocus.focus();
+      }
+      document.querySelectorAll('[data-close-detail]').forEach((button) => button.addEventListener('click',closeDetail));
+      document.addEventListener('keydown',(event) => { if (event.key === 'Escape' && !poiModal.hidden) closeDetail(); });
+      document.getElementById('poi-photo-prev').addEventListener('click',() => { activePhotoIndex = (activePhotoIndex - 1 + activePhotos.length) % activePhotos.length; renderPhoto(); });
+      document.getElementById('poi-photo-next').addEventListener('click',() => { activePhotoIndex = (activePhotoIndex + 1) % activePhotos.length; renderPhoto(); });
+      function openDetail(pointId) {
+        const point = kyotoPoints.find((item) => item.id === pointId);
+        if (!point || point.type === 'restaurant') return;
+        const detail = detailById.get(pointId) || {};
+        previousFocus = document.activeElement;
+        document.getElementById('poi-title').textContent = point.name;
+        document.getElementById('poi-description').textContent = detail.description || point.desc || '';
+        activePhotos = Array.isArray(detail.photos) ? detail.photos : [];
+        activePhotoIndex = 0;
+        renderPhoto();
+        const directions = document.getElementById('poi-directions');
+        directions.replaceChildren();
+        const directionLinks = detail.directions || {};
+        [['search','Ver ubicación'],['transit','Transporte público'],['walking','A pie']].forEach(([key,label]) => {
+          if (!directionLinks[key]) return;
+          const link = document.createElement('a'); link.href = directionLinks[key]; link.target = '_blank'; link.rel = 'noopener'; link.textContent = label; directions.appendChild(link);
+        });
+        const audioSection = document.getElementById('poi-audio-section');
+        const audioLinks = document.getElementById('poi-audio-links');
+        audioLinks.replaceChildren();
+        const guides = detail.audioGuides || [];
+        audioSection.hidden = guides.length === 0;
+        guides.forEach((guide) => {
+          const paragraph = document.createElement('p'); paragraph.textContent = guide.note || '';
+          const link = document.createElement('a'); link.href = guide.url; link.target = '_blank'; link.rel = 'noopener'; link.textContent = guide.label;
+          audioLinks.append(paragraph,link);
+        });
+        const eventSection = document.getElementById('poi-event');
+        eventSection.hidden = point.type !== 'event';
+        eventSection.replaceChildren();
+        if (point.type === 'event') {
+          const heading = document.createElement('h3'); heading.textContent = `${eventPlan.title} · ${eventPlan.date}`;
+          const intro = document.createElement('p'); intro.textContent = `Horario oficial del festival: ${eventPlan.officialHours}. Recomendación: llegar a ${eventPlan.recommendedArrival} a ${eventPlan.start} para buscar sitio antes de la salida.`;
+          const list = document.createElement('ol');
+          eventPlan.routeStops.forEach((stop) => {
+            const item = document.createElement('li');
+            const strong = document.createElement('strong'); strong.textContent = `${stop.time} · ${stop.name}`;
+            const note = document.createElement('span'); note.textContent = stop.note;
+            item.append(strong,note); list.appendChild(item);
+          });
+          const routeLink = document.createElement('a'); routeLink.href = eventPlan.routeUrl; routeLink.target = '_blank'; routeLink.rel = 'noopener'; routeLink.textContent = 'Ver recorrido y paradas en Google Maps';
+          const source = document.createElement('p'); source.textContent = eventPlan.note;
+          const official = document.createElement('a'); official.href = eventPlan.officialSource; official.target = '_blank'; official.rel = 'noopener'; official.textContent = 'Programa oficial de Kyoto City';
+          eventSection.append(heading,intro,list,routeLink,source,official);
+        }
+        poiModal.hidden = false;
+        poiModal.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        document.querySelector('.poi-back').focus();
+      }
+      window.openPoiDetail = openDetail;
 
-    const restaurantPoints = [{"id":"food-01","name":"Mercado Nishiki","lat":35.00503,"lng":135.76471,"day":"11","type":"restaurant","foodCategory":"mercado","desc":"La parada más sencilla para probar varias especialidades: tamagoyaki, encurtidos, yuba, namafu, tempura y dulces. No es un restaurante único: escoged varios puestos y compartid.","query":"Nishiki Market Kyoto","pinApproximate":true},{"id":"food-02","name":"Shunsai Imari","lat":35.00864,"lng":135.75684,"day":"11","type":"restaurant","foodCategory":"tradicional","desc":"Pequeño restaurante en una machiya, conocido por su desayuno de Kioto con arroz cocinado en cazuela (donabe) y por sus platos obanzai de temporada por la noche.","query":"Shunsai Imari Kyoto","pinApproximate":true},{"id":"food-03","name":"Kyomachiya Obanzai Kohaku","lat":35.0032,"lng":135.77035,"day":"11","type":"restaurant","foodCategory":"tradicional","desc":"Una opción para cenar compartiendo pequeños platos de cocina casera de Kioto, verduras de temporada y pescado, en una casa tradicional remodelada cerca de Pontocho y Kiyamachi.","query":"Kyomachiya Obanzai Kohaku Kyoto","pinApproximate":true},{"id":"food-04","name":"Nippon Ramen Rin Kyoto","lat":35.0051,"lng":135.76035,"day":"11","type":"restaurant","foodCategory":"fideos","desc":"Ramen de estilo moderno, con caldos claros y sabores delicados. Está en el centro, a una distancia razonable del hotel y de Nishiki; opción práctica para una comida caliente sin alargar demasiado la parada.","query":"Nippon Ramen Rin Kyoto","pinApproximate":true},{"id":"food-05","name":"Kyosai-aji Nomura · Nishiki","lat":35.00455,"lng":135.76448,"day":"11","type":"restaurant","foodCategory":"tradicional","desc":"Una forma cómoda de probar varios sabores de Kioto en una sola comida: el menú Yasaka combina seis pequeños obanzai con un bol de arroz con yuba y sopa de miso.","query":"Kyosai-aji Nomura Nishiki Kyoto","pinApproximate":true},{"id":"food-06","name":"Menami","lat":35.00856,"lng":135.76975,"day":"11","type":"restaurant","foodCategory":"tradicional","desc":"Izakaya conocida por sus platos obanzai de temporada y verduras locales. Buena alternativa para una cena japonesa informal en la zona de Kiyamachi, al norte de Pontocho.","query":"Menami Kyoto Kiyamachi","pinApproximate":true},{"id":"food-07","name":"Kanoko","lat":34.96715,"lng":135.77265,"day":"12","type":"restaurant","foodCategory":"fideos","desc":"Restaurante tradicional junto al acceso de Fushimi Inari. Ofrece soba y cha-soba (fideos con té verde), una opción cómoda para comer después de recorrer los torii.","query":"Kanoko 59 Fukakusa Inari Nakanocho Kyoto","pinApproximate":true},{"id":"food-08","name":"GYUKATSU Kyoto Katsugyu · Fushimi Inari","lat":34.96655,"lng":135.7722,"day":"12","type":"restaurant","foodCategory":"carne","desc":"Especialista en gyukatsu: filete de ternera empanado y frito, servido en formato de menú japonés. Alternativa contundente cerca del santuario.","query":"GYUKATSU Kyoto Katsugyu Fushimi Inari","pinApproximate":true},{"id":"food-09","name":"Sohonke Nishin Soba Matsuba","lat":35.00357,"lng":135.77076,"day":"12","type":"restaurant","foodCategory":"fideos","desc":"Casa histórica conocida por el nishin soba: fideos en caldo dashi con arenque seco cocinado hasta quedar tierno. Está junto al teatro Minamiza.","query":"Sohonke Nishin Soba Matsuba Kyoto","pinApproximate":true},{"id":"food-10","name":"Izuu","lat":35.0033,"lng":135.77658,"day":"12","type":"restaurant","foodCategory":"tradicional","desc":"Fundado en 1781 y famoso por su saba-zushi: sushi prensado de caballa curada, arroz y kombu. Una alternativa muy local al nigiri convencional.","query":"Izuu 367 Kiyomotocho Kyoto","pinApproximate":true},{"id":"food-11","name":"Saryo Tsujiri · Gion Honten","lat":35.0032,"lng":135.77552,"day":"12","type":"restaurant","foodCategory":"dulces","desc":"Parada para tomar matcha de Uji, parfaits y dulces de té verde. Buena pausa después de recorrer Higashiyama y Gion; puede haber cola en horas punta.","query":"Saryo Tsujiri Gion Honten Kyoto","pinApproximate":true},{"id":"food-12","name":"Kyoto Gyoza enen · Gion","lat":35.003,"lng":135.7731,"day":"12","type":"restaurant","foodCategory":"carne","desc":"Pequeño izakaya especializado en gyoza, ideal para compartir varias raciones y acompañarlas con otros platos y bebidas. Una opción más informal para la noche.","query":"Kyoto Gyoza enen Gion Main Branch","pinApproximate":true},{"id":"food-13","name":"Yudofu Takemura","lat":35.01605,"lng":135.67765,"day":"13","type":"restaurant","foodCategory":"tradicional","desc":"Restaurante tradicional de tofu caliente en Arashiyama. Entre noviembre y febrero sirve yuzu-gama tofu, preparado dentro de una yuzu: una especialidad muy apropiada para vuestro viaje.","query":"Yudofu Takemura Arashiyama Kyoto","pinApproximate":true},{"id":"food-14","name":"Shigetsu","lat":35.0158,"lng":135.67465,"day":"13","type":"restaurant","foodCategory":"tradicional","desc":"Comedor dentro del recinto de Tenryū-ji, especializado en shojin-ryori: cocina budista vegetariana basada en tofu, verduras, setas y productos de temporada.","query":"Shigetsu Tenryuji Kyoto","pinApproximate":true},{"id":"food-15","name":"Arashiyama Yoshimura","lat":35.0098,"lng":135.67755,"day":"13","type":"restaurant","foodCategory":"fideos","desc":"Restaurante de soba cerca del puente Togetsukyō. Algunas comidas combinan fideos, tempura y pequeños platos de temporada, con vistas al río Katsura.","query":"Arashiyama Yoshimura Kyoto","pinApproximate":true},{"id":"food-16","name":"Wagyu Volcano-Steak OAGARI","lat":35.01435,"lng":135.67725,"day":"13","type":"restaurant","foodCategory":"carne","desc":"Especializado en bowls de wagyu, con una presentación llamativa y una forma de comerlo por etapas, añadiendo caldo para terminar como ochazuke.","query":"Wagyu Volcano Steak OAGARI Arashiyama","pinApproximate":true},{"id":"food-17","name":"% ARABICA Kyoto Arashiyama","lat":35.00965,"lng":135.67725,"day":"13","type":"restaurant","foodCategory":"dulces","desc":"Cafetería de especialidad junto al río Katsura y el puente Togetsukyō. Buena parada para tomar café y descansar un rato entre visitas.","query":"Arabica Kyoto Arashiyama","pinApproximate":true},{"id":"food-18","name":"Tokumasa · Yamashina","lat":34.99165,"lng":135.8175,"day":"14","type":"restaurant","foodCategory":"curry","desc":"Pequeño local de curry japonés, práctico para una comida sencilla y caliente antes o después de los actos del festival.","query":"Tokumasa Yamashina Kyoto","pinApproximate":true},{"id":"food-19","name":"Kyo-Motsunabe Kamehachi · Yamashina","lat":34.99195,"lng":135.8171,"day":"14","type":"restaurant","foodCategory":"tradicional","desc":"Opción de cena para entrar en calor: hot pot de casquería con caldo de dashi y miso blanco al estilo de Kioto, pensado para compartir alrededor de la mesa.","query":"Kyo-Motsunabe Kamehachi Yamashina","pinApproximate":true},{"id":"food-20","name":"Yakitori Kanazawa Honkan","lat":34.9928,"lng":135.81795,"day":"14","type":"restaurant","foodCategory":"carne","desc":"Izakaya especializada en brochetas de pollo, con pollo de Kioto asado sobre carbón binchotan. Una cena informal para cerrar el día de Yamashina.","query":"Yakitori Kanazawa Honkan Yamashina Kyoto","pinApproximate":true}];
-    kyotoPoints.push(...restaurantPoints);
 
     const dayMarkerColors = { '11':'#c45a4a' , '12':'#3f70a5', '13':'#268577', '14':'#8554a4' };
     const alternativeMarkerColors = { templos:'#bd8a9d', barrios:'#c58b44', naturaleza:'#78a47d', cultura:'#7887a6' };
@@ -856,7 +690,7 @@
       const markerNote = point.type === 'restaurant'
         ? '<div class="popup-meta">Marcador orientativo. Abre Google Maps para confirmar la entrada exacta y navegar.</div>'
         : '';
-      marker.bindPopup(`<div class="popup-title">${point.name}</div><div class="popup-meta">${point.desc}</div>${markerNote}<div class="popup-links"><a href="${googleSearch}" target="_blank" rel="noopener">Ver ficha en Google Maps ↗</a><a href="${directions}" target="_blank" rel="noopener">Cómo llegar ↗</a></div>`);
+      marker.bindPopup(`<div class="popup-title">${point.name}</div><div class="popup-meta">${point.desc}</div>${markerNote}<div class="popup-links">${detailAction}<a href="${googleSearch}" target="_blank" rel="noopener">Ver ficha en Google Maps ↗</a><a href="${directions}" target="_blank" rel="noopener">Cómo llegar ↗</a></div>`);
       marker.bindTooltip(point.name, {direction:'top',offset:[0,-7]});
       marker.pointData = point;
       markerById.set(point.id,marker);
@@ -949,7 +783,7 @@
             if (!visibleForKind(point,currentKindFilter)) applyMapKindFilter('todos');
           }
           map.setView([point.lat,point.lng],16);
-          marker.openPopup();
+          openDetail(point.id);
         });
         const span = document.createElement('span');
         span.className = 'nearby-distance';
@@ -1052,7 +886,25 @@
     window.addEventListener('pagehide', () => {
       if (watchId !== null) navigator.geolocation.clearWatch(watchId);
     });
+    })().catch((error) => {
+      console.error('No se pudo inicializar el mapa:', error);
+      const status = document.getElementById('nearby-status');
+      if (status) status.textContent = 'No se han podido cargar los datos del mapa. Comprueba la conexión y vuelve a cargar la página.';
+    });
   </script>
-  <div class="version-indicator" title="Versión desplegada de la guía: V6" aria-label="Versión de la guía V6">GUÍA · V6</div>
+  <div class="version-indicator" id="version-indicator" title="Versión desplegada de la guía" aria-label="Versión de la guía">GUÍA · …</div>
+  <script>
+    fetch('data/version.json').then((response) => {
+      if (!response.ok) throw new Error('No se pudo cargar la versión');
+      return response.json();
+    }).then(({ version }) => {
+      const indicator = document.getElementById('version-indicator');
+      indicator.textContent = `GUÍA · ${version}`;
+      indicator.title = `Versión desplegada de la guía: ${version}`;
+      indicator.setAttribute('aria-label', `Versión de la guía ${version}`);
+    }).catch(() => {
+      document.getElementById('version-indicator').textContent = 'GUÍA · ?';
+    });
+  </script>
 </body>
 </html>
