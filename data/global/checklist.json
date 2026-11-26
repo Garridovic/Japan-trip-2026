@@ -1,0 +1,135 @@
+{
+  "kicker": "Antes y durante el viaje",
+  "title": "Checklist del viaje",
+  "lead": "Marca lo que ya tienes listo. Puedes añadir tus propias cosas; todo se guarda en este móvil.",
+  "groups": [
+    {
+      "id": "documentos",
+      "label": "Documentos y dinero"
+    },
+    {
+      "id": "maleta",
+      "label": "En la maleta"
+    },
+    {
+      "id": "antes",
+      "label": "Antes de salir"
+    },
+    {
+      "id": "durante",
+      "label": "Durante el viaje"
+    }
+  ],
+  "items": [
+    {
+      "id": "pasaporte",
+      "group": "documentos",
+      "text": "Pasaporte en vigor"
+    },
+    {
+      "id": "visit-japan-web",
+      "group": "documentos",
+      "text": "Registro en Visit Japan Web (aduana e inmigración)"
+    },
+    {
+      "id": "seguro",
+      "group": "documentos",
+      "text": "Seguro de viaje y teléfono de asistencia"
+    },
+    {
+      "id": "reservas-offline",
+      "group": "documentos",
+      "text": "Reservas y billetes guardados sin conexión"
+    },
+    {
+      "id": "tarjeta",
+      "group": "documentos",
+      "text": "Tarjeta de pago sin comisiones en el extranjero"
+    },
+    {
+      "id": "efectivo",
+      "group": "documentos",
+      "text": "Yenes en efectivo"
+    },
+    {
+      "id": "cargador",
+      "group": "maleta",
+      "text": "Cargador del móvil"
+    },
+    {
+      "id": "adaptador",
+      "group": "maleta",
+      "text": "Adaptador de enchufe"
+    },
+    {
+      "id": "bateria",
+      "group": "maleta",
+      "text": "Batería externa"
+    },
+    {
+      "id": "ropa-abrigo",
+      "group": "maleta",
+      "text": "Ropa de abrigo por capas"
+    },
+    {
+      "id": "calzado",
+      "group": "maleta",
+      "text": "Calzado cómodo para caminar mucho"
+    },
+    {
+      "id": "paraguas",
+      "group": "maleta",
+      "text": "Chubasquero o paraguas pequeño"
+    },
+    {
+      "id": "medicinas",
+      "group": "maleta",
+      "text": "Medicinas personales con su receta"
+    },
+    {
+      "id": "bolsa-basura",
+      "group": "maleta",
+      "text": "Bolsa pequeña para la basura (hay pocas papeleras)"
+    },
+    {
+      "id": "sim",
+      "group": "antes",
+      "text": "SIM o eSIM contratada"
+    },
+    {
+      "id": "descargar-guia",
+      "group": "antes",
+      "text": "Guía descargada para usar sin conexión (Viaje → estado sin conexión)"
+    },
+    {
+      "id": "mapas-offline",
+      "group": "antes",
+      "text": "Mapa de cada ciudad guardado sin conexión"
+    },
+    {
+      "id": "avisar-banco",
+      "group": "antes",
+      "text": "Avisar al banco del viaje"
+    },
+    {
+      "id": "tarjeta-ic",
+      "group": "durante",
+      "text": "Tarjeta IC (ICOCA o similar) cargada"
+    },
+    {
+      "id": "sellos",
+      "group": "durante",
+      "text": "Libreta para sellos y goshuin"
+    },
+    {
+      "id": "efectivo-templos",
+      "group": "durante",
+      "text": "Monedas para templos y máquinas"
+    },
+    {
+      "id": "cargar-moviles",
+      "group": "durante",
+      "text": "Cargar móvil y batería cada noche"
+    }
+  ]
+}

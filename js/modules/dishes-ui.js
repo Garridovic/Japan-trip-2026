@@ -1,4 +1,5 @@
 // "Platos" section: identify a dish by photo or by name (search), favourites and a full-screen "show" sheet.
+import { userStorage } from './user-data.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { byId, h, externalLink } from './dom.js';
 import { createFavoritesStore } from './phrases.js';
@@ -159,5 +160,5 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
 }
 
 function safeStorage() {
-  try { return window.localStorage; } catch { return null; }
+  return userStorage(); // favourites go through the single user-data layer
 }

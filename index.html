@@ -185,6 +185,18 @@
 
   <div class="app-view" id="view-viaje" data-view="viaje" hidden>
     <main>
+      <section id="checklist" class="checklist" hidden>
+        <div class="section-head"><div><div class="kicker" id="checklist-kicker"></div><h2 id="checklist-title"></h2></div><p class="muted small" id="checklist-lead"></p></div>
+        <div class="checklist-summary"><strong id="checklist-count" aria-live="polite"></strong><div class="checklist-bar" id="checklist-bar" role="progressbar" aria-label="Progreso de la checklist" aria-valuemin="0"></div></div>
+        <div class="checklist-groups" id="checklist-groups"></div>
+        <form class="checklist-form" id="checklist-form">
+          <label class="visually-hidden" for="checklist-input">Añadir a la checklist</label>
+          <input type="text" id="checklist-input" maxlength="80" placeholder="Añadir algo a la lista…" autocomplete="off" enterkeyhint="done">
+          <button type="submit" class="filter">Añadir</button>
+        </form>
+        <button type="button" class="filter checklist-reset" id="checklist-reset">Quitar todas las marcas</button>
+      </section>
+
       <section id="consejos" class="tips-practical" hidden>
         <div class="section-head"><div><div class="kicker" id="tips-practical-kicker"></div><h2 id="tips-practical-title"></h2></div><p class="muted small" id="tips-practical-lead"></p></div>
         <div class="tips-groups" id="tips-groups"></div>

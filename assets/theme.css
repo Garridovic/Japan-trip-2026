@@ -385,3 +385,25 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 .extra-card .card-art { height: 70px; }
 .extra-card .card-art svg { height: 54px; width: 54px; }
 @media print { .card-art { display: none; } }
+
+/* ====== Checklist del viaje ====== */
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.checklist { margin-bottom: 28px; }
+.checklist-summary { display: flex; align-items: center; gap: 14px; margin: 0 0 12px; }
+.checklist-bar { flex: 1; height: 10px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.checklist-bar::after { content: ""; display: block; width: var(--progress, 0%); height: 100%; border-radius: 99px; background: var(--ok); transition: width .25s; }
+.checklist-groups { display: grid; gap: 10px; }
+.checklist-group { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+.checklist-group > summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 48px; padding: 0 16px; font-weight: 800; cursor: pointer; list-style: none; }
+.checklist-group > summary::-webkit-details-marker { display: none; }
+.checklist-items { margin: 0; padding: 0 8px 8px; list-style: none; }
+.checklist-item { display: flex; align-items: center; gap: 6px; border-radius: 12px; }
+.checklist-item label { flex: 1; display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 8px; cursor: pointer; }
+.checklist-item input[type="checkbox"] { width: 24px; height: 24px; flex: none; accent-color: var(--ok); }
+.checklist-item.is-done label span { color: var(--muted); text-decoration: line-through; }
+.checklist-remove { flex: none; width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); font: inherit; cursor: pointer; }
+.checklist-remove:hover { background: var(--surface-2); color: var(--err); }
+.checklist-form { display: flex; gap: 8px; margin: 12px 0 8px; }
+.checklist-form input { flex: 1; min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); font: inherit; }
+.checklist-reset { margin-top: 4px; }
+@media print { .checklist { display: none !important; } }

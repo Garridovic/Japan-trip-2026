@@ -1,5 +1,6 @@
 // "Visited" marks for places of interest. They belong to the device (localStorage), per city, and never leave it.
 // Shape in storage: { "kyoto": ["fushimi", "nishiki"], "osaka": [...] }.
+import { userStorage } from './user-data.js';
 export const VISITED_KEY = 'visited-v1';
 
 /** Hotels are where you sleep, not something to tick off. */
@@ -53,9 +54,7 @@ let shared = null;
 /** One store for the whole page (map, place sheet and counters share it). */
 export function visitedStore() {
   if (!shared) {
-    let storage = null;
-    try { storage = window.localStorage; } catch { /* blocked */ }
-    shared = createVisitedStore(storage);
+    shared = createVisitedStore(userStorage()); // through the single user-data layer
   }
   return shared;
 }

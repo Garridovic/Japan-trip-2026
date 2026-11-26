@@ -17,6 +17,8 @@ import { initOffline } from './modules/offline.js';
 import { initLodging } from './modules/lodging-ui.js';
 import { initTips } from './modules/tips-ui.js';
 import { initTaxi } from './modules/taxi-ui.js';
+import { initChecklist } from './modules/checklist-ui.js';
+import { userData } from './modules/user-data.js';
 import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
@@ -31,6 +33,7 @@ const showStatus = (message, isError = false) => {
   status.classList.toggle('is-error', isError);
 };
 
+userData(); // creates window.japanTripUserData right away so an account-sync module can connect before start() loads
 initOverlayHistory(); // registered first so overlays handle Back before navigation does
 
 initCollapsibles();
@@ -41,9 +44,11 @@ initUpdates();
 
 async function start() {
   const [journey, global] = await Promise.all([loadJourney(), loadGlobalContent()]);
+  await userData().load(); // with a sync backend connected (see user-data.js) the stored values are in place before any store reads them
   const cities = enabledCities(journey);
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
+  initChecklist(global.checklist);
   initTaxi(global.lodging?.stays); // the taxi screen opens from any button with data-taxi
   initLodging(global.lodging);
   const tips = initTips(global.tips?.practical, cities); // city tips.json files are fetched the first time Viaje opens

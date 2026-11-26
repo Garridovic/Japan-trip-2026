@@ -1,4 +1,5 @@
 // "Frases" section: search, category chips, favourites, audio and the full-screen show mode.
+import { userStorage } from './user-data.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { byId, h, setPressed } from './dom.js';
 import {
@@ -195,5 +196,5 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
 }
 
 function safeStorage() {
-  try { return window.localStorage; } catch { return null; }
+  return userStorage(); // favourites go through the single user-data layer
 }
