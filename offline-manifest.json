@@ -1,7 +1,7 @@
 {
-  "version": "55eddb03c6",
+  "version": "2f2b294a2d",
   "sizes": {
-    "required": 758976,
+    "required": 768842,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -80,6 +80,8 @@
     "js/modules/private-notes.js",
     "js/modules/render.js",
     "js/modules/scrollspy.js",
+    "js/modules/search-ui.js",
+    "js/modules/search.js",
     "js/modules/speech.js",
     "js/modules/swipe.js",
     "js/modules/tabs.js",

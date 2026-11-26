@@ -24,6 +24,7 @@
     <div class="city-tabs" id="city-tabs" hidden></div>
     <span class="top-bar-title" id="top-bar-title">Japón · 2026</span>
     <button type="button" class="offline-chip" id="offline-chip" data-state="none" aria-haspopup="dialog" aria-expanded="false" aria-controls="offline-popover" hidden><span class="offline-chip-icon" id="offline-chip-icon" aria-hidden="true">⬇</span><span class="offline-chip-label" id="offline-chip-label">Sin conexión</span><span class="offline-chip-short" id="offline-chip-short">Sin conexión</span></button>
+    <button type="button" class="theme-button search-button" id="search-button" aria-label="Buscar en la guía"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg></button>
     <button type="button" class="theme-button" id="theme-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="theme-popover" aria-label="Apariencia: automática"><svg viewBox="0 0 24 24" aria-hidden="true" id="theme-button-icon"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17A8.5 8.5 0 0 0 12 3.5Z" fill="currentColor"/></svg></button>
   </header>
 
@@ -363,6 +364,14 @@
     <button type="button" class="phrase-show-close" id="dish-show-close" data-close-dish aria-label="Volver">← Volver</button>
     <p class="show-rotate-hint" aria-hidden="true">↻ Gira el móvil para verlo más grande</p>
     <div class="phrase-show-body" id="dish-show-body"></div>
+  </div>
+
+  <div class="search-sheet" id="search-sheet" role="dialog" aria-modal="true" aria-label="Buscar en la guía" hidden aria-hidden="true">
+    <div class="search-bar">
+      <input type="search" id="search-input" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="Buscar: ramen, templo, gracias…" aria-label="Buscar">
+      <button type="button" class="filter" id="search-close">Cerrar</button>
+    </div>
+    <div class="search-results" id="search-results" aria-live="polite"></div>
   </div>
 
   <div class="phrase-show taxi-show" id="taxi-show" role="dialog" aria-modal="true" aria-label="Modo taxi: hotel en pantalla grande" hidden aria-hidden="true">

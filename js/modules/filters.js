@@ -31,7 +31,7 @@ export function renderFood(food, restaurants, queryContext = '') {
   typeContainer.replaceChildren(...food.typeFilters.map((filter, index) => filterButton('food-type-filter', 'foodType', filter, index === 0)));
 
   const cards = restaurants.map((item) =>
-    h('article', { class: 'food-card', dataset: { foodCategory: item.foodCategory, foodDay: item.day } },
+    h('article', { class: 'food-card', dataset: { foodCategory: item.foodCategory, foodDay: item.day, foodId: item.id } },
       item.photo ? null : artBanner(foodArtKind(item)),
       h('div', { class: 'food-card-top' }, h('span', { class: 'food-type' }, item.foodTypeLabel), h('span', { class: 'food-day' }, item.dayLabel)),
       h('h3', {}, item.name),

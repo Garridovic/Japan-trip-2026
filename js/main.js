@@ -20,6 +20,7 @@ import { initTaxi } from './modules/taxi-ui.js';
 import { initChecklist } from './modules/checklist-ui.js';
 import { userData } from './modules/user-data.js';
 import { toast, haptic } from './modules/feedback.js';
+import { initSearch } from './modules/search-ui.js';
 import { visitedStore } from './modules/visited.js';
 import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
@@ -64,6 +65,39 @@ async function start() {
   initDishes(global.dishes, global.dishCredits);
   initPhrases(global.phrases); // global content: rendered once, shared by every city
   const mapView = initMapView({ map });
+  let navigateViewRef = async () => {};
+  const jumpToSearch = async (view, inputId, text) => {
+    await navigateViewRef(view);
+    const field = byId(inputId);
+    field.value = text;
+    field.dispatchEvent(new Event('input', { bubbles: true }));
+    field.scrollIntoView({ block: 'center' });
+  };
+  const search = initSearch({
+    phrases: global.phrases?.phrases ?? [],
+    dishes: global.dishes?.dishes ?? [],
+    handlers: {
+      place: async ({ id }) => { await whenOverlaySettled(); details.open(id); },
+      restaurant: async ({ id }) => {
+        await navigateViewRef('guia');
+        const card = document.querySelector(`.food-card[data-food-id="${CSS.escape(id)}"]`);
+        if (!card) return;
+        card.hidden = false;
+        card.scrollIntoView({ block: 'center' });
+        card.classList.add('is-found');
+        setTimeout(() => card.classList.remove('is-found'), 2500);
+      },
+      extra: async ({ id }) => {
+        await navigateViewRef('guia');
+        const card = [...document.querySelectorAll('.extra-card h3')].find((node) => node.textContent === id)?.closest('.extra-card');
+        card?.scrollIntoView({ block: 'center' });
+        card?.classList.add('is-found');
+        setTimeout(() => card?.classList.remove('is-found'), 2500);
+      },
+      phrase: ({ id }) => jumpToSearch('frases', 'phrases-search', global.phrases.phrases.find((p) => p.id === id)?.es ?? ''),
+      dish: ({ id }) => jumpToSearch('platos', 'dishes-search', global.dishes.dishes.find((d) => d.id === id)?.es ?? '')
+    }
+  });
   const today = initToday();
   const scrollSpy = initScrollSpy();
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
@@ -87,6 +121,7 @@ async function start() {
     window.scrollTo({ top: scrollByView.get(view) ?? 0, behavior: 'instant' });
   }
 
+  navigateViewRef = (view) => navigateView(view);
   async function navigateView(view) {
     await whenOverlaySettled();
     if (view === activeView) { window.scrollTo({ top: 0 }); return; }
@@ -108,6 +143,7 @@ async function start() {
       renderCity({ journey, cityEntry: cities.find((city) => city.id === cityId), bundle, global });
       details.setCity({ ...index, events: bundle.events });
       map.setCity(index, bundle.city.map);
+      search.setCity({ places: bundle.places, restaurants: bundle.restaurants, extras: bundle.extras?.items ?? [] });
       today.show({ days: bundle.itinerary.days, cityName: cities.find((city) => city.id === cityId).name, queryContext: bundle.city.map.queryContext });
       activeCityId = cityId;
       scrollSpy.refresh();

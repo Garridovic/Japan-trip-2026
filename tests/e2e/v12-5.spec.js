@@ -245,3 +245,57 @@ test.describe('feedback and loading (V12.6)', () => {
     expect(reduced).toBe('none');
   });
 });
+
+test.describe('global search (V12.6)', () => {
+  test('the magnifier opens the sheet; it finds places, phrases and dishes and Escape closes it', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.getByRole('button', { name: 'Buscar en la guía' }).click();
+    await expect(page.locator('#search-sheet')).toBeVisible();
+    await expect(page.locator('#search-input')).toBeFocused();
+    await page.locator('#search-input').fill('fushimi');
+    await expect(page.locator('.search-group[data-kind="place"]')).toBeVisible();
+    await page.locator('#search-input').fill('gracias');
+    await expect(page.locator('.search-group[data-kind="phrase"]')).toBeVisible();
+    await page.locator('#search-input').fill('zzzzqq');
+    await expect(page.locator('.search-hint')).toContainText('Nada para');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#search-sheet')).toBeHidden();
+  });
+
+  test('a place result opens its sheet', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.keyboard.press('/');
+    await page.locator('#search-input').fill('Kinkaku');
+    await page.locator('.search-result[data-kind="place"]').first().click();
+    await expect(page.locator('#poi-title')).toContainText(/Kinkaku/i);
+  });
+
+  test('a phrase result goes to Frases with the search filled in', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Buscar en la guía' }).click();
+    await page.locator('#search-input').fill('arigato');
+    await page.locator('.search-result[data-kind="phrase"]').first().click();
+    await expect(page.locator('#view-frases')).toBeVisible();
+    await expect(page.locator('#phrases-search')).not.toHaveValue('');
+    await expect(page.locator('.phrase-card').first()).toBeVisible();
+  });
+
+  test('a restaurant result scrolls to its card and highlights it', async ({ page }) => {
+    await page.goto('/?view=frases');
+    await page.getByRole('button', { name: 'Buscar en la guía' }).click();
+    await page.locator('#search-input').fill('Nippon Ramen');
+    await page.locator('.search-result[data-kind="restaurant"]').first().click();
+    await expect(page.locator('#city-view')).toBeVisible();
+    await expect(page.locator('.food-card.is-found')).toContainText('Nippon Ramen');
+  });
+
+  test('Back closes the search sheet instead of leaving the page', async ({ page }) => {
+    await page.goto('/?view=viaje');
+    await page.getByRole('button', { name: 'Buscar en la guía' }).click();
+    await page.goBack();
+    await expect(page.locator('#search-sheet')).toBeHidden();
+    await expect(page).toHaveURL(/view=viaje/);
+  });
+});
