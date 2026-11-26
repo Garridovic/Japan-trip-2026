@@ -1,4 +1,5 @@
 // Restaurants ("Comer") and alternative places ("Otros lugares") sections, with their filters.
+import { artBanner, foodArtKind, extraArtKind } from './placeholder-art.js';
 import { byId, h, externalLink, setPressed } from './dom.js';
 
 const filterButton = (className, dataKey, { value, label }, pressed) =>
@@ -31,6 +32,7 @@ export function renderFood(food, restaurants, queryContext = '') {
 
   const cards = restaurants.map((item) =>
     h('article', { class: 'food-card', dataset: { foodCategory: item.foodCategory, foodDay: item.day } },
+      item.photo ? null : artBanner(foodArtKind(item)),
       h('div', { class: 'food-card-top' }, h('span', { class: 'food-type' }, item.foodTypeLabel), h('span', { class: 'food-day' }, item.dayLabel)),
       h('h3', {}, item.name),
       h('p', {}, item.desc),
@@ -82,6 +84,7 @@ export function renderExtras(extras, categories, queryContext = '') {
   }
   const cards = extras.items.map((item) =>
     h('article', { class: 'extra-card', dataset: { category: item.category } },
+      item.photo ? null : artBanner(extraArtKind(item)),
       h('span', { class: 'extra-tag' }, item.tag), h('h3', {}, item.name), h('p', {}, item.desc),
       h('div', { class: 'food-actions' }, externalLink(directionsUrl(item.name, queryContext), 'Cómo llegar', 'primary-action')))
   );

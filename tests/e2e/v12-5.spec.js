@@ -148,3 +148,33 @@ test.describe('presentation modes in portrait', () => {
     expect(ja.width).toBeGreaterThan(100);
   });
 });
+
+test.describe('illustrations for places without a photo', () => {
+  test('every restaurant card gets a drawing for what it serves, hidden from screen readers', async ({ page }) => {
+    await page.goto('/#gastronomia');
+    const cards = page.locator('.food-card');
+    const total = await cards.count();
+    expect(total).toBeGreaterThan(0);
+    await expect(page.locator('.food-card .card-art')).toHaveCount(total);
+    await expect(page.locator('.food-card .card-art').first()).toHaveAttribute('aria-hidden', 'true');
+    const ramen = page.locator('.food-card', { hasText: 'Nippon Ramen Rin' }).locator('.card-art');
+    await expect(ramen).toHaveAttribute('data-art', 'noodles');
+    await expect(page.locator('.food-card', { hasText: 'Mercado Nishiki' }).locator('.card-art')).toHaveAttribute('data-art', 'market');
+  });
+
+  test('other places use the category drawing', async ({ page }) => {
+    await page.goto('/#alternativas');
+    const cards = page.locator('.extra-card');
+    await expect(page.locator('.extra-card .card-art')).toHaveCount(await cards.count());
+    await expect(page.locator('.extra-card[data-category="templos"] .card-art').first()).toHaveAttribute('data-art', 'temple');
+  });
+
+  test('the drawings are visible and sized in dark mode too', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto('/#gastronomia');
+    const box = await page.locator('.food-card .card-art svg').first().boundingBox();
+    expect(box.width).toBeGreaterThan(40);
+    const stroke = await page.locator('.food-card .card-art .s').first().evaluate((el) => getComputedStyle(el).stroke);
+    expect(stroke).not.toBe('none');
+  });
+});

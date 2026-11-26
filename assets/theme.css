@@ -371,3 +371,17 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 #poi-taxi { margin-top: 8px; }
 #poi-taxi[hidden] { display: none; }
 @media print { .taxi-button, .taxi-show { display: none !important; } }
+
+/* ====== Ilustraciones para lugares y restaurantes sin foto (propias, sin créditos) ====== */
+.card-art { display: grid; place-items: center; height: 84px; margin: 0 0 12px; border-radius: 14px; background: var(--accent-soft); color: var(--accent-text); }
+.card-art[data-tone="ok"] { background: var(--ok-soft); color: var(--ok); }
+.card-art[data-tone="net"] { background: var(--net-soft); color: var(--net); }
+.card-art[data-tone="warn"] { background: var(--warn-soft); color: var(--warn); }
+.card-art svg { height: 66px; width: 66px; overflow: visible; }
+.card-art .s { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.card-art .f { fill: currentColor; stroke: currentColor; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; opacity: .85; }
+.card-art .w { fill: var(--surface); stroke: currentColor; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.card-art .g { fill: color-mix(in srgb, currentColor 30%, var(--surface)); stroke: currentColor; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.extra-card .card-art { height: 70px; }
+.extra-card .card-art svg { height: 54px; width: 54px; }
+@media print { .card-art { display: none; } }

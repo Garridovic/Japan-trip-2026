@@ -1,7 +1,7 @@
 {
-  "version": "e2e27522cc",
+  "version": "ecb99bbae5",
   "sizes": {
-    "required": 725376,
+    "required": 732576,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -71,6 +71,7 @@
     "js/modules/overlay-history.js",
     "js/modules/phrases-ui.js",
     "js/modules/phrases.js",
+    "js/modules/placeholder-art.js",
     "js/modules/private-notes.js",
     "js/modules/render.js",
     "js/modules/scrollspy.js",
