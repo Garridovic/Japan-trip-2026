@@ -1,9 +1,9 @@
 {
-  "version": "2004039ace",
+  "version": "fe0bd8bc97",
   "sizes": {
-    "required": 903120,
-    "optional": 4066138,
-    "warm": 14431338
+    "required": 911815,
+    "optional": 3612410,
+    "warm": 12657692
   },
   "required": [
     "assets/auth-config.js",
@@ -212,6 +212,7 @@
     "assets/images/kyoto/sannenzaka-1-480.webp",
     "assets/images/kyoto/tenryuji-1-480.webp",
     "assets/images/kyoto/togetsu-1-480.webp",
+    "assets/images/kyoto/toji-1-480.webp",
     "assets/images/kyoto/yasaka-1-480.webp",
     "assets/images/manga-1-480.webp",
     "assets/images/monkey-1-480.webp",
@@ -334,6 +335,7 @@
     "assets/images/kyoto/sannenzaka-1-960.webp",
     "assets/images/kyoto/tenryuji-1-960.webp",
     "assets/images/kyoto/togetsu-1-960.webp",
+    "assets/images/kyoto/toji-1-960.webp",
     "assets/images/kyoto/yasaka-1-960.webp",
     "assets/images/manga-1-960.webp",
     "assets/images/monkey-1-960.webp",
