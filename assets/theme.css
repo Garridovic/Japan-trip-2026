@@ -522,3 +522,40 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
   body.has-account .account-button svg { width: 18px; height: 18px; }
   body.has-account .theme-button, body.has-account .search-button { width: 36px; height: 36px; margin-right: 2px; }
 }
+
+/* ---------- V14: sellos (goshuin-style stamps) ---------- */
+.stamps { margin: 0 0 var(--s-5); }
+.stamps-total { margin: 0 0 var(--s-3); color: var(--muted); font-size: var(--t-s); font-weight: 750; }
+.stamps-cities { display: grid; gap: var(--s-3); }
+.stamps-city { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); box-shadow: var(--shadow); overflow: hidden; }
+.stamps-city > summary { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); cursor: pointer; list-style: none; min-height: 56px; }
+.stamps-city > summary::-webkit-details-marker { display: none; }
+.stamps-city > summary:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: var(--r-m); }
+.stamps-city-name { font-weight: 800; font-size: var(--t-m); }
+.stamps-count { margin-left: auto; font-weight: 800; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.stamps-badge { border-radius: var(--r-pill); padding: 3px 10px; background: var(--accent-soft); color: var(--accent-text); font-size: var(--t-xs); font-weight: 800; }
+.stamp-ring { width: 40px; height: 40px; flex: none; }
+.stamp-ring circle { fill: none; stroke-width: 4; }
+.stamp-ring-track { stroke: var(--surface-2); }
+.stamp-ring-fill { stroke: var(--accent); stroke-linecap: round; transition: stroke-dasharray .5s ease; }
+.stamps-empty { margin: 0; padding: 0 var(--s-4) var(--s-2); }
+.stamps-grid { list-style: none; margin: 0; padding: var(--s-2) var(--s-4) var(--s-4); display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: var(--s-4) var(--s-3); }
+.stamp { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; min-width: 0; }
+.stamp-art, .stamp-slot { width: 72px; height: 72px; }
+.stamp-art { color: var(--accent-text); transform: rotate(var(--tilt, 0deg)); opacity: .92; }
+.stamp-line { fill: none; stroke: currentColor; stroke-width: 2.6; }
+.stamp-line.thin { stroke-width: 1.2; }
+.stamp-line.dashed { stroke-width: 1.4; stroke-dasharray: 3 3; }
+.stamp-fill-line { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.stamp-solid { fill: currentColor; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.stamp-slot { border: 2px dashed var(--line); border-radius: 50%; }
+.stamp-name { font-size: var(--t-xs); line-height: 1.25; font-weight: 700; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.stamp:not(.is-earned) .stamp-name { color: var(--muted); font-weight: 500; }
+.stamp.is-new .stamp-art { animation: stamp-press .7s cubic-bezier(.2, .9, .3, 1.2); }
+@keyframes stamp-press { 0% { transform: rotate(var(--tilt, 0deg)) scale(1.9); opacity: 0; } 60% { transform: rotate(var(--tilt, 0deg)) scale(.92); opacity: 1; } 100% { transform: rotate(var(--tilt, 0deg)) scale(1); opacity: .92; } }
+.stamps-city.is-complete { border-color: var(--accent); }
+.stamps-city.is-celebrating { animation: stamp-glow 1.6s ease-out; }
+@keyframes stamp-glow { 0% { box-shadow: 0 0 0 0 var(--accent); } 40% { box-shadow: 0 0 0 8px var(--accent-soft); } 100% { box-shadow: var(--shadow); } }
+.stamps-pending { border-top: 1px solid var(--line); }
+.stamps-pending > summary { padding: var(--s-3) var(--s-4); cursor: pointer; color: var(--muted); font-size: var(--t-s); font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+.stamps-city > .stamps-grid + .stamps-pending { margin-top: 0; }

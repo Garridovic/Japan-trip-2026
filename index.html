@@ -192,6 +192,12 @@
 
   <div class="app-view" id="view-viaje" data-view="viaje" hidden>
     <main>
+      <section id="sellos" class="stamps" hidden>
+        <div class="section-head"><div><div class="kicker">Tu pasaporte</div><h2>Mis sellos</h2></div><p class="muted small">Cada lugar que marcas como visitado deja su sello, como en un templo. Sin prisas: es solo un recuerdo del viaje.</p></div>
+        <p class="stamps-total" id="stamps-total" aria-live="polite"></p>
+        <div class="stamps-cities" id="stamps-cities"></div>
+      </section>
+
       <section id="checklist" class="checklist" hidden>
         <div class="section-head"><div><div class="kicker" id="checklist-kicker"></div><h2 id="checklist-title"></h2></div><p class="muted small" id="checklist-lead"></p></div>
         <div class="checklist-summary"><strong id="checklist-count" aria-live="polite"></strong><div class="checklist-bar" id="checklist-bar" role="progressbar" aria-label="Progreso de la checklist" aria-valuemin="0"></div></div>
