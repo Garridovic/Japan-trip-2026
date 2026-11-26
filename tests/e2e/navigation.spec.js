@@ -4,6 +4,18 @@ import { SVG_MARKERS, kyoto } from './helpers.js';
 const SECTIONS = ['mapa', 'detalle', 'comer', 'alternativas', 'practico', 'resumen', 'mapa'];
 const ids = ['resumen', 'mapa', 'detalle', 'comer', 'alternativas', 'practico'];
 
+/** Resolves once the page has stopped scrolling (same position on several consecutive checks). */
+async function scrollSettled(page) {
+  let previous = -1;
+  let steady = 0;
+  await expect.poll(async () => {
+    const now = await page.evaluate(() => Math.round(window.scrollY));
+    steady = now === previous ? steady + 1 : 0;
+    previous = now;
+    return steady >= 4; // ~400 ms without movement
+  }, { timeout: 15_000, intervals: [100] }).toBe(true);
+}
+
 async function expectAligned(page, id) {
   // After the scroll has settled the section starts right below the two sticky bars (scroll-margin-top).
   await expect.poll(async () => page.evaluate((id) => {
@@ -57,9 +69,12 @@ test('a browser that cancels smooth scrolling on scrollIntoView() does not break
 
 test('the last tab works even though the page cannot scroll that far', async ({ page }) => {
   await page.goto('/');
+  // wait for the city content: on a slow machine the click could otherwise land on a page that is still short
+  await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
   await page.locator('.nav-inner a[href="#fuentes"]').click();
-  await expect.poll(() => page.evaluate(() => window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4)).toBe(true);
-  await expect(page.locator('.nav-inner a[aria-current="location"]')).toHaveAttribute('href', '#fuentes');
+  await scrollSettled(page);
+  expect(await page.evaluate(() => window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4)).toBe(true);
+  await expect(page.locator('.nav-inner a[aria-current="location"]')).toHaveAttribute('href', '#fuentes', { timeout: 10_000 });
 });
 
 test('the tab updates the URL hash without adding history entries', async ({ page }) => {
