@@ -18,6 +18,7 @@ import { initLodging } from './modules/lodging-ui.js';
 import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
+import { initMapView } from './modules/map-view.js';
 
 const status = byId('app-status');
 const showStatus = (message, isError = false) => {
@@ -41,6 +42,7 @@ async function start() {
   initLodging(global.lodging);
   initDishes(global.dishes, global.dishCredits);
   initPhrases(global.phrases); // global content: rendered once, shared by every city
+  const mapView = initMapView({ map });
   const scrollSpy = initScrollSpy();
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
 
@@ -57,6 +59,7 @@ async function start() {
     scrollByView.set(activeView, window.scrollY);
     activeView = view;
     views.setActive(view);
+    mapView.sync(view);
     if (view === 'guia') { map.refresh(); scrollSpy.refresh(); }
     window.scrollTo({ top: scrollByView.get(view) ?? 0, behavior: 'instant' });
   }
@@ -116,13 +119,9 @@ async function start() {
     if (viewFromSearch(window.location.search) === activeView && cityFromLocation() === activeCityId) return;
     applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation());
   });
-  // Centre button of the bar: the map lives inside the guide, so go there first (from any view) and scroll to it.
-  document.querySelector('[data-action="map"]')?.addEventListener('click', async () => {
-    if (activeView !== 'guia') await navigateView('guia');
-    document.getElementById('mapa')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-  });
   views.setActive(activeView);
   await showCity(cityFromLocation());
+  mapView.sync(activeView); // opened directly on ?view=mapa
   // Honour an in-page anchor (for example #mapa) once the content exists.
   if (activeView === 'guia' && window.location.hash) {
     const target = document.getElementById(window.location.hash.slice(1));

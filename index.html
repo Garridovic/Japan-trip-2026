@@ -259,12 +259,31 @@
     </main>
   </div>
 
+  <div class="app-view map-view" id="view-mapa" data-view="mapa" hidden>
+    <div class="map-view-canvas" id="map-view-canvas"></div>
+    <div class="map-view-controls">
+      <span class="map-view-title" id="map-view-title">Mapa</span>
+      <button type="button" class="map-view-button" data-map-sheet="filters" aria-expanded="false">Filtros</button>
+      <button type="button" class="map-view-button" data-map-sheet="nearby" aria-expanded="false">Cerca de mí</button>
+      <button type="button" class="map-view-button" data-map-sheet="offline" aria-expanded="false">Sin conexión</button>
+    </div>
+    <section class="map-sheet" id="map-sheet" role="dialog" aria-labelledby="map-sheet-title" hidden>
+      <div class="map-sheet-grab" aria-hidden="true"></div>
+      <header class="map-sheet-header"><h2 id="map-sheet-title">Filtros del mapa</h2><button type="button" class="filter" id="map-sheet-close">Cerrar</button></header>
+      <div class="map-sheet-body">
+        <div data-sheet-section="filters" hidden></div>
+        <div data-sheet-section="nearby" hidden></div>
+        <div data-sheet-section="offline" hidden></div>
+      </div>
+    </section>
+  </div>
+
   <p class="offline-banner" id="offline-banner" role="status" aria-live="polite" hidden>Sin conexión · usando la guía guardada</p>
 
   <nav class="app-bar" id="app-bar" aria-label="Secciones de la guía">
     <button type="button" class="app-bar-button" data-view-target="guia" aria-current="page"><span class="app-bar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.2A7 7 0 0 1 12 3a7 7 0 0 1 7 6.8C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.8" r="2.6"/></svg></span><span class="app-bar-label">Guía</span></button>
     <button type="button" class="app-bar-button" data-view-target="viaje"><span class="app-bar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12.5" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17"/></svg></span><span class="app-bar-label">Viaje</span></button>
-    <button type="button" class="app-bar-button is-map" data-action="map" aria-label="Abrir el mapa"><span class="app-bar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5-5.5 2v12L9 17m0-12 6 2m-6-2v12m6-10 5.5-2v12L15 19m0-12v12"/></svg></span><span class="app-bar-label">Mapa</span></button>
+    <button type="button" class="app-bar-button is-map" data-view-target="mapa" aria-label="Mapa a pantalla completa"><span class="app-bar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5-5.5 2v12L9 17m0-12 6 2m-6-2v12m6-10 5.5-2v12L15 19m0-12v12"/></svg></span><span class="app-bar-label">Mapa</span></button>
     <button type="button" class="app-bar-button" data-view-target="frases"><span class="app-bar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5Z"/><path d="M8.5 9h7M8.5 12h4"/></svg></span><span class="app-bar-label">Frases</span></button>
     <button type="button" class="app-bar-button" data-view-target="platos"><span class="app-bar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12h17a8.5 8 0 0 1-17 0Z"/><path d="M8 4c-1 1.5 1 2.5 0 4M12 4c-1 1.5 1 2.5 0 4M16 4c-1 1.5 1 2.5 0 4"/></svg></span><span class="app-bar-label">Platos</span></button>
   </nav>

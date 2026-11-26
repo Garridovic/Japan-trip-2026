@@ -73,8 +73,8 @@ test('the bottom bar has five destinations, the map button in the centre and no 
   const bar = html.slice(html.indexOf('id="app-bar"'), html.indexOf('</nav>', html.indexOf('id="app-bar"')));
   const buttons = [...bar.matchAll(/<button[^>]*class="app-bar-button[^>]*>/g)].map((m) => m[0]);
   assert.equal(buttons.length, 5);
-  assert.match(buttons[2], /data-action="map"/);
-  assert.deepEqual(buttons.filter((b) => b.includes('data-view-target')).map((b) => b.match(/data-view-target="(\w+)"/)[1]), ['guia', 'viaje', 'frases', 'platos']);
+  assert.match(buttons[2], /data-view-target="mapa"/);
+  assert.deepEqual(buttons.map((b) => b.match(/data-view-target="(\w+)"/)[1]), ['guia', 'viaje', 'mapa', 'frases', 'platos']);
   assert.doesNotMatch(bar, /[\u{1F300}-\u{1FAFF}]/u);
   assert.match(bar, /<svg/);
 });

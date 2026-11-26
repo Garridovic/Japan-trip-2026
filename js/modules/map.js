@@ -295,6 +295,8 @@ export function initMap({ openDetail }) {
       mapOffline.setPlan(planCityTiles({ center: config.center, points }), document.querySelector('[data-city-name]')?.textContent);
     },
     /** Call when the guide view becomes visible again: Leaflet cannot measure a hidden container. */
-    refresh() { map.invalidateSize(); }
+    refresh() { map.invalidateSize(); },
+    /** After the map moves into the full-screen view: re-measure and fit the visible points again. */
+    refit() { map.invalidateSize(); refreshMapPoints(); }
   };
 }

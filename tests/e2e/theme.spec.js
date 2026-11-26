@@ -86,14 +86,6 @@ test.describe('light and dark theme', () => {
 });
 
 test.describe('bottom bar with the central map button', () => {
-  test('Mapa takes you to the map of the guide from any view', async ({ page }) => {
-    await page.goto('/?view=platos');
-    await page.locator('[data-action="map"]').click();
-    await expect(page.locator('#city-view')).toBeVisible();
-    await expect.poll(() => page.evaluate(() => Math.abs(document.getElementById('mapa').getBoundingClientRect().top)), { timeout: 8000 }).toBeLessThan(200);
-    await expect(page.locator('[data-view-target="guia"]')).toHaveAttribute('aria-current', 'page');
-  });
-
   test('five buttons fit a 320 px phone and the map button is the centre one', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 640 });
     await page.goto('/');

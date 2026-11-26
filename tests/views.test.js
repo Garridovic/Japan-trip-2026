@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { viewFromSearch, withView, VIEWS, DEFAULT_VIEW } from '../js/modules/views.js';
 
 test('the four app views are Guía, Viaje, Frases and Platos, with the guide as default', () => {
-  assert.deepEqual(VIEWS, ['guia', 'viaje', 'frases', 'platos']);
+  assert.deepEqual(VIEWS, ['guia', 'viaje', 'mapa', 'frases', 'platos']);
   assert.equal(viewFromSearch('?view=viaje'), 'viaje');
   assert.equal(DEFAULT_VIEW, 'guia');
 });
