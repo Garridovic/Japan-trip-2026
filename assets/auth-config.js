@@ -4,7 +4,7 @@
 //   domain   : your Auth0 tenant, e.g. 'japan-trip-xxxx.eu.auth0.com'.
 //   clientId : the Client ID of the "Single Page Application" in Auth0.
 export const AUTH_CONFIG = Object.freeze({
-  enabled: false,
-  domain: '',
-  clientId: ''
+  enabled: true,
+  domain: 'dev-garridovic.eu.auth0.com',
+  clientId: 'FnWreTgXGxLlaHtggoJjPt4jzxugh1Wj'
 });

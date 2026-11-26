@@ -7,10 +7,10 @@ import { greetingName, statusText } from '../js/modules/account.js';
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
-test('sign-in ships dormant and the public config holds no secrets', () => {
-  assert.equal(AUTH_CONFIG.enabled, false);
+test('the public sign-in config holds only domain and client id (no secrets)', () => {
+  assert.equal(AUTH_CONFIG.enabled, true);
   assert.deepEqual(Object.keys(AUTH_CONFIG).sort(), ['clientId', 'domain', 'enabled']);
-  assert.equal(isConfigured(AUTH_CONFIG), false);
+  assert.equal(isConfigured(AUTH_CONFIG), true);
   assert.equal(isConfigured({ enabled: true, domain: 'a.eu.auth0.com', clientId: 'x' }), true);
   assert.equal(isConfigured({ enabled: true, domain: '', clientId: 'x' }), false);
 });

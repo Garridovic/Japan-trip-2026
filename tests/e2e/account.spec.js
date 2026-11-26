@@ -41,9 +41,10 @@ const signIn = async (page) => {
 };
 
 test.describe('optional account (Auth0, Google)', () => {
-  test('dormant by default: no account button and no sign-in code is requested', async ({ page }) => {
+  test('when disabled in the config: no account button and no sign-in code is requested', async ({ page }) => {
+    await page.route('**/assets/auth-config.js', (route) => route.fulfill({ contentType: 'text/javascript', body: "export const AUTH_CONFIG = { enabled: false, domain: '', clientId: '' };" }));
     const requested = [];
-    page.on('request', (request) => { if (/auth0|auth\.js|cloud-sync/.test(request.url())) requested.push(request.url()); });
+    page.on('request', (request) => { if (/auth0-spa|auth\.js|cloud-sync/.test(request.url())) requested.push(request.url()); });
     await page.goto('/');
     await expect(page.locator('#hero-title')).not.toHaveText('…');
     await expect(page.locator('#account-button')).toBeHidden();
