@@ -1,6 +1,7 @@
 // Place detail sheet (modal). Details are always resolved inside the active city.
 import { byId, h, externalLink } from './dom.js';
 import { findPoint, findDetail } from './city-index.js';
+import { openOverlay, releaseOverlay } from './overlay-history.js';
 
 export function initDetails() {
   const modal = byId('poi-modal');
@@ -21,7 +22,9 @@ export function initDetails() {
     photoElement.loading = 'lazy';
     photoElement.decoding = 'async';
     photoElement.onerror = () => photoElement.classList.add('is-fallback');
-    byId('poi-photo-count').textContent = photos.length ? `${photoIndex + 1} / ${photos.length}` : 'Foto no disponible';
+    const counter = byId('poi-photo-count');
+    counter.hidden = photos.length === 1; // "1 / 1" says nothing
+    counter.textContent = photos.length ? `${photoIndex + 1} / ${photos.length}` : 'Foto no disponible';
     byId('poi-photo-prev').hidden = photos.length < 2;
     byId('poi-photo-next').hidden = photos.length < 2;
   }
@@ -31,6 +34,7 @@ export function initDetails() {
     modal.hidden = true;
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    releaseOverlay('poi');
     previousFocus?.focus?.();
   }
 
@@ -78,6 +82,7 @@ export function initDetails() {
     modal.hidden = false;
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    openOverlay('poi', close);
     document.querySelector('.poi-back').focus();
   }
 

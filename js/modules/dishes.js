@@ -9,19 +9,50 @@ export const DISH_FAVORITES_KEY = 'japan-trip:dish-favorites';
 const searchText = (dish) => normalizeText([dish.es, dish.ja, dish.romaji].join(' '));
 const queryTerms = (query) => String(query ?? '').trim().split(/\s+/).map(normalizeText).filter(Boolean);
 
-export function matchesDishQuery(dish, query) {
+/** Edit distance (Levenshtein) between two short strings. */
+export function editDistance(a, b) {
+  let previous = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    for (let j = 1; j <= b.length; j++) {
+      row[j] = Math.min(previous[j] + 1, row[j - 1] + 1, previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    previous = row;
+  }
+  return previous[b.length];
+}
+
+/** Typos allowed for a term: none for very short ones, one up to 6 letters, two beyond. */
+const allowedTypos = (term) => (term.length >= 7 ? 2 : term.length >= 4 ? 1 : 0);
+
+/** True when some stretch of the text is within the allowed number of typos of the term. */
+export function fuzzyIncludes(text, term) {
+  const allowed = allowedTypos(term);
+  if (allowed === 0) return text.includes(term);
+  if (text.includes(term)) return true;
+  for (let size = term.length - allowed; size <= term.length + allowed; size++) {
+    for (let start = 0; start + size <= text.length; start++) {
+      if (editDistance(text.slice(start, start + size), term) <= allowed) return true;
+    }
+  }
+  return false;
+}
+
+export function matchesDishQuery(dish, query, { fuzzy = false } = {}) {
   const terms = queryTerms(query);
   const haystack = searchText(dish);
-  return terms.every((term) => haystack.includes(term));
+  return terms.every((term) => (fuzzy ? fuzzyIncludes(haystack, term) : haystack.includes(term)));
 }
 
 export function filterDishes(dishes, { category = ALL, protein = ALL, query = '', favorites = new Set() } = {}) {
-  return dishes.filter((dish) => {
+  const inScope = dishes.filter((dish) => {
     if (category === FAVORITES && !favorites.has(dish.id)) return false;
     if (category !== ALL && category !== FAVORITES && dish.category !== category) return false;
-    if (protein !== ALL && dish.protein !== protein) return false;
-    return matchesDishQuery(dish, query);
+    return protein === ALL || dish.protein === protein;
   });
+  const exact = inScope.filter((dish) => matchesDishQuery(dish, query));
+  // Typo-tolerant fallback: "sasimi" still finds sashimi, but only when nothing matches exactly.
+  return exact.length > 0 || queryTerms(query).length === 0 ? exact : inScope.filter((dish) => matchesDishQuery(dish, query, { fuzzy: true }));
 }
 
 /** Photos must be declared with local files that have a credit record; `fileExists` is injected so this stays pure. */

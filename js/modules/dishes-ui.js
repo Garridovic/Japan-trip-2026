@@ -1,4 +1,5 @@
 // "Platos" section: identify a dish by photo or by name (search), favourites and a full-screen "show" sheet.
+import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { byId, h, externalLink } from './dom.js';
 import { createFavoritesStore } from './phrases.js';
 import { createSpeech } from './speech.js';
@@ -7,9 +8,9 @@ import { ALL, FAVORITES, PROTEINS, DISH_FAVORITES_KEY, filterDishes } from './di
 const PROTEIN_ICON = { carne: '🥩', pescado: '🐟', vegetariano: '🌱', variable: '❔' };
 const PROTEIN_FILTERS = [
   { id: ALL, label: 'Cualquiera' },
-  { id: 'carne', label: '🥩 Con carne' },
-  { id: 'pescado', label: '🐟 Pescado o marisco' },
-  { id: 'vegetariano', label: '🌱 Sin carne ni pescado' }
+  { id: 'carne', label: '🥩 Con carne', short: 'Con carne' },
+  { id: 'pescado', label: '🐟 Pescado o marisco', short: 'Pescado o marisco' },
+  { id: 'vegetariano', label: '🌱 Sin carne ni pescado', short: 'Sin carne ni pescado' }
 ];
 
 export function initDishes(data, credits = [], { storage = safeStorage(), speech = createSpeech() } = {}) {
@@ -52,6 +53,7 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
     modal.hidden = true;
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('phrase-show-open');
+    releaseOverlay('dish-show');
     opener?.focus?.();
     opener = null;
   };
@@ -73,6 +75,7 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
     modal.hidden = false;
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('phrase-show-open');
+    openOverlay('dish-show', closeShow);
     modal.scrollTop = 0;
     byId('dish-show-close').focus();
   };
@@ -109,11 +112,22 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
   const proteinContainer = byId('dishes-protein');
   const chip = (id, label, current, onSelect, extra = {}) =>
     h('button', { type: 'button', class: 'filter phrase-chip', 'aria-pressed': String(current === id), dataset: extra, onclick: () => onSelect(id) }, label);
+  const favButton = byId('dishes-fav');
+  const filtersSummary = byId('dishes-filters-summary');
   const renderChips = () => {
-    const categories = [{ id: ALL, label: 'Todos' }, { id: FAVORITES, label: `★ Favoritos (${favorites.all().size})` }, ...data.categories];
+    const categories = [{ id: ALL, label: 'Todos' }, ...data.categories];
     chipContainer.replaceChildren(...categories.map(({ id, label }) => chip(id, label, state.category, (value) => { state.category = value; render(); }, { dishCategory: id })));
     proteinContainer.replaceChildren(...PROTEIN_FILTERS.map(({ id, label }) => chip(id, label, state.protein, (value) => { state.protein = value; render(); }, { dishProtein: id })));
+    favButton.textContent = `★ Favoritos (${favorites.all().size})`;
+    favButton.setAttribute('aria-pressed', String(state.category === FAVORITES));
+    const parts = [categories.find(({ id }) => id === state.category), PROTEIN_FILTERS.find(({ id }) => id === state.protein)]
+      .filter((entry) => entry && entry.id !== ALL).map((entry) => entry.short ?? entry.label);
+    filtersSummary.textContent = parts.length ? `Filtros · ${parts.join(' · ')}` : 'Filtros';
   };
+  favButton.addEventListener('click', () => {
+    state.category = state.category === FAVORITES ? ALL : FAVORITES;
+    render();
+  });
 
   const grid = byId('dishes-grid');
   const count = byId('dishes-count');

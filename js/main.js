@@ -11,6 +11,8 @@ import { initMap } from './modules/map.js';
 import { initScrollSpy } from './modules/scrollspy.js';
 import { initPhrases } from './modules/phrases-ui.js';
 import { VIEW_QUERY_PARAM, viewFromSearch, withView, initViews } from './modules/views.js';
+import { initOverlayHistory, popstateWasOverlay } from './modules/overlay-history.js';
+import { initCollapsibles } from './modules/collapsible.js';
 import { initDishes } from './modules/dishes-ui.js';
 
 const status = byId('app-status');
@@ -19,6 +21,10 @@ const showStatus = (message, isError = false) => {
   status.textContent = message;
   status.classList.toggle('is-error', isError);
 };
+
+initOverlayHistory(); // registered first so overlays handle Back before navigation does
+
+initCollapsibles();
 
 async function start() {
   const [journey, global] = await Promise.all([loadJourney(), loadGlobalContent()]);
@@ -31,6 +37,9 @@ async function start() {
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
 
   let activeView = viewFromSearch(window.location.search);
+  if (new URLSearchParams(window.location.search).has(VIEW_QUERY_PARAM) && withView(window.location.href, activeView).search !== window.location.search) {
+    history.replaceState(history.state, '', withView(window.location.href, activeView)); // drop an invalid ?view=
+  }
   const scrollByView = new Map();
   const views = initViews((view) => navigateView(view));
   let activeCityId = null;
@@ -46,7 +55,9 @@ async function start() {
 
   function navigateView(view) {
     if (view === activeView) { window.scrollTo({ top: 0 }); return; }
-    history.pushState({ view }, '', withView(window.location.href, view));
+    const next = withView(window.location.href, view);
+    next.hash = ''; // a section anchor of the previous view means nothing here
+    history.pushState({ view }, '', next);
     applyView(view);
   }
 
@@ -89,7 +100,10 @@ async function start() {
     return cityId;
   }
 
-  window.addEventListener('popstate', () => { applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation()); });
+  window.addEventListener('popstate', () => {
+    if (popstateWasOverlay()) return;
+    applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation());
+  });
   views.setActive(activeView);
   await showCity(cityFromLocation());
   // Honour an in-page anchor (for example #mapa) once the content exists.

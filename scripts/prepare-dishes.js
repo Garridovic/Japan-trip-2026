@@ -95,7 +95,7 @@ for (const entry of catalog.dishes) {
     dish.photos = [{
       src: variants.at(-1).path,
       srcSet: variants.map(({ path: p, width }) => `${p} ${width}w`).join(', '),
-      alt: `${dish.es} (${dish.ja}) — ${description}`.slice(0, 220)
+      alt: `Foto de ${dish.es[0].toLowerCase()}${dish.es.slice(1)}` // short Spanish alt text; licence and author live in dish-credits.json
     }];
     credits.push({
       dishId: entry.id, dishName: dish.es, fileTitle: page.title,

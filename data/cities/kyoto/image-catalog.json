@@ -38,7 +38,10 @@
       "id": "sannenzaka",
       "query": "Sannei-zaka Sannenzaka Kyoto Japan",
       "count": 1,
-      "category": "Category:Sannei-zaka"
+      "category": "Category:Sannei-zaka",
+      "exclude": [
+        "File:Sanneizaka board.JPG"
+      ]
     },
     {
       "id": "yasaka",

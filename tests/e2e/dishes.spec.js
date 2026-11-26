@@ -62,7 +62,7 @@ test('favourite dishes persist after reloading', async ({ page }) => {
   await page.goto('/?view=platos');
   await page.locator('.dish-card[data-dish-id="udon"] .dish-fav').click();
   await page.reload();
-  await page.locator('#dishes-chips').getByRole('button', { name: /Favoritos \(1\)/ }).click();
+  await page.locator('#dishes-fav').click();
   await expect(page.locator('.dish-card')).toHaveCount(1);
   await page.locator('.dish-card .dish-fav').click();
   await expect(page.locator('#dishes-empty')).toContainText('Aún no tienes favoritos');

@@ -120,3 +120,7 @@ The image preparation script searches Wikimedia Commons by text and, when needed
 The page has three full-screen views chosen with the fixed bottom bar: **Guía** (the active city, with its city tabs and section navigation), **Frases** and **Platos** (both global). The URL keeps the state: `?view=frases` / `?view=platos` (the guide is the default and has no param) next to `?city=…`. Each view keeps its scroll position, search and favourites when you switch.
 
 Dish photos come from Wikimedia Commons (CC0, public domain, CC BY, CC BY-SA) and are prepared manually with `npm run prepare:dishes` (resumable; `--force` redoes all). Set `file`, `exclude` or `skip` per dish in `data/global/dish-catalog.json` to fix a photo. The result is committed so published photos are always reviewed ones.
+
+## Usability polish (V11.4)
+
+Full-screen sheets (place sheet, phrase show mode, dish sheet) push a history entry (`overlay-history.js`), so the Back button or the swipe-back gesture closes the sheet instead of leaving the guide. Filter panels (`details[data-open-on-wide]`) start collapsed on phones. Dish search falls back to a typo-tolerant match when nothing matches exactly. Image catalog entries accept `exclude` (list of Commons file titles) to ban a photo.

@@ -103,7 +103,7 @@ const prepareCity = async (cityId) => {
         const license = metadataValue(metadata, 'LicenseShortName');
         return info && info.width >= 1400 && info.mime?.startsWith('image/') &&
           !info.mime.includes('svg') && isReusableLicense(license) &&
-          !usedPageIds.has(page.pageid) && info.thumburl;
+          !usedPageIds.has(page.pageid) && !(entry.exclude ?? []).includes(page.title) && info.thumburl;
       }).slice(0, entry.count);
 
       if (selected.length < entry.count) {

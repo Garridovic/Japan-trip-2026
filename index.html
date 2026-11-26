@@ -55,6 +55,8 @@
 
       <section id="mapa">
         <div class="section-head"><div><div class="kicker">Explora por proximidad</div><h2>Mapa de <span data-city-name>…</span> y puntos de interés</h2></div><p class="muted small">Filtra por día o categoría. Puedes localizarte desde el móvil para ver qué tienes más cerca.</p></div>
+        <details class="collapsible-filters map-filters" id="map-filters" data-open-on-wide>
+          <summary>Filtros del mapa</summary>
         <div class="map-filter-group">
           <div class="map-filter-label">Filtrar por jornada</div>
           <div class="map-toolbar" id="map-day-filters" role="group" aria-label="Filtrar puntos del mapa por jornada"></div>
@@ -67,8 +69,9 @@
             <button class="filter map-kind-filter" data-map-kind="restaurantes" aria-pressed="false">Solo restaurantes</button>
           </div>
         </div>
+        </details>
         <p class="map-filter-status" id="map-filter-status" aria-live="polite">Mostrando todos los puntos: visitas, alternativas, eventos y restaurantes.</p>
-        <details class="map-legend" open>
+        <details class="map-legend">
           <summary id="map-legend-summary">Leyenda del mapa</summary>
           <div class="legend" id="map-legend"></div>
         </details>
@@ -145,7 +148,11 @@
           <label class="phrase-search-label" for="phrases-search">Buscar en español, japonés o romaji</label>
           <input type="search" id="phrases-search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ej.: gracias, ありがとう, arigato">
         </div>
-        <div class="phrase-chips" id="phrases-chips" role="group" aria-label="Filtrar frases por categoría"></div>
+        <button type="button" class="filter fav-shortcut" id="phrases-fav" aria-pressed="false">★ Favoritas</button>
+        <details class="collapsible-filters" id="phrases-filters" data-open-on-wide>
+          <summary id="phrases-filters-summary">Filtros</summary>
+          <div class="phrase-chips" id="phrases-chips" role="group" aria-label="Filtrar frases por categoría"></div>
+        </details>
         <p class="muted small" id="phrases-count" aria-live="polite"></p>
         <div class="phrase-grid" id="phrases-grid"></div>
         <p class="phrase-empty muted" id="phrases-empty" hidden></p>
@@ -162,8 +169,12 @@
           <label class="phrase-search-label" for="dishes-search">Buscar por nombre (español, japonés o romaji)</label>
           <input type="search" id="dishes-search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ej.: ramen, ラーメン, tonkatsu, cerdo">
         </div>
-        <div class="phrase-chips" id="dishes-chips" role="group" aria-label="Filtrar platos por categoría"></div>
-        <div class="phrase-chips" id="dishes-protein" role="group" aria-label="Filtrar platos por ingrediente principal"></div>
+        <button type="button" class="filter fav-shortcut" id="dishes-fav" aria-pressed="false">★ Favoritos</button>
+        <details class="collapsible-filters" id="dishes-filters" data-open-on-wide>
+          <summary id="dishes-filters-summary">Filtros</summary>
+          <div class="phrase-chips" id="dishes-chips" role="group" aria-label="Filtrar platos por categoría"></div>
+          <div class="phrase-chips" id="dishes-protein" role="group" aria-label="Filtrar platos por ingrediente principal"></div>
+        </details>
         <div class="dish-toolbar">
           <p class="muted small" id="dishes-count" aria-live="polite"></p>
           <div class="dish-views" role="group" aria-label="Vista de los platos">
@@ -225,6 +236,11 @@
   <div class="phrase-show" id="phrase-show" role="dialog" aria-modal="true" aria-label="Frase en pantalla grande" hidden aria-hidden="true">
     <button type="button" class="phrase-show-close" id="phrase-show-close" data-close-phrase aria-label="Volver">← Volver</button>
     <div class="phrase-show-body" id="phrase-show-body"></div>
+    <div class="phrase-show-pager" id="phrase-show-pager">
+      <button type="button" class="phrase-btn is-slow" id="phrase-show-prev" aria-label="Frase anterior">‹ Anterior</button>
+      <span class="phrase-show-position" id="phrase-show-position" aria-live="polite"></span>
+      <button type="button" class="phrase-btn is-slow" id="phrase-show-next" aria-label="Frase siguiente">Siguiente ›</button>
+    </div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

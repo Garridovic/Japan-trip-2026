@@ -24,6 +24,13 @@ export function initScrollSpy(win = window, doc = document) {
   const destination = (section) => Math.max(0, Math.round(section.getBoundingClientRect().top + win.scrollY - marginOf(section)));
   const maxScroll = () => doc.documentElement.scrollHeight - win.innerHeight;
 
+  // Fade at the edges of the strip that still have tabs hidden beyond them (a hint that it scrolls).
+  function updateEdges(strip) {
+    const nav = strip.parentElement;
+    nav.toggleAttribute('data-more-start', strip.scrollLeft > 4);
+    nav.toggleAttribute('data-more-end', strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 4);
+  }
+
   function highlight(link) {
     links.forEach((other) => {
       if (other === link) other.setAttribute('aria-current', 'location');
@@ -31,6 +38,7 @@ export function initScrollSpy(win = window, doc = document) {
     });
     // Keep the active link in view inside the nav strip without touching the page scroll.
     const strip = link?.parentElement;
+    if (strip) updateEdges(strip);
     if (strip && strip.scrollWidth > strip.clientWidth) {
       const left = link.offsetLeft - strip.offsetLeft;
       if (left < strip.scrollLeft + 8 || left + link.offsetWidth > strip.scrollLeft + strip.clientWidth - 8) {
@@ -80,5 +88,6 @@ export function initScrollSpy(win = window, doc = document) {
   links.forEach((link) => link.addEventListener('click', onNavClick));
   win.addEventListener('scroll', () => { schedule(); if (target) armSettle(); }, { passive: true });
   win.addEventListener('resize', schedule);
+  links[0]?.parentElement?.addEventListener('scroll', () => updateEdges(links[0].parentElement), { passive: true });
   return { refresh: schedule };
 }

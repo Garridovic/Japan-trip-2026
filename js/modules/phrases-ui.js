@@ -1,4 +1,5 @@
 // "Frases" section: search, category chips, favourites, audio and the full-screen show mode.
+import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { byId, h, setPressed } from './dom.js';
 import {
   ALL_CATEGORY, FAVORITES_CATEGORY, createFavoritesStore, filterPhrases
@@ -48,30 +49,51 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
   const modal = byId('phrase-show');
   const showBody = byId('phrase-show-body');
   let opener = null;
+  let sequence = []; // phrases visible when the sheet was opened: Anterior/Siguiente walk through them
+  let position = 0;
   const closeShow = () => {
     if (modal.hidden) return;
     speech.stop();
     modal.hidden = true;
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('phrase-show-open');
+    releaseOverlay('phrase-show');
     opener?.focus?.();
     opener = null;
   };
-  const openShow = (phrase, trigger) => {
-    opener = trigger;
+  function showPhrase(index) {
+    position = (index + sequence.length) % sequence.length;
+    const phrase = sequence[position];
+    speech.stop();
+    audioButtons.forEach((button) => { if (!button.isConnected) audioButtons.delete(button); });
     showBody.replaceChildren(
       h('p', { class: 'phrase-show-ja', lang: 'ja' }, phrase.ja),
       h('p', { class: 'phrase-show-romaji' }, phrase.romaji),
       h('p', { class: 'phrase-show-es' }, phrase.es),
       h('div', { class: 'phrase-show-actions' }, audioButton(phrase.ja), audioButton(phrase.ja, { slow: true }))
     );
+    byId('phrase-show-position').textContent = `${position + 1} / ${sequence.length}`;
+    byId('phrase-show-pager').hidden = sequence.length < 2;
+  }
+  const openShow = (phrase, trigger) => {
+    opener = trigger;
+    sequence = filterPhrases(data.phrases, { ...state, favorites: favorites.all() });
+    showPhrase(Math.max(0, sequence.findIndex(({ id }) => id === phrase.id)));
     modal.hidden = false;
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('phrase-show-open');
+    openOverlay('phrase-show', closeShow);
     byId('phrase-show-close').focus();
   };
+  byId('phrase-show-prev').addEventListener('click', () => showPhrase(position - 1));
+  byId('phrase-show-next').addEventListener('click', () => showPhrase(position + 1));
   modal.querySelectorAll('[data-close-phrase]').forEach((node) => node.addEventListener('click', closeShow));
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeShow(); });
+  document.addEventListener('keydown', (event) => {
+    if (modal.hidden) return;
+    if (event.key === 'Escape') closeShow();
+    else if (event.key === 'ArrowRight') showPhrase(position + 1);
+    else if (event.key === 'ArrowLeft') showPhrase(position - 1);
+  });
 
   // ----- cards -----
   const favoriteButton = (phrase) => {
@@ -116,18 +138,28 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
   // ----- chips, search and list -----
   const chips = [
     { id: ALL_CATEGORY, label: 'Todas' },
-    { id: FAVORITES_CATEGORY, label: 'Favoritas' },
     ...data.categories
   ];
   const chipContainer = byId('phrases-chips');
+  const favButton = byId('phrases-fav');
+  const filtersSummary = byId('phrases-filters-summary');
   const renderChips = () => {
     chipContainer.replaceChildren(...chips.map(({ id, label }) =>
       h('button', {
         type: 'button', class: 'filter phrase-chip', 'aria-pressed': String(state.category === id), dataset: { phraseCategory: id },
         onclick: () => { state.category = id; render(); }
-      }, id === FAVORITES_CATEGORY ? `★ ${label} (${favorites.all().size})` : label)
+      }, label)
     ));
+    favButton.textContent = `★ Favoritas (${favorites.all().size})`;
+    favButton.setAttribute('aria-pressed', String(state.category === FAVORITES_CATEGORY));
+    const active = chips.find(({ id }) => id === state.category);
+    filtersSummary.textContent = active && active.id !== ALL_CATEGORY ? `Filtros · ${active.label}` : 'Filtros';
   };
+  // One tap to jump to / leave the favourites, handy at the restaurant table.
+  favButton.addEventListener('click', () => {
+    state.category = state.category === FAVORITES_CATEGORY ? ALL_CATEGORY : FAVORITES_CATEGORY;
+    render();
+  });
 
   const grid = byId('phrases-grid');
   const count = byId('phrases-count');

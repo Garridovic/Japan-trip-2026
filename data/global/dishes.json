@@ -64,7 +64,7 @@
         {
           "src": "assets/images/dishes/gohan-960.webp",
           "srcSet": "assets/images/dishes/gohan-480.webp 480w, assets/images/dishes/gohan-960.webp 960w",
-          "alt": "Arroz blanco (ご飯) — This free picture of the ceramic bowl full of white rice was created by my hungry friend epSos.de. This beautiful picture can be used for free, if you link epSos.de as the original author of the image"
+          "alt": "Foto de arroz blanco"
         }
       ]
     },
@@ -83,7 +83,7 @@
         {
           "src": "assets/images/dishes/onigiri-960.webp",
           "srcSet": "assets/images/dishes/onigiri-480.webp 480w, assets/images/dishes/onigiri-960.webp 960w",
-          "alt": "Bola de arroz (おにぎり) — Example of Onigiri in Japan"
+          "alt": "Foto de bola de arroz"
         }
       ]
     },
@@ -102,7 +102,7 @@
         {
           "src": "assets/images/dishes/gyudon-960.webp",
           "srcSet": "assets/images/dishes/gyudon-480.webp 480w, assets/images/dishes/gyudon-960.webp 960w",
-          "alt": "Arroz con ternera (牛丼) — Yoshinoya Beef Bowl, regular size."
+          "alt": "Foto de arroz con ternera"
         }
       ]
     },
@@ -123,7 +123,7 @@
         {
           "src": "assets/images/dishes/katsudon-960.webp",
           "srcSet": "assets/images/dishes/katsudon-480.webp 480w, assets/images/dishes/katsudon-960.webp 960w",
-          "alt": "Arroz con cerdo empanado (カツ丼) — Example picture of Katsudon ."
+          "alt": "Foto de arroz con cerdo empanado"
         }
       ]
     },
@@ -143,7 +143,7 @@
         {
           "src": "assets/images/dishes/oyakodon-960.webp",
           "srcSet": "assets/images/dishes/oyakodon-480.webp 480w, assets/images/dishes/oyakodon-960.webp 960w",
-          "alt": "Arroz con pollo y huevo (親子丼) — A bowl of rice topped with boiled chicken and eggs"
+          "alt": "Foto de arroz con pollo y huevo"
         }
       ]
     },
@@ -164,7 +164,7 @@
         {
           "src": "assets/images/dishes/tendon-960.webp",
           "srcSet": "assets/images/dishes/tendon-480.webp 480w, assets/images/dishes/tendon-960.webp 960w",
-          "alt": "Arroz con tempura (天丼) — Rice bowl topped with shrimp tempura"
+          "alt": "Foto de arroz con tempura"
         }
       ]
     },
@@ -184,7 +184,7 @@
         {
           "src": "assets/images/dishes/unadon-960.webp",
           "srcSet": "assets/images/dishes/unadon-480.webp 480w, assets/images/dishes/unadon-960.webp 960w",
-          "alt": "Arroz con anguila (うな丼) — Unaju box tokyo.jpg"
+          "alt": "Foto de arroz con anguila"
         }
       ]
     },
@@ -203,7 +203,7 @@
         {
           "src": "assets/images/dishes/kare-raisu-960.webp",
           "srcSet": "assets/images/dishes/kare-raisu-480.webp 480w, assets/images/dishes/kare-raisu-960.webp 960w",
-          "alt": "Arroz con curry (カレーライス) — Typical home made Japanese curry rice with beef, onions, carrots and potatoes."
+          "alt": "Foto de arroz con curry"
         }
       ]
     },
@@ -222,7 +222,7 @@
         {
           "src": "assets/images/dishes/omurice-960.webp",
           "srcSet": "assets/images/dishes/omurice-480.webp 480w, assets/images/dishes/omurice-960.webp 960w",
-          "alt": "Tortilla rellena de arroz (オムライス) — Omurice at Taimeiken in Nihonbashi, Tokyo, Japan."
+          "alt": "Foto de tortilla rellena de arroz"
         }
       ]
     },
@@ -242,7 +242,7 @@
         {
           "src": "assets/images/dishes/chahan-960.webp",
           "srcSet": "assets/images/dishes/chahan-480.webp 480w, assets/images/dishes/chahan-960.webp 960w",
-          "alt": "Arroz frito (チャーハン) — Ramen and Chahan set meal"
+          "alt": "Foto de arroz frito"
         }
       ]
     },
@@ -278,7 +278,7 @@
         {
           "src": "assets/images/dishes/ramen-960.webp",
           "srcSet": "assets/images/dishes/ramen-480.webp 480w, assets/images/dishes/ramen-960.webp 960w",
-          "alt": "Ramen (ラーメン) — A style of soupless Japanese ramen, Maze-soba."
+          "alt": "Foto de ramen"
         }
       ]
     },
@@ -298,7 +298,7 @@
         {
           "src": "assets/images/dishes/tonkotsu-ramen-960.webp",
           "srcSet": "assets/images/dishes/tonkotsu-ramen-480.webp 480w, assets/images/dishes/tonkotsu-ramen-960.webp 960w",
-          "alt": "Ramen de caldo de cerdo (豚骨ラーメン) — Tonkotsu ramen in Tokyo"
+          "alt": "Foto de ramen de caldo de cerdo"
         }
       ]
     },
@@ -318,7 +318,7 @@
         {
           "src": "assets/images/dishes/miso-ramen-960.webp",
           "srcSet": "assets/images/dishes/miso-ramen-480.webp 480w, assets/images/dishes/miso-ramen-960.webp 960w",
-          "alt": "Ramen de miso (味噌ラーメン) — Medium size."
+          "alt": "Foto de ramen de miso"
         }
       ]
     },
@@ -338,7 +338,7 @@
         {
           "src": "assets/images/dishes/shoyu-ramen-960.webp",
           "srcSet": "assets/images/dishes/shoyu-ramen-480.webp 480w, assets/images/dishes/shoyu-ramen-960.webp 960w",
-          "alt": "Ramen de salsa de soja (醤油ラーメン) — A common use of soy sauce is to put it in ramen noodles."
+          "alt": "Foto de ramen de salsa de soja"
         }
       ]
     },
@@ -358,7 +358,7 @@
         {
           "src": "assets/images/dishes/tsukemen-960.webp",
           "srcSet": "assets/images/dishes/tsukemen-480.webp 480w, assets/images/dishes/tsukemen-960.webp 960w",
-          "alt": "Fideos para mojar (つけ麺) — Tsukemen (Dipping Ramen) - Goemon Ramen Bar"
+          "alt": "Foto de fideos para mojar"
         }
       ]
     },
@@ -377,7 +377,7 @@
         {
           "src": "assets/images/dishes/udon-960.webp",
           "srcSet": "assets/images/dishes/udon-480.webp 480w, assets/images/dishes/udon-960.webp 960w",
-          "alt": "Udon (うどん) — Udon noodle in curry soup"
+          "alt": "Foto de udon"
         }
       ]
     },
@@ -398,7 +398,7 @@
         {
           "src": "assets/images/dishes/kitsune-udon-960.webp",
           "srcSet": "assets/images/dishes/kitsune-udon-480.webp 480w, assets/images/dishes/kitsune-udon-960.webp 960w",
-          "alt": "Udon con tofu frito (きつねうどん) — Kitsune udon ( a type of Udon)"
+          "alt": "Foto de udon con tofu frito"
         }
       ]
     },
@@ -471,7 +471,7 @@
         {
           "src": "assets/images/dishes/tonkatsu-960.webp",
           "srcSet": "assets/images/dishes/tonkatsu-480.webp 480w, assets/images/dishes/tonkatsu-960.webp 960w",
-          "alt": "Cerdo empanado (とんかつ) — Pork cutlet / Tonkatsu on a plate."
+          "alt": "Foto de cerdo empanado"
         }
       ]
     },
@@ -492,7 +492,7 @@
         {
           "src": "assets/images/dishes/tempura-960.webp",
           "srcSet": "assets/images/dishes/tempura-480.webp 480w, assets/images/dishes/tempura-960.webp 960w",
-          "alt": "Tempura (天ぷら) — Sillaginidae (sand borer) tempura. This photo was taken in NAKANO City, Tokyo, Japan on 2 October, 2021."
+          "alt": "Foto de tempura"
         }
       ]
     },
@@ -512,7 +512,7 @@
         {
           "src": "assets/images/dishes/karaage-960.webp",
           "srcSet": "assets/images/dishes/karaage-480.webp 480w, assets/images/dishes/karaage-960.webp 960w",
-          "alt": "Pollo frito japonés (唐揚げ) — 広島市内の居酒屋にてフライドポトと唐揚げ"
+          "alt": "Foto de pollo frito japonés"
         }
       ]
     },
@@ -532,7 +532,7 @@
         {
           "src": "assets/images/dishes/korokke-960.webp",
           "srcSet": "assets/images/dishes/korokke-480.webp 480w, assets/images/dishes/korokke-960.webp 960w",
-          "alt": "Croqueta japonesa (コロッケ) — Typical example of Potato croquettes."
+          "alt": "Foto de croqueta japonesa"
         }
       ]
     },
@@ -553,7 +553,7 @@
         {
           "src": "assets/images/dishes/ebi-furai-960.webp",
           "srcSet": "assets/images/dishes/ebi-furai-480.webp 480w, assets/images/dishes/ebi-furai-960.webp 960w",
-          "alt": "Gambas empanadas (エビフライ) — Fried Shrimp in Kurofunetei, Ueno"
+          "alt": "Foto de gambas empanadas"
         }
       ]
     },
@@ -574,7 +574,7 @@
         {
           "src": "assets/images/dishes/kushikatsu-960.webp",
           "srcSet": "assets/images/dishes/kushikatsu-480.webp 480w, assets/images/dishes/kushikatsu-960.webp 960w",
-          "alt": "Brochetas fritas (串カツ) — みそ串カツ（ 東京 ・ 中央区 銀座 4-10-14、 東銀座駅 最寄りの「 みそかつ 矢場とん 」東京銀座店 [1] ）"
+          "alt": "Foto de brochetas fritas"
         }
       ]
     },
@@ -594,7 +594,7 @@
         {
           "src": "assets/images/dishes/gyoza-960.webp",
           "srcSet": "assets/images/dishes/gyoza-480.webp 480w, assets/images/dishes/gyoza-960.webp 960w",
-          "alt": "Empanadillas gyoza (餃子) — The Swiss Gyoza producer Missgyoza manufactures its delicious Gyoza dumplings in Rüschlikon, Zurich Switzerland"
+          "alt": "Foto de empanadillas gyoza"
         }
       ]
     },
@@ -611,7 +611,7 @@
         {
           "src": "assets/images/dishes/yakitori-960.webp",
           "srcSet": "assets/images/dishes/yakitori-480.webp 480w, assets/images/dishes/yakitori-960.webp 960w",
-          "alt": "Brochetas de pollo (焼き鳥) — Yakitori being grilled."
+          "alt": "Foto de brochetas de pollo"
         }
       ]
     },
@@ -659,7 +659,7 @@
         {
           "src": "assets/images/dishes/okonomiyaki-960.webp",
           "srcSet": "assets/images/dishes/okonomiyaki-480.webp 480w, assets/images/dishes/okonomiyaki-960.webp 960w",
-          "alt": "Tortilla de col (お好み焼き) — Okonomiyaki"
+          "alt": "Foto de tortilla de col"
         }
       ]
     },
@@ -681,7 +681,7 @@
         {
           "src": "assets/images/dishes/takoyaki-960.webp",
           "srcSet": "assets/images/dishes/takoyaki-480.webp 480w, assets/images/dishes/takoyaki-960.webp 960w",
-          "alt": "Bolitas de pulpo (たこ焼き) — Takoyaki."
+          "alt": "Foto de bolitas de pulpo"
         }
       ]
     },
@@ -700,7 +700,7 @@
         {
           "src": "assets/images/dishes/shioyaki-960.webp",
           "srcSet": "assets/images/dishes/shioyaki-480.webp 480w, assets/images/dishes/shioyaki-960.webp 960w",
-          "alt": "Pescado a la sal (塩焼き) — Ayu are small fish in the salmon family that, in Japan, are found in fast-flowing rivers from western Hokkaido south through Kyushu. They grow to about 20 - 30 cm long and, when sprinkled with sa"
+          "alt": "Foto de pescado a la sal"
         }
       ]
     },
@@ -720,7 +720,7 @@
         {
           "src": "assets/images/dishes/unagi-960.webp",
           "srcSet": "assets/images/dishes/unagi-480.webp 480w, assets/images/dishes/unagi-960.webp 960w",
-          "alt": "Anguila a la parrilla (鰻の蒲焼) — FoodCourt"
+          "alt": "Foto de anguila a la parrilla"
         }
       ]
     },
@@ -739,7 +739,7 @@
         {
           "src": "assets/images/dishes/teriyaki-960.webp",
           "srcSet": "assets/images/dishes/teriyaki-480.webp 480w, assets/images/dishes/teriyaki-960.webp 960w",
-          "alt": "Teriyaki (照り焼き) — Chicken teriyaki bento box - Massachusetts, USA."
+          "alt": "Foto de teriyaki"
         }
       ]
     },
@@ -760,7 +760,7 @@
         {
           "src": "assets/images/dishes/nigiri-960.webp",
           "srcSet": "assets/images/dishes/nigiri-480.webp 480w, assets/images/dishes/nigiri-960.webp 960w",
-          "alt": "Sushi nigiri (握り寿司) — From Gourmet Festival 2018, Budapest, Hungary By Sushi Sei Madai (red seabream), tuna and hamachi (amberjack)."
+          "alt": "Foto de sushi nigiri"
         }
       ]
     },
@@ -779,7 +779,7 @@
         {
           "src": "assets/images/dishes/maki-960.webp",
           "srcSet": "assets/images/dishes/maki-480.webp 480w, assets/images/dishes/maki-960.webp 960w",
-          "alt": "Sushi enrollado (巻き寿司) — 典型的なかんぴょう巻きの参考画像"
+          "alt": "Foto de sushi enrollado"
         }
       ]
     },
@@ -800,7 +800,7 @@
         {
           "src": "assets/images/dishes/chirashi-960.webp",
           "srcSet": "assets/images/dishes/chirashi-480.webp 480w, assets/images/dishes/chirashi-960.webp 960w",
-          "alt": "Chirashi (ちらし寿司) — パックで買ったお寿司をできるだけうまそうに撮ってみようじゃん！と、食べるのガマンして夜中に何やってるんだろうね、の10月8、いやもう9日か。(笑)"
+          "alt": "Foto de chirashi"
         }
       ]
     },
@@ -820,7 +820,7 @@
         {
           "src": "assets/images/dishes/sashimi-960.webp",
           "srcSet": "assets/images/dishes/sashimi-480.webp 480w, assets/images/dishes/sashimi-960.webp 960w",
-          "alt": "Sashimi (刺身) — A plate of Stephanolepis cirrhifer (kawahagi) served as sashimi, served with a dipping sauce made from its liver and soy sauce. Served at Nagomi, Cuppage Plaza, Singapore."
+          "alt": "Foto de sashimi"
         }
       ]
     },
@@ -839,7 +839,7 @@
         {
           "src": "assets/images/dishes/temaki-960.webp",
           "srcSet": "assets/images/dishes/temaki-480.webp 480w, assets/images/dishes/temaki-960.webp 960w",
-          "alt": "Cono de sushi (手巻き寿司) — Hand rolls from left to right: nori kyu (seaweed & cucumber) tuna salmon Description of \"Sushi Hand Roll\" on menu: \"Our hand rolls, inspired by tacos, feature sushi rice and fresh ingredients on a"
+          "alt": "Foto de cono de sushi"
         }
       ]
     },
@@ -859,7 +859,7 @@
         {
           "src": "assets/images/dishes/inari-960.webp",
           "srcSet": "assets/images/dishes/inari-480.webp 480w, assets/images/dishes/inari-960.webp 960w",
-          "alt": "Sushi inari (いなり寿司) — Inarizushi"
+          "alt": "Foto de sushi inari"
         }
       ]
     },
@@ -893,7 +893,7 @@
         {
           "src": "assets/images/dishes/miso-shiru-960.webp",
           "srcSet": "assets/images/dishes/miso-shiru-480.webp 480w, assets/images/dishes/miso-shiru-960.webp 960w",
-          "alt": "Sopa de miso (味噌汁) — Tofu and Pholiota microspora miso soup."
+          "alt": "Foto de sopa de miso"
         }
       ]
     },
@@ -914,7 +914,7 @@
         {
           "src": "assets/images/dishes/oden-960.webp",
           "srcSet": "assets/images/dishes/oden-480.webp 480w, assets/images/dishes/oden-960.webp 960w",
-          "alt": "Oden (おでん) — おでん."
+          "alt": "Foto de oden"
         }
       ]
     },
@@ -934,7 +934,7 @@
         {
           "src": "assets/images/dishes/sukiyaki-960.webp",
           "srcSet": "assets/images/dishes/sukiyaki-480.webp 480w, assets/images/dishes/sukiyaki-960.webp 960w",
-          "alt": "Sukiyaki (すき焼き) — Sukiyaki"
+          "alt": "Foto de sukiyaki"
         }
       ]
     },
@@ -953,7 +953,7 @@
         {
           "src": "assets/images/dishes/shabu-shabu-960.webp",
           "srcSet": "assets/images/dishes/shabu-shabu-480.webp 480w, assets/images/dishes/shabu-shabu-960.webp 960w",
-          "alt": "Shabu-shabu (しゃぶしゃぶ) — Modern Shabu shabu set: Rice, Sesame Seed & bowl, Skimmer and Tongs, Beef: Kobe, Shortribs, Noodles, Split broth pot on stove, Goma with Green onions, Vegetable selection Ponzu with garlic and gree"
+          "alt": "Foto de shabu-shabu"
         }
       ]
     },
@@ -972,7 +972,7 @@
         {
           "src": "assets/images/dishes/nabe-960.webp",
           "srcSet": "assets/images/dishes/nabe-480.webp 480w, assets/images/dishes/nabe-960.webp 960w",
-          "alt": "Olla caliente (鍋) — Nabe of Kansai or Osaka style."
+          "alt": "Foto de olla caliente"
         }
       ]
     },
@@ -992,7 +992,7 @@
         {
           "src": "assets/images/dishes/chawanmushi-960.webp",
           "srcSet": "assets/images/dishes/chawanmushi-480.webp 480w, assets/images/dishes/chawanmushi-960.webp 960w",
-          "alt": "Flan de huevo salado (茶碗蒸し) — Chawan-mushi in a restaurant in Hamamatsu, Japan"
+          "alt": "Foto de flan de huevo salado"
         }
       ]
     },
@@ -1011,7 +1011,7 @@
         {
           "src": "assets/images/dishes/nikujaga-960.webp",
           "srcSet": "assets/images/dishes/nikujaga-480.webp 480w, assets/images/dishes/nikujaga-960.webp 960w",
-          "alt": "Estofado de carne y patata (肉じゃが) — braised pork and potatoes"
+          "alt": "Foto de estofado de carne y patata"
         }
       ]
     },
@@ -1030,7 +1030,7 @@
         {
           "src": "assets/images/dishes/tamagoyaki-960.webp",
           "srcSet": "assets/images/dishes/tamagoyaki-480.webp 480w, assets/images/dishes/tamagoyaki-960.webp 960w",
-          "alt": "Tortilla japonesa (卵焼き) — 田町"
+          "alt": "Foto de tortilla japonesa"
         }
       ]
     },
@@ -1065,7 +1065,7 @@
         {
           "src": "assets/images/dishes/agedashi-tofu-960.webp",
           "srcSet": "assets/images/dishes/agedashi-tofu-480.webp 480w, assets/images/dishes/agedashi-tofu-960.webp 960w",
-          "alt": "Tofu frito en caldo (揚げ出し豆腐) — Tofu and yasai agedashi - Massachusetts, USA."
+          "alt": "Foto de tofu frito en caldo"
         }
       ]
     },
@@ -1084,7 +1084,7 @@
         {
           "src": "assets/images/dishes/hiyayakko-960.webp",
           "srcSet": "assets/images/dishes/hiyayakko-480.webp 480w, assets/images/dishes/hiyayakko-960.webp 960w",
-          "alt": "Tofu frío (冷奴) — Hiyayakko , a chilled block of tofu, topped with bonito flakes and Welsh onion."
+          "alt": "Foto de tofu frío"
         }
       ]
     },
@@ -1103,7 +1103,7 @@
         {
           "src": "assets/images/dishes/edamame-960.webp",
           "srcSet": "assets/images/dishes/edamame-480.webp 480w, assets/images/dishes/edamame-960.webp 960w",
-          "alt": "Edamame (枝豆) — Edamame"
+          "alt": "Foto de edamame"
         }
       ]
     },
@@ -1120,7 +1120,7 @@
         {
           "src": "assets/images/dishes/tsukemono-960.webp",
           "srcSet": "assets/images/dishes/tsukemono-480.webp 480w, assets/images/dishes/tsukemono-960.webp 960w",
-          "alt": "Encurtidos (漬物) — A dish of tsukemono ."
+          "alt": "Foto de encurtidos"
         }
       ]
     },
@@ -1139,7 +1139,7 @@
         {
           "src": "assets/images/dishes/natto-960.webp",
           "srcSet": "assets/images/dishes/natto-480.webp 480w, assets/images/dishes/natto-960.webp 960w",
-          "alt": "Soja fermentada (納豆) — 日本の納豆かけご飯"
+          "alt": "Foto de soja fermentada"
         }
       ]
     },
@@ -1158,7 +1158,7 @@
         {
           "src": "assets/images/dishes/nasu-dengaku-960.webp",
           "srcSet": "assets/images/dishes/nasu-dengaku-480.webp 480w, assets/images/dishes/nasu-dengaku-960.webp 960w",
-          "alt": "Berenjena con miso (茄子田楽) — Nasu dengaku"
+          "alt": "Foto de berenjena con miso"
         }
       ]
     },
@@ -1178,7 +1178,7 @@
         {
           "src": "assets/images/dishes/tamago-kake-gohan-960.webp",
           "srcSet": "assets/images/dishes/tamago-kake-gohan-480.webp 480w, assets/images/dishes/tamago-kake-gohan-960.webp 960w",
-          "alt": "Arroz con huevo crudo (卵かけご飯) — In Japan, people eats raw chicken eggs. This is called Tamago kake gohan , and it has been established as a part of our food culture. We proposed this illustration as a reference to the un"
+          "alt": "Foto de arroz con huevo crudo"
         }
       ]
     },
@@ -1198,7 +1198,7 @@
         {
           "src": "assets/images/dishes/katsu-sando-960.webp",
           "srcSet": "assets/images/dishes/katsu-sando-480.webp 480w, assets/images/dishes/katsu-sando-960.webp 960w",
-          "alt": "Sándwich de cerdo empanado (カツサンド) — Katsu sando かつサンド , deep-fried pork cutlet served as a sandwich on a Shinkansen train."
+          "alt": "Foto de sándwich de cerdo empanado"
         }
       ]
     },
@@ -1215,7 +1215,7 @@
         {
           "src": "assets/images/dishes/teishoku-960.webp",
           "srcSet": "assets/images/dishes/teishoku-480.webp 480w, assets/images/dishes/teishoku-960.webp 960w",
-          "alt": "Menú del día (定食) — Homemade meal set (teishoku): Pork miso soup (main dish), natto, daikon-citrus salad, pan-fried kombu and bonito as side dishes"
+          "alt": "Foto de menú del día"
         }
       ]
     },
@@ -1232,7 +1232,7 @@
         {
           "src": "assets/images/dishes/bento-960.webp",
           "srcSet": "assets/images/dishes/bento-480.webp 480w, assets/images/dishes/bento-960.webp 960w",
-          "alt": "Caja de comida (bento) (弁当) — Bento Box at Hanabishi, Koyasan. 日々是好日弁当"
+          "alt": "Foto de caja de comida (bento)"
         }
       ]
     },
@@ -1253,7 +1253,7 @@
         {
           "src": "assets/images/dishes/kaiseki-960.webp",
           "srcSet": "assets/images/dishes/kaiseki-480.webp 480w, assets/images/dishes/kaiseki-960.webp 960w",
-          "alt": "Kaiseki (懐石) — A Traditional breakfast at Tamahan Ryokan, Kyoto. The dishes include roast mackerel, dashimaki (Japanese omelette, here Kansai style), rice, a paper pot ( kami nabe ) of yudofu over a small brasier, with s"
+          "alt": "Foto de kaiseki"
         }
       ]
     },
@@ -1273,7 +1273,7 @@
         {
           "src": "assets/images/dishes/obanzai-960.webp",
           "srcSet": "assets/images/dishes/obanzai-480.webp 480w, assets/images/dishes/obanzai-960.webp 960w",
-          "alt": "Obanzai (おばんざい) — Simmered season vegetable - Kyoto"
+          "alt": "Foto de obanzai"
         }
       ]
     }

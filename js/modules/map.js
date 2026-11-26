@@ -2,19 +2,11 @@
 // One Leaflet map is created once; setCity() swaps in the data of the active city.
 import { byId, h, externalLink, setPressed } from './dom.js';
 import { cityKey } from './ids.js';
+import { distanceKm, formatDistance, formatFarDistance, distanceIfFarFromCity } from './geo.js';
 
 const HOTEL_COLOR = '#273d70';
 const FALLBACK_COLOR = '#64748b';
 const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
-
-const distanceKm = (a, b) => {
-  const toRad = (value) => value * Math.PI / 180;
-  const dLat = toRad(b.lat - a.lat);
-  const dLng = toRad(b.lng - a.lng);
-  const x = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
-  return 6371 * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
-};
-const formatDistance = (distance) => distance < 1 ? `${Math.round(distance * 1000)} m` : `${distance.toFixed(1)} km`;
 
 export function initMap({ openDetail }) {
   const mapElement = byId('city-map');
@@ -197,7 +189,10 @@ export function initMap({ openDetail }) {
         externalLink(googleDirectionsUrl(point), 'Cómo llegar con Google Maps ↗', 'nearby-directions')
       );
     }));
-    nearbyStatus.textContent = `Los ${ordered.length} lugares más próximos, ordenados por distancia en línea recta. La ruta real puede ser más larga.${currentAccuracy ? ` Precisión GPS aproximada: ${Math.round(currentAccuracy)} m.` : ''}`;
+    const far = config ? distanceIfFarFromCity(userLatLng, config.center) : null;
+    const cityName = document.querySelector('[data-city-name]')?.textContent ?? 'la ciudad';
+    nearbyStatus.classList.toggle('is-far', far !== null);
+    nearbyStatus.textContent = `${far !== null ? `Estás a ${formatFarDistance(far)} de ${cityName}: lo que ves son los puntos de esta guía más cercanos a ti, aunque quedan lejos. ` : ''}Los ${ordered.length} lugares más próximos, ordenados por distancia en línea recta. La ruta real puede ser más larga.${currentAccuracy ? ` Precisión GPS aproximada: ${Math.round(currentAccuracy)} m.` : ''}`;
   }
 
   function updateUserLocation(position, centerMap) {
