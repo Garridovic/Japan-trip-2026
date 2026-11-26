@@ -37,6 +37,7 @@
         <a href="#comer" data-nav-section="comer">Comer</a>
         <a href="#alternativas" data-nav-section="alternativas">Otros lugares</a>
         <a href="#practico" data-nav-section="practico">Consejos</a>
+        <a href="#frases" data-nav-section="frases" hidden>Frases</a>
         <a href="#fuentes" data-nav-section="fuentes">Fuentes</a>
       </div>
     </nav>
@@ -125,6 +126,19 @@
         <div class="notes-grid" id="notes-grid"></div>
       </section>
 
+      <section id="frases" hidden>
+        <div class="section-head"><div><div class="kicker" id="phrases-kicker"></div><h2 id="phrases-title"></h2></div><p class="muted small" id="phrases-lead"></p></div>
+        <p class="phrase-notice" id="phrases-notice" role="status" hidden></p>
+        <div class="phrase-search">
+          <label class="phrase-search-label" for="phrases-search">Buscar en español, japonés o romaji</label>
+          <input type="search" id="phrases-search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ej.: gracias, ありがとう, arigato">
+        </div>
+        <div class="phrase-chips" id="phrases-chips" role="group" aria-label="Filtrar frases por categoría"></div>
+        <p class="muted small" id="phrases-count" aria-live="polite"></p>
+        <div class="phrase-grid" id="phrases-grid"></div>
+        <p class="phrase-empty muted" id="phrases-empty" hidden></p>
+      </section>
+
       <section id="fuentes" hidden>
         <div class="section-head"><div><div class="kicker">Información contrastada</div><h2>Fuentes útiles</h2></div></div>
         <details class="note-card sources" id="sources-card"></details>
@@ -164,6 +178,11 @@
         <p class="poi-source-note">Fotografías alojadas localmente. Consulta la autoría y las licencias en los créditos de imágenes.</p>
       </div>
     </section>
+  </div>
+
+  <div class="phrase-show" id="phrase-show" role="dialog" aria-modal="true" aria-label="Frase en pantalla grande" hidden aria-hidden="true">
+    <button type="button" class="phrase-show-close" id="phrase-show-close" data-close-phrase aria-label="Cerrar">✕ Cerrar</button>
+    <div class="phrase-show-body" id="phrase-show-body"></div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

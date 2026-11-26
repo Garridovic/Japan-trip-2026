@@ -18,11 +18,15 @@ js/modules/
   filters.js          restaurants and alternative places sections with their filters
   map.js              Leaflet map, marker filters, legend, nearby places, GPS
   details.js          place detail sheet (resolved only inside the active city)
+  phrases.js          pure phrasebook logic (validation, search, filters, favourites)
+  phrases-ui.js       "Frases" section: search, chips, favourites, audio, full-screen show mode
+  speech.js           Web Speech API wrapper (ja-JP voice, normal and slow rate)
   version.js          visible version, read from data/version.json
 data/
   version.json        source of truth for the visible version
   journey.json        trip manifest: ordered cities, enabled flag, dates, inter-city connections
   global/tips.json    content shared by every city
+  global/phrases.json phrasebook shared by every city (Spanish, Japanese, romaji, category, 2 examples; `source` is `pdf` or `added`)
   cities/<id>/        one folder per city with content (see below)
 scripts/prepare-images.js   per-city Wikimedia Commons image pipeline
 tests/                      node:test data/logic tests and Playwright browser tests

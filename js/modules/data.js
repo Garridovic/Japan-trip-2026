@@ -21,7 +21,8 @@ export async function loadJourney() {
 }
 
 export const loadGlobalContent = async () => ({
-  tips: await fetchJson('data/global/tips.json', { optional: true })
+  tips: await fetchJson('data/global/tips.json', { optional: true }),
+  phrases: await fetchJson('data/global/phrases.json', { optional: true })
 });
 
 const cityCache = new Map();

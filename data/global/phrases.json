@@ -1,0 +1,960 @@
+{
+  "kicker": "Japonés para el viaje",
+  "title": "Frases útiles",
+  "lead": "Pulsa el altavoz para oírlas o «Mostrar» para enseñarlas en pantalla grande.",
+  "categories": [
+    {
+      "id": "saludos",
+      "label": "Saludos"
+    },
+    {
+      "id": "cortesia",
+      "label": "Cortesía"
+    },
+    {
+      "id": "comprar",
+      "label": "Comprar"
+    },
+    {
+      "id": "preguntar",
+      "label": "Preguntar"
+    },
+    {
+      "id": "emergencias",
+      "label": "Emergencias"
+    },
+    {
+      "id": "comida",
+      "label": "Comida"
+    }
+  ],
+  "phrases": [
+    {
+      "id": "konichiwa",
+      "category": "saludos",
+      "source": "pdf",
+      "es": "Hola (de día)",
+      "ja": "こんにちは",
+      "romaji": "konichiwa",
+      "examples": [
+        {
+          "es": "Hola. Hace buen tiempo.",
+          "ja": "こんにちは。いい天気ですね。",
+          "romaji": "Konnichiwa. Ii tenki desu ne."
+        },
+        {
+          "es": "Hola. Somos una persona.",
+          "ja": "こんにちは。一人です。",
+          "romaji": "Konnichiwa. Hitori desu."
+        }
+      ]
+    },
+    {
+      "id": "ohayo",
+      "category": "saludos",
+      "source": "pdf",
+      "es": "Buenos días",
+      "ja": "おはよう",
+      "romaji": "ohayo",
+      "note": "Más formal: おはようございます (ohayou gozaimasu).",
+      "examples": [
+        {
+          "es": "Buenos días (formal).",
+          "ja": "おはようございます。",
+          "romaji": "Ohayou gozaimasu."
+        },
+        {
+          "es": "¡Buenos días! ¿Qué tal?",
+          "ja": "おはよう！元気？",
+          "romaji": "Ohayou! Genki?"
+        }
+      ]
+    },
+    {
+      "id": "konbanwa",
+      "category": "saludos",
+      "source": "pdf",
+      "es": "Hola (por la noche o al caer la tarde)",
+      "ja": "こんばんは",
+      "romaji": "konbanwa",
+      "note": "«Oyasumi» solo se dice a quien se va a la cama: no lo uses.",
+      "examples": [
+        {
+          "es": "Buenas noches. Somos dos.",
+          "ja": "こんばんは。二人です。",
+          "romaji": "Konbanwa. Futari desu."
+        },
+        {
+          "es": "Buenas noches. Tengo reserva.",
+          "ja": "こんばんは。予約しています。",
+          "romaji": "Konbanwa. Yoyaku shite imasu."
+        }
+      ]
+    },
+    {
+      "id": "genki",
+      "category": "saludos",
+      "source": "pdf",
+      "es": "¿Qué tal?",
+      "ja": "元気？",
+      "romaji": "genki?",
+      "examples": [
+        {
+          "es": "¿Estás bien?",
+          "ja": "元気ですか？",
+          "romaji": "Genki desu ka?"
+        },
+        {
+          "es": "Sí, estoy bien.",
+          "ja": "はい、元気です。",
+          "romaji": "Hai, genki desu."
+        }
+      ]
+    },
+    {
+      "id": "supein-hito-des",
+      "category": "saludos",
+      "source": "pdf",
+      "es": "Soy español/española",
+      "ja": "スペイン人です",
+      "romaji": "Supein hito des",
+      "examples": [
+        {
+          "es": "Vengo de España.",
+          "ja": "スペインから来ました。",
+          "romaji": "Supein kara kimashita."
+        },
+        {
+          "es": "Soy español. Encantado.",
+          "ja": "スペイン人です。よろしくお願いします。",
+          "romaji": "Supein-jin desu. Yoroshiku onegaishimasu."
+        }
+      ]
+    },
+    {
+      "id": "kiosketee",
+      "category": "saludos",
+      "source": "pdf",
+      "es": "Cuidaos (al despedirse)",
+      "ja": "気をつけて",
+      "romaji": "kiosketee",
+      "note": "Solo lo dice quien se queda a quien se va: no se responde igual, basta con dar las gracias.",
+      "examples": [
+        {
+          "es": "Cuídate.",
+          "ja": "気をつけて。",
+          "romaji": "Ki o tsukete."
+        },
+        {
+          "es": "Gracias (como respuesta).",
+          "ja": "ありがとうございます。",
+          "romaji": "Arigatou gozaimasu."
+        }
+      ]
+    },
+    {
+      "id": "sayounara",
+      "category": "saludos",
+      "source": "added",
+      "es": "Adiós",
+      "ja": "さようなら",
+      "romaji": "sayounara",
+      "examples": [
+        {
+          "es": "Adiós.",
+          "ja": "さようなら。",
+          "romaji": "Sayounara."
+        },
+        {
+          "es": "Hasta mañana.",
+          "ja": "また明日。",
+          "romaji": "Mata ashita."
+        }
+      ]
+    },
+    {
+      "id": "arigato",
+      "category": "cortesia",
+      "source": "pdf",
+      "es": "Gracias",
+      "ja": "ありがとう",
+      "romaji": "arigato",
+      "note": "En Osaka se dice «ookini».",
+      "examples": [
+        {
+          "es": "Muchas gracias (formal).",
+          "ja": "ありがとうございます。",
+          "romaji": "Arigatou gozaimasu."
+        },
+        {
+          "es": "Muchas gracias.",
+          "ja": "どうもありがとう。",
+          "romaji": "Doumo arigatou."
+        }
+      ]
+    },
+    {
+      "id": "ookini",
+      "category": "cortesia",
+      "source": "pdf",
+      "es": "Gracias (solo en Osaka)",
+      "ja": "おおきに",
+      "romaji": "ookini",
+      "note": "Dialecto de Osaka: cae genial.",
+      "examples": [
+        {
+          "es": "¡Gracias! (Osaka)",
+          "ja": "おおきに！",
+          "romaji": "Ookini!"
+        },
+        {
+          "es": "Gracias, estaba rico.",
+          "ja": "おおきに、おいしかったです。",
+          "romaji": "Ookini, oishikatta desu."
+        }
+      ]
+    },
+    {
+      "id": "onegaishimas",
+      "category": "cortesia",
+      "source": "pdf",
+      "es": "Por favor",
+      "ja": "お願いします",
+      "romaji": "onegaishimas",
+      "examples": [
+        {
+          "es": "Esto, por favor.",
+          "ja": "これ、お願いします。",
+          "romaji": "Kore, onegaishimasu."
+        },
+        {
+          "es": "Agua, por favor.",
+          "ja": "水をお願いします。",
+          "romaji": "Mizu o onegaishimasu."
+        }
+      ]
+    },
+    {
+      "id": "gomen-nasai",
+      "category": "cortesia",
+      "source": "pdf",
+      "es": "Perdón (formal)",
+      "ja": "ごめんなさい",
+      "romaji": "gomen nasai",
+      "examples": [
+        {
+          "es": "Lo siento.",
+          "ja": "ごめんなさい。",
+          "romaji": "Gomen nasai."
+        },
+        {
+          "es": "Perdón por llegar tarde.",
+          "ja": "遅れてごめんなさい。",
+          "romaji": "Okurete gomen nasai."
+        }
+      ]
+    },
+    {
+      "id": "gomen",
+      "category": "cortesia",
+      "source": "pdf",
+      "es": "Perdón (informal)",
+      "ja": "ごめん！",
+      "romaji": "gomen!",
+      "note": "También «gomen-gomen!».",
+      "examples": [
+        {
+          "es": "¡Perdón!",
+          "ja": "ごめん！",
+          "romaji": "Gomen!"
+        },
+        {
+          "es": "Perdón, perdón.",
+          "ja": "ごめんごめん。",
+          "romaji": "Gomen gomen."
+        }
+      ]
+    },
+    {
+      "id": "suimasen",
+      "category": "cortesia",
+      "source": "pdf",
+      "es": "Disculpa (para preguntar «¿se puede?» o llamar la atención)",
+      "ja": "すみません",
+      "romaji": "suimasen",
+      "examples": [
+        {
+          "es": "Disculpe, ¿puedo preguntar?",
+          "ja": "すみません、ちょっといいですか。",
+          "romaji": "Sumimasen, chotto ii desu ka."
+        },
+        {
+          "es": "Disculpe, voy a pasar.",
+          "ja": "すみません、通ります。",
+          "romaji": "Sumimasen, toorimasu."
+        }
+      ]
+    },
+    {
+      "id": "hai",
+      "category": "cortesia",
+      "source": "added",
+      "es": "Sí",
+      "ja": "はい",
+      "romaji": "hai",
+      "examples": [
+        {
+          "es": "Sí, por favor.",
+          "ja": "はい、お願いします。",
+          "romaji": "Hai, onegaishimasu."
+        },
+        {
+          "es": "Sí, está bien.",
+          "ja": "はい、大丈夫です。",
+          "romaji": "Hai, daijoubu desu."
+        }
+      ]
+    },
+    {
+      "id": "iie",
+      "category": "cortesia",
+      "source": "added",
+      "es": "No",
+      "ja": "いいえ",
+      "romaji": "iie",
+      "examples": [
+        {
+          "es": "No, gracias (no hace falta).",
+          "ja": "いいえ、大丈夫です。",
+          "romaji": "Iie, daijoubu desu."
+        },
+        {
+          "es": "No, gracias.",
+          "ja": "いいえ、結構です。",
+          "romaji": "Iie, kekkou desu."
+        }
+      ]
+    },
+    {
+      "id": "tetsudate",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "¿Podrías ayudarme, por favor?",
+      "ja": "手伝っていただけますか？",
+      "romaji": "Tetsudate itadakemas ka?",
+      "examples": [
+        {
+          "es": "Disculpe, ¿me ayuda?",
+          "ja": "すみません、手伝ってもらえますか。",
+          "romaji": "Sumimasen, tetsudatte moraemasu ka."
+        },
+        {
+          "es": "¿Podría indicarme el camino?",
+          "ja": "道を教えていただけますか。",
+          "romaji": "Michi o oshiete itadakemasu ka."
+        }
+      ]
+    },
+    {
+      "id": "toire-doko",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "¿Dónde está el baño?",
+      "ja": "トイレはどこですか？",
+      "romaji": "toire doko deska?",
+      "examples": [
+        {
+          "es": "Disculpe, ¿dónde está el baño?",
+          "ja": "すみません、トイレはどこですか。",
+          "romaji": "Sumimasen, toire wa doko desu ka."
+        },
+        {
+          "es": "¿Dónde está la estación?",
+          "ja": "駅はどこですか。",
+          "romaji": "Eki wa doko desu ka."
+        }
+      ]
+    },
+    {
+      "id": "eigo",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "¿Hablas inglés?",
+      "ja": "英語を話しますか？",
+      "romaji": "eigo o hanashimaska?",
+      "examples": [
+        {
+          "es": "¿Puede hablar inglés?",
+          "ja": "英語は話せますか。",
+          "romaji": "Eigo wa hanasemasu ka."
+        },
+        {
+          "es": "¿Hay menú en inglés?",
+          "ja": "英語のメニューはありますか。",
+          "romaji": "Eigo no menyuu wa arimasu ka."
+        }
+      ]
+    },
+    {
+      "id": "supeingo",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "¿Hablas español?",
+      "ja": "スペイン語を話しますか？",
+      "romaji": "supeingo o hanashimaska?",
+      "examples": [
+        {
+          "es": "¿Puede hablar español?",
+          "ja": "スペイン語は話せますか。",
+          "romaji": "Supeingo wa hanasemasu ka."
+        },
+        {
+          "es": "¿Hay menú en español?",
+          "ja": "スペイン語のメニューはありますか。",
+          "romaji": "Supeingo no menyuu wa arimasu ka."
+        }
+      ]
+    },
+    {
+      "id": "nihongo",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "No hablo japonés",
+      "ja": "日本語を話しません",
+      "romaji": "nihongo o hanashimasen",
+      "examples": [
+        {
+          "es": "Hablo solo un poco de japonés.",
+          "ja": "日本語は少しだけ話せます。",
+          "romaji": "Nihongo wa sukoshi dake hanasemasu."
+        },
+        {
+          "es": "Despacio, por favor.",
+          "ja": "ゆっくりお願いします。",
+          "romaji": "Yukkuri onegaishimasu."
+        }
+      ]
+    },
+    {
+      "id": "kore",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "Esto",
+      "ja": "これ",
+      "romaji": "kore",
+      "examples": [
+        {
+          "es": "Esto, por favor.",
+          "ja": "これをください。",
+          "romaji": "Kore o kudasai."
+        },
+        {
+          "es": "¿Qué es esto?",
+          "ja": "これは何ですか。",
+          "romaji": "Kore wa nan desu ka."
+        }
+      ]
+    },
+    {
+      "id": "sore",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "Eso",
+      "ja": "それ",
+      "romaji": "sore",
+      "examples": [
+        {
+          "es": "Eso, por favor.",
+          "ja": "それをください。",
+          "romaji": "Sore o kudasai."
+        },
+        {
+          "es": "¿Qué es eso?",
+          "ja": "それは何ですか。",
+          "romaji": "Sore wa nan desu ka."
+        }
+      ]
+    },
+    {
+      "id": "kono",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "Aquí",
+      "ja": "この",
+      "romaji": "kono",
+      "examples": [
+        {
+          "es": "¿Puedo sentarme en este asiento?",
+          "ja": "この席、いいですか。",
+          "romaji": "Kono seki, ii desu ka."
+        },
+        {
+          "es": "¿Es por este camino?",
+          "ja": "この道ですか。",
+          "romaji": "Kono michi desu ka."
+        }
+      ]
+    },
+    {
+      "id": "asoko",
+      "category": "preguntar",
+      "source": "pdf",
+      "es": "Allí",
+      "ja": "あそこ",
+      "romaji": "asoko",
+      "examples": [
+        {
+          "es": "Es allí.",
+          "ja": "あそこです。",
+          "romaji": "Asoko desu."
+        },
+        {
+          "es": "El baño está allí.",
+          "ja": "トイレはあそこです。",
+          "romaji": "Toire wa asoko desu."
+        }
+      ]
+    },
+    {
+      "id": "wakarimasen",
+      "category": "preguntar",
+      "source": "added",
+      "es": "No entiendo",
+      "ja": "分かりません",
+      "romaji": "wakarimasen",
+      "examples": [
+        {
+          "es": "Disculpe, no entiendo.",
+          "ja": "すみません、分かりません。",
+          "romaji": "Sumimasen, wakarimasen."
+        },
+        {
+          "es": "Otra vez, por favor.",
+          "ja": "もう一度お願いします。",
+          "romaji": "Mou ichido onegaishimasu."
+        }
+      ]
+    },
+    {
+      "id": "yukkuri",
+      "category": "preguntar",
+      "source": "added",
+      "es": "Más despacio, por favor",
+      "ja": "ゆっくりお願いします",
+      "romaji": "yukkuri onegaishimasu",
+      "examples": [
+        {
+          "es": "Hable despacio, por favor.",
+          "ja": "ゆっくり話してください。",
+          "romaji": "Yukkuri hanashite kudasai."
+        },
+        {
+          "es": "Despacio está bien.",
+          "ja": "ゆっくりで大丈夫です。",
+          "romaji": "Yukkuri de daijoubu desu."
+        }
+      ]
+    },
+    {
+      "id": "ikura",
+      "category": "comprar",
+      "source": "pdf",
+      "es": "¿Cuándo cuesta?",
+      "ja": "いくらですか？",
+      "romaji": "ikura deska?",
+      "examples": [
+        {
+          "es": "¿Cuánto es en total?",
+          "ja": "全部でいくらですか。",
+          "romaji": "Zenbu de ikura desu ka."
+        },
+        {
+          "es": "¿Incluye impuestos?",
+          "ja": "税込みですか。",
+          "romaji": "Zeikomi desu ka."
+        }
+      ]
+    },
+    {
+      "id": "kore-ikura",
+      "category": "comprar",
+      "source": "pdf",
+      "es": "¿Cuánto cuesta esto?",
+      "ja": "これはいくらですか？",
+      "romaji": "kore o ikuradeska?",
+      "examples": [
+        {
+          "es": "Esto, ¿cuánto cuesta?",
+          "ja": "これ、いくらですか。",
+          "romaji": "Kore, ikura desu ka."
+        },
+        {
+          "es": "¿Cuánto cuesta ese bolso?",
+          "ja": "そのバッグはいくらですか。",
+          "romaji": "Sono baggu wa ikura desu ka."
+        }
+      ]
+    },
+    {
+      "id": "konbini",
+      "category": "comprar",
+      "source": "pdf",
+      "es": "Konbini: tienda que cierra tarde",
+      "ja": "コンビニ",
+      "romaji": "Konbini",
+      "examples": [
+        {
+          "es": "¿Dónde hay un konbini?",
+          "ja": "コンビニはどこですか。",
+          "romaji": "Konbini wa doko desu ka."
+        },
+        {
+          "es": "Compro agua en el konbini.",
+          "ja": "コンビニで水を買います。",
+          "romaji": "Konbini de mizu o kaimasu."
+        }
+      ]
+    },
+    {
+      "id": "depaato",
+      "category": "comprar",
+      "source": "pdf",
+      "es": "Depaato: grandes almacenes y centros comerciales",
+      "ja": "デパート",
+      "romaji": "Depaato",
+      "examples": [
+        {
+          "es": "¿Hasta qué hora abre el depaato?",
+          "ja": "デパートは何時までですか。",
+          "romaji": "Depaato wa nanji made desu ka."
+        },
+        {
+          "es": "El depaato está allí.",
+          "ja": "デパートはあそこです。",
+          "romaji": "Depaato wa asoko desu."
+        }
+      ]
+    },
+    {
+      "id": "donki",
+      "category": "comprar",
+      "source": "pdf",
+      "es": "Donki: tienda con mascota de pingüino donde hay de todo",
+      "ja": "ドン・キホーテ",
+      "romaji": "Donki",
+      "note": "Ideal para regalos o necesidades exprés.",
+      "examples": [
+        {
+          "es": "¿Dónde hay un Donki?",
+          "ja": "ドンキはどこですか。",
+          "romaji": "Donki wa doko desu ka."
+        },
+        {
+          "es": "Compro recuerdos en Donki.",
+          "ja": "ドンキでお土産を買います。",
+          "romaji": "Donki de omiyage o kaimasu."
+        }
+      ]
+    },
+    {
+      "id": "kaado",
+      "category": "comprar",
+      "source": "added",
+      "es": "¿Puedo pagar con tarjeta?",
+      "ja": "カードは使えますか？",
+      "romaji": "kaado wa tsukaemasu ka?",
+      "examples": [
+        {
+          "es": "¿Puedo pagar con tarjeta?",
+          "ja": "カードで払えますか。",
+          "romaji": "Kaado de haraemasu ka."
+        },
+        {
+          "es": "¿Solo efectivo?",
+          "ja": "現金だけですか。",
+          "romaji": "Genkin dake desu ka."
+        }
+      ]
+    },
+    {
+      "id": "menzei",
+      "category": "comprar",
+      "source": "added",
+      "es": "¿Se puede hacer tax free?",
+      "ja": "免税できますか？",
+      "romaji": "menzei dekimasu ka?",
+      "examples": [
+        {
+          "es": "Aquí tiene mi pasaporte.",
+          "ja": "パスポートです。",
+          "romaji": "Pasupooto desu."
+        },
+        {
+          "es": "Tax free, por favor.",
+          "ja": "免税でお願いします。",
+          "romaji": "Menzei de onegaishimasu."
+        }
+      ]
+    },
+    {
+      "id": "tasukete",
+      "category": "emergencias",
+      "source": "added",
+      "es": "¡Ayuda!",
+      "ja": "助けて！",
+      "romaji": "tasukete!",
+      "examples": [
+        {
+          "es": "¡Ayúdeme, por favor!",
+          "ja": "助けてください！",
+          "romaji": "Tasukete kudasai!"
+        },
+        {
+          "es": "¡Que alguien me ayude!",
+          "ja": "誰か助けて！",
+          "romaji": "Dareka tasukete!"
+        }
+      ]
+    },
+    {
+      "id": "keisatsu",
+      "category": "emergencias",
+      "source": "added",
+      "es": "Llame a la policía",
+      "ja": "警察を呼んでください",
+      "romaji": "keisatsu o yonde kudasai",
+      "examples": [
+        {
+          "es": "Llame a la policía, por favor.",
+          "ja": "警察に電話してください。",
+          "romaji": "Keisatsu ni denwa shite kudasai."
+        },
+        {
+          "es": "Me han robado la cartera.",
+          "ja": "財布を盗まれました。",
+          "romaji": "Saifu o nusumaremashita."
+        }
+      ]
+    },
+    {
+      "id": "kyuukyuusha",
+      "category": "emergencias",
+      "source": "added",
+      "es": "Llame a una ambulancia",
+      "ja": "救急車を呼んでください",
+      "romaji": "kyuukyuusha o yonde kudasai",
+      "examples": [
+        {
+          "es": "Una ambulancia, por favor.",
+          "ja": "救急車をお願いします。",
+          "romaji": "Kyuukyuusha o onegaishimasu."
+        },
+        {
+          "es": "Mi amigo se ha desmayado.",
+          "ja": "友達が倒れました。",
+          "romaji": "Tomodachi ga taoremashita."
+        }
+      ]
+    },
+    {
+      "id": "byouin",
+      "category": "emergencias",
+      "source": "added",
+      "es": "¿Dónde está el hospital?",
+      "ja": "病院はどこですか？",
+      "romaji": "byouin wa doko desu ka?",
+      "examples": [
+        {
+          "es": "¿Hay un hospital cerca?",
+          "ja": "近くに病院はありますか。",
+          "romaji": "Chikaku ni byouin wa arimasu ka."
+        },
+        {
+          "es": "¿Dónde hay una farmacia?",
+          "ja": "薬局はどこですか。",
+          "romaji": "Yakkyoku wa doko desu ka."
+        }
+      ]
+    },
+    {
+      "id": "guai-warui",
+      "category": "emergencias",
+      "source": "added",
+      "es": "Me encuentro mal",
+      "ja": "具合が悪いです",
+      "romaji": "guai ga warui desu",
+      "examples": [
+        {
+          "es": "Me duele la cabeza.",
+          "ja": "頭が痛いです。",
+          "romaji": "Atama ga itai desu."
+        },
+        {
+          "es": "Me duele el estómago.",
+          "ja": "お腹が痛いです。",
+          "romaji": "Onaka ga itai desu."
+        }
+      ]
+    },
+    {
+      "id": "itadakimasu",
+      "category": "comida",
+      "source": "added",
+      "es": "Antes de comer («buen provecho»)",
+      "ja": "いただきます",
+      "romaji": "itadakimasu",
+      "examples": [
+        {
+          "es": "¡Buen provecho!",
+          "ja": "いただきます！",
+          "romaji": "Itadakimasu!"
+        },
+        {
+          "es": "Comemos todos juntos.",
+          "ja": "みんなでいただきます。",
+          "romaji": "Minna de itadakimasu."
+        }
+      ]
+    },
+    {
+      "id": "gochisousama",
+      "category": "comida",
+      "source": "added",
+      "es": "Gracias por la comida (al terminar)",
+      "ja": "ごちそうさまでした",
+      "romaji": "gochisousama deshita",
+      "examples": [
+        {
+          "es": "Gracias por la comida.",
+          "ja": "ごちそうさまでした。",
+          "romaji": "Gochisousama deshita."
+        },
+        {
+          "es": "Estaba muy rico.",
+          "ja": "とてもおいしかったです。",
+          "romaji": "Totemo oishikatta desu."
+        }
+      ]
+    },
+    {
+      "id": "oishii",
+      "category": "comida",
+      "source": "added",
+      "es": "¡Qué rico!",
+      "ja": "おいしい！",
+      "romaji": "oishii!",
+      "examples": [
+        {
+          "es": "¡Esto está rico!",
+          "ja": "これ、おいしい！",
+          "romaji": "Kore, oishii!"
+        },
+        {
+          "es": "Está rico, ¿verdad?",
+          "ja": "おいしいですね。",
+          "romaji": "Oishii desu ne."
+        }
+      ]
+    },
+    {
+      "id": "menyuu",
+      "category": "comida",
+      "source": "added",
+      "es": "La carta, por favor",
+      "ja": "メニューをください",
+      "romaji": "menyuu o kudasai",
+      "examples": [
+        {
+          "es": "El menú, por favor.",
+          "ja": "メニューをお願いします。",
+          "romaji": "Menyuu o onegaishimasu."
+        },
+        {
+          "es": "¿Qué recomienda?",
+          "ja": "おすすめは何ですか。",
+          "romaji": "Osusume wa nan desu ka."
+        }
+      ]
+    },
+    {
+      "id": "mizu",
+      "category": "comida",
+      "source": "added",
+      "es": "Agua, por favor",
+      "ja": "お水をください",
+      "romaji": "omizu o kudasai",
+      "examples": [
+        {
+          "es": "Agua, por favor.",
+          "ja": "お水をお願いします。",
+          "romaji": "Omizu o onegaishimasu."
+        },
+        {
+          "es": "Té, por favor.",
+          "ja": "お茶をください。",
+          "romaji": "Ocha o kudasai."
+        }
+      ]
+    },
+    {
+      "id": "okaikei",
+      "category": "comida",
+      "source": "added",
+      "es": "La cuenta, por favor",
+      "ja": "お会計お願いします",
+      "romaji": "okaikei onegaishimasu",
+      "examples": [
+        {
+          "es": "Cuentas separadas, por favor.",
+          "ja": "別々でお願いします。",
+          "romaji": "Betsubetsu de onegaishimasu."
+        },
+        {
+          "es": "Pago con tarjeta.",
+          "ja": "カードで払います。",
+          "romaji": "Kaado de haraimasu."
+        }
+      ]
+    },
+    {
+      "id": "arerugii",
+      "category": "comida",
+      "source": "added",
+      "es": "Tengo alergia",
+      "ja": "アレルギーがあります",
+      "romaji": "arerugii ga arimasu",
+      "examples": [
+        {
+          "es": "Soy alérgico a los frutos secos.",
+          "ja": "ナッツアレルギーです。",
+          "romaji": "Nattsu arerugii desu."
+        },
+        {
+          "es": "¿Lleva huevo?",
+          "ja": "卵は入っていますか。",
+          "romaji": "Tamago wa haitte imasu ka."
+        }
+      ]
+    },
+    {
+      "id": "bejitarian",
+      "category": "comida",
+      "source": "added",
+      "es": "Soy vegetariano/a",
+      "ja": "ベジタリアンです",
+      "romaji": "bejitarian desu",
+      "examples": [
+        {
+          "es": "No como carne.",
+          "ja": "肉は食べません。",
+          "romaji": "Niku wa tabemasen."
+        },
+        {
+          "es": "Tampoco como pescado.",
+          "ja": "魚も食べません。",
+          "romaji": "Sakana mo tabemasen."
+        }
+      ]
+    }
+  ]
+}

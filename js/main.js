@@ -9,6 +9,7 @@ import { renderCity } from './modules/render.js';
 import { initDetails } from './modules/details.js';
 import { initMap } from './modules/map.js';
 import { initScrollSpy } from './modules/scrollspy.js';
+import { initPhrases } from './modules/phrases-ui.js';
 
 const status = byId('app-status');
 const showStatus = (message, isError = false) => {
@@ -22,6 +23,7 @@ async function start() {
   const cities = enabledCities(journey);
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
+  initPhrases(global.phrases); // global content: rendered once, shared by every city
   const scrollSpy = initScrollSpy();
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
 
