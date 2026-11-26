@@ -94,9 +94,12 @@ jobs:
         run: node --test
 
   browser:
-    name: Browser tests
-    # Waits for the unit tests (about 15 s) so a unit failure stops the pipeline before the 4-minute browser run.
-    needs: [prepare, unit]
+    name: Browser tests (part ${{ matrix.shard }} of 3)
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -115,7 +118,7 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('node_modules/@playwright/test/package.json') }}
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+      - run: npx playwright test --shard=${{ matrix.shard }}/3
 
   deploy:
     name: Deploy to GitHub Pages
