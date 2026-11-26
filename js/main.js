@@ -8,6 +8,7 @@ import { initTabs } from './modules/tabs.js';
 import { renderCity } from './modules/render.js';
 import { initDetails } from './modules/details.js';
 import { initMap } from './modules/map.js';
+import { initScrollSpy } from './modules/scrollspy.js';
 
 const status = byId('app-status');
 const showStatus = (message, isError = false) => {
@@ -21,6 +22,7 @@ async function start() {
   const cities = enabledCities(journey);
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
+  const scrollSpy = initScrollSpy();
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
 
   let activeCityId = null;
@@ -39,6 +41,7 @@ async function start() {
       details.setCity({ ...index, events: bundle.events });
       map.setCity(index, bundle.city.map);
       activeCityId = cityId;
+      scrollSpy.refresh();
       showStatus('');
     } catch (error) {
       if (token !== requestToken) return;

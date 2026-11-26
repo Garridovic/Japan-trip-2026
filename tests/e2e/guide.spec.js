@@ -146,3 +146,18 @@ test('a place photo that fails to load shows the visual fallback', async ({ brow
   await expect(page.locator('#poi-photo')).toHaveClass(/is-fallback/);
   await context.close();
 });
+
+test('the section navigation highlights the section being read', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
+  const current = page.locator('.nav-inner a[aria-current="location"]');
+  await expect(current).toHaveText('Vista rápida');
+  await page.locator('#mapa').scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollTo(0, document.getElementById('mapa').offsetTop - 60));
+  await expect(current).toHaveText('Mapa');
+  await page.evaluate(() => window.scrollTo(0, document.getElementById('detalle').offsetTop - 60));
+  await expect(current).toHaveText('Día a día');
+  await expect(current).toHaveCount(1);
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await expect(current).toHaveText('Fuentes');
+});
