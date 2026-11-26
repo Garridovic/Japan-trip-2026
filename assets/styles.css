@@ -284,3 +284,24 @@
  .poi-detail-content { padding-left:16px; padding-right:16px; }
  .poi-gallery { margin-left:-16px; margin-right:-16px; }
 }
+
+
+/* Map popup detail action */
+.popup-detail-button {
+  display: block;
+  width: 100%;
+  margin: 0 0 8px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #315f79;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.popup-detail-button:hover,
+.popup-detail-button:focus-visible {
+  background: #24485c;
+}

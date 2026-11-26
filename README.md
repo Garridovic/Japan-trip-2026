@@ -1,52 +1,52 @@
-# Kyoto Guide · GitHub Pages
+# Kyoto Guide — Japan Trip 2026
 
-Guía estática para el viaje a Kioto (11–15 diciembre 2026). No requiere servidor, build ni dependencias locales. GitHub Pages sirve directamente los archivos.
+A static, mobile-first Kyoto travel guide for December 11–15, 2026.
 
-## Estructura
+## Architecture
 
-- `index.html`: interfaz y estructura de la guía.
-- `assets/styles.css`: estilos.
-- `data/places.json`: hotel, visitas, eventos y lugares alternativos del mapa.
-- `data/restaurants.json`: los 20 establecimientos gastronómicos y sus marcadores.
-- `data/itinerary.json`: resumen estructurado de las jornadas (referencia editable; el texto editorial detallado del itinerario sigue en `index.html`).
-- `data/details.json`: descripciones ampliadas, galerías, enlaces de llegada y audioguías cuando hay recursos identificados.
-- `data/events.json`: recorrido y planificación del Yamashina Gishi Matsuri, separando horarios oficiales de estimaciones.
-- `data/version.json`: versión visible en la esquina de la web.
-- `kyoto-points.kml`: exportación independiente para otras aplicaciones cartográficas.
+- `index.html`: page structure and Spanish-language editorial content.
+- `assets/styles.css`: application styles.
+- `js/main.js`: JavaScript application entry point.
+- `js/modules/filters.js`: restaurant and alternative-place filters.
+- `js/modules/map.js`: map, markers, place details, nearby places and geolocation.
+- `js/modules/version.js`: deployed-version indicator.
+- `data/*.json`: itinerary, places, restaurants, details, events and version metadata.
+- `tests/`: Node.js data tests and Playwright browser tests.
+- `.github/workflows/tests.yml`: automated test workflow.
 
-## Cambios habituales desde el iPhone
+Application code, identifiers, comments and technical diagnostics should be written in English. Visitor-facing content remains in Spanish.
 
-1. Abre el repositorio en Safari: https://github.com/Garridovic/Japan-trip-2026
-2. Entra en `data/places.json` o `data/restaurants.json`.
-3. Pulsa el lápiz **Edit**.
-4. Modifica el JSON sin borrar comas, llaves ni corchetes. Mantén los campos `id` únicos.
-5. Pulsa **Commit changes**. GitHub Pages publicará el cambio automáticamente.
-6. Recarga la guía. Si ves datos antiguos, prueba una recarga completa o añade `?refresh=1` a la URL.
+## Run locally
 
-### Añadir un restaurante
+The application uses native JavaScript ES modules and must be served over HTTP; do not open `index.html` using `file://`.
 
-Copia un objeto existente de `data/restaurants.json`, pégalo dentro del array y cambia al menos `id`, `name`, `lat`, `lng`, `day`, `foodCategory`, `desc` y `query`. Usa `day` igual a `11`, `12`, `13` o `14`. Las coordenadas son latitud (`lat`) y longitud (`lng`).
+```sh
+python3 -m http.server 8000
+```
 
-### Añadir un punto de interés
+Open `http://localhost:8000`.
 
-Añade un objeto en `data/places.json`. Para visitas usa `type: "itinerary"`; para eventos `type: "event"`; para alternativas `type: "alternative"` y un `altCategory` como `templos`, `barrios`, `naturaleza` o `cultura`. El hotel usa `type: "hotel"`.
+## Tests
 
-### Cambiar la versión
+Node.js 22 or later is recommended.
 
-Edita `data/version.json`, por ejemplo `{"version":"V7.1","updated":"2026-12-12"}`. El indicador inferior derecho se actualiza leyendo ese archivo, sin modificar el HTML.
+```sh
+npm install
+npm test
+npx playwright install chromium
+npm run test:e2e
+```
 
-## Cambios funcionales
+The Node.js test suite validates data integrity, IDs, coordinates, detail references and event metadata. Playwright checks map initialization, marker rendering, place-detail interaction and restaurant filtering.
 
-Para cambiar el comportamiento del mapa, GPS, filtros o diseño, edita `index.html` y/o `assets/styles.css`. Para estos cambios puedes usar el editor web de GitHub o https://github.dev/Garridovic/Japan-trip-2026.
+## Deployment
 
-## Publicación
+The site remains static; no build step is required. GitHub Pages must be configured to use **GitHub Actions** as its deployment source (Repository Settings → Pages → Build and deployment → Source).
 
-GitHub → Settings → Pages → **Deploy from a branch** → `main` → `/ (root)`. Cada commit en `main` se publica automáticamente.
+The `Test and deploy` workflow runs the Node.js and Playwright suites on pull requests and pushes to `main`. The deployment job runs only for pushes to `main`, and it has an explicit dependency on both test jobs (`needs: [unit, browser]`). If either suite fails, GitHub Actions skips deployment and the currently published site remains unchanged. Pull requests run tests but never publish the site.
 
-## Validación local opcional
+This protects publication even when changes are pushed directly to `main`: they may enter the branch, but they will not be deployed unless both test jobs pass. For an additional review gate, use pull requests as the normal integration path.
 
-No abras `index.html` mediante `file://`, porque el navegador bloquea `fetch()` de JSON local. Usa GitHub Pages o un servidor local estático.
+## Data maintenance
 
-## Fichas de detalle (V8)
-
-Los marcadores del mapa y la lista de lugares cercanos abren fichas con galería, descripción y enlaces de Google Maps (búsqueda, transporte público y a pie). Los enlaces de audioguía se muestran como catálogos externos cuando no hay una pista individual verificada en español. El evento Yamashina Gishi Matsuri incluye salida, paradas y final; el horario global 10:00–15:00 procede de Kyoto City, mientras que los horarios intermedios se identifican como aproximados. No se dibuja una ruta peatonal exacta no verificada.
+Keep place IDs stable across `data/places.json` and `data/details.json`. Preserve the Spanish editorial content and distinguish official event information from estimates and recommendations.
