@@ -203,7 +203,9 @@ body[data-view="mapa"] { overflow: hidden; }
 .map-sheet .map-legend, .map-sheet .collapsible-filters { box-shadow: none; }
 .map-sheet .map-legend { border: 0; padding: 0; background: transparent; }
 .map-sheet .map-legend > summary { display: none; }
-.map-sheet .legend { grid-template-columns: 1fr; margin-top: 0; font-size: .86rem; gap: 12px; color: var(--ink); }
+.map-sheet .legend { grid-template-columns: 1fr; margin-top: 0; font-size: .86rem; gap: 9px; color: var(--ink); }
+.map-sheet[data-sheet="legend"] { max-height: 84%; }
+.legend i.hotel-shape { border: 2px solid #fff; box-shadow: 0 0 0 1px #aab4b8; }
 .legend i.visited-shape { border: 2px solid #fff; box-shadow: 0 0 0 1px #aab4b8; background: #64748b; opacity: .35; }
 .legend i.route-shape { background: var(--accent); border: 2px solid #fff; box-shadow: 0 0 0 1px #aab4b8; }
 .map-sheet .map-offline { border-top: 0; padding: 0; }

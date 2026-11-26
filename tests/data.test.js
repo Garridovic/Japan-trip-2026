@@ -239,3 +239,11 @@ test('all generated place photos use local responsive assets with credits', asyn
   }
   assert.equal(report.placesChecked, expectedPlaces);
 });
+
+test('journey optionalData lists exactly the optional files each city has, so no 404s are requested', async () => {
+  for (const city of cities) {
+    const present = [];
+    for (const name of [...OPTIONAL_CITY_DATASETS, 'tips']) if (await exists(`data/cities/${city.id}/${name}.json`)) present.push(name);
+    assert.deepEqual([...(city.optionalData ?? [])].sort(), present.sort(), `optionalData of ${city.id}`);
+  }
+});
