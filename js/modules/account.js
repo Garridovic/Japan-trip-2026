@@ -58,7 +58,7 @@ const personIcon = () => {
   return svg;
 };
 
-export async function initAccount({ config, userData, win = window, storage = null } = {}) {
+export async function initAccount({ config, userData, win = window, storage = null, proximity = null } = {}) {
   const button = byId('account-button');
   const popover = byId('account-popover');
   if (!isConfigured(config) || !button || !popover) return null;
@@ -163,6 +163,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
           signInButton(),
           !online() ? h('p', {}, 'Para entrar hace falta internet. La guía sigue funcionando sin él.') : null,
           !auth ? h('p', {}, 'No se ha podido cargar el inicio de sesión ahora mismo.') : null,
+          proximity?.settingNode(),
           h('h3', { class: 'account-subtitle' }, 'Datos de este dispositivo'),
           ...resetButtons(),
           h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar'))
@@ -189,6 +190,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
       privacy(),
       h('div', { class: 'account-actions' },
         status.state === 'signed-out' ? signInButton() : h('button', { type: 'button', class: 'filter', onclick: () => sync.reconcile(), disabled: busy || !online() }, 'Sincronizar ahora'),
+        proximity?.settingNode(),
         h('h3', { class: 'account-subtitle' }, 'Restablecer mis datos'),
         ...resetButtons(),
         h('button', { type: 'button', class: 'filter is-danger', onclick: () => { view = 'logout'; render(); } }, 'Cerrar sesión'),
@@ -214,6 +216,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
   }
 
   function render() { renderButton(); renderGreeting(); renderPopover(); renderInvite(); }
+  proximity?.onChange(() => { if (!popover.hidden && view === 'main') renderPopover(); });
 
   function setOpen(open) {
     if (open) { view = 'main'; resetItem = null; renderPopover(); }
