@@ -89,15 +89,18 @@
       "query": "soba noodle bowl tempura soba",
       "exclude": [
         "File:Soba-Noodles-Deliveryman-Tokyo-1935.png"
-      ]
+      ],
+      "skip": true
     },
     {
       "id": "zaru-soba",
-      "query": "zaru soba"
+      "query": "zaru soba",
+      "skip": true
     },
     {
       "id": "yakisoba",
-      "query": "yakisoba"
+      "query": "yakisoba",
+      "skip": true
     },
     {
       "id": "somen",
@@ -141,7 +144,8 @@
     },
     {
       "id": "yakiniku",
-      "query": "yakiniku Japanese barbecue"
+      "query": "yakiniku Japanese barbecue",
+      "skip": true
     },
     {
       "id": "teppanyaki",

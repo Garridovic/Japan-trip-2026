@@ -154,28 +154,6 @@
     "height": 1864
   },
   {
-    "dishId": "zaru-soba",
-    "dishName": "Soba frío",
-    "fileTitle": "File:Dried soba noodles by FotoosVanRobin.jpg",
-    "author": "FotoosVanRobin",
-    "license": "CC BY-SA 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Dried_soba_noodles_by_FotoosVanRobin.jpg",
-    "width": 1200,
-    "height": 725
-  },
-  {
-    "dishId": "yakisoba",
-    "dishName": "Fideos salteados",
-    "fileTitle": "File:Pork yakisoba and tofu yakisoba, Korpan, Brighton.jpg",
-    "author": "Andy Li",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Pork_yakisoba_and_tofu_yakisoba,_Korpan,_Brighton.jpg",
-    "width": 3024,
-    "height": 4032
-  },
-  {
     "dishId": "tonkatsu",
     "dishName": "Cerdo empanado",
     "fileTitle": "File:Pork-cutlet.jpg",
@@ -251,17 +229,6 @@
     "sourcePage": "https://commons.wikimedia.org/wiki/File:Cooking_yakitori.jpg",
     "width": 1112,
     "height": 1590
-  },
-  {
-    "dishId": "yakiniku",
-    "dishName": "Carne a la parrilla",
-    "fileTitle": "File:Two Butabara pork Yakiniku 焼き肉-焼肉 Samgyeopsalgui14.jpg",
-    "author": "Autor no identificado",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Two_Butabara_pork_Yakiniku_%E7%84%BC%E3%81%8D%E8%82%89-%E7%84%BC%E8%82%89_Samgyeopsalgui14.jpg",
-    "width": 2749,
-    "height": 1336
   },
   {
     "dishId": "okonomiyaki",
@@ -614,17 +581,6 @@
     "sourcePage": "https://commons.wikimedia.org/wiki/File:Udon_(Kitsune_udon)_2.jpg",
     "width": 2960,
     "height": 1975
-  },
-  {
-    "dishId": "soba",
-    "dishName": "Soba",
-    "fileTitle": "File:Iwamizawa Komoro-buckwheat-noodles-eating-shop vegetables-Tempra-bowl.JPG",
-    "author": "SelEle-MS",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Iwamizawa_Komoro-buckwheat-noodles-eating-shop_vegetables-Tempra-bowl.JPG",
-    "width": 3264,
-    "height": 2448
   },
   {
     "dishId": "kushikatsu",

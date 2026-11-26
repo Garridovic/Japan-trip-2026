@@ -413,13 +413,7 @@
       "allergens": [
         "gluten"
       ],
-      "photos": [
-        {
-          "src": "assets/images/dishes/soba-960.webp",
-          "srcSet": "assets/images/dishes/soba-480.webp 480w, assets/images/dishes/soba-960.webp 960w",
-          "alt": "Soba (そば) — 小もろそば店の野菜丼"
-        }
-      ]
+      "photos": []
     },
     {
       "id": "zaru-soba",
@@ -433,13 +427,7 @@
         "gluten",
         "soja"
       ],
-      "photos": [
-        {
-          "src": "assets/images/dishes/zaru-soba-960.webp",
-          "srcSet": "assets/images/dishes/zaru-soba-480.webp 480w, assets/images/dishes/zaru-soba-960.webp 960w",
-          "alt": "Soba frío (ざるそば) — 蕎麦 乾麺 （ 熊本県 下益城郡 城南町 坂野94、 五木食品 [1] の乾麺）"
-        }
-      ]
+      "photos": []
     },
     {
       "id": "yakisoba",
@@ -452,13 +440,7 @@
       "allergens": [
         "gluten"
       ],
-      "photos": [
-        {
-          "src": "assets/images/dishes/yakisoba-960.webp",
-          "srcSet": "assets/images/dishes/yakisoba-480.webp 480w, assets/images/dishes/yakisoba-960.webp 960w",
-          "alt": "Fideos salteados (焼きそば) — pork yakisoba (front) and tofu yakisoba (back), Korpan, Brighton"
-        }
-      ]
+      "photos": []
     },
     {
       "id": "somen",
@@ -644,13 +626,7 @@
       "allergens": [
         "soja"
       ],
-      "photos": [
-        {
-          "src": "assets/images/dishes/yakiniku-960.webp",
-          "srcSet": "assets/images/dishes/yakiniku-480.webp 480w, assets/images/dishes/yakiniku-960.webp 960w",
-          "alt": "Carne a la parrilla (焼肉) — Two Butabara pork Yakiniku 焼き肉-焼肉 Samgyeopsalgui14.jpg"
-        }
-      ]
+      "photos": []
     },
     {
       "id": "teppanyaki",
