@@ -1,6 +1,6 @@
 // Service worker: makes the guide work without a connection after the first visit.
 // VERSION is stamped by scripts/build-offline.js; a new version installs a fresh cache and removes the old one.
-const VERSION = '0935badbd6';
+const VERSION = '24c640443c';
 const APP_CACHE = `japan-guide-${VERSION}`;
 const TILE_CACHE = 'japan-tiles-v1';
 const MAX_TILES = 700;

@@ -254,6 +254,8 @@ export function initMap({ openDetail }) {
       item(swatch({ class: 'visit-shape', style: 'background:#8a9699' }), 'Círculo · visitas y puntos de interés'),
       item(swatch({ style: `background:${HOTEL_COLOR}` }), 'Hotel · alojamiento del grupo'),
       ...(hasAlternatives() ? config.alternativeCategories.map((category) => item(swatch({ style: `background:${category.color}` }), category.legend)) : []),
+      item(swatch({ class: 'visited-shape' }), '✓ Atenuado · ya visitado'),
+      item(swatch({ class: 'route-shape' }), 'Número · orden de la ruta del día'),
       item(swatch({ class: 'location' }), 'Azul intenso · tu ubicación GPS'),
       item(swatch({ class: 'accuracy' }), 'Azul claro · precisión estimada del GPS')
     ];

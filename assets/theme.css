@@ -201,6 +201,11 @@ body[data-view="mapa"] { overflow: hidden; }
 .map-sheet-body { overflow: auto; overscroll-behavior: contain; padding: 0 16px calc(16px + env(safe-area-inset-bottom)); }
 .map-sheet .nearby-panel { border: 0; box-shadow: none; background: transparent; padding: 0; }
 .map-sheet .map-legend, .map-sheet .collapsible-filters { box-shadow: none; }
+.map-sheet .map-legend { border: 0; padding: 0; background: transparent; }
+.map-sheet .map-legend > summary { display: none; }
+.map-sheet .legend { grid-template-columns: 1fr; margin-top: 0; font-size: .86rem; gap: 12px; color: var(--ink); }
+.legend i.visited-shape { border: 2px solid #fff; box-shadow: 0 0 0 1px #aab4b8; background: #64748b; opacity: .35; }
+.legend i.route-shape { background: var(--accent); border: 2px solid #fff; box-shadow: 0 0 0 1px #aab4b8; }
 .map-sheet .map-offline { border-top: 0; padding: 0; }
 @media (min-width: 900px) {
   .map-view { bottom: 0; }

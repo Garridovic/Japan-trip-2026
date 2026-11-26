@@ -97,6 +97,25 @@ test.describe('full-screen map view', () => {
     await expect(page.locator('#view-mapa')).toBeVisible();
   });
 
+  test('Leyenda explains every marker colour and shape from the city data, and goes back to the guide on leaving', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await openMap(page);
+    await page.getByRole('button', { name: 'Leyenda', exact: true }).click();
+    const sheet = page.locator('#map-sheet');
+    await expect(sheet).toBeVisible();
+    await expect(page.locator('#map-sheet-title')).toHaveText('Leyenda del mapa');
+    const entries = sheet.locator('#map-legend > span');
+    for (const day of kyoto.city.map.dayFilters) await expect(entries.filter({ hasText: day.legend })).toHaveCount(1);
+    for (const text of ['Diamante', 'Círculo', 'Hotel', 'ya visitado', 'ruta del día', 'ubicación GPS']) {
+      await expect(entries.filter({ hasText: text })).toHaveCount(1);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    await page.goBack();
+    await expect(sheet).toBeHidden();
+    await page.goBack();
+    await expect(page.locator('#mapa .map-legend')).toHaveCount(1);
+  });
+
   test('dark theme applies to the full-screen map and its sheet', async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'dark' });
     await openMap(page);
