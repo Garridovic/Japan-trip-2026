@@ -1,7 +1,7 @@
 {
-  "version": "2d5d133279",
+  "version": "68011d4cfd",
   "sizes": {
-    "required": 912180,
+    "required": 927242,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -92,6 +92,8 @@
     "js/modules/phrases.js",
     "js/modules/placeholder-art.js",
     "js/modules/private-notes.js",
+    "js/modules/proximity-ui.js",
+    "js/modules/proximity.js",
     "js/modules/render.js",
     "js/modules/scrollspy.js",
     "js/modules/search-ui.js",

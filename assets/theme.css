@@ -532,3 +532,20 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
   body.has-account .offline-chip { padding: 0 8px; gap: 4px; margin-left: 2px; font-size: .7rem; }
   body.has-account .offline-chip::before { display: none; }
 }
+
+/* ====== Avisos de lugares cercanos ("¿Estás en…?") ====== */
+.proximity-card { position: fixed; left: 0; right: 0; margin: 0 auto; bottom: calc(var(--bar-height) + env(safe-area-inset-bottom) + 24px); z-index: 2600; box-sizing: border-box; width: min(420px, calc(100vw - 24px)); padding: 12px 14px; border-radius: 16px; background: var(--ink); color: var(--bg); box-shadow: var(--shadow); animation: toast-in .2s ease-out; }
+.proximity-card p { margin: 0 0 8px; font-weight: 700; }
+.proximity-actions { display: flex; gap: 8px; }
+.proximity-actions button { flex: 1; min-height: 44px; border-radius: 12px; border: 1px solid transparent; font: inherit; font-weight: 850; cursor: pointer; }
+.proximity-yes { background: var(--accent); color: #fff; }
+.proximity-no { background: transparent; color: inherit; border-color: rgba(255,255,255,.35) !important; }
+.proximity-consent { position: fixed; inset: 0; z-index: 2700; display: flex; align-items: flex-end; justify-content: center; padding: 12px; background: rgba(18,30,36,.55); }
+.proximity-consent-box { box-sizing: border-box; width: min(460px, 100%); max-height: 90vh; overflow: auto; padding: 18px 18px 14px; border-radius: 18px; background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+.proximity-consent-box h2 { margin: 0 0 8px; font-size: 1.15rem; }
+.proximity-consent-box ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+.proximity-toggle { min-height: 44px; width: 100%; justify-content: center; margin-top: 8px; }
+.proximity-toggle[aria-checked="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.proximity-note { margin: 6px 0 0; font-size: .82rem; color: var(--muted); }
+@media (min-width: 900px) { .proximity-card { bottom: calc(var(--bar-height) + 34px); } .proximity-consent { align-items: center; } }
+@media print { .proximity-card, .proximity-consent { display: none; } }
