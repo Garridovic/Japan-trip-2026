@@ -11,61 +11,17 @@ permissions:
 
 jobs:
   prepare:
-    name: Download and optimize local images
+    name: Build offline manifest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - run: npm install --no-package-lock
-      # Photos come from Wikimedia Commons and take 3-4 min to download and convert. They only change when the
-      # catalogs, the place data or the script change, so the result is cached under a key made from those files.
-      - name: Compute the photo cache key (before the script rewrites details.json)
-        id: key
-        run: echo "key=photos-${{ hashFiles('data/journey.json', 'data/cities/*/image-catalog.json', 'data/cities/*/places.json', 'data/cities/*/details.json', 'scripts/prepare-images.js') }}" >> "$GITHUB_OUTPUT"
-      - name: Restore prepared photos
-        id: photos
-        uses: actions/cache/restore@v5
-        with:
-          path: |
-            assets/images
-            data/cities/*/details.json
-            data/cities/*/image-credits.json
-            image-preparation-report.json
-            image-preparation-report.md
-          key: ${{ steps.key.outputs.key }}
-      - name: Download and optimize local images (only when the cache missed)
-        if: steps.photos.outputs.cache-hit != 'true'
-        run: npm run prepare:images
-      - name: Cache the result unless a download or search failed (places with no free photo are expected)
-        if: steps.photos.outputs.cache-hit != 'true' && hashFiles('image-preparation-report.json') != ''
-        run: |
-          node -e "const r=JSON.parse(require('fs').readFileSync('image-preparation-report.json','utf8'));process.exit(r.issues.some((i)=>/error/.test(i.status))?1:0)" \
-            && echo "SAVE_PHOTOS=true" >> "$GITHUB_ENV" || echo "Some downloads or searches failed: not caching this result."
-      - name: Save photo cache
-        if: env.SAVE_PHOTOS == 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            assets/images
-            data/cities/*/details.json
-            data/cities/*/image-credits.json
-            image-preparation-report.json
-            image-preparation-report.md
-          key: ${{ steps.key.outputs.key }}
+      # Photos and their credits are committed (npm run prepare:images, run by hand when the catalogs change),
+      # so CI no longer downloads anything. The manifest only lists files that exist and stamps the version into sw.js.
       - name: Build the offline manifest (service worker file list and version)
         run: npm run build:offline
-      - name: Upload image preparation report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: image-preparation-report
-          path: |
-            image-preparation-report.md
-            image-preparation-report.json
-          if-no-files-found: warn
-          retention-days: 30
       - uses: actions/upload-artifact@v7
         with:
           name: prepared-site

@@ -205,19 +205,17 @@ test('application version metadata is consistent', () => {
   assert.equal(`V${packageJson.version}`, version.version, 'package.json version must match data/version.json');
 });
 
-// ---------- images (require `npm run prepare:images`) ----------
+// ---------- images (committed by `npm run prepare:images`) ----------
 
 test('all generated place photos use local responsive assets with credits', async () => {
-  const report = await readJson('image-preparation-report.json');
-  assert.ok(Array.isArray(report.issues), 'Image preparation report must include an issues array');
-  let expectedPlaces = 0;
+  let photosChecked = 0;
 
   for (const { id: cityId } of cities) {
     const data = cityData.get(cityId);
     if (!data['image-catalog']) continue;
-    expectedPlaces += data['image-catalog'].places.length;
     const credits = await readJson(`data/cities/${cityId}/image-credits.json`);
     const photoRecords = data.details.flatMap(({ id, photos }) => photos.map((photo) => ({ id, photo })));
+    photosChecked += photoRecords.length;
     assert.equal(photoRecords.length, credits.length, `${cityId}: every photo must have a credit record`);
 
     for (const { id, photo } of photoRecords) {
@@ -237,7 +235,7 @@ test('all generated place photos use local responsive assets with credits', asyn
       assert.ok(sourcePage.startsWith('https://commons.wikimedia.org/'));
     });
   }
-  assert.equal(report.placesChecked, expectedPlaces);
+  assert.ok(photosChecked > 0, 'the committed photos and credits are missing: run npm run prepare:images');
 });
 
 test('journey optionalData lists exactly the optional files each city has, so no 404s are requested', async () => {
