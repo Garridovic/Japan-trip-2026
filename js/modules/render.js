@@ -61,7 +61,7 @@ function renderItinerary(itinerary) {
       h('div', { class: 'detail-body' },
         h('p', { class: 'detail-lead' }, detail.lead),
         h('div', { class: 'stops' }, detail.stops.map((stop) =>
-          h('div', { class: 'stop' }, h('span', { class: 'time' }, stop.time), h('div', {}, h('strong', {}, stop.title), h('p', {}, stop.text)))
+          h('div', { class: 'stop' }, h('span', { class: 'time' }, stop.time), h('div', {}, h('strong', {}, stop.title), h('p', {}, stop.text), stop.suggestion && h('p', { class: 'stop-suggestion' }, h('strong', {}, 'Sugerencia: '), stop.suggestion)))
         )),
         detail.highlight && h('div', { class: 'highlight' }, h('strong', {}, detail.highlight.label), ` ${detail.highlight.text}`),
         h('div', { class: 'detail-bottom' },

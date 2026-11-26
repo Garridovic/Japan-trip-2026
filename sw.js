@@ -1,6 +1,6 @@
 // Service worker: makes the guide work without a connection after the first visit.
 // VERSION is stamped by scripts/build-offline.js; a new version installs a fresh cache and removes the old one.
-const VERSION = '2694e38607';
+const VERSION = '1527d12e7f';
 const APP_CACHE = `japan-guide-${VERSION}`;
 const TILE_CACHE = 'japan-tiles-v1';
 const MAX_TILES = 700;
@@ -67,6 +67,9 @@ async function assetResponse(request) {
       const fallback = await cache.match(request.url.replace(smaller[0], smaller[1])) ?? await cache.match(request.url.replace(smaller[0], '-480.webp'));
       if (fallback) return fallback;
     }
+    // A data file that was never saved does not exist (every real dataset is in the precache): answer 404 like the
+    // server would, so optional datasets (for example a city without events.json) are simply skipped offline.
+    if (/\/data\//.test(request.url)) return new Response('Not found', { status: 404 });
     throw error;
   }
 }

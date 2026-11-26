@@ -4,10 +4,10 @@ import { kyoto, SVG_MARKERS } from './helpers.js';
 const bar = (page) => page.locator('#app-bar');
 const button = (page, view) => page.locator(`[data-view-target="${view}"]`);
 
-test('the bottom bar has Guía, Frases and Platos and starts on the guide', async ({ page }) => {
+test('the bottom bar has Guía, Viaje, Frases and Platos and starts on the guide', async ({ page }) => {
   await page.goto('/');
   await expect(bar(page)).toBeVisible();
-  await expect(bar(page).getByRole('button')).toHaveText([/Guía/, /Frases/, /Platos/]);
+  await expect(bar(page).getByRole('button')).toHaveText([/Guía/, /Viaje/, /Frases/, /Platos/]);
   await expect(button(page, 'guia')).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('#city-view')).toBeVisible();
   await expect(page.locator('#view-frases')).toBeHidden();
@@ -46,7 +46,7 @@ test('the bar stays visible while scrolling and does not cover the end of the pa
 
 test('buttons are big enough to tap with a thumb', async ({ page }) => {
   await page.goto('/');
-  for (const view of ['guia', 'frases', 'platos']) {
+  for (const view of ['guia', 'viaje', 'frases', 'platos']) {
     const box = await button(page, view).boundingBox();
     expect(box.height).toBeGreaterThanOrEqual(48);
     expect(box.width).toBeGreaterThanOrEqual(64);

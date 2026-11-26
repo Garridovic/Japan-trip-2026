@@ -138,3 +138,9 @@ Full-screen sheets (place sheet, phrase show mode, dish sheet) push a history en
 * The guide can be installed to the home screen (`manifest.webmanifest`, icons from `npm run make:icons`).
 * Recovery: open `?reset-offline` to unregister the worker and clear its caches.
 * Playwright blocks service workers by default (they would hide `page.route()` mocks); only `tests/e2e/offline.spec.js` enables them.
+
+## Viaje and Osaka (V11.7)
+
+* **Viaje** (`data/global/lodging.json`, `js/modules/lodging*.js`): fourth view of the bottom bar with every stay in chronological order (dates, nights, address, Google Maps link, "copy address"). **The repository is public**: the data must never hold PINs, booking numbers, who paid or amounts. `tests/lodging.test.js` fails if such keys or text appear.
+* **Osaka** (`data/cities/osaka/`, enabled in `data/journey.json`): same structure as Kioto. Days 15 and 16 are Victor's plan with his times; checks and proposals appear as visible "Sugerencia" notes (never applied silently). Day 17 is an optional draft (Sumiyoshi Taisha before Nara). Every place sheet lists its sources (`details[].sources`) and what is unverified (`verificationNote`). Pins marked `pinApproximate` need checking in Google Maps. Photos come from the image pipeline; pin reviewed ones with `files` in `image-catalog.json` (`files: []` = no photo on purpose). `npm run prepare:images -- --city=osaka` runs a single city.
+* The service worker answers 404 for data files that are not saved, so optional datasets (a city without `events.json`) are skipped offline.

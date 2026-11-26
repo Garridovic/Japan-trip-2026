@@ -16,11 +16,15 @@ const isReusableLicense = (license) => {
       !value.includes('noncommercial') && !value.includes('no derivatives'));
 };
 const requestJson = async (url) => {
-  const response = await fetch(url, {
-    headers: { 'User-Agent': 'JapanTripGuide/11.0 (personal travel guide; image attribution included)' }
-  });
-  if (!response.ok) throw new Error(`HTTP ${response.status} from ${url}`);
-  return response.json();
+  for (let attempt = 0; ; attempt++) {
+    const response = await fetch(url, {
+      headers: { 'User-Agent': 'JapanTripGuide/11.0 (personal travel guide; image attribution included)' }
+    });
+    if (response.ok) return response.json();
+    // Commons rate-limits aggressive clients: wait and retry before giving up.
+    if (response.status === 429 && attempt < 5) { await new Promise((resolve) => setTimeout(resolve, 8000 * (attempt + 1))); continue; }
+    throw new Error(`HTTP ${response.status} from ${url}`);
+  }
 };
 const searchImages = async (catalog, query) => {
   const url = new URL(apiUrl);
@@ -38,6 +42,18 @@ const searchImages = async (catalog, query) => {
   }).forEach(([key, value]) => url.searchParams.set(key, value));
   const result = await requestJson(url);
   return Object.values(result.query?.pages || {});
+};
+// Catalog entries may pin reviewed photos with `files` (exact Commons titles); an empty list means "no photo on purpose".
+const fetchTitles = async (catalog, titles) => {
+  if (!titles.length) return [];
+  const url = new URL(apiUrl);
+  Object.entries({
+    action: 'query', format: 'json', titles: titles.join('|'), prop: 'imageinfo', iiprop: 'url|size|mime|extmetadata',
+    iiurlwidth: String(catalog.imageWidth), iiextmetadatalanguage: 'en'
+  }).forEach(([key, value]) => url.searchParams.set(key, value));
+  const result = await requestJson(url);
+  const order = new Map(titles.map((title, index) => [title, index]));
+  return Object.values(result.query?.pages || {}).sort((a, b) => (order.get(a.title) ?? 99) - (order.get(b.title) ?? 99));
 };
 const searchCategoryImages = async (catalog, category) => {
   if (!category) return [];
@@ -92,8 +108,9 @@ const prepareCity = async (cityId) => {
 
     const photos = [];
     try {
-      const primaryCandidates = await searchImages(catalog, entry.query);
-      const categoryCandidates = await searchCategoryImages(catalog, entry.category);
+      const pinned = Array.isArray(entry.files);
+      const primaryCandidates = pinned ? await fetchTitles(catalog, entry.files) : await searchImages(catalog, entry.query);
+      const categoryCandidates = pinned ? [] : await searchCategoryImages(catalog, entry.category);
       const candidates = [...new Map(
         [...primaryCandidates, ...categoryCandidates].map((page) => [page.pageid, page])
       ).values()];
@@ -106,7 +123,7 @@ const prepareCity = async (cityId) => {
           !usedPageIds.has(page.pageid) && !(entry.exclude ?? []).includes(page.title) && info.thumburl;
       }).slice(0, entry.count);
 
-      if (selected.length < entry.count) {
+      if (selected.length < entry.count && !(pinned && entry.files.length === 0)) {
         issues.push({
           placeId: entry.id,
           placeName: place.name,
@@ -191,8 +208,9 @@ const prepareCity = async (cityId) => {
 
 const issues = [];
 const cityReports = [];
+const onlyCity = process.argv.find((argument) => argument.startsWith('--city='))?.slice(7); // e.g. --city=osaka
 for (const { id: cityId, enabled } of journey.cities) {
-  if (!enabled) continue;
+  if (!enabled || (onlyCity && cityId !== onlyCity)) continue;
   try {
     await readFile(path.join(root, 'data', 'cities', cityId, 'image-catalog.json'), 'utf8');
   } catch {

@@ -1,0 +1,333 @@
+[
+  {
+    "id": "hotel",
+    "description": "Alojamiento del grupo para las noches del 15 al 17 de diciembre, en el barrio de Shinsaibashi. Según las fuentes, está a unos 3–5 minutos andando de la estación Shinsaibashi (salidas 7 y 8) y a unos 3 minutos de Yotsubashi (salida 3). Dotonbori queda a unos 7–9 minutos a pie.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.67377,135.49813",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.67377,135.49813&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.67377,135.49813&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · The Bridge Hotel Shinsaibashi",
+        "url": "https://osaka-info.jp/en/spot/the-bridge-hotel-sinsaibashi/"
+      }
+    ],
+    "verificationNote": "Los tiempos a pie varían entre fuentes (2–7 min a Shinsaibashi). La dirección y el mapa son los de vuestro alojamiento."
+  },
+  {
+    "id": "dotonbori",
+    "description": "El corazón nocturno de Osaka: el canal Dotonbori, el puente Ebisubashi y los carteles luminosos. El cartel del corredor de Glico está junto al puente, en la orilla sur del canal, y es el sitio clásico para la foto. Es la zona de takoyaki, okonomiyaki y comida callejera. Con el atardecer sobre las 16:50, a las 17:30 ya está todo iluminado.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/dotonbori-1-1600.webp",
+        "srcSet": "assets/images/osaka/dotonbori-1-480.webp 480w, assets/images/osaka/dotonbori-1-960.webp 960w, assets/images/osaka/dotonbori-1-1600.webp 1600w",
+        "alt": "Dotonbori · puente Ebisu y cartel de Glico — 道頓堀のグリコサインと戎橋"
+      },
+      {
+        "src": "assets/images/osaka/dotonbori-2-1600.webp",
+        "srcSet": "assets/images/osaka/dotonbori-2-480.webp 480w, assets/images/osaka/dotonbori-2-960.webp 960w, assets/images/osaka/dotonbori-2-1600.webp 1600w",
+        "alt": "Dotonbori · puente Ebisu y cartel de Glico — Wall of signboards at Ebisu Bridge on the Dōtonbori Canal, Osaka , Japan ."
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.66907,135.5013",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.66907,135.5013&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.66907,135.5013&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · Dotonbori",
+        "url": "https://osaka-info.jp/en/spot/dotonbori/"
+      },
+      {
+        "label": "Time Out · cartel de Glico",
+        "url": "https://www.timeout.com/osaka/shopping/glico-ya"
+      }
+    ],
+    "verificationNote": "El cartel de Glico se describe como de 1935 en una fuente turística; no está contrastado con una fuente oficial."
+  },
+  {
+    "id": "hozenji",
+    "description": "Un callejón empedrado y estrecho con faroles, a un paso del bullicio de Dotonbori. En él está el templo Hozenji y la estatua de Fudo Myo-o cubierta de musgo (Mizukake Fudo), a la que los visitantes echan agua mientras piden un deseo. Junto a ella está la tienda de zenzai Meoto Zenzai.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/hozenji-1-1600.webp",
+        "srcSet": "assets/images/osaka/hozenji-1-480.webp 480w, assets/images/osaka/hozenji-1-960.webp 960w, assets/images/osaka/hozenji-1-1600.webp 1600w",
+        "alt": "Hozenji Yokocho — Hozenji Yokocho 2023-11"
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.66785,135.5026",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.66785,135.5026&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.66785,135.5026&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · Hozenji Yokocho",
+        "url": "https://osaka-info.jp/en/spot/hozenji-yokocho/"
+      },
+      {
+        "label": "Live Japan · Hozenji Yokocho",
+        "url": "https://livejapan.com/en/in-kansai/in-pref-osaka/in-namba_dotonbori_shinsaibashi/article-a2000351/"
+      }
+    ],
+    "verificationNote": "No hay horario del callejón (es una calle); los locales tienen el suyo."
+  },
+  {
+    "id": "shinsaibashisuji",
+    "description": "Una de las galerías comerciales cubiertas más largas de Osaka, que une la zona de Shinsaibashi con Dotonbori. Tiendas de moda, farmacias, snacks y mucho ambiente por la tarde-noche. Hacia el norte enlaza con el barrio de vuestro hotel.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/shinsaibashisuji-1-1600.webp",
+        "srcSet": "assets/images/osaka/shinsaibashisuji-1-480.webp 480w, assets/images/osaka/shinsaibashisuji-1-960.webp 960w, assets/images/osaka/shinsaibashisuji-1-1600.webp 1600w",
+        "alt": "Shinsaibashi-suji — Shinsaibashi, Osaka, Kansai Region."
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.67067,135.50133",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.67067,135.50133&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.67067,135.50133&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · Shinsaibashi-suji",
+        "url": "https://osaka-info.jp/en/spot/shinsaibashi-suji-shopping-street/"
+      }
+    ],
+    "verificationNote": "Horarios de cada tienda sin verificar; muchas cierran entre las 20:00 y las 21:00 (dato no contrastado)."
+  },
+  {
+    "id": "osakajo",
+    "description": "Símbolo de la ciudad. La torre principal (tenshukaku) reúne un museo de historia del castillo y un mirador en el último piso. La entrada de adultos cuesta 1.200 yenes según las fuentes consultadas (los menores de secundaria entran gratis). Según el listado de Osaka Info abre de 9:00 a 18:00 con último acceso a las 17:30; algunas páginas antiguas aún dicen 17:00 y 16:30. La torre cierra del 28 de diciembre al 1 de enero, fuera de vuestras fechas. El parque que la rodea es de acceso libre.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/osakajo-1-1600.webp",
+        "srcSet": "assets/images/osaka/osakajo-1-480.webp 480w, assets/images/osaka/osakajo-1-960.webp 960w, assets/images/osaka/osakajo-1-1600.webp 1600w",
+        "alt": "Castillo de Osaka — 大坂城・天守閣と内濠"
+      },
+      {
+        "src": "assets/images/osaka/osakajo-2-1600.webp",
+        "srcSet": "assets/images/osaka/osakajo-2-480.webp 480w, assets/images/osaka/osakajo-2-960.webp 960w, assets/images/osaka/osakajo-2-1600.webp 1600w",
+        "alt": "Castillo de Osaka — Osaka Castle"
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.68737,135.52586",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68737,135.52586&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68737,135.52586&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · torre principal",
+        "url": "https://osaka-info.jp/en/spot/osaka-castle-main-keep/"
+      },
+      {
+        "label": "Japan Guide · Osaka Castle",
+        "url": "https://www.japan-guide.com/e/e4000.html"
+      }
+    ],
+    "verificationNote": "Hora de último acceso con fuentes contradictorias (17:30 o 16:30). Con la entrada a las 9:00 no os afecta. Confirmad en osakacastle.net."
+  },
+  {
+    "id": "nambayasaka",
+    "description": "Santuario famoso por su edificio en forma de cabeza de león de 12 m de alto, 11 de ancho y 10 de profundidad. La entrada es gratuita. Los recintos abren de 6:00 a 17:00 y la oficina de amuletos y sellos de 9:00 a 16:50, según Osaka Info. Se llega a pie en unos 6 minutos desde la estación Namba. Es una visita corta.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/nambayasaka-1-1600.webp",
+        "srcSet": "assets/images/osaka/nambayasaka-1-480.webp 480w, assets/images/osaka/nambayasaka-1-960.webp 960w, assets/images/osaka/nambayasaka-1-1600.webp 1600w",
+        "alt": "Santuario Namba Yasaka — The eye of the lion's head stage at Namba Yasaka Jinja, Osaka."
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.66148,135.49673",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.66148,135.49673&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.66148,135.49673&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · Namba Yasaka",
+        "url": "https://osaka-info.jp/en/spot/nanbayasakajinja/"
+      }
+    ],
+    "verificationNote": "Horario según una sola fuente turística; otras dan 6:30–17:00."
+  },
+  {
+    "id": "kuromon",
+    "description": "El mercado de alimentación más conocido de Osaka, con puestos de marisco fresco, brochetas, tamagoyaki y fruta. Se come en el propio puesto. Los horarios varían por tienda: las fuentes dan desde las 8:00 o las 9:00 hasta las 17:00–18:00, pero muchos puestos de pescado empiezan a cerrar hacia las 14:00–16:30 y algunos cierran domingos y festivos. Lo mejor es ir por la mañana o a mediodía, como en vuestro plan.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/kuromon-1-1600.webp",
+        "srcSet": "assets/images/osaka/kuromon-1-480.webp 480w, assets/images/osaka/kuromon-1-960.webp 960w, assets/images/osaka/kuromon-1-1600.webp 1600w",
+        "alt": "Mercado Kuromon — Kuromon-ichiba , Osaka , Osaka Prefecture , Japan"
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.6667,135.50705",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.6667,135.50705&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.6667,135.50705&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · Kuromon",
+        "url": "https://osaka-info.jp/en/spot/kuromon-market"
+      },
+      {
+        "label": "Japan Guide · Kuromon",
+        "url": "https://www.japan-guide.com/e/e4031.html"
+      },
+      {
+        "label": "Explore Osaka · Kuromon",
+        "url": "https://explore.osaka/things-to-do/kuromon-ichiba-market/"
+      }
+    ],
+    "verificationNote": "Los horarios de las fuentes no coinciden; cada puesto decide el suyo."
+  },
+  {
+    "id": "nipponbashi",
+    "description": "El barrio de la electrónica de Osaka: tiendas de informática, videojuegos retro, anime, manga, figuras y cafés temáticos, a lo largo de la calle Sakaisuji. Las tiendas abren cada una a su hora, normalmente de las 10:00–11:00 a las 19:00–20:00, y algunas cierran antes de las 18:00. Se llega desde la estación Nipponbashi.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.65972,135.50583",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.65972,135.50583&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.65972,135.50583&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · Nipponbashi Den Den Town",
+        "url": "https://osaka-info.jp/en/spot/nippombashi-denden-town/"
+      },
+      {
+        "label": "Live Japan · Den Den Town",
+        "url": "https://livejapan.com/en/in-kansai/in-pref-osaka/in-namba_dotonbori_shinsaibashi/article-a2000308"
+      }
+    ],
+    "verificationNote": "Horarios por tienda, con fuentes que no coinciden."
+  },
+  {
+    "id": "shinsekai",
+    "description": "Barrio de aire retro nacido para la Exposición de 1903, presidido por la torre Tsutenkaku, con carteles gigantes, calles de kushikatsu (brochetas fritas) y salas de juego. El mirador de la torre abre aproximadamente de las 9:00–10:00 a las 20:00–21:30 según la fuente, con último acceso 30 minutos antes. Los precios que se citan (800 o 1.200 yenes) no coinciden. Subir al mirador es opcional.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/shinsekai-1-1600.webp",
+        "srcSet": "assets/images/osaka/shinsekai-1-480.webp 480w, assets/images/osaka/shinsekai-1-960.webp 960w, assets/images/osaka/shinsekai-1-1600.webp 1600w",
+        "alt": "Shinsekai y Torre Tsutenkaku — 通天閣 (Meaning \"Reaching Sky Tower\")"
+      },
+      {
+        "src": "assets/images/osaka/shinsekai-2-1600.webp",
+        "srcSet": "assets/images/osaka/shinsekai-2-480.webp 480w, assets/images/osaka/shinsekai-2-960.webp 960w, assets/images/osaka/shinsekai-2-1600.webp 1600w",
+        "alt": "Shinsekai y Torre Tsutenkaku — Tsūtenkaku Tower in Shinsekai"
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.65254,135.50631",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.65254,135.50631&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.65254,135.50631&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · Tsutenkaku",
+        "url": "https://osaka-info.jp/en/spot/tsutenkaku/"
+      },
+      {
+        "label": "Time Out · Tsutenkaku",
+        "url": "https://www.timeout.com/osaka/attractions/tsutenkaku"
+      },
+      {
+        "label": "Tsutenkaku · web oficial",
+        "url": "https://www.tsutenkaku.co.jp/"
+      }
+    ],
+    "verificationNote": "Horario y precio del mirador sin verificar: consultad la web oficial. En Shinsekai, en las tiendas de kushikatsu no se moja dos veces la brocheta en la salsa común."
+  },
+  {
+    "id": "umeda",
+    "description": "Dos torres de 40 plantas unidas por el Observatorio del Jardín Flotante, una plataforma circular al aire libre con vistas de 360°. Abre de 9:30 a 22:30 con último acceso a las 22:00, todos los días. La entrada de adultos son 2.000 yenes según la mayoría de fuentes (alguna antigua cita 1.500). En el sótano está el callejón gastronómico Takimi-koji, de ambientación retro. Con el sol poniéndose hacia las 16:50, a las 17:15 llegaréis ya con la ciudad iluminada.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/umeda-1-1600.webp",
+        "srcSet": "assets/images/osaka/umeda-1-480.webp 480w, assets/images/osaka/umeda-1-960.webp 960w, assets/images/osaka/umeda-1-1600.webp 1600w",
+        "alt": "Umeda Sky Building — Umeda Sky Building"
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.70529,135.49053",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.70529,135.49053&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.70529,135.49053&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Umeda Sky Building",
+        "url": "https://www.japan-guide.com/e/e4002.html"
+      },
+      {
+        "label": "Osaka Info · Umeda Sky Building",
+        "url": "https://osaka-info.jp/en/spot/umeda-sky-building/"
+      },
+      {
+        "label": "Osaka Info · Takimi-koji",
+        "url": "https://osaka-info.jp/en/spot/takimi-koji/"
+      }
+    ],
+    "verificationNote": "Precio de entrada con ligera discrepancia entre fuentes."
+  },
+  {
+    "id": "nakanoshima",
+    "description": "Visita extra opcional. Isla entre dos ramas del río, con la Sala Central de Osaka (1918), el parque y la calle de luces. El Osaka Hikari-Renaissance de 2026 se celebra del 11 al 25 de diciembre, con proyección sobre la fachada de la Sala Central de 17:30 a 21:30 según una fuente turística; las luces de la calle de Nakanoshima, según la misma, duran hasta el 31 de diciembre. Queda justo en el camino de vuelta de Umeda al hotel (Yodoyabashi, una parada de Umeda en la línea Midosuji). Veredicto: cabe la noche del 16, desplazando la cena unos 60–75 minutos.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/nakanoshima-1-1600.webp",
+        "srcSet": "assets/images/osaka/nakanoshima-1-480.webp 480w, assets/images/osaka/nakanoshima-1-960.webp 960w, assets/images/osaka/nakanoshima-1-1600.webp 1600w",
+        "alt": "Nakanoshima · luces del Hikari Renaissance (visita extra) — Nakanoshima, Osaka City Central Public Hall -1 (September 2009)"
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.69354,135.50401",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.69354,135.50401&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.69354,135.50401&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Travel · Osaka Hikari-Renaissance 2026",
+        "url": "https://en.japantravel.com/osaka/osaka-christmas-hikari-renaissance/3698"
+      },
+      {
+        "label": "Have a Good Holiday · proyección en la Sala Central",
+        "url": "https://www.haveagood-holiday.com/en/articles/osaka-hikari-no-renaissance-2026-central-public-hall-projection-mapping"
+      },
+      {
+        "label": "Hikari-Renaissance · web oficial",
+        "url": "https://hikari-kyoen.com/"
+      }
+    ],
+    "verificationNote": "Fechas y horas del Hikari-Renaissance de fuentes secundarias: confirmar en la web oficial."
+  },
+  {
+    "id": "sumiyoshi",
+    "description": "Visita extra opcional. Uno de los santuarios más antiguos de Japón, con el puente arqueado Sorihashi y cuatro santuarios principales. Abre de 6:30 a 17:00 de octubre a marzo y la entrada es gratuita. Se llega con la línea principal Nankai desde Namba en unos 10 minutos (solo paran los trenes locales) y de la estación al santuario hay unos 3 minutos andando. Veredicto: no cabe el día 16 sin recortar Shinsekai; sí cabe por la mañana del 17, antes de salir hacia Nara.",
+    "photos": [
+      {
+        "src": "assets/images/osaka/sumiyoshi-1-1600.webp",
+        "srcSet": "assets/images/osaka/sumiyoshi-1-480.webp 480w, assets/images/osaka/sumiyoshi-1-960.webp 960w, assets/images/osaka/sumiyoshi-1-1600.webp 1600w",
+        "alt": "Sumiyoshi Taisha (visita extra) — 住吉大社 反橋"
+      }
+    ],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.613,135.4931",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.613,135.4931&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.613,135.4931&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Sumiyoshi Taisha",
+        "url": "https://www.japan-guide.com/e/e4007.html"
+      },
+      {
+        "label": "Osaka Info · Sumiyoshi Taisha",
+        "url": "https://osaka-info.jp/en/spot/sumiyoshitaisha"
+      }
+    ],
+    "verificationNote": "Horarios y trayecto de fuentes turísticas; tarifa de Nankai con discrepancia (210–240 yenes)."
+  }
+]

@@ -166,6 +166,17 @@
     </footer>
   </div>
 
+  <div class="app-view" id="view-viaje" data-view="viaje" hidden>
+    <main>
+      <section id="viaje" hidden>
+        <div class="section-head"><div><div class="kicker" id="lodging-kicker"></div><h2 id="lodging-title"></h2></div><p class="muted small" id="lodging-lead"></p></div>
+        <p class="muted small" id="lodging-count" aria-live="polite"></p>
+        <div class="lodging-list" id="lodging-list"></div>
+        <p class="phrase-notice lodging-privacy" id="lodging-privacy"></p>
+      </section>
+    </main>
+  </div>
+
   <div class="app-view" id="view-frases" data-view="frases" hidden>
     <main>
       <section id="frases" hidden>
@@ -223,6 +234,7 @@
 
   <nav class="app-bar" id="app-bar" aria-label="Secciones de la guía">
     <button type="button" class="app-bar-button" data-view-target="guia" aria-current="page"><span class="app-bar-icon" aria-hidden="true">🧭</span><span class="app-bar-label">Guía</span></button>
+    <button type="button" class="app-bar-button" data-view-target="viaje"><span class="app-bar-icon" aria-hidden="true">🏨</span><span class="app-bar-label">Viaje</span></button>
     <button type="button" class="app-bar-button" data-view-target="frases"><span class="app-bar-icon" aria-hidden="true">💬</span><span class="app-bar-label">Frases</span></button>
     <button type="button" class="app-bar-button" data-view-target="platos"><span class="app-bar-icon" aria-hidden="true">🍜</span><span class="app-bar-label">Platos</span></button>
   </nav>
@@ -247,6 +259,11 @@
         <section class="poi-links-section">
           <h3>Cómo llegar</h3>
           <div class="poi-action-links" id="poi-directions"></div>
+        </section>
+        <section class="poi-sources-section" id="poi-sources-section" hidden>
+          <h3>Fuentes</h3>
+          <p class="poi-verification" id="poi-verification" hidden></p>
+          <ul id="poi-sources"></ul>
         </section>
         <section class="poi-audio-section" id="poi-audio-section" hidden>
           <h3>Audioguía en español</h3>

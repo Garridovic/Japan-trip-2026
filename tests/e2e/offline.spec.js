@@ -301,3 +301,13 @@ test.describe('chip text and layout', () => {
     expect(await page.locator('body').innerText()).not.toMatch(/básico/i);
   });
 });
+
+test('optional datasets that do not exist (a city without events.json) are skipped offline instead of breaking the city', async ({ page, context }) => {
+  await firstVisit(page, context);
+  await context.setOffline(true);
+  const status = await page.evaluate(async () => (await fetch('data/cities/osaka/events.json')).status);
+  expect(status).toBe(404);
+  await page.goto('/?city=osaka');
+  await expect(page.locator('#hero-title')).toHaveText('Osaka');
+  await expect(page.locator('.quick-card')).toHaveCount(3);
+});

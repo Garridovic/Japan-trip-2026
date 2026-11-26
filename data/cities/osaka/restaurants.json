@@ -1,0 +1,152 @@
+[
+  {
+    "id": "food-01",
+    "name": "Mercado Kuromon",
+    "lat": 34.6667,
+    "lng": 135.50705,
+    "day": "16",
+    "type": "restaurant",
+    "foodCategory": "mercado",
+    "desc": "Puestos de marisco, brochetas, tamagoyaki y fruta. Se come allí mismo, en el puesto.",
+    "query": "Kuromon Ichiba Market Osaka",
+    "foodTypeLabel": "Mercado · marisco y bocados",
+    "dayLabel": "16 dic · hacia las 12:10",
+    "note": "Los horarios varían por puesto: muchos de pescado cierran entre las 14:00 y las 16:30 y algunos no abren domingos y festivos. Horario sin verificar en la web oficial.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kuromon+Ichiba+Market+Osaka%2C+Osaka",
+    "links": [
+      {
+        "label": "Osaka Info · Kuromon ↗",
+        "url": "https://osaka-info.jp/en/spot/kuromon-market"
+      }
+    ]
+  },
+  {
+    "id": "food-02",
+    "name": "Takoya Dotonbori Kukuru (casa central)",
+    "lat": 34.66871,
+    "lng": 135.50131,
+    "day": "15",
+    "type": "restaurant",
+    "foodCategory": "takoyaki",
+    "desc": "Takoyaki con trozos de pulpo muy grandes («Bikkuri Takoyaki», solo en esta casa central) en pleno Dotonbori.",
+    "query": "Takoya Dotonbori Kukuru Honten",
+    "pinApproximate": true,
+    "foodTypeLabel": "Takoyaki · Dotonbori",
+    "dayLabel": "15 dic · cena o picoteo",
+    "note": "Según Tabelog (2026) abre de 11:00 a 21:00 entre semana, pero otras fuentes dan 12:00–23:00: confirmadlo en Google Maps. Marcador aproximado.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Takoya+Dotonbori+Kukuru+Honten%2C+Osaka",
+    "links": [
+      {
+        "label": "Tabelog · Kukuru ↗",
+        "url": "https://tabelog.com/en/osaka/A2701/A270202/27001546/"
+      }
+    ]
+  },
+  {
+    "id": "food-03",
+    "name": "Okonomiyaki Mizuno",
+    "lat": 34.66845,
+    "lng": 135.50307,
+    "day": "15",
+    "type": "restaurant",
+    "foodCategory": "okonomiyaki",
+    "desc": "Okonomiyaki, el plato estrella de Osaka, en un clásico de Dotonbori (1-4-15 Dotonbori). Suele haber cola por la noche.",
+    "query": "Okonomiyaki Mizuno Dotonbori",
+    "foodTypeLabel": "Okonomiyaki · Dotonbori",
+    "dayLabel": "15 dic · cena",
+    "note": "Una fuente da 11:00–22:00 con último pedido a las 21:00 y otra a las 21:30; hay cierres irregulares. Confirmad antes de ir.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Okonomiyaki+Mizuno+Dotonbori%2C+Osaka",
+    "links": [
+      {
+        "label": "Global Labels Japan · Mizuno ↗",
+        "url": "https://www.gltjp.com/en/directory/item/12081/"
+      }
+    ]
+  },
+  {
+    "id": "food-04",
+    "name": "Takoume Honten",
+    "lat": 34.66883,
+    "lng": 135.50527,
+    "day": "15",
+    "type": "restaurant",
+    "foodCategory": "oden",
+    "desc": "Oden (kanto-daki) en un local de Dotonbori que las fuentes describen como el más antiguo de Japón, fundado en 1844. Muy apetecible en invierno.",
+    "query": "Takoume Honten Dotonbori",
+    "foodTypeLabel": "Oden · Dotonbori",
+    "dayLabel": "15 dic · cena",
+    "note": "Time Out da 16:00–21:50 y Byfood 16:00–22:30: horario sin verificar. Su especialidad más rara es el saezuri (lengua de ballena): preguntad antes de pedir.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Takoume+Honten+Dotonbori%2C+Osaka",
+    "links": [
+      {
+        "label": "Time Out · Takoume ↗",
+        "url": "https://www.timeout.com/osaka/restaurants/takoume-honten"
+      }
+    ]
+  },
+  {
+    "id": "food-05",
+    "name": "Meoto Zenzai · Hozenji",
+    "lat": 34.66785,
+    "lng": 135.5026,
+    "day": "15",
+    "type": "restaurant",
+    "foodCategory": "dulces",
+    "desc": "Zenzai, sopa dulce de judía roja con mochi, servida en dos cuencos, junto a la estatua de Fudo de Hozenji.",
+    "query": "Meoto Zenzai Hozenji Yokocho",
+    "pinApproximate": true,
+    "foodTypeLabel": "Postre tradicional · Hozenji",
+    "dayLabel": "15 dic · tras Hozenji",
+    "note": "Las fuentes dan 10:00–22:00 todos los días en una dirección y horarios partidos en otra: puede haber más de un local. Marcador aproximado; confirmad en Google Maps.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Meoto+Zenzai+Hozenji+Yokocho%2C+Osaka",
+    "links": [
+      {
+        "label": "Global Labels Japan · Meoto Zenzai ↗",
+        "url": "https://gltjp.com/en/directory/item/15293"
+      }
+    ]
+  },
+  {
+    "id": "food-06",
+    "name": "Kushikatsu Daruma · Shinsekai",
+    "lat": 34.65254,
+    "lng": 135.50631,
+    "day": "16",
+    "type": "restaurant",
+    "foodCategory": "kushikatsu",
+    "desc": "Brochetas fritas, el plato de Shinsekai. En Daruma está prohibido mojar dos veces la brocheta en la salsa común.",
+    "query": "Kushikatsu Daruma Shinsekai Honten",
+    "pinApproximate": true,
+    "foodTypeLabel": "Kushikatsu · Shinsekai",
+    "dayLabel": "16 dic · tarde",
+    "note": "Hay varias tiendas Daruma y las fuentes dan horarios distintos (hasta las 22:00 o 22:30). Marcador aproximado: confirmad cuál tenéis más cerca.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kushikatsu+Daruma+Shinsekai+Honten%2C+Osaka",
+    "links": [
+      {
+        "label": "Global Labels Japan · Daruma ↗",
+        "url": "https://www.gltjp.com/en/directory/item/11883"
+      }
+    ]
+  },
+  {
+    "id": "food-07",
+    "name": "Takimi-koji · Umeda Sky Building",
+    "lat": 34.70529,
+    "lng": 135.49053,
+    "day": "16",
+    "type": "restaurant",
+    "foodCategory": "varios",
+    "desc": "Callejón de restaurantes de ambientación retro en el sótano del Umeda Sky Building: opciones variadas para cenar sin salir del edificio.",
+    "query": "Takimi-koji Umeda Sky Building",
+    "foodTypeLabel": "Callejón de restaurantes · Umeda",
+    "dayLabel": "16 dic · cena",
+    "note": "No hay horario único: cada local pone el suyo (el 9:30–22:30 es del observatorio, no del sótano).",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Takimi-koji+Umeda+Sky+Building%2C+Osaka",
+    "links": [
+      {
+        "label": "Osaka Info · Takimi-koji ↗",
+        "url": "https://osaka-info.jp/en/spot/takimi-koji/"
+      }
+    ]
+  }
+]

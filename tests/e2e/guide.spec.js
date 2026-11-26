@@ -20,13 +20,12 @@ test('Kyoto loads its map, markers, tabs and full version', async ({ page }) => 
   expect(pageErrors).toEqual([]);
 });
 
-test('only enabled cities get a tab (Osaka is configured but has no content yet)', async ({ page }) => {
+test('only enabled cities get a tab, in journey order: Kioto and Osaka', async ({ page }) => {
   await page.goto('/');
   const tabs = page.getByRole('tab');
   await expect(tabs).toHaveCount(journey.cities.filter((city) => city.enabled).length);
-  await expect(tabs.first()).toHaveText('Kioto');
+  await expect(tabs).toHaveText(['Kioto', 'Osaka']);
   await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
-  await expect(page.getByRole('tab', { name: 'Osaka' })).toHaveCount(0);
 });
 
 test('the Kyoto content migrated to data is fully rendered', async ({ page }) => {

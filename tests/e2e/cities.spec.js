@@ -13,7 +13,7 @@ test('city tabs switch the whole context and Kyoto is restored intact', async ({
   await page.goto('/');
 
   const tabs = page.getByRole('tab');
-  await expect(tabs).toHaveText(['Kioto', 'Testville']);
+  await expect(tabs).toHaveText(['Kioto', 'Testville', 'Osaka']);
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
 
   await page.getByRole('tab', { name: 'Testville' }).click();
@@ -106,8 +106,22 @@ test('tabs are keyboard accessible', async ({ page }) => {
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
 });
 
+test('a configured but disabled city in the URL falls back to a valid city and is never downloaded', async ({ page }) => {
+  await page.route('**/data/journey.json', async (route) => {
+    const response = await route.fetch();
+    const body = await response.json();
+    body.cities.push({ id: 'hakone', name: 'Hakone', enabled: false, arrivalDate: '2026-12-10' });
+    await route.fulfill({ response, json: body });
+  });
+  const requested = [];
+  page.on('request', (request) => requested.push(request.url()));
+  await page.goto('/?city=hakone');
+  await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
+  await expect(page.getByRole('tab', { name: 'Hakone' })).toHaveCount(0);
+  expect(requested.some((address) => /data\/cities\/hakone/.test(address))).toBe(false);
+});
+
 for (const [label, url] of [
-  ['a disabled city (Osaka)', '/?city=osaka'],
   ['an unknown city', '/?city=atlantis'],
   ['a path-traversal attempt', '/?city=..%2F..%2Fetc']
 ]) {
@@ -120,7 +134,7 @@ for (const [label, url] of [
     await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
     expect(warnings.some((text) => text.includes('[journey]'))).toBe(true);
-    expect(requested.some((address) => /data\/cities\/(osaka|atlantis|\.\.)/.test(address))).toBe(false);
+    expect(requested.some((address) => /data\/cities\/(atlantis|\.\.)/.test(address))).toBe(false);
   });
 }
 

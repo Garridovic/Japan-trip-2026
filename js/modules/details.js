@@ -56,6 +56,15 @@ export function initDetails() {
     );
   }
 
+  function renderSources(detail) {
+    const section = byId('poi-sources-section');
+    const sources = detail.sources ?? [];
+    section.hidden = sources.length === 0 && !detail.verificationNote;
+    byId('poi-verification').textContent = detail.verificationNote ?? '';
+    byId('poi-verification').hidden = !detail.verificationNote;
+    byId('poi-sources').replaceChildren(...sources.map((source) => h('li', {}, externalLink(source.url, `${source.label} ↗`))));
+  }
+
   function open(localId) {
     if (!cityIndex) return;
     const point = findPoint(cityIndex, localId);
@@ -78,6 +87,7 @@ export function initDetails() {
     byId('poi-audio-section').hidden = guides.length === 0;
     byId('poi-audio-links').replaceChildren(...guides.flatMap((guide) => [h('p', {}, guide.note || ''), externalLink(guide.url, guide.label)]));
 
+    renderSources(detail);
     renderEvent(point, cityIndex.events);
     modal.hidden = false;
     modal.setAttribute('aria-hidden', 'false');

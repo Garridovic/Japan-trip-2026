@@ -1,0 +1,122 @@
+[
+  {
+    "id": "hotel",
+    "name": "The Bridge Hotel Shinsaibashi",
+    "lat": 34.67377,
+    "lng": 135.49813,
+    "day": "base",
+    "type": "hotel",
+    "desc": "Alojamiento del grupo (15–17 dic). A pie de Shinsaibashi y de Dotonbori.",
+    "query": "The Bridge Hotel Shinsaibashi Osaka"
+  },
+  {
+    "id": "dotonbori",
+    "name": "Dotonbori · puente Ebisu y cartel de Glico",
+    "lat": 34.66907,
+    "lng": 135.5013,
+    "day": "15",
+    "type": "itinerary",
+    "desc": "Canal, neones y el cartel del corredor de Glico junto al puente Ebisubashi.",
+    "query": "Ebisubashi Dotonbori Osaka"
+  },
+  {
+    "id": "hozenji",
+    "name": "Hozenji Yokocho",
+    "lat": 34.66785,
+    "lng": 135.5026,
+    "day": "15",
+    "type": "itinerary",
+    "desc": "Callejón empedrado con faroles junto al templo Hozenji y su estatua cubierta de musgo.",
+    "query": "Hozenji Yokocho Osaka"
+  },
+  {
+    "id": "shinsaibashisuji",
+    "name": "Shinsaibashi-suji",
+    "lat": 34.67067,
+    "lng": 135.50133,
+    "day": "15",
+    "type": "itinerary",
+    "desc": "Galería comercial cubierta de norte a sur, entre Shinsaibashi y Dotonbori.",
+    "query": "Shinsaibashi-suji shopping street Osaka"
+  },
+  {
+    "id": "osakajo",
+    "name": "Castillo de Osaka",
+    "lat": 34.68737,
+    "lng": 135.52586,
+    "day": "16",
+    "type": "itinerary",
+    "desc": "Torre principal del castillo con museo y mirador, dentro de un gran parque.",
+    "query": "Osaka Castle Main Tower"
+  },
+  {
+    "id": "nambayasaka",
+    "name": "Santuario Namba Yasaka",
+    "lat": 34.66148,
+    "lng": 135.49673,
+    "day": "16",
+    "type": "itinerary",
+    "desc": "Santuario con el escenario en forma de cabeza de león de unos 12 m de altura.",
+    "query": "Namba Yasaka Shrine Osaka"
+  },
+  {
+    "id": "kuromon",
+    "name": "Mercado Kuromon",
+    "lat": 34.6667,
+    "lng": 135.50705,
+    "day": "16",
+    "type": "itinerary",
+    "desc": "Mercado de comida de Nipponbashi: marisco, brochetas y puestos para comer allí.",
+    "query": "Kuromon Ichiba Market Osaka"
+  },
+  {
+    "id": "nipponbashi",
+    "name": "Nipponbashi · Den Den Town",
+    "lat": 34.65972,
+    "lng": 135.50583,
+    "day": "16",
+    "type": "itinerary",
+    "desc": "Barrio de electrónica, anime, manga y videojuegos.",
+    "query": "Nipponbashi Den Den Town Osaka"
+  },
+  {
+    "id": "shinsekai",
+    "name": "Shinsekai y Torre Tsutenkaku",
+    "lat": 34.65254,
+    "lng": 135.50631,
+    "day": "16",
+    "type": "itinerary",
+    "desc": "Barrio retro con la torre Tsutenkaku y calles de kushikatsu.",
+    "query": "Tsutenkaku Tower Shinsekai Osaka"
+  },
+  {
+    "id": "umeda",
+    "name": "Umeda Sky Building",
+    "lat": 34.70529,
+    "lng": 135.49053,
+    "day": "16",
+    "type": "itinerary",
+    "desc": "Dos torres unidas por el Observatorio del Jardín Flotante, con vistas nocturnas.",
+    "query": "Umeda Sky Building Osaka"
+  },
+  {
+    "id": "nakanoshima",
+    "name": "Nakanoshima · luces del Hikari Renaissance (visita extra)",
+    "lat": 34.69354,
+    "lng": 135.50401,
+    "day": "16",
+    "type": "itinerary",
+    "desc": "Isla fluvial con la Sala Central de Osaka. Visita extra opcional por la noche del 16.",
+    "query": "Osaka City Central Public Hall Nakanoshima"
+  },
+  {
+    "id": "sumiyoshi",
+    "name": "Sumiyoshi Taisha (visita extra)",
+    "lat": 34.613,
+    "lng": 135.4931,
+    "day": "17",
+    "type": "itinerary",
+    "desc": "Gran santuario con el puente arqueado Sorihashi. Visita extra opcional la mañana del 17.",
+    "query": "Sumiyoshi Taisha Osaka"
+  }
+]

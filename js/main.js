@@ -11,9 +11,10 @@ import { initMap } from './modules/map.js';
 import { initScrollSpy } from './modules/scrollspy.js';
 import { initPhrases } from './modules/phrases-ui.js';
 import { VIEW_QUERY_PARAM, viewFromSearch, withView, initViews } from './modules/views.js';
-import { initOverlayHistory, popstateWasOverlay } from './modules/overlay-history.js';
+import { initOverlayHistory, popstateWasOverlay, whenOverlaySettled } from './modules/overlay-history.js';
 import { initCollapsibles } from './modules/collapsible.js';
 import { initOffline } from './modules/offline.js';
+import { initLodging } from './modules/lodging-ui.js';
 import { initDishes } from './modules/dishes-ui.js';
 
 const status = byId('app-status');
@@ -33,6 +34,7 @@ async function start() {
   const cities = enabledCities(journey);
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
+  initLodging(global.lodging);
   initDishes(global.dishes, global.dishCredits);
   initPhrases(global.phrases); // global content: rendered once, shared by every city
   const scrollSpy = initScrollSpy();
@@ -55,7 +57,8 @@ async function start() {
     window.scrollTo({ top: scrollByView.get(view) ?? 0, behavior: 'instant' });
   }
 
-  function navigateView(view) {
+  async function navigateView(view) {
+    await whenOverlaySettled();
     if (view === activeView) { window.scrollTo({ top: 0 }); return; }
     const next = withView(window.location.href, view);
     next.hash = ''; // a section anchor of the previous view means nothing here
@@ -85,7 +88,8 @@ async function start() {
     }
   }
 
-  function navigate(cityId) {
+  async function navigate(cityId) {
+    await whenOverlaySettled();
     if (cityId === resolveActiveCity(journey, requestedCityFromSearch(window.location.search)).cityId) return;
     const url = new URL(window.location.href);
     url.searchParams.set(CITY_QUERY_PARAM, cityId);

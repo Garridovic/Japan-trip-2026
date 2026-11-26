@@ -1,0 +1,86 @@
+{
+  "provider": "Wikimedia Commons",
+  "api": "https://commons.wikimedia.org/w/api.php",
+  "imageWidth": 1800,
+  "variants": [
+    480,
+    960,
+    1600
+  ],
+  "defaultCount": 1,
+  "places": [
+    {
+      "id": "dotonbori",
+      "query": "Dotonbori Osaka night Glico sign Ebisubashi",
+      "count": 2,
+      "files": [
+        "File:Glico Man Neon Sign and Ebisubashi Bridge at night.jpg",
+        "File:Dotonbori, Osaka, at night, November 2016.jpg"
+      ]
+    },
+    {
+      "id": "hozenji",
+      "query": "Hozenji Yokocho Osaka",
+      "count": 1,
+      "files": [
+        "File:Hozenji Yokocho 2023-11.jpg"
+      ]
+    },
+    {
+      "id": "shinsaibashisuji",
+      "query": "Shinsaibashi-suji shopping street Osaka",
+      "count": 1
+    },
+    {
+      "id": "osakajo",
+      "query": "Osaka Castle Main Tower Japan",
+      "count": 2,
+      "files": [
+        "File:Tenshu and Inner Moat of Osaka Castle 1.jpg",
+        "File:Osaka Castle, Japan 2019-5 9.jpg"
+      ]
+    },
+    {
+      "id": "nambayasaka",
+      "query": "Namba Yasaka Shrine Osaka lion head stage",
+      "count": 1
+    },
+    {
+      "id": "kuromon",
+      "query": "Kuromon Ichiba Market Osaka",
+      "count": 1
+    },
+    {
+      "id": "nipponbashi",
+      "query": "Den Den Town Nipponbashi Osaka",
+      "count": 0,
+      "files": []
+    },
+    {
+      "id": "shinsekai",
+      "query": "Tsutenkaku Tower Shinsekai Osaka",
+      "count": 2
+    },
+    {
+      "id": "umeda",
+      "query": "Umeda Sky Building Osaka night",
+      "count": 1,
+      "files": [
+        "File:Umeda Sky Building 2026.jpg"
+      ]
+    },
+    {
+      "id": "nakanoshima",
+      "query": "Osaka City Central Public Hall Nakanoshima",
+      "count": 1
+    },
+    {
+      "id": "sumiyoshi",
+      "query": "Sumiyoshi Taisha Sorihashi bridge Osaka",
+      "count": 1,
+      "files": [
+        "File:Sumiyoshi-taisha, Sorihashi.jpg"
+      ]
+    }
+  ]
+}

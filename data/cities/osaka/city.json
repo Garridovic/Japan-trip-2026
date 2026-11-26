@@ -1,0 +1,59 @@
+{
+  "id": "osaka",
+  "timezone": "Asia/Tokyo",
+  "pageTitle": "Osaka · 15–17 diciembre 2026",
+  "description": "Guía compartida de Osaka del 15 al 17 de diciembre de 2026: itinerario, mapa GPS, gastronomía y visitas extra. Primera versión.",
+  "hero": {
+    "subtitle": "Dotonbori de noche, castillo, mercados y miradores en dos días, con base en Shinsaibashi. Primera versión: revisad los horarios antes de ir.",
+    "meta": [
+      "15–17 diciembre 2026",
+      "2 noches",
+      "Base: Shinsaibashi"
+    ],
+    "hotel": {
+      "name": "The Bridge Hotel Shinsaibashi",
+      "mapUrl": "https://maps.app.goo.gl/ohmM1sY272qXbuhj7"
+    }
+  },
+  "map": {
+    "center": [
+      34.675,
+      135.505
+    ],
+    "zoom": 13,
+    "queryContext": "Osaka, Japan",
+    "legendSummary": "Leyenda del mapa · color por jornada",
+    "dayFilters": [
+      {
+        "value": "15",
+        "label": "15 dic",
+        "short": "15 dic",
+        "color": "#c45a4a",
+        "legend": "15 dic · Dotonbori y Shinsaibashi"
+      },
+      {
+        "value": "16",
+        "label": "16 dic",
+        "short": "16 dic",
+        "color": "#3f70a5",
+        "legend": "16 dic · castillo, mercados y miradores"
+      },
+      {
+        "value": "17",
+        "label": "17 dic · extra",
+        "short": "17 dic",
+        "color": "#268577",
+        "legend": "17 dic · visita extra de la mañana"
+      }
+    ],
+    "alternativeCategories": [
+      {
+        "id": "extra",
+        "label": "Visitas extra",
+        "color": "#8554a4",
+        "legend": "Visitas extra opcionales"
+      }
+    ]
+  },
+  "footerLabel": "Osaka · 15–17 diciembre 2026"
+}

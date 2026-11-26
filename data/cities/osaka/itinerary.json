@@ -1,0 +1,229 @@
+{
+  "trip": "Osaka",
+  "year": 2026,
+  "dates": "15–17 diciembre",
+  "hotel": "The Bridge Hotel Shinsaibashi",
+  "summaryNote": "Primera versión del itinerario: los días 15 y 16 son el plan de Victor; los horarios de cada lugar proceden de webs turísticas y deben confirmarse antes de ir. El día 17 es un borrador opcional.",
+  "days": [
+    {
+      "key": "15",
+      "date": "2026-12-15",
+      "label": "15 diciembre",
+      "route": "Kioto → Osaka · Dotonbori",
+      "focus": "Llegada, hotel y primera noche andando por Dotonbori",
+      "quick": {
+        "date": "Mar · 15 dic",
+        "zone": "Shinsaibashi · Dotonbori",
+        "title": "Llegada y primera noche",
+        "route": [
+          "Hotel",
+          "Dotonbori",
+          "Hozenji Yokocho",
+          "Shinsaibashi-suji"
+        ],
+        "note": "Todo andando desde el hotel"
+      },
+      "detail": {
+        "dayOfWeek": "mar",
+        "title": "Llegada a Osaka y noche en Dotonbori",
+        "summary": "Un primer día tranquilo: instalarse y pasear de noche entre luces y callejones.",
+        "lead": "Plan de Victor, con horas orientativas. Todo el recorrido es andando desde el hotel. El sol se pone hacia las 16:50, así que a las 17:30 Dotonbori ya está iluminado.",
+        "stops": [
+          {
+            "time": "15:00–17:00",
+            "title": "Llegada desde Kioto, hotel y dejar equipaje",
+            "text": "Opciones según las fuentes: tren JR Special Rapid de Kioto a Osaka (unos 27–30 min, ≈580 ¥) o Hankyu desde Karasuma a Osaka-Umeda (unos 40–45 min, ≈410 ¥), y luego la línea Midosuji hasta Shinsaibashi (3–4 paradas desde Umeda). El hotel queda a unos 3–5 min de la estación.",
+            "suggestion": "Si el check-in no es hasta una hora concreta, dejad las maletas en recepción: no he podido comprobar la hora de entrada del hotel."
+          },
+          {
+            "time": "17:00–17:30",
+            "title": "Paseo hacia Dotonbori",
+            "text": "Unos 7–9 minutos a pie según los listados del hotel. El hotel está junto a Amerikamura, otra zona animada."
+          },
+          {
+            "time": "17:30–18:15",
+            "title": "Dotonbori · canal, puente Ebisu y cartel de Glico",
+            "text": "Foto en el puente Ebisubashi con el cartel del corredor de Glico y los neones sobre el canal. Es la zona de takoyaki y okonomiyaki."
+          },
+          {
+            "time": "18:15–18:45",
+            "title": "Hozenji Yokocho · callejón y templo Hozenji",
+            "text": "Callejón empedrado con faroles, a un paso de Dotonbori. Echad agua a la estatua cubierta de musgo (Mizukake Fudo) y, si queréis, tomad zenzai en Meoto Zenzai."
+          },
+          {
+            "time": "18:45–19:30",
+            "title": "Shinsaibashi-suji · galería comercial cubierta",
+            "text": "Galería comercial que sube hacia el norte, hacia vuestro hotel. Muchas tiendas cierran hacia las 20:00–21:00 (sin verificar)."
+          },
+          {
+            "time": "19:30–21:00",
+            "title": "Cena por Dotonbori y paseo nocturno",
+            "text": "Opciones verificadas: okonomiyaki en Mizuno, oden en Takoume Honten o takoyaki en Kukuru (ver «Comer en Osaka»).",
+            "suggestion": "A esa hora Mizuno suele tener cola: ir a las 19:30 sin reserva puede alargar la espera. El orden del plan tiene sentido: Hozenji y Shinsaibashi-suji quedan a pocos minutos de Dotonbori, y volvéis a cenar cerca."
+          }
+        ],
+        "transport": "Todo a pie desde el hotel (unos 7–9 min a Dotonbori). Desde Kioto: tren hasta Umeda o Osaka y metro Midosuji hasta Shinsaibashi.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=The+Bridge+Hotel+Shinsaibashi&destination=Shinsaibashi-suji,+Osaka&waypoints=Dotonbori,+Osaka%7CHozenji+Yokocho,+Osaka&travelmode=walking"
+      }
+    },
+    {
+      "key": "16",
+      "date": "2026-12-16",
+      "label": "16 diciembre",
+      "route": "Castillo → Namba Yasaka → Kuromon → Den Den → Shinsekai → Umeda",
+      "focus": "Día completo de visitas por Osaka",
+      "quick": {
+        "date": "Mié · 16 dic",
+        "zone": "Castillo · Namba · Shinsekai · Umeda",
+        "title": "Día completo por Osaka",
+        "route": [
+          "Castillo de Osaka",
+          "Namba Yasaka",
+          "Kuromon",
+          "Den Den Town",
+          "Shinsekai",
+          "Umeda Sky"
+        ],
+        "note": "Visita extra opcional: Nakanoshima por la noche"
+      },
+      "detail": {
+        "dayOfWeek": "mié",
+        "title": "Castillo, mercados, Shinsekai y Umeda",
+        "summary": "Seis visitas entre las 9:00 y las 18:30, con cena y, si queréis, luces en Nakanoshima.",
+        "lead": "Plan de Victor, con sus horas orientativas. Lo he revisado con fuentes turísticas: el orden y los tiempos son viables, y abajo van mis sugerencias sin cambiar nada de vuestro plan.",
+        "stops": [
+          {
+            "time": "08:30–09:00",
+            "title": "Desayuno y traslado al castillo",
+            "text": "30 minutos según vuestro plan.",
+            "suggestion": "El hotel está a unos 3 km en línea recta del castillo, y desde la estación hay que cruzar el parque hasta la torre: contad 35–45 minutos. Es una estimación mía, sin verificar; salir hacia las 8:15 da margen para estar en la puerta a las 9:00."
+          },
+          {
+            "time": "09:00–10:45",
+            "title": "1. Castillo de Osaka",
+            "text": "La torre principal abre a las 9:00; según Osaka Info cierra a las 18:00 con último acceso a las 17:30. Entrada de adultos: 1.200 yenes. Tiene museo y mirador. El parque es de acceso libre.",
+            "suggestion": "Algunas páginas antiguas dan 17:00 y último acceso 16:30; con entrada a las 9:00 no os afecta. 1 h 45 es holgado: sobra tiempo para el parque."
+          },
+          {
+            "time": "10:45–11:20",
+            "title": "Traslado a Namba Yasaka",
+            "text": "35 minutos según vuestro plan, en metro.",
+            "suggestion": "Orden alternativo (no aplicado): Castillo → Kuromon → Den Den Town → Shinsekai → Namba Yasaka → Umeda. Recorre unos 10,7 km en línea recta en lugar de 12,7 km (sin ir al sudoeste del castillo para volver al noreste) y Namba Yasaka queda de camino hacia Umeda por la línea Midosuji. Contras: coméis en Kuromon antes (hacia las 11:00) y Namba Yasaka (cierra a las 17:00) quedaría hacia las 15:30–16:00. Distancias calculadas con las coordenadas; los tiempos de metro no están verificados."
+          },
+          {
+            "time": "11:20–11:50",
+            "title": "2. Santuario Namba Yasaka",
+            "text": "Entrada gratuita. Recintos de 6:00 a 17:00; oficina de sellos de 9:00 a 16:50 (Osaka Info). Su escenario en forma de cabeza de león mide unos 12 m de alto. Visita corta, como decís."
+          },
+          {
+            "time": "11:50–12:10",
+            "title": "Paseo hasta Kuromon",
+            "text": "20 minutos según vuestro plan.",
+            "suggestion": "Entre Namba Yasaka y Kuromon hay unos 1,1 km en línea recta (calculado con las coordenadas): 20 minutos andando es razonable."
+          },
+          {
+            "time": "12:10–13:30",
+            "title": "3. Mercado Kuromon y comida",
+            "text": "Las fuentes dan horarios muy distintos y cada puesto decide el suyo. A mediodía hay buen ambiente y casi todo abierto.",
+            "suggestion": "Varias guías aconsejan ir antes (9:00–11:00) y avisan de que muchos puestos de pescado empiezan a cerrar desde las 14:00–16:30. Vuestra comida a las 12:10 funciona; no lo dejéis para más tarde."
+          },
+          {
+            "time": "13:30–14:15",
+            "title": "4. Nipponbashi · Den Den Town",
+            "text": "Tiendas de electrónica, anime, manga y videojuegos. Cada tienda abre a su hora, normalmente de 10:00–11:00 a 19:00–20:00. A las 13:30 todo estará abierto."
+          },
+          {
+            "time": "14:15–14:45",
+            "title": "Traslado a Shinsekai",
+            "text": "30 minutos según vuestro plan.",
+            "suggestion": "Están a unos 0,8 km en línea recta (calculado con las coordenadas): andando serían 15–20 minutos, así que 30 es muy prudente."
+          },
+          {
+            "time": "14:45–16:30",
+            "title": "5. Shinsekai y torre Tsutenkaku",
+            "text": "Barrio retro con carteles gigantes y calles de kushikatsu. Subir al mirador es opcional. Horario y precio del mirador sin verificar: las fuentes no coinciden (hasta las 20:00–21:30; 800 o 1.200 ¥).",
+            "suggestion": "El sol se pone hacia las 16:50: si queréis ver la ciudad con luz desde la torre, subid hacia las 16:00–16:15. 1 h 45 es mucho si no subís; podríais tomar kushikatsu en Daruma."
+          },
+          {
+            "time": "16:30–17:15",
+            "title": "Traslado a Umeda",
+            "text": "45 minutos según vuestro plan, en metro y a pie."
+          },
+          {
+            "time": "17:15–18:30",
+            "title": "6. Umeda Sky Building",
+            "text": "Abre de 9:30 a 22:30, último acceso a las 22:00. Entrada de adultos: 2.000 yenes según la mayoría de fuentes. Con el sol ya puesto, las vistas son de noche, como pretendíais.",
+            "suggestion": "Como el observatorio admite hasta las 22:00, no hay prisa: 1 h 15 es suficiente y deja margen para la visita extra."
+          },
+          {
+            "time": "19:00 en adelante",
+            "title": "Cena y regreso al hotel",
+            "text": "En el sótano del propio Umeda Sky está Takimi-koji, un callejón de restaurantes de estilo retro. También podéis cenar en Dotonbori.",
+            "suggestion": "Visita extra opcional, Nakanoshima: está de paso. Yodoyabashi queda a una parada de Umeda en la línea Midosuji, y de ahí al hotel. 60–75 minutos para ver la Sala Central de Osaka iluminada (Hikari-Renaissance, 11–25 dic según fuentes) retrasan la cena a las 20:15–20:30. Cabe sin recortar nada."
+          }
+        ],
+        "transport": "Mucho metro (Midosuji, Chuo, Sakaisuji) y algo de paseo. Una tarjeta IC (ICOCA, Suica…) evita comprar billetes sueltos.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=The+Bridge+Hotel+Shinsaibashi&destination=Umeda+Sky+Building&waypoints=Osaka+Castle%7CNamba+Yasaka+Shrine%7CKuromon+Market%7CNipponbashi+Den+Den+Town%7CTsutenkaku&travelmode=transit",
+        "highlight": {
+          "label": "Visita extra · Nakanoshima:",
+          "text": "cabe la noche del 16 (Hikari-Renaissance, de paso hacia el hotel). Sumiyoshi Taisha no cabe este día sin recortar Shinsekai."
+        }
+      }
+    },
+    {
+      "key": "17",
+      "date": "2026-12-17",
+      "label": "17 diciembre",
+      "route": "Osaka → Nara · visita extra opcional",
+      "focus": "Mañana opcional antes de salir hacia Nara",
+      "quick": {
+        "date": "Jue · 17 dic",
+        "zone": "Sumiyoshi · salida a Nara",
+        "title": "Visita extra opcional",
+        "route": [
+          "Hotel",
+          "Namba",
+          "Sumiyoshi Taisha",
+          "Namba"
+        ],
+        "note": "Solo si salís pronto hacia Nara"
+      },
+      "detail": {
+        "dayOfWeek": "jue",
+        "title": "Sumiyoshi Taisha antes de Nara (opcional)",
+        "summary": "Una visita corta y tranquila que cabe si salís del hotel hacia las 8:00.",
+        "lead": "Borrador para que lo edite Victor: horas propuestas por mí a partir de los tiempos de las fuentes. Si preferís ir directos a Nara, ignorad este día.",
+        "stops": [
+          {
+            "time": "08:00–08:30",
+            "title": "Hotel → Namba",
+            "text": "Propuesta. Dejad el hotel con las maletas (o dejadlas en una consigna: no he verificado cuál)."
+          },
+          {
+            "time": "08:30–08:50",
+            "title": "Nankai desde Namba a Sumiyoshi Taisha",
+            "text": "Unos 10 minutos en la línea principal Nankai; solo paran los trenes locales. El santuario queda a unos 3 minutos andando de la estación."
+          },
+          {
+            "time": "08:50–09:50",
+            "title": "Sumiyoshi Taisha",
+            "text": "Abre a las 6:30 de octubre a marzo; cierra a las 17:00; entrada gratuita. Puente Sorihashi y cuatro santuarios principales.",
+            "suggestion": "Cabe: aproximadamente 1 hora de visita. Con maletas es incómodo."
+          },
+          {
+            "time": "09:50–10:20",
+            "title": "Regreso a Namba",
+            "text": "Mismo trayecto en Nankai."
+          },
+          {
+            "time": "10:20",
+            "title": "Salida hacia Nara",
+            "text": "Desde Namba hay trenes a Nara (unos 40 minutos según lo habitual; no verificado en esta revisión). Llegaríais a Nara hacia las 11:00–11:30."
+          }
+        ],
+        "transport": "Metro y Nankai. Tarjeta IC válida en ambos.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=The+Bridge+Hotel+Shinsaibashi&destination=Sumiyoshi+Taisha&travelmode=transit"
+      }
+    }
+  ]
+}

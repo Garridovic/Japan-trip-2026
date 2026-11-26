@@ -421,9 +421,9 @@ body.phrase-show-open { overflow:hidden; }
 /* ---------- App views and bottom bar (Guía · Frases · Platos) ---------- */
 body { padding-bottom: calc(var(--bar-height) + env(safe-area-inset-bottom)); }
 .app-view[hidden] { display: none; }
-body[data-view="frases"] .city-tabs, body[data-view="platos"] .city-tabs { display: none; }
-#view-frases main, #view-platos main { padding-top: 26px; }
-.app-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 900; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; box-sizing: border-box; padding: 6px max(10px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)); background: rgba(24,42,53,.97); border-top: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+body:not([data-view="guia"]) .city-tabs { display: none; }
+#view-viaje main, #view-frases main, #view-platos main { padding-top: 26px; }
+.app-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 900; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; box-sizing: border-box; padding: 6px max(10px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)); background: rgba(24,42,53,.97); border-top: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .app-bar-button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: calc(var(--bar-height) - 12px); border: 0; border-radius: 16px; background: transparent; color: #c3cdca; font: inherit; cursor: pointer; }
 .app-bar-icon { font-size: 1.7rem; line-height: 1; }
 .app-bar-label { font-size: .78rem; font-weight: 800; letter-spacing: .02em; }
@@ -471,7 +471,7 @@ body[data-view="frases"] .city-tabs, body[data-view="platos"] .city-tabs { displ
 .top-bar { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; box-sizing: border-box; height: var(--tabs-height); background: #182a35; border-bottom: 1px solid rgba(255,255,255,.12); }
 .top-bar .city-tabs { position: static; flex: 1 1 auto; min-width: 0; height: 100%; border: 0; background: none; }
 .top-bar-title { display: none; flex: 1 1 auto; padding: 0 max(22px, calc((100vw - 1080px) / 2 + 22px)); color: #f2e5c9; font-size: .86rem; font-weight: 850; letter-spacing: .04em; }
-body[data-view="frases"] .top-bar-title, body[data-view="platos"] .top-bar-title { display: block; }
+body:not([data-view="guia"]) .top-bar-title { display: block; }
 .offline-chip { flex: none; display: inline-flex; align-items: center; gap: 5px; min-height: 40px; margin: 0 max(10px, calc((100vw - 1080px) / 2 + 12px)) 0 4px; padding: 0 12px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: transparent; color: #e8e6de; font: inherit; font-size: .76rem; font-weight: 850; cursor: pointer; }
 .offline-chip[hidden] { display: none; }
 .offline-chip[data-tone="ok"] { background: #2f6f4f; border-color: #2f6f4f; color: #fff; }
@@ -508,3 +508,29 @@ body[data-view="frases"] .top-bar-title, body[data-view="platos"] .top-bar-title
 .offline-chip-short { display: none; }
 @media (max-width: 419px) { .offline-chip-label { display: none; } .offline-chip-short { display: inline; } }
 .offline-chip { max-width: 70vw; white-space: nowrap; }
+
+/* ---------- Viaje (lodging) ---------- */
+.lodging-list { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.lodging-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 15px 16px; min-width: 0; }
+.lodging-card.is-current { border-color: var(--red); box-shadow: 0 0 0 2px var(--red-soft), var(--shadow); }
+.lodging-card.is-past { opacity: .72; }
+.lodging-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.lodging-city { color: var(--red); font-size: .72rem; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; }
+.lodging-status { border-radius: 999px; padding: 3px 9px; background: var(--red); color: #fff; font-size: .68rem; font-weight: 850; }
+.lodging-card.is-next .lodging-status { background: var(--gold); }
+.lodging-dates { margin: 2px 0 6px; font-weight: 800; font-size: .92rem; }
+.lodging-nights { color: var(--muted); font-weight: 700; }
+.lodging-card h3 { font-size: 1.1rem; overflow-wrap: anywhere; }
+.lodging-address { color: var(--muted); font-size: .86rem; overflow-wrap: anywhere; user-select: all; }
+.lodging-note { margin: 6px 0 0; padding: 6px 10px; border-radius: 10px; background: #fbf5e9; color: #6e5633; font-size: .78rem; font-weight: 700; }
+.lodging-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.lodging-map { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 14px; border-radius: 999px; background: var(--ink); color: #fff; text-decoration: none; font-size: .8rem; font-weight: 850; }
+.lodging-copy { min-height: 44px; padding: 0 14px; }
+.lodging-privacy { margin-top: 18px; }
+@media (max-width: 700px) { .lodging-list { grid-template-columns: 1fr; } .app-bar-label { font-size: .74rem; } }
+@media print { .lodging-actions { display: none !important; } }
+
+/* Osaka content: suggestions, sources */
+.stop-suggestion { margin-top: 6px; padding: 7px 10px; border-left: 3px solid var(--gold); border-radius: 8px; background: #fbf5e9; color: #6e5633 !important; font-size: .82rem; }
+.poi-sources-section ul { margin: 6px 0 0; padding-left: 18px; font-size: .86rem; }
+.poi-verification { margin: 6px 0; padding: 7px 10px; border-radius: 8px; background: #fbf5e9; color: #6e5633; font-size: .82rem; }

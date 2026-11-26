@@ -1,0 +1,77 @@
+{
+  "kicker": "7 paradas junto al recorrido",
+  "title": "Comer en Osaka",
+  "lead": "Okonomiyaki, takoyaki, oden y brochetas, cerca de lo que ya vais a visitar.",
+  "intro": "Osaka es famosa por comer bien y de pie, en puestos y locales pequeños. Esta es una primera selección corta, cada ficha con su fuente y marcada si el dato no está confirmado. Son ideas para elegir sobre la marcha, no reservas. Los horarios y cierres cambian: comprobadlos antes de ir.",
+  "highlightsLabel": "Comidas típicas de Osaka",
+  "highlights": [
+    {
+      "title": "Okonomiyaki",
+      "text": "Torta de col y masa a la plancha con salsa y mayonesa. El plato estrella de Osaka."
+    },
+    {
+      "title": "Takoyaki",
+      "text": "Bolitas de masa con un trozo de pulpo, con salsa y bonito seco. Se comen calientes en la calle."
+    },
+    {
+      "title": "Oden",
+      "text": "Cocido de huevo, rábano, tofu y pasta de pescado en caldo, ideal en invierno."
+    },
+    {
+      "title": "Kushikatsu",
+      "text": "Brochetas empanadas y fritas, típicas de Shinsekai. Nada de mojar dos veces en la salsa común."
+    }
+  ],
+  "dayFilters": [
+    {
+      "value": "todos",
+      "label": "Todos los días"
+    },
+    {
+      "value": "15",
+      "label": "15 dic · Dotonbori"
+    },
+    {
+      "value": "16",
+      "label": "16 dic · recorrido"
+    }
+  ],
+  "typeFilters": [
+    {
+      "value": "todos",
+      "label": "Todos"
+    },
+    {
+      "value": "okonomiyaki",
+      "label": "Okonomiyaki"
+    },
+    {
+      "value": "takoyaki",
+      "label": "Takoyaki"
+    },
+    {
+      "value": "oden",
+      "label": "Oden"
+    },
+    {
+      "value": "kushikatsu",
+      "label": "Kushikatsu"
+    },
+    {
+      "value": "mercado",
+      "label": "Mercado"
+    },
+    {
+      "value": "dulces",
+      "label": "Dulces"
+    },
+    {
+      "value": "varios",
+      "label": "Variado"
+    }
+  ],
+  "note": {
+    "label": "Importante:",
+    "text": "Primera versión. No he confirmado horarios en las webs de cada local; los marcadores «aproximados» necesitan comprobarse en Google Maps antes de ir."
+  }
+}

@@ -13,8 +13,9 @@
     {
       "id": "osaka",
       "name": "Osaka",
-      "enabled": false,
-      "arrivalDate": "2026-12-15"
+      "enabled": true,
+      "arrivalDate": "2026-12-15",
+      "departureDate": "2026-12-17"
     }
   ],
   "connections": [
@@ -23,7 +24,7 @@
       "to": "osaka",
       "date": "2026-12-15",
       "title": "Mar 15 dic · Kioto → Osaka",
-      "note": "Salida temprana, sin visitas. Si vais a Umeda, la línea Hankyu desde Karasuma hasta Osaka-Umeda puede ser práctica. Si vuestro alojamiento queda junto a Shin-Osaka, Namba o necesitáis enlazar con Shinkansen, elegid la ruta según la dirección exacta del hotel de Osaka."
+      "note": "Salida de Kioto tras el desayuno o el check-out, sin visitas. Opciones según fuentes: tren JR Special Rapid de Kioto a Osaka (unos 27–30 min, ≈580 ¥) o Hankyu de Karasuma a Osaka-Umeda (unos 40–45 min, ≈410 ¥). Después, la línea Midosuji del metro de Umeda a Shinsaibashi. El hotel de Osaka, The Bridge Hotel Shinsaibashi, queda a unos 3–5 min andando de Shinsaibashi (salidas 7 y 8). Comprobad horarios y tarifas el día antes."
     }
   ]
 }

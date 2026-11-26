@@ -24,7 +24,7 @@ for (const { name, viewport, deviceScaleFactor, isMobile, hasTouch } of devices)
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);
 
       const tabs = page.getByRole('tab');
-      await expect(tabs).toHaveCount(7);
+      await expect(tabs).toHaveCount(8); // Kioto, Osaka and the six fictional test cities
       const tablist = page.locator('#city-tabs');
       const first = await tabs.first().boundingBox();
       expect(first.height).toBeGreaterThanOrEqual(36);

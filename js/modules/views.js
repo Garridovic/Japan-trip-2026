@@ -1,6 +1,6 @@
-// App views: Guía (the city guide), Frases and Platos (global). Pure URL helpers + the bottom bar controller.
+// App views: Guía (the city guide), Viaje, Frases and Platos (global). Pure URL helpers + the bottom bar controller.
 export const VIEW_QUERY_PARAM = 'view';
-export const VIEWS = ['guia', 'frases', 'platos'];
+export const VIEWS = ['guia', 'viaje', 'frases', 'platos'];
 export const DEFAULT_VIEW = 'guia';
 
 /** Returns a valid view id for a query string; anything unknown falls back to the guide. */

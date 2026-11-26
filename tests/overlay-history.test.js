@@ -79,3 +79,17 @@ test('a plain popstate is not treated as an overlay event', async () => {
   await tick();
   assert.equal(popstateWasOverlay(), false);
 });
+
+test('navigation waits for a just-closed overlay to leave the history before pushing a new entry', async () => {
+  const { openOverlay, releaseOverlay, whenOverlaySettled, win } = await fresh();
+  openOverlay('poi', () => {}, win);
+  releaseOverlay('poi', win); // closed with the button: history.back() is now pending
+  let settled = false;
+  const waiting = whenOverlaySettled().then(() => { settled = true; });
+  assert.equal(settled, false);
+  await tick();
+  await waiting;
+  assert.equal(settled, true);
+  assert.equal(win.history.state, null);
+  await whenOverlaySettled(); // nothing pending: resolves at once
+});

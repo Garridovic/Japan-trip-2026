@@ -1,0 +1,71 @@
+{
+  "kicker": "Alojamientos",
+  "title": "Dónde dormimos",
+  "lead": "Todas las noches del viaje en orden, con la dirección a mano y el mapa en un toque.",
+  "privacyNote": "Esta web es pública: por eso no incluye códigos de acceso, números de reserva ni pagos.",
+  "stays": [
+    {
+      "id": "tokyo-1",
+      "city": "tokyo",
+      "cityName": "Tokio",
+      "name": "HOTEL AMANEK Asakusa Sakurabashi",
+      "address": "6-35-8 Asakusa, Taito Ward, Taito 111-0032",
+      "mapsUrl": "https://maps.app.goo.gl/v2Qf3UwKc9pgaaoK9",
+      "checkIn": "2026-12-08",
+      "checkOut": "2026-12-10"
+    },
+    {
+      "id": "hakone",
+      "city": "hakone",
+      "cityName": "Hakone",
+      "name": "Hakone Onsen Yuyado Yamanoshou",
+      "address": "Kanagawa, Hakone, Sengokuhara 817-211",
+      "mapsUrl": "https://maps.app.goo.gl/tdQMHdNZLnpgAAoD8",
+      "checkIn": "2026-12-10",
+      "checkOut": "2026-12-11"
+    },
+    {
+      "id": "kyoto",
+      "city": "kyoto",
+      "cityName": "Kioto",
+      "name": "Agora Kyoto Karasuma",
+      "address": "Shimogyo-Ku Myodenji-cho 701-1, Kyoto 600-8472",
+      "mapsUrl": "https://maps.app.goo.gl/vGFBKz2eG2h4FQJs5",
+      "checkIn": "2026-12-11",
+      "checkOut": "2026-12-15",
+      "reminder": "Pago el 7 de diciembre."
+    },
+    {
+      "id": "osaka",
+      "city": "osaka",
+      "cityName": "Osaka",
+      "name": "The Bridge Hotel Shinsaibashi",
+      "address": "Chuo-ku Nishi Shinsaibashi 1-10-24, Osaka 542-0086",
+      "mapsUrl": "https://maps.app.goo.gl/ohmM1sY272qXbuhj7",
+      "checkIn": "2026-12-15",
+      "checkOut": "2026-12-17",
+      "freeCancellationUntil": "2026-12-08"
+    },
+    {
+      "id": "nara",
+      "city": "nara",
+      "cityName": "Nara",
+      "name": "Yuzan apartment Sanjo",
+      "address": "532-2 Sanjocho, Nara 630-8244",
+      "mapsUrl": "https://maps.app.goo.gl/yrsz5D9qNysvfW4D9",
+      "checkIn": "2026-12-17",
+      "checkOut": "2026-12-18",
+      "freeCancellationUntil": "2026-12-10"
+    },
+    {
+      "id": "tokyo-2",
+      "city": "tokyo",
+      "cityName": "Tokio",
+      "name": "HOTEL AMANEK Asakusa Sakurabashi",
+      "address": "6-35-8 Asakusa, Taito Ward, Taito 111-0032",
+      "mapsUrl": "https://maps.app.goo.gl/v2Qf3UwKc9pgaaoK9",
+      "checkIn": "2026-12-18",
+      "checkOut": "2026-12-22"
+    }
+  ]
+}
