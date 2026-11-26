@@ -1,0 +1,22 @@
+{
+  "kicker": "Antes de salir",
+  "title": "Consejos prácticos",
+  "items": [
+    {
+      "title": "🚆 Transporte",
+      "text": "Combinad tren, metro y autobús. En las zonas turísticas el tráfico puede ralentizar mucho los buses. Usad una tarjeta IC (ICOCA u otra compatible) para pagar sin comprar billetes cada vez."
+    },
+    {
+      "title": "🌇 Luz y temperatura",
+      "text": "En diciembre anochece pronto y las noches son frías. Haced los paisajes y templos principales por la mañana y reservad las visitas iluminadas para después de las 17:00."
+    },
+    {
+      "title": "👟 Calzado y equipaje",
+      "text": "Hay muchas escaleras, cuestas y calles empedradas. Llevad calzado cómodo y evitad cargar con las maletas durante las visitas."
+    },
+    {
+      "title": "🕒 Horarios",
+      "text": "Los horarios de esta guía son orientativos. Revisad la web oficial del templo el día anterior, especialmente los eventos nocturnos, cierres y última admisión."
+    }
+  ]
+}

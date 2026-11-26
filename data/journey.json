@@ -1,0 +1,29 @@
+{
+  "id": "japan-2026",
+  "title": "Japón · Diciembre 2026",
+  "eyebrow": "Japón · guía compartida",
+  "cities": [
+    {
+      "id": "kyoto",
+      "name": "Kioto",
+      "enabled": true,
+      "arrivalDate": "2026-12-11",
+      "departureDate": "2026-12-15"
+    },
+    {
+      "id": "osaka",
+      "name": "Osaka",
+      "enabled": false,
+      "arrivalDate": "2026-12-15"
+    }
+  ],
+  "connections": [
+    {
+      "from": "kyoto",
+      "to": "osaka",
+      "date": "2026-12-15",
+      "title": "Mar 15 dic · Kioto → Osaka",
+      "note": "Salida temprana, sin visitas. Si vais a Umeda, la línea Hankyu desde Karasuma hasta Osaka-Umeda puede ser práctica. Si vuestro alojamiento queda junto a Shin-Osaka, Namba o necesitáis enlazar con Shinkansen, elegid la ruta según la dirección exacta del hotel de Osaka."
+    }
+  ]
+}

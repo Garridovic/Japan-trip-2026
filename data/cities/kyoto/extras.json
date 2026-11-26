@@ -1,0 +1,76 @@
+{
+  "items": [
+    {
+      "category": "templos",
+      "tag": "Templos · noreste",
+      "name": "Ginkaku-ji · Pabellón de Plata",
+      "desc": "Templo y jardines de musgo y arena. Combina muy bien con el Camino del Filósofo."
+    },
+    {
+      "category": "naturaleza",
+      "tag": "Paseo · noreste",
+      "name": "Philosopher’s Path",
+      "desc": "Camino junto a un canal, ideal para pasear entre Ginkaku-ji y Nanzen-ji."
+    },
+    {
+      "category": "templos",
+      "tag": "Templos · noreste",
+      "name": "Nanzen-ji",
+      "desc": "Gran complejo zen con jardines y un acueducto de ladrillo muy fotogénico."
+    },
+    {
+      "category": "templos",
+      "tag": "Templos · Higashiyama",
+      "name": "Sanjūsangen-dō",
+      "desc": "Famoso por sus 1.001 figuras de Kannon. Una visita interior muy diferente."
+    },
+    {
+      "category": "templos",
+      "tag": "Santuario · Okazaki",
+      "name": "Heian-jingū",
+      "desc": "Gran torii y arquitectura inspirada en los edificios imperiales de Kioto."
+    },
+    {
+      "category": "naturaleza",
+      "tag": "Parque · centro",
+      "name": "Kyoto Gyoen + Palacio Imperial",
+      "desc": "Amplio parque histórico para pasear y descansar del ritmo turístico."
+    },
+    {
+      "category": "barrios",
+      "tag": "Barrio · sur",
+      "name": "Fushimi Sake District",
+      "desc": "Antiguas bodegas de sake, canales y arquitectura tradicional. Requiere una excursión aparte."
+    },
+    {
+      "category": "barrios",
+      "tag": "Barrio · norte",
+      "name": "Kamishichiken",
+      "desc": "Distrito histórico más tranquilo que Gion, con calles tradicionales y casas de té."
+    },
+    {
+      "category": "cultura",
+      "tag": "Museo · centro",
+      "name": "Kyoto International Manga Museum",
+      "desc": "Una opción diferente si os interesa el manga y queréis una actividad interior."
+    },
+    {
+      "category": "cultura",
+      "tag": "Museo · Kyoto Station",
+      "name": "Kyoto Railway Museum",
+      "desc": "Locomotoras históricas, trenes y cultura ferroviaria japonesa. Interesante para aficionados a la tecnología."
+    },
+    {
+      "category": "naturaleza",
+      "tag": "Naturaleza · Arashiyama",
+      "name": "Monkey Park Iwatayama",
+      "desc": "Macacos japoneses y vistas panorámicas; exige una subida a pie."
+    },
+    {
+      "category": "cultura",
+      "tag": "Experiencia",
+      "name": "Ceremonia del té",
+      "desc": "Experiencia guiada para conocer la preparación y el servicio tradicional del matcha."
+    }
+  ]
+}

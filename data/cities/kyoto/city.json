@@ -1,0 +1,85 @@
+{
+  "id": "kyoto",
+  "timezone": "Asia/Tokyo",
+  "pageTitle": "Kioto · 11–15 diciembre 2026",
+  "description": "Guía compartida del viaje a Kioto del 11 al 15 de diciembre de 2026: itinerario, mapa GPS, gastronomía y lugares alternativos.",
+  "hero": {
+    "subtitle": "Cuatro días para combinar templos, barrios históricos, gastronomía local y dos eventos especiales el 14 de diciembre.",
+    "meta": [
+      "11–15 diciembre 2026",
+      "4 jornadas · 4 noches",
+      "Base: centro de Kioto"
+    ],
+    "hotel": {
+      "name": "Agora Kyoto Karasuma",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Agora+Kyoto+Karasuma"
+    }
+  },
+  "map": {
+    "center": [
+      35.005,
+      135.765
+    ],
+    "zoom": 12,
+    "queryContext": "Kyoto, Japan",
+    "legendSummary": "Leyenda del mapa · color por jornada y alternativas",
+    "dayFilters": [
+      {
+        "value": "11",
+        "label": "11 dic",
+        "short": "11 dic",
+        "color": "#c45a4a",
+        "legend": "11 dic · centro y Pontocho"
+      },
+      {
+        "value": "12",
+        "label": "12 dic",
+        "short": "12 dic",
+        "color": "#3f70a5",
+        "legend": "12 dic · Fushimi e Higashiyama"
+      },
+      {
+        "value": "13",
+        "label": "13 dic",
+        "short": "13 dic",
+        "color": "#268577",
+        "legend": "13 dic · templos y Arashiyama"
+      },
+      {
+        "value": "14",
+        "label": "14 dic · eventos",
+        "short": "14 dic",
+        "color": "#8554a4",
+        "legend": "14 dic · Yamashina Gishi y eventos"
+      }
+    ],
+    "alternativeCategories": [
+      {
+        "id": "templos",
+        "label": "Templos",
+        "color": "#bd8a9d",
+        "legend": "Alternativas · templos y santuarios"
+      },
+      {
+        "id": "barrios",
+        "label": "Barrios",
+        "color": "#c58b44",
+        "legend": "Alternativas · barrios y zonas"
+      },
+      {
+        "id": "naturaleza",
+        "label": "Naturaleza",
+        "color": "#78a47d",
+        "legend": "Alternativas · naturaleza y parques"
+      },
+      {
+        "id": "cultura",
+        "label": "Cultura",
+        "color": "#7887a6",
+        "legend": "Alternativas · museos y cultura"
+      }
+    ]
+  },
+  "footerLabel": "Kioto · 11–15 diciembre 2026",
+  "kml": "kyoto-points.kml"
+}

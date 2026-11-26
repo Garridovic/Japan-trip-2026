@@ -9,7 +9,17 @@
     "foodCategory": "mercado",
     "desc": "La parada más sencilla para probar varias especialidades: tamagoyaki, encurtidos, yuba, namafu, tempura y dulces. No es un restaurante único: escoged varios puestos y compartid.",
     "query": "Nishiki Market Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Mercado · bocados locales",
+    "dayLabel": "11 dic · centro",
+    "note": "Mejor antes de media tarde; cada tienda tiene su propio horario. En el mercado se debe comer delante o dentro del puesto, no caminando.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nishiki+Market+Kyoto",
+    "links": [
+      {
+        "label": "Normas del mercado ↗",
+        "url": "https://www.kyoto-nishiki.or.jp/en/manner/"
+      }
+    ]
   },
   {
     "id": "food-02",
@@ -21,7 +31,11 @@
     "foodCategory": "tradicional",
     "desc": "Pequeño restaurante en una machiya, conocido por su desayuno de Kioto con arroz cocinado en cazuela (donabe) y por sus platos obanzai de temporada por la noche.",
     "query": "Shunsai Imari Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Obanzai · desayuno y cena",
+    "dayLabel": "11 dic · centro",
+    "note": "Buena opción cerca del hotel. El servicio de desayuno y el de cena tienen horarios distintos; comprobad disponibilidad y reserva.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shunsai+Imari+Kyoto"
   },
   {
     "id": "food-03",
@@ -33,7 +47,11 @@
     "foodCategory": "tradicional",
     "desc": "Una opción para cenar compartiendo pequeños platos de cocina casera de Kioto, verduras de temporada y pescado, en una casa tradicional remodelada cerca de Pontocho y Kiyamachi.",
     "query": "Kyomachiya Obanzai Kohaku Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Obanzai · izakaya",
+    "dayLabel": "11 dic · Pontocho",
+    "note": "Pensado para la noche del viernes, después del paseo por el centro. Comprobad si admite reserva y el horario de ese día.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kyomachiya+Obanzai+Kohaku+Kyoto"
   },
   {
     "id": "food-04",
@@ -45,7 +63,11 @@
     "foodCategory": "fideos",
     "desc": "Ramen de estilo moderno, con caldos claros y sabores delicados. Está en el centro, a una distancia razonable del hotel y de Nishiki; opción práctica para una comida caliente sin alargar demasiado la parada.",
     "query": "Nippon Ramen Rin Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Ramen · comida informal",
+    "dayLabel": "11 dic · Karasuma",
+    "note": "Comprobad el horario y posibles colas antes de ir.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nippon+Ramen+Rin+Kyoto"
   },
   {
     "id": "food-05",
@@ -57,7 +79,17 @@
     "foodCategory": "tradicional",
     "desc": "Una forma cómoda de probar varios sabores de Kioto en una sola comida: el menú Yasaka combina seis pequeños obanzai con un bol de arroz con yuba y sopa de miso.",
     "query": "Kyosai-aji Nomura Nishiki Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Obanzai y yuba · comida",
+    "dayLabel": "11 dic · Nishiki",
+    "note": "La información publicada indica servicio de 8:00 a 15:00. Encaja mejor como desayuno tardío o comida antes de continuar por el centro.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kyosai-aji+Nomura+Nishiki+Kyoto",
+    "links": [
+      {
+        "label": "Web oficial ↗",
+        "url": "https://www.nomurafoods.jp/shops/nishiki/"
+      }
+    ]
   },
   {
     "id": "food-06",
@@ -69,7 +101,11 @@
     "foodCategory": "tradicional",
     "desc": "Izakaya conocida por sus platos obanzai de temporada y verduras locales. Buena alternativa para una cena japonesa informal en la zona de Kiyamachi, al norte de Pontocho.",
     "query": "Menami Kyoto Kiyamachi",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Obanzai · platos para compartir",
+    "dayLabel": "11 dic · Kiyamachi / Sanjo",
+    "note": "Interesante si preferís una cena con varios platos en el centro. Consultad disponibilidad y reserva.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Menami+Kyoto+Kiyamachi"
   },
   {
     "id": "food-07",
@@ -81,7 +117,11 @@
     "foodCategory": "fideos",
     "desc": "Restaurante tradicional junto al acceso de Fushimi Inari. Ofrece soba y cha-soba (fideos con té verde), una opción cómoda para comer después de recorrer los torii.",
     "query": "Kanoko 59 Fukakusa Inari Nakanocho Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Soba y cha-soba",
+    "dayLabel": "12 dic · Fushimi Inari",
+    "note": "A pocos minutos andando del santuario. Puede haber espera en las horas centrales.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kanoko+59+Fukakusa+Inari+Nakanocho+Kyoto"
   },
   {
     "id": "food-08",
@@ -93,7 +133,11 @@
     "foodCategory": "carne",
     "desc": "Especialista en gyukatsu: filete de ternera empanado y frito, servido en formato de menú japonés. Alternativa contundente cerca del santuario.",
     "query": "GYUKATSU Kyoto Katsugyu Fushimi Inari",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Gyukatsu · ternera empanada",
+    "dayLabel": "12 dic · Fushimi Inari",
+    "note": "A unos pocos minutos de la estación JR Inari y de la zona de acceso al santuario. En horas punta puede haber cola.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=GYUKATSU+Kyoto+Katsugyu+Fushimi+Inari"
   },
   {
     "id": "food-09",
@@ -105,7 +149,17 @@
     "foodCategory": "fideos",
     "desc": "Casa histórica conocida por el nishin soba: fideos en caldo dashi con arenque seco cocinado hasta quedar tierno. Está junto al teatro Minamiza.",
     "query": "Sohonke Nishin Soba Matsuba Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Nishin soba · especialidad histórica",
+    "dayLabel": "12 dic · Gion-Shijo",
+    "note": "El horario publicado es 10:30–21:00 (último pedido 20:30); cierra los miércoles. Confirmadlo antes del viaje.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sohonke+Nishin+Soba+Matsuba+Kyoto",
+    "links": [
+      {
+        "label": "Web oficial ↗",
+        "url": "http://www.sobamatsuba.co.jp/"
+      }
+    ]
   },
   {
     "id": "food-10",
@@ -117,7 +171,17 @@
     "foodCategory": "tradicional",
     "desc": "Fundado en 1781 y famoso por su saba-zushi: sushi prensado de caballa curada, arroz y kombu. Una alternativa muy local al nigiri convencional.",
     "query": "Izuu 367 Kiyomotocho Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Saba-zushi · sushi tradicional",
+    "dayLabel": "12 dic · Gion",
+    "note": "Tiene espacio para comer y también opciones para llevar. La web oficial publica horarios y días de cierre.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Izuu+367+Kiyomotocho+Kyoto",
+    "links": [
+      {
+        "label": "Web oficial y menú ↗",
+        "url": "https://www.izuu.jp/en_eatin/"
+      }
+    ]
   },
   {
     "id": "food-11",
@@ -129,7 +193,17 @@
     "foodCategory": "dulces",
     "desc": "Parada para tomar matcha de Uji, parfaits y dulces de té verde. Buena pausa después de recorrer Higashiyama y Gion; puede haber cola en horas punta.",
     "query": "Saryo Tsujiri Gion Honten Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Matcha · parfaits y té",
+    "dayLabel": "12 dic · Gion",
+    "note": "Consultad los horarios de la sala de té en la web oficial antes de ir.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Saryo+Tsujiri+Gion+Honten+Kyoto",
+    "links": [
+      {
+        "label": "Web oficial ↗",
+        "url": "https://www.giontsujiri.co.jp/en/"
+      }
+    ]
   },
   {
     "id": "food-12",
@@ -141,7 +215,11 @@
     "foodCategory": "carne",
     "desc": "Pequeño izakaya especializado en gyoza, ideal para compartir varias raciones y acompañarlas con otros platos y bebidas. Una opción más informal para la noche.",
     "query": "Kyoto Gyoza enen Gion Main Branch",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Gyoza · izakaya informal",
+    "dayLabel": "12 dic · Gion",
+    "note": "Está en el entorno de Gion-Shijo. En horas punta conviene llegar pronto o comprobar si admite reserva.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kyoto+Gyoza+enen+Gion+Main+Branch"
   },
   {
     "id": "food-13",
@@ -153,7 +231,17 @@
     "foodCategory": "tradicional",
     "desc": "Restaurante tradicional de tofu caliente en Arashiyama. Entre noviembre y febrero sirve yuzu-gama tofu, preparado dentro de una yuzu: una especialidad muy apropiada para vuestro viaje.",
     "query": "Yudofu Takemura Arashiyama Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Yudofu · especialidad de invierno",
+    "dayLabel": "13 dic · Arashiyama",
+    "note": "Recomiendan reservar, especialmente en temporada concurrida. Calculad tiempo para una comida sentados.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Yudofu+Takemura+Arashiyama+Kyoto",
+    "links": [
+      {
+        "label": "Menú y reservas ↗",
+        "url": "https://www.yudouhutakemura.com/en/"
+      }
+    ]
   },
   {
     "id": "food-14",
@@ -165,7 +253,17 @@
     "foodCategory": "tradicional",
     "desc": "Comedor dentro del recinto de Tenryū-ji, especializado en shojin-ryori: cocina budista vegetariana basada en tofu, verduras, setas y productos de temporada.",
     "query": "Shigetsu Tenryuji Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Shojin-ryori · cocina budista",
+    "dayLabel": "13 dic · Tenryū-ji",
+    "note": "La opción más temática para comer después de visitar el templo. Revisad el horario de servicio y reservad con antelación; no es un restaurante para una comida tardía.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shigetsu+Tenryuji+Kyoto",
+    "links": [
+      {
+        "label": "Información ↗",
+        "url": "https://www.tenryuji.com/en/shigetsu/"
+      }
+    ]
   },
   {
     "id": "food-15",
@@ -177,7 +275,11 @@
     "foodCategory": "fideos",
     "desc": "Restaurante de soba cerca del puente Togetsukyō. Algunas comidas combinan fideos, tempura y pequeños platos de temporada, con vistas al río Katsura.",
     "query": "Arashiyama Yoshimura Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Soba · tempura y vistas al río",
+    "dayLabel": "13 dic · Togetsukyō",
+    "note": "Buena opción para comer durante el paseo de Arashiyama. Es popular y puede formarse cola.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Arashiyama+Yoshimura+Kyoto"
   },
   {
     "id": "food-16",
@@ -189,7 +291,11 @@
     "foodCategory": "carne",
     "desc": "Especializado en bowls de wagyu, con una presentación llamativa y una forma de comerlo por etapas, añadiendo caldo para terminar como ochazuke.",
     "query": "Wagyu Volcano Steak OAGARI Arashiyama",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Wagyu · arroz y caldo dashi",
+    "dayLabel": "13 dic · Arashiyama",
+    "note": "Alternativa para quien prefiera carne a tofu o soba. Está cerca de Tenryū-ji y del puente.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Wagyu+Volcano+Steak+OAGARI+Arashiyama"
   },
   {
     "id": "food-17",
@@ -201,7 +307,11 @@
     "foodCategory": "dulces",
     "desc": "Cafetería de especialidad junto al río Katsura y el puente Togetsukyō. Buena parada para tomar café y descansar un rato entre visitas.",
     "query": "Arabica Kyoto Arashiyama",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Café · pausa junto al río",
+    "dayLabel": "13 dic · Arashiyama",
+    "note": "Es una cafetería, no una comida completa. Consultad el horario del local el mismo día.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Arabica+Kyoto+Arashiyama"
   },
   {
     "id": "food-18",
@@ -213,7 +323,11 @@
     "foodCategory": "curry",
     "desc": "Pequeño local de curry japonés, práctico para una comida sencilla y caliente antes o después de los actos del festival.",
     "query": "Tokumasa Yamashina Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Curry japonés · comida rápida",
+    "dayLabel": "14 dic · Yamashina",
+    "note": "Está a unos minutos de la estación de Yamashina. La información publicada indica servicio de comida y cena; comprobad el horario concreto.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tokumasa+Yamashina+Kyoto"
   },
   {
     "id": "food-19",
@@ -225,7 +339,11 @@
     "foodCategory": "tradicional",
     "desc": "Opción de cena para entrar en calor: hot pot de casquería con caldo de dashi y miso blanco al estilo de Kioto, pensado para compartir alrededor de la mesa.",
     "query": "Kyo-Motsunabe Kamehachi Yamashina",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Motsunabe · hot pot de Kioto",
+    "dayLabel": "14 dic · Yamashina",
+    "note": "Cerca de la estación de Yamashina. Abre para el servicio de tarde-noche; es una opción para después del festival, no para una comida temprana.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kyo-Motsunabe+Kamehachi+Yamashina"
   },
   {
     "id": "food-20",
@@ -237,6 +355,10 @@
     "foodCategory": "carne",
     "desc": "Izakaya especializada en brochetas de pollo, con pollo de Kioto asado sobre carbón binchotan. Una cena informal para cerrar el día de Yamashina.",
     "query": "Yakitori Kanazawa Honkan Yamashina Kyoto",
-    "pinApproximate": true
+    "pinApproximate": true,
+    "foodTypeLabel": "Yakitori · pollo a la brasa",
+    "dayLabel": "14 dic · Yamashina",
+    "note": "Está en el entorno de la estación de Yamashina. Confirmad el horario y la disponibilidad antes de ir.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Yakitori+Kanazawa+Honkan+Yamashina+Kyoto"
   }
 ]

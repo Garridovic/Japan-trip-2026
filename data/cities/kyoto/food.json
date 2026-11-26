@@ -1,0 +1,97 @@
+{
+  "kicker": "20 paradas seleccionadas por zona",
+  "title": "Comer en Kioto",
+  "lead": "Platos típicos y sitios cerca de las visitas del itinerario. Cada ficha abre su ubicación en Google Maps.",
+  "intro": "No hace falta recorrer la ciudad para comer: estas 20 opciones están agrupadas por los barrios que visitaréis. Son ideas para elegir sobre la marcha, no reservas obligatorias. Los horarios, cierres semanales y menús pueden cambiar; comprobadlos antes de ir.",
+  "highlightsLabel": "Comidas típicas de Kioto",
+  "highlights": [
+    {
+      "title": "Obanzai",
+      "text": "Pequeños platos caseros con verduras y productos de temporada, normalmente para compartir."
+    },
+    {
+      "title": "Yudofu y yuba",
+      "text": "Tofu caliente y piel de tofu. Especialmente apetecibles en diciembre."
+    },
+    {
+      "title": "Nishin soba",
+      "text": "Fideos soba en caldo dashi con arenque dulce cocinado lentamente."
+    },
+    {
+      "title": "Saba-zushi",
+      "text": "Sushi prensado de caballa curada, una especialidad de Kioto."
+    },
+    {
+      "title": "Kyo-tsukemono",
+      "text": "Encurtidos locales como senmaizuke y shibazuke."
+    },
+    {
+      "title": "Matcha y wagashi",
+      "text": "Té verde de Uji y dulces tradicionales japoneses."
+    },
+    {
+      "title": "Shojin-ryori",
+      "text": "Cocina budista vegetariana, con tofu, verduras, setas y preparaciones de temporada."
+    },
+    {
+      "title": "Kyo-kaiseki",
+      "text": "Comida estacional de varios pases. Una experiencia más formal y normalmente cara."
+    }
+  ],
+  "dayFilters": [
+    {
+      "value": "todos",
+      "label": "Todos los días"
+    },
+    {
+      "value": "11",
+      "label": "11 dic · centro"
+    },
+    {
+      "value": "12",
+      "label": "12 dic · Fushimi y Gion"
+    },
+    {
+      "value": "13",
+      "label": "13 dic · Arashiyama"
+    },
+    {
+      "value": "14",
+      "label": "14 dic · Yamashina"
+    }
+  ],
+  "typeFilters": [
+    {
+      "value": "todos",
+      "label": "Todos"
+    },
+    {
+      "value": "mercado",
+      "label": "Mercado"
+    },
+    {
+      "value": "tradicional",
+      "label": "Cocina tradicional"
+    },
+    {
+      "value": "fideos",
+      "label": "Ramen y soba"
+    },
+    {
+      "value": "dulces",
+      "label": "Té y café"
+    },
+    {
+      "value": "carne",
+      "label": "Carne e izakaya"
+    },
+    {
+      "value": "curry",
+      "label": "Curry"
+    }
+  ],
+  "note": {
+    "label": "Consejos para el grupo:",
+    "text": "en Nishiki Market no se debe caminar comiendo; consumid cada producto delante del puesto o dentro del establecimiento. Para Shigetsu, yudofu y las cenas de grupo, comprobad las reservas con antelación. Los 20 sitios son alternativas, no una ruta gastronómica que haya que completar. El día 14, las opciones de Yamashina están alrededor de la estación; el final del desfile puede requerir un desplazamiento adicional."
+  }
+}

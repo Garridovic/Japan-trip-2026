@@ -1,0 +1,275 @@
+{
+  "trip": "Kioto",
+  "year": 2026,
+  "dates": "11–15 diciembre",
+  "hotel": "Agora Kyoto Karasuma",
+  "days": [
+    {
+      "key": "11",
+      "date": "2026-12-11",
+      "label": "11 diciembre",
+      "route": "Hakone → Kioto",
+      "focus": "Llegada a media mañana; centro, Nishiki, Castillo Nijō y Pontocho",
+      "quick": {
+        "date": "Vie · 11 dic",
+        "zone": "Centro",
+        "title": "Llegada + primera noche",
+        "route": [
+          "Hotel",
+          "Nishiki",
+          "Castillo Nijō",
+          "Pontocho"
+        ],
+        "note": "Mercado, castillo y cena junto al río"
+      },
+      "detail": {
+        "dayOfWeek": "vie",
+        "title": "Llegada, centro de Kioto y Pontocho",
+        "summary": "Un primer día moderado para instalarse y conocer el centro.",
+        "lead": "Dejad primero las maletas en el hotel. El plan se puede desplazar según la hora real de llegada desde Hakone.",
+        "stops": [
+          {
+            "time": "10:30–11:30",
+            "title": "Agora Kyoto Karasuma · dejar equipaje",
+            "text": "Check-in o consigna, según disponibilidad. Desayuno tardío o café si hace falta."
+          },
+          {
+            "time": "11:45–13:15",
+            "title": "Mercado Nishiki",
+            "text": "Comida informal y picoteo: encurtidos, tamagoyaki, dulces y especialidades locales. Mejor no dejarlo para última hora."
+          },
+          {
+            "time": "13:45–16:00",
+            "title": "Castillo Nijō",
+            "text": "Palacio Ninomaru, murallas y jardines. La entrada al recinto termina a las 16:00 y el castillo cierra a las 17:00."
+          },
+          {
+            "time": "18:00–noche",
+            "title": "Pontocho + Kiyamachi",
+            "text": "Callejones de restaurantes, bares y ambiente joven. Buena zona para cenar y tomar algo."
+          }
+        ],
+        "transport": "hotel → Nishiki, a pie (aprox. 10–15 min). Nishiki → Nijō, metro o taxi. Nijō → Pontocho, metro o taxi; regreso al hotel a pie o en taxi.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Agora+Kyoto+Karasuma&destination=Pontocho,+Kyoto&waypoints=Nishiki+Market,+Kyoto%7CNijo+Castle,+Kyoto&travelmode=transit"
+      }
+    },
+    {
+      "key": "12",
+      "date": "2026-12-12",
+      "label": "12 diciembre",
+      "route": "Fushimi Inari → Higashiyama → Gion",
+      "focus": "Santuarios, calles tradicionales e iluminación nocturna de Kōdai-ji",
+      "quick": {
+        "date": "Sáb · 12 dic",
+        "zone": "Sur + Higashiyama",
+        "title": "El Kioto más tradicional",
+        "route": [
+          "Fushimi Inari",
+          "Kiyomizu-dera",
+          "Sannenzaka",
+          "Yasaka",
+          "Kōdai-ji"
+        ],
+        "note": "Torii, calles históricas e iluminación"
+      },
+      "detail": {
+        "dayOfWeek": "sáb",
+        "title": "Fushimi Inari, Higashiyama y Kōdai-ji",
+        "summary": "El gran día de santuarios, calles tradicionales y jardines iluminados.",
+        "lead": "Empezad temprano en Fushimi Inari y moved el resto del día a pie por Higashiyama. Llevad calzado cómodo: hay cuestas, escalones y adoquines.",
+        "stops": [
+          {
+            "time": "07:00–09:15",
+            "title": "Fushimi Inari Taisha",
+            "text": "Los torii rojos y el recorrido hasta el mirador Yotsutsuji. No es necesario subir hasta la cima."
+          },
+          {
+            "time": "10:15–11:45",
+            "title": "Kiyomizu-dera",
+            "text": "Templo y terraza de madera con vistas sobre Kioto. La iluminación nocturna de otoño termina antes de vuestras fechas."
+          },
+          {
+            "time": "11:45–14:30",
+            "title": "Sannenzaka + Ninenzaka + Yasaka Pagoda",
+            "text": "Calles históricas, tiendas, casas de té y pausa para comer por la zona."
+          },
+          {
+            "time": "14:30–16:30",
+            "title": "Santuario Yasaka + parque Maruyama + Nene-no-michi",
+            "text": "Paseo tranquilo hacia el barrio de Gion y la zona de Kōdai-ji."
+          },
+          {
+            "time": "17:00–19:00",
+            "title": "Kōdai-ji · iluminación nocturna",
+            "text": "Jardines y estanques iluminados. La temporada especial de 2026 termina el 13 de diciembre; el templo enciende la iluminación a las 17:00 y cierra a las 22:00."
+          },
+          {
+            "time": "19:00–noche",
+            "title": "Gion · cena y paseo",
+            "text": "Terminad la jornada por Hanamikoji y las calles históricas de Gion, respetando las zonas con restricciones de fotografía y acceso."
+          }
+        ],
+        "highlight": {
+          "label": "Evento de temporada:",
+          "text": "Kōdai-ji celebra su visita nocturna especial del 23 de octubre al 13 de diciembre de 2026. El sábado 12 es una buena fecha para verla."
+        },
+        "transport": "hotel → Fushimi Inari, metro hasta Kyoto Station + JR Nara Line hasta Inari. Fushimi → Kiyomizu: Keihan/JR con caminata final o taxi. Desde Kiyomizu, el resto se hace a pie.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Agora+Kyoto+Karasuma&destination=Kodaiji+Temple,+Kyoto&waypoints=Fushimi+Inari+Taisha,+Kyoto%7CKiyomizu-dera,+Kyoto%7CSannenzaka,+Kyoto%7CYasaka+Shrine,+Kyoto&travelmode=transit"
+      }
+    },
+    {
+      "key": "13",
+      "date": "2026-12-13",
+      "label": "13 diciembre",
+      "route": "Kinkaku-ji → Ryoan-ji → Arashiyama → Tō-ji",
+      "focus": "Templos zen, bosque de bambú y visita nocturna",
+      "quick": {
+        "date": "Dom · 13 dic",
+        "zone": "Noroeste + sur",
+        "title": "Templos e iluminación final",
+        "route": [
+          "Kinkaku-ji",
+          "Ryoan-ji",
+          "Arashiyama",
+          "Tō-ji"
+        ],
+        "note": "Noroeste + oeste · Última noche de Tō-ji"
+      },
+      "detail": {
+        "dayOfWeek": "dom",
+        "title": "Kinkaku-ji, Ryoan-ji, Arashiyama y Tō-ji",
+        "summary": "Jornada intensa para encadenar el noroeste y el oeste; Ninna-ji queda como alternativa.",
+        "lead": "Es el día más completo del itinerario. Para que funcione, limitad el tiempo en cada templo y utilizad taxi o tren Randen entre Ryoan-ji y Arashiyama. Okochi Sanso es la primera visita que eliminaría si vais justos.",
+        "stops": [
+          {
+            "time": "08:15–09:00",
+            "title": "Desplazamiento a Kinkaku-ji",
+            "text": "Salid temprano desde el hotel. Taxi o autobús; el taxi es más previsible para cumplir el horario."
+          },
+          {
+            "time": "09:00–10:00",
+            "title": "Kinkaku-ji · Pabellón Dorado",
+            "text": "El pabellón cubierto de pan de oro y su estanque. Horario habitual: 9:00–17:00."
+          },
+          {
+            "time": "10:30–11:30",
+            "title": "Ryoan-ji",
+            "text": "Jardín zen de grava y piedras. Una visita breve pero imprescindible para conocer el paisajismo japonés."
+          },
+          {
+            "time": "11:30–12:15",
+            "title": "Traslado y comida temprana en Arashiyama",
+            "text": "Taxi directo o línea Randen con transbordo. Evitad añadir Ninna-ji este día para no ir demasiado ajustados."
+          },
+          {
+            "time": "12:15–13:15",
+            "title": "Tenryū-ji",
+            "text": "Templo zen y jardín Sōgenchi. Abre a las 8:30; la última admisión del jardín suele ser a las 16:50."
+          },
+          {
+            "time": "13:15–14:00",
+            "title": "Bosque de bambú",
+            "text": "Paseo por el famoso sendero; es gratuito y suele llenarse conforme avanza la mañana."
+          },
+          {
+            "time": "14:00–15:00",
+            "title": "Okochi Sanso · opcional",
+            "text": "Villa y jardines tradicionales con vistas sobre la zona. Saltadla si preferís dedicar más tiempo al río."
+          },
+          {
+            "time": "15:00–16:15",
+            "title": "Puente Togetsukyō + río Katsura",
+            "text": "Paseo por la orilla y tiempo para disfrutar del paisaje. El Monkey Park sería una alternativa, no una parada adicional."
+          },
+          {
+            "time": "16:15–17:30",
+            "title": "Regreso al hotel y descanso",
+            "text": "Volved al centro para descansar antes de la última iluminación especial de Tō-ji."
+          },
+          {
+            "time": "18:00–20:00",
+            "title": "Tō-ji · iluminación nocturna",
+            "text": "Pagoda de cinco pisos, jardines y visita especial nocturna. El 13 de diciembre es el último día anunciado de la iluminación 2026; horario previsto de 18:00 a 21:30, última entrada 21:00."
+          }
+        ],
+        "highlight": {
+          "label": "Prioridades si el día se alarga:",
+          "text": "mantened Kinkaku-ji, Ryoan-ji, Tenryū-ji, bosque de bambú y Tō-ji. Okochi Sanso es opcional y Ninna-ji queda fuera del recorrido principal."
+        },
+        "transport": "hotel → Kinkaku-ji en taxi o bus; Kinkaku-ji → Ryoan-ji en taxi/bus; Ryoan-ji → Arashiyama en taxi o Randen (vía Katabiranotsuji); regreso desde Saga-Arashiyama en JR Sagano Line. Para Tō-ji, taxi o transporte público vía Kyoto Station.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Agora+Kyoto+Karasuma&destination=Toji+Temple,+Kyoto&waypoints=Kinkaku-ji,+Kyoto%7CRyoan-ji,+Kyoto%7CTenryu-ji,+Kyoto%7CArashiyama+Bamboo+Grove,+Kyoto%7CTogetsukyo+Bridge,+Kyoto&travelmode=transit"
+      }
+    },
+    {
+      "key": "14",
+      "date": "2026-12-14",
+      "label": "14 diciembre",
+      "route": "Yamashina",
+      "focus": "Yamashina Gishi Matsuri y actividades relacionadas con el Kanji del Año",
+      "quick": {
+        "date": "Lun · 14 dic",
+        "zone": "Yamashina + Higashiyama",
+        "title": "Yamashina Gishi + Kanji del Año",
+        "route": [
+          "Bishamondō",
+          "desfile",
+          "Centro Cultural",
+          "Ōishi Jinja"
+        ],
+        "note": "Festival 10:00–15:00 · anuncio del Kanji"
+      },
+      "detail": {
+        "dayOfWeek": "lun",
+        "title": "Yamashina Gishi Matsuri + Kanji del Año",
+        "summary": "Dos acontecimientos especiales que coinciden este lunes en Kioto.",
+        "lead": "Dedicad la mañana y primeras horas de la tarde al desfile de los 47 rōnin en Yamashina. El acto «Kanji del Año» también se celebra el 14 en Kiyomizu-dera, pero la organización restringe el acceso del público al lugar de la caligrafía: no se puede asistir a la ceremonia en sí.",
+        "stops": [
+          {
+            "time": "08:45–09:40",
+            "title": "Hotel → estación Yamashina → Bishamondō",
+            "text": "Metro Tozai hasta Yamashina y unos 20 minutos a pie hasta el templo. Llegad con margen para buscar un buen lugar desde el que ver la salida."
+          },
+          {
+            "time": "10:00",
+            "title": "Salida del desfile · Bishamondō",
+            "text": "Comienza el Yamashina Gishi Matsuri: vecinos vestidos como los 47 rōnin recorren lugares vinculados a la historia de Ōishi Kuranosuke."
+          },
+          {
+            "time": "11:45–12:30 aprox.",
+            "title": "Actuaciones · Kyoto City Tōbu Culture Hall",
+            "text": "Representaciones de escenas de la historia de los 47 rōnin, incluida «Matsu no Rōka». Hora orientativa publicada por la organización turística regional; confirmad el programa cercano a la fecha."
+          },
+          {
+            "time": "12:30–14:30",
+            "title": "Comida y continuación del festival",
+            "text": "Podéis seguir el recorrido hacia Iwayadera y Ōishi Jinja o terminar aquí y regresar al centro. Seguir todo el desfile supone caminar bastante."
+          },
+          {
+            "time": "14:30–15:00 aprox.",
+            "title": "Tramo final · Iwayadera / Ōishi Jinja",
+            "text": "El desfile termina en Ōishi Jinja. La llegada está publicada como aproximada; consultad el programa definitivo y el punto de observación más conveniente."
+          },
+          {
+            "time": "Tarde",
+            "title": "Regreso al centro y tiempo libre",
+            "text": "Volved al hotel, descansad y disfrutad de vuestra última tarde-noche en Kioto. Gion, Pontocho o Kiyamachi son buenas opciones para cenar."
+          }
+        ],
+        "highlight": {
+          "label": "También el 14: «Kanji del Año» en Kiyomizu-dera.",
+          "text": "La asociación oficial confirma la fecha y el lugar, pero advierte que el área de la caligrafía queda restringida a personas relacionadas con el acto. No planifiquéis desplazaros allí para presenciar la ceremonia: podéis seguir el anuncio en la web oficial. La visita turística a Kiyomizu-dera la mantenemos el sábado 12."
+        },
+        "transport": "hotel → Yamashina en metro Tozai; Yamashina → Bishamondō a pie (aprox. 20 min). Para volver desde Tōbu Culture Hall, metro desde Nagitsuji. Si acabáis en Ōishi Jinja, comprobad las conexiones de autobús antes de seguir el desfile.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Agora+Kyoto+Karasuma&destination=Oishi+Shrine,+Kyoto&waypoints=Bishamondo,+Kyoto%7CKyoto+City+Tobu+Culture+Hall,+Kyoto&travelmode=transit"
+      }
+    },
+    {
+      "key": "15",
+      "date": "2026-12-15",
+      "label": "15 diciembre",
+      "route": "Kioto → Osaka",
+      "focus": "Salida temprano"
+    }
+  ],
+  "summaryNote": "Mar 15 dic: salida temprana hacia Osaka. No se programa ninguna visita."
+}
