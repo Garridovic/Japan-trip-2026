@@ -1,0 +1,291 @@
+{
+  "provider": "Wikimedia Commons",
+  "api": "https://commons.wikimedia.org/w/api.php",
+  "imageWidth": 1200,
+  "variants": [
+    480,
+    960
+  ],
+  "minWidth": 800,
+  "dishes": [
+    {
+      "id": "gohan",
+      "query": "gohan steamed Japanese rice bowl",
+      "file": "File:Ceramic bowl full of white rice.jpg"
+    },
+    {
+      "id": "onigiri",
+      "query": "onigiri rice ball"
+    },
+    {
+      "id": "gyudon",
+      "query": "gyudon beef bowl"
+    },
+    {
+      "id": "katsudon",
+      "query": "katsudon"
+    },
+    {
+      "id": "oyakodon",
+      "query": "oyakodon"
+    },
+    {
+      "id": "tendon",
+      "query": "tendon tempura rice bowl"
+    },
+    {
+      "id": "unadon",
+      "query": "unadon unagi rice bowl",
+      "file": "File:Unaju box tokyo.jpg"
+    },
+    {
+      "id": "kare-raisu",
+      "query": "Japanese curry rice"
+    },
+    {
+      "id": "omurice",
+      "query": "omurice"
+    },
+    {
+      "id": "chahan",
+      "query": "chahan fried rice Japan"
+    },
+    {
+      "id": "kaisendon",
+      "query": "kaisendon",
+      "skip": true
+    },
+    {
+      "id": "ramen",
+      "query": "ramen noodles Japan"
+    },
+    {
+      "id": "tonkotsu-ramen",
+      "query": "tonkotsu ramen"
+    },
+    {
+      "id": "miso-ramen",
+      "query": "miso ramen"
+    },
+    {
+      "id": "shoyu-ramen",
+      "query": "shoyu ramen"
+    },
+    {
+      "id": "tsukemen",
+      "query": "tsukemen"
+    },
+    {
+      "id": "udon",
+      "query": "udon noodle soup"
+    },
+    {
+      "id": "kitsune-udon",
+      "query": "kitsune udon",
+      "file": "File:Udon (Kitsune udon) 2.jpg"
+    },
+    {
+      "id": "soba",
+      "query": "soba noodle bowl tempura soba",
+      "exclude": [
+        "File:Soba-Noodles-Deliveryman-Tokyo-1935.png"
+      ]
+    },
+    {
+      "id": "zaru-soba",
+      "query": "zaru soba"
+    },
+    {
+      "id": "yakisoba",
+      "query": "yakisoba"
+    },
+    {
+      "id": "somen",
+      "query": "somen noodles hiyashi",
+      "exclude": [
+        "File:Various types of noodles- Spaghetti, somen, udon, fedelini, soba.jpg"
+      ]
+    },
+    {
+      "id": "tonkatsu",
+      "query": "tonkatsu pork cutlet"
+    },
+    {
+      "id": "tempura",
+      "query": "tempura Japanese"
+    },
+    {
+      "id": "karaage",
+      "query": "karaage fried chicken"
+    },
+    {
+      "id": "korokke",
+      "query": "korokke croquette"
+    },
+    {
+      "id": "ebi-furai",
+      "query": "ebi fry fried shrimp Japan"
+    },
+    {
+      "id": "kushikatsu",
+      "query": "kushikatsu",
+      "file": "File:Miso kushi katsu by ayustety in Ginza, Tokyo.jpg"
+    },
+    {
+      "id": "gyoza",
+      "query": "gyoza dumplings"
+    },
+    {
+      "id": "yakitori",
+      "query": "yakitori"
+    },
+    {
+      "id": "yakiniku",
+      "query": "yakiniku Japanese barbecue"
+    },
+    {
+      "id": "teppanyaki",
+      "query": "teppanyaki grilled steak iron plate",
+      "exclude": [
+        "File:Flamingonionvolcano1.jpg"
+      ]
+    },
+    {
+      "id": "okonomiyaki",
+      "query": "okonomiyaki"
+    },
+    {
+      "id": "takoyaki",
+      "query": "takoyaki"
+    },
+    {
+      "id": "shioyaki",
+      "query": "shioyaki grilled fish Japan"
+    },
+    {
+      "id": "unagi",
+      "query": "unagi kabayaki"
+    },
+    {
+      "id": "teriyaki",
+      "query": "chicken teriyaki Japan"
+    },
+    {
+      "id": "nigiri",
+      "query": "nigiri sushi",
+      "file": "File:Nigiri Moriawase (Sushi Sei) (42217840971).jpg"
+    },
+    {
+      "id": "maki",
+      "query": "makizushi sushi roll"
+    },
+    {
+      "id": "chirashi",
+      "query": "chirashi sushi"
+    },
+    {
+      "id": "sashimi",
+      "query": "sashimi"
+    },
+    {
+      "id": "temaki",
+      "query": "temaki hand roll"
+    },
+    {
+      "id": "inari",
+      "query": "inarizushi"
+    },
+    {
+      "id": "battera",
+      "query": "battera sushi"
+    },
+    {
+      "id": "miso-shiru",
+      "query": "miso soup"
+    },
+    {
+      "id": "oden",
+      "query": "oden"
+    },
+    {
+      "id": "sukiyaki",
+      "query": "sukiyaki"
+    },
+    {
+      "id": "shabu-shabu",
+      "query": "shabu-shabu"
+    },
+    {
+      "id": "nabe",
+      "query": "nabemono hot pot Japan"
+    },
+    {
+      "id": "chawanmushi",
+      "query": "chawanmushi"
+    },
+    {
+      "id": "nikujaga",
+      "query": "nikujaga"
+    },
+    {
+      "id": "tamagoyaki",
+      "query": "tamagoyaki"
+    },
+    {
+      "id": "yudofu",
+      "query": "yudofu",
+      "skip": true
+    },
+    {
+      "id": "agedashi-tofu",
+      "query": "agedashi tofu"
+    },
+    {
+      "id": "hiyayakko",
+      "query": "hiyayakko"
+    },
+    {
+      "id": "edamame",
+      "query": "edamame"
+    },
+    {
+      "id": "tsukemono",
+      "query": "tsukemono pickles"
+    },
+    {
+      "id": "natto",
+      "query": "natto"
+    },
+    {
+      "id": "nasu-dengaku",
+      "query": "nasu dengaku"
+    },
+    {
+      "id": "tamago-kake-gohan",
+      "query": "tamago kake gohan"
+    },
+    {
+      "id": "katsu-sando",
+      "query": "katsu sando"
+    },
+    {
+      "id": "teishoku",
+      "query": "teishoku set meal"
+    },
+    {
+      "id": "bento",
+      "query": "bento box"
+    },
+    {
+      "id": "kaiseki",
+      "query": "kaiseki ryori dinner",
+      "exclude": [
+        "File:Tsukemono by Ms. President in Kyoto.jpg"
+      ]
+    },
+    {
+      "id": "obanzai",
+      "query": "obanzai Kyoto"
+    }
+  ]
+}

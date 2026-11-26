@@ -35,6 +35,7 @@
         <a href="#mapa">Mapa</a>
         <a href="#detalle">Día a día</a>
         <a href="#comer" data-nav-section="comer">Comer</a>
+        <a href="#platos" data-nav-section="platos" hidden>Platos</a>
         <a href="#alternativas" data-nav-section="alternativas">Otros lugares</a>
         <a href="#practico" data-nav-section="practico">Consejos</a>
         <a href="#frases" data-nav-section="frases" hidden>Frases</a>
@@ -115,6 +116,30 @@
         <div class="food-note" id="food-note"></div>
       </section>
 
+      <section id="platos" hidden>
+        <div class="section-head"><div><div class="kicker" id="dishes-kicker"></div><h2 id="dishes-title"></h2></div><p class="muted small" id="dishes-lead"></p></div>
+        <p class="phrase-notice" id="dishes-disclaimer"></p>
+        <div class="phrase-search">
+          <label class="phrase-search-label" for="dishes-search">Buscar por nombre (español, japonés o romaji)</label>
+          <input type="search" id="dishes-search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ej.: ramen, ラーメン, tonkatsu, cerdo">
+        </div>
+        <div class="phrase-chips" id="dishes-chips" role="group" aria-label="Filtrar platos por categoría"></div>
+        <div class="phrase-chips" id="dishes-protein" role="group" aria-label="Filtrar platos por ingrediente principal"></div>
+        <div class="dish-toolbar">
+          <p class="muted small" id="dishes-count" aria-live="polite"></p>
+          <div class="dish-views" role="group" aria-label="Vista de los platos">
+            <button type="button" class="filter" data-dish-view="photos" aria-pressed="true">Fotos</button>
+            <button type="button" class="filter" data-dish-view="list" aria-pressed="false">Lista</button>
+          </div>
+        </div>
+        <div class="dish-grid is-photos" id="dishes-grid"></div>
+        <p class="phrase-empty muted" id="dishes-empty" hidden></p>
+        <details class="note-card dish-credits" id="dishes-credits" hidden>
+          <summary>Créditos de las fotos (Wikimedia Commons)</summary>
+          <ul id="dishes-credits-list"></ul>
+        </details>
+      </section>
+
       <section id="alternativas" hidden>
         <div class="section-head"><div><div class="kicker">Para improvisar o sustituir visitas</div><h2>Otros lugares de interés</h2></div></div>
         <div class="extras-toolbar" id="extras-toolbar" role="group" aria-label="Filtrar lugares por categoría"></div>
@@ -178,6 +203,11 @@
         <p class="poi-source-note">Fotografías alojadas localmente. Consulta la autoría y las licencias en los créditos de imágenes.</p>
       </div>
     </section>
+  </div>
+
+  <div class="phrase-show dish-show" id="dish-show" role="dialog" aria-modal="true" aria-label="Plato en pantalla grande" hidden aria-hidden="true">
+    <button type="button" class="phrase-show-close" id="dish-show-close" data-close-dish aria-label="Cerrar">✕ Cerrar</button>
+    <div class="phrase-show-body" id="dish-show-body"></div>
   </div>
 
   <div class="phrase-show" id="phrase-show" role="dialog" aria-modal="true" aria-label="Frase en pantalla grande" hidden aria-hidden="true">

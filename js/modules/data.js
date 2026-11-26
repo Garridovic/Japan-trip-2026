@@ -20,10 +20,15 @@ export async function loadJourney() {
   return journey;
 }
 
-export const loadGlobalContent = async () => ({
-  tips: await fetchJson('data/global/tips.json', { optional: true }),
-  phrases: await fetchJson('data/global/phrases.json', { optional: true })
-});
+export async function loadGlobalContent() {
+  const [tips, phrases, dishes, dishCredits] = await Promise.all([
+    fetchJson('data/global/tips.json', { optional: true }),
+    fetchJson('data/global/phrases.json', { optional: true }),
+    fetchJson('data/global/dishes.json', { optional: true }),
+    fetchJson('data/global/dish-credits.json', { optional: true })
+  ]);
+  return { tips, phrases, dishes, dishCredits: dishCredits ?? [] };
+}
 
 const cityCache = new Map();
 

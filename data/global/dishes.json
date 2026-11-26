@@ -1,0 +1,1305 @@
+{
+  "kicker": "Para entender la carta",
+  "title": "Platos y comidas",
+  "lead": "Identifica un plato por su foto o por su nombre japonés.",
+  "disclaimer": "La información de carne, pescado y alérgenos es orientativa: cambia según el local y la receta. Si tienes alergia o no comes algo, díselo siempre al personal.",
+  "proteinLabels": {
+    "carne": "Lleva carne",
+    "pescado": "Pescado o marisco",
+    "vegetariano": "Sin carne ni pescado",
+    "variable": "Depende del local"
+  },
+  "allergenLabels": {
+    "gluten": "Gluten",
+    "huevo": "Huevo",
+    "pescado": "Pescado",
+    "marisco": "Marisco",
+    "soja": "Soja"
+  },
+  "categories": [
+    {
+      "id": "arroz",
+      "label": "Arroz"
+    },
+    {
+      "id": "fideos",
+      "label": "Fideos"
+    },
+    {
+      "id": "frito",
+      "label": "Fritos"
+    },
+    {
+      "id": "plancha",
+      "label": "Plancha y parrilla"
+    },
+    {
+      "id": "sushi",
+      "label": "Sushi y pescado crudo"
+    },
+    {
+      "id": "caldo",
+      "label": "Caldos y estofados"
+    },
+    {
+      "id": "pequenos",
+      "label": "Tofu, verdura y pequeños platos"
+    },
+    {
+      "id": "menus",
+      "label": "Menús y sets"
+    }
+  ],
+  "dishes": [
+    {
+      "id": "gohan",
+      "category": "arroz",
+      "es": "Arroz blanco",
+      "ja": "ご飯",
+      "romaji": "gohan",
+      "description": "Arroz japonés al vapor, el acompañamiento de casi todas las comidas.",
+      "protein": "vegetariano",
+      "allergens": [],
+      "photos": [
+        {
+          "src": "assets/images/dishes/gohan-960.webp",
+          "srcSet": "assets/images/dishes/gohan-480.webp 480w, assets/images/dishes/gohan-960.webp 960w",
+          "alt": "Arroz blanco (ご飯) — This free picture of the ceramic bowl full of white rice was created by my hungry friend epSos.de. This beautiful picture can be used for free, if you link epSos.de as the original author of the image"
+        }
+      ]
+    },
+    {
+      "id": "onigiri",
+      "category": "arroz",
+      "es": "Bola de arroz",
+      "ja": "おにぎり",
+      "romaji": "onigiri",
+      "description": "Triángulo de arroz envuelto en alga con relleno (ciruela, salmón, atún…). Se vende en cualquier konbini.",
+      "protein": "variable",
+      "allergens": [
+        "pescado"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/onigiri-960.webp",
+          "srcSet": "assets/images/dishes/onigiri-480.webp 480w, assets/images/dishes/onigiri-960.webp 960w",
+          "alt": "Bola de arroz (おにぎり) — Example of Onigiri in Japan"
+        }
+      ]
+    },
+    {
+      "id": "gyudon",
+      "category": "arroz",
+      "es": "Arroz con ternera",
+      "ja": "牛丼",
+      "romaji": "gyuudon",
+      "description": "Bol de arroz con ternera y cebolla estofadas en salsa dulce de soja.",
+      "protein": "carne",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/gyudon-960.webp",
+          "srcSet": "assets/images/dishes/gyudon-480.webp 480w, assets/images/dishes/gyudon-960.webp 960w",
+          "alt": "Arroz con ternera (牛丼) — Yoshinoya Beef Bowl, regular size."
+        }
+      ]
+    },
+    {
+      "id": "katsudon",
+      "category": "arroz",
+      "es": "Arroz con cerdo empanado",
+      "ja": "カツ丼",
+      "romaji": "katsudon",
+      "description": "Bol de arroz con chuleta de cerdo empanada y huevo cuajado.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "huevo",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/katsudon-960.webp",
+          "srcSet": "assets/images/dishes/katsudon-480.webp 480w, assets/images/dishes/katsudon-960.webp 960w",
+          "alt": "Arroz con cerdo empanado (カツ丼) — Example picture of Katsudon ."
+        }
+      ]
+    },
+    {
+      "id": "oyakodon",
+      "category": "arroz",
+      "es": "Arroz con pollo y huevo",
+      "ja": "親子丼",
+      "romaji": "oyakodon",
+      "description": "Bol de arroz con pollo y huevo cocinados juntos («padre e hijo»).",
+      "protein": "carne",
+      "allergens": [
+        "huevo",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/oyakodon-960.webp",
+          "srcSet": "assets/images/dishes/oyakodon-480.webp 480w, assets/images/dishes/oyakodon-960.webp 960w",
+          "alt": "Arroz con pollo y huevo (親子丼) — A bowl of rice topped with boiled chicken and eggs"
+        }
+      ]
+    },
+    {
+      "id": "tendon",
+      "category": "arroz",
+      "es": "Arroz con tempura",
+      "ja": "天丼",
+      "romaji": "tendon",
+      "description": "Bol de arroz con tempura de gambas y verduras y salsa dulce.",
+      "protein": "pescado",
+      "allergens": [
+        "gluten",
+        "huevo",
+        "marisco"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/tendon-960.webp",
+          "srcSet": "assets/images/dishes/tendon-480.webp 480w, assets/images/dishes/tendon-960.webp 960w",
+          "alt": "Arroz con tempura (天丼) — Rice bowl topped with shrimp tempura"
+        }
+      ]
+    },
+    {
+      "id": "unadon",
+      "category": "arroz",
+      "es": "Arroz con anguila",
+      "ja": "うな丼",
+      "romaji": "unadon",
+      "description": "Anguila a la parrilla con salsa dulce sobre arroz.",
+      "protein": "pescado",
+      "allergens": [
+        "pescado",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/unadon-960.webp",
+          "srcSet": "assets/images/dishes/unadon-480.webp 480w, assets/images/dishes/unadon-960.webp 960w",
+          "alt": "Arroz con anguila (うな丼) — Unaju box tokyo.jpg"
+        }
+      ]
+    },
+    {
+      "id": "kare-raisu",
+      "category": "arroz",
+      "es": "Arroz con curry",
+      "ja": "カレーライス",
+      "romaji": "karē raisu",
+      "description": "Curry japonés espeso y suave, con arroz; suele llevar cerdo o pollo.",
+      "protein": "variable",
+      "allergens": [
+        "gluten"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/kare-raisu-960.webp",
+          "srcSet": "assets/images/dishes/kare-raisu-480.webp 480w, assets/images/dishes/kare-raisu-960.webp 960w",
+          "alt": "Arroz con curry (カレーライス) — Typical home made Japanese curry rice with beef, onions, carrots and potatoes."
+        }
+      ]
+    },
+    {
+      "id": "omurice",
+      "category": "arroz",
+      "es": "Tortilla rellena de arroz",
+      "ja": "オムライス",
+      "romaji": "omuraisu",
+      "description": "Arroz frito con tomate envuelto en una tortilla.",
+      "protein": "variable",
+      "allergens": [
+        "huevo"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/omurice-960.webp",
+          "srcSet": "assets/images/dishes/omurice-480.webp 480w, assets/images/dishes/omurice-960.webp 960w",
+          "alt": "Tortilla rellena de arroz (オムライス) — Omurice at Taimeiken in Nihonbashi, Tokyo, Japan."
+        }
+      ]
+    },
+    {
+      "id": "chahan",
+      "category": "arroz",
+      "es": "Arroz frito",
+      "ja": "チャーハン",
+      "romaji": "chāhan",
+      "description": "Arroz salteado con huevo, cebolleta y a menudo cerdo o gambas.",
+      "protein": "variable",
+      "allergens": [
+        "huevo",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/chahan-960.webp",
+          "srcSet": "assets/images/dishes/chahan-480.webp 480w, assets/images/dishes/chahan-960.webp 960w",
+          "alt": "Arroz frito (チャーハン) — Ramen and Chahan set meal"
+        }
+      ]
+    },
+    {
+      "id": "kaisendon",
+      "category": "arroz",
+      "es": "Arroz con pescado crudo",
+      "ja": "海鮮丼",
+      "romaji": "kaisendon",
+      "description": "Bol de arroz cubierto de sashimi variado.",
+      "protein": "pescado",
+      "allergens": [
+        "pescado",
+        "marisco",
+        "soja"
+      ],
+      "photos": []
+    },
+    {
+      "id": "ramen",
+      "category": "fideos",
+      "es": "Ramen",
+      "ja": "ラーメン",
+      "romaji": "rāmen",
+      "description": "Fideos de trigo en caldo caliente con cerdo, huevo y cebolleta. Hay muchos estilos.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "huevo",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/ramen-960.webp",
+          "srcSet": "assets/images/dishes/ramen-480.webp 480w, assets/images/dishes/ramen-960.webp 960w",
+          "alt": "Ramen (ラーメン) — A style of soupless Japanese ramen, Maze-soba."
+        }
+      ]
+    },
+    {
+      "id": "tonkotsu-ramen",
+      "category": "fideos",
+      "es": "Ramen de caldo de cerdo",
+      "ja": "豚骨ラーメン",
+      "romaji": "tonkotsu rāmen",
+      "description": "Caldo blanco, denso y graso de huesos de cerdo.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "huevo"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/tonkotsu-ramen-960.webp",
+          "srcSet": "assets/images/dishes/tonkotsu-ramen-480.webp 480w, assets/images/dishes/tonkotsu-ramen-960.webp 960w",
+          "alt": "Ramen de caldo de cerdo (豚骨ラーメン) — Tonkotsu ramen in Tokyo"
+        }
+      ]
+    },
+    {
+      "id": "miso-ramen",
+      "category": "fideos",
+      "es": "Ramen de miso",
+      "ja": "味噌ラーメン",
+      "romaji": "miso rāmen",
+      "description": "Caldo de miso potente, a menudo con maíz y mantequilla.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/miso-ramen-960.webp",
+          "srcSet": "assets/images/dishes/miso-ramen-480.webp 480w, assets/images/dishes/miso-ramen-960.webp 960w",
+          "alt": "Ramen de miso (味噌ラーメン) — Medium size."
+        }
+      ]
+    },
+    {
+      "id": "shoyu-ramen",
+      "category": "fideos",
+      "es": "Ramen de salsa de soja",
+      "ja": "醤油ラーメン",
+      "romaji": "shōyu rāmen",
+      "description": "Caldo claro y marrón de salsa de soja, el más clásico.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/shoyu-ramen-960.webp",
+          "srcSet": "assets/images/dishes/shoyu-ramen-480.webp 480w, assets/images/dishes/shoyu-ramen-960.webp 960w",
+          "alt": "Ramen de salsa de soja (醤油ラーメン) — A common use of soy sauce is to put it in ramen noodles."
+        }
+      ]
+    },
+    {
+      "id": "tsukemen",
+      "category": "fideos",
+      "es": "Fideos para mojar",
+      "ja": "つけ麺",
+      "romaji": "tsukemen",
+      "description": "Fideos fríos que se mojan en un caldo concentrado aparte.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "huevo"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/tsukemen-960.webp",
+          "srcSet": "assets/images/dishes/tsukemen-480.webp 480w, assets/images/dishes/tsukemen-960.webp 960w",
+          "alt": "Fideos para mojar (つけ麺) — Tsukemen (Dipping Ramen) - Goemon Ramen Bar"
+        }
+      ]
+    },
+    {
+      "id": "udon",
+      "category": "fideos",
+      "es": "Udon",
+      "ja": "うどん",
+      "romaji": "udon",
+      "description": "Fideos gruesos y blandos de trigo en caldo suave.",
+      "protein": "variable",
+      "allergens": [
+        "gluten"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/udon-960.webp",
+          "srcSet": "assets/images/dishes/udon-480.webp 480w, assets/images/dishes/udon-960.webp 960w",
+          "alt": "Udon (うどん) — Udon noodle in curry soup"
+        }
+      ]
+    },
+    {
+      "id": "kitsune-udon",
+      "category": "fideos",
+      "es": "Udon con tofu frito",
+      "ja": "きつねうどん",
+      "romaji": "kitsune udon",
+      "description": "Udon con láminas dulces de tofu frito; muy típico de Osaka y Kioto.",
+      "protein": "vegetariano",
+      "allergens": [
+        "gluten",
+        "soja"
+      ],
+      "region": "Osaka",
+      "photos": [
+        {
+          "src": "assets/images/dishes/kitsune-udon-960.webp",
+          "srcSet": "assets/images/dishes/kitsune-udon-480.webp 480w, assets/images/dishes/kitsune-udon-960.webp 960w",
+          "alt": "Udon con tofu frito (きつねうどん) — Kitsune udon ( a type of Udon)"
+        }
+      ]
+    },
+    {
+      "id": "soba",
+      "category": "fideos",
+      "es": "Soba",
+      "ja": "そば",
+      "romaji": "soba",
+      "description": "Fideos finos de alforfón, calientes en caldo o fríos.",
+      "protein": "vegetariano",
+      "allergens": [
+        "gluten"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/soba-960.webp",
+          "srcSet": "assets/images/dishes/soba-480.webp 480w, assets/images/dishes/soba-960.webp 960w",
+          "alt": "Soba (そば) — 小もろそば店の野菜丼"
+        }
+      ]
+    },
+    {
+      "id": "zaru-soba",
+      "category": "fideos",
+      "es": "Soba frío",
+      "ja": "ざるそば",
+      "romaji": "zaru soba",
+      "description": "Soba frío sobre una cesta con salsa para mojar.",
+      "protein": "vegetariano",
+      "allergens": [
+        "gluten",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/zaru-soba-960.webp",
+          "srcSet": "assets/images/dishes/zaru-soba-480.webp 480w, assets/images/dishes/zaru-soba-960.webp 960w",
+          "alt": "Soba frío (ざるそば) — 蕎麦 乾麺 （ 熊本県 下益城郡 城南町 坂野94、 五木食品 [1] の乾麺）"
+        }
+      ]
+    },
+    {
+      "id": "yakisoba",
+      "category": "fideos",
+      "es": "Fideos salteados",
+      "ja": "焼きそば",
+      "romaji": "yakisoba",
+      "description": "Fideos fritos con col, cerdo y salsa dulce y salada.",
+      "protein": "carne",
+      "allergens": [
+        "gluten"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/yakisoba-960.webp",
+          "srcSet": "assets/images/dishes/yakisoba-480.webp 480w, assets/images/dishes/yakisoba-960.webp 960w",
+          "alt": "Fideos salteados (焼きそば) — pork yakisoba (front) and tofu yakisoba (back), Korpan, Brighton"
+        }
+      ]
+    },
+    {
+      "id": "somen",
+      "category": "fideos",
+      "es": "Somen",
+      "ja": "そうめん",
+      "romaji": "sōmen",
+      "description": "Fideos blanquísimos y finísimos, servidos fríos.",
+      "protein": "vegetariano",
+      "allergens": [
+        "gluten"
+      ],
+      "photos": []
+    },
+    {
+      "id": "tonkatsu",
+      "category": "frito",
+      "es": "Cerdo empanado",
+      "ja": "とんかつ",
+      "romaji": "tonkatsu",
+      "description": "Chuleta de cerdo empanada y frita, con col y salsa.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "huevo"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/tonkatsu-960.webp",
+          "srcSet": "assets/images/dishes/tonkatsu-480.webp 480w, assets/images/dishes/tonkatsu-960.webp 960w",
+          "alt": "Cerdo empanado (とんかつ) — Pork cutlet / Tonkatsu on a plate."
+        }
+      ]
+    },
+    {
+      "id": "tempura",
+      "category": "frito",
+      "es": "Tempura",
+      "ja": "天ぷら",
+      "romaji": "tenpura",
+      "description": "Marisco y verduras rebozados muy ligeros y fritos.",
+      "protein": "pescado",
+      "allergens": [
+        "gluten",
+        "huevo",
+        "marisco"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/tempura-960.webp",
+          "srcSet": "assets/images/dishes/tempura-480.webp 480w, assets/images/dishes/tempura-960.webp 960w",
+          "alt": "Tempura (天ぷら) — Sillaginidae (sand borer) tempura. This photo was taken in NAKANO City, Tokyo, Japan on 2 October, 2021."
+        }
+      ]
+    },
+    {
+      "id": "karaage",
+      "category": "frito",
+      "es": "Pollo frito japonés",
+      "ja": "唐揚げ",
+      "romaji": "karaage",
+      "description": "Trozos de pollo marinados y fritos, crujientes.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/karaage-960.webp",
+          "srcSet": "assets/images/dishes/karaage-480.webp 480w, assets/images/dishes/karaage-960.webp 960w",
+          "alt": "Pollo frito japonés (唐揚げ) — 広島市内の居酒屋にてフライドポトと唐揚げ"
+        }
+      ]
+    },
+    {
+      "id": "korokke",
+      "category": "frito",
+      "es": "Croqueta japonesa",
+      "ja": "コロッケ",
+      "romaji": "korokke",
+      "description": "Croqueta de patata, a veces con carne, empanada.",
+      "protein": "variable",
+      "allergens": [
+        "gluten",
+        "huevo"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/korokke-960.webp",
+          "srcSet": "assets/images/dishes/korokke-480.webp 480w, assets/images/dishes/korokke-960.webp 960w",
+          "alt": "Croqueta japonesa (コロッケ) — Typical example of Potato croquettes."
+        }
+      ]
+    },
+    {
+      "id": "ebi-furai",
+      "category": "frito",
+      "es": "Gambas empanadas",
+      "ja": "エビフライ",
+      "romaji": "ebi furai",
+      "description": "Gambas grandes empanadas y fritas.",
+      "protein": "pescado",
+      "allergens": [
+        "gluten",
+        "huevo",
+        "marisco"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/ebi-furai-960.webp",
+          "srcSet": "assets/images/dishes/ebi-furai-480.webp 480w, assets/images/dishes/ebi-furai-960.webp 960w",
+          "alt": "Gambas empanadas (エビフライ) — Fried Shrimp in Kurofunetei, Ueno"
+        }
+      ]
+    },
+    {
+      "id": "kushikatsu",
+      "category": "frito",
+      "es": "Brochetas fritas",
+      "ja": "串カツ",
+      "romaji": "kushikatsu",
+      "description": "Brochetas empanadas y fritas; especialidad de Osaka. No se moja dos veces en la salsa común.",
+      "protein": "variable",
+      "allergens": [
+        "gluten",
+        "huevo"
+      ],
+      "region": "Osaka",
+      "photos": [
+        {
+          "src": "assets/images/dishes/kushikatsu-960.webp",
+          "srcSet": "assets/images/dishes/kushikatsu-480.webp 480w, assets/images/dishes/kushikatsu-960.webp 960w",
+          "alt": "Brochetas fritas (串カツ) — みそ串カツ（ 東京 ・ 中央区 銀座 4-10-14、 東銀座駅 最寄りの「 みそかつ 矢場とん 」東京銀座店 [1] ）"
+        }
+      ]
+    },
+    {
+      "id": "gyoza",
+      "category": "plancha",
+      "es": "Empanadillas gyoza",
+      "ja": "餃子",
+      "romaji": "gyōza",
+      "description": "Empanadillas rellenas de cerdo y col, doradas a la plancha.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/gyoza-960.webp",
+          "srcSet": "assets/images/dishes/gyoza-480.webp 480w, assets/images/dishes/gyoza-960.webp 960w",
+          "alt": "Empanadillas gyoza (餃子) — The Swiss Gyoza producer Missgyoza manufactures its delicious Gyoza dumplings in Rüschlikon, Zurich Switzerland"
+        }
+      ]
+    },
+    {
+      "id": "yakitori",
+      "category": "plancha",
+      "es": "Brochetas de pollo",
+      "ja": "焼き鳥",
+      "romaji": "yakitori",
+      "description": "Brochetas de pollo a la parrilla, con sal o salsa tare.",
+      "protein": "carne",
+      "allergens": [],
+      "photos": [
+        {
+          "src": "assets/images/dishes/yakitori-960.webp",
+          "srcSet": "assets/images/dishes/yakitori-480.webp 480w, assets/images/dishes/yakitori-960.webp 960w",
+          "alt": "Brochetas de pollo (焼き鳥) — Yakitori being grilled."
+        }
+      ]
+    },
+    {
+      "id": "yakiniku",
+      "category": "plancha",
+      "es": "Carne a la parrilla",
+      "ja": "焼肉",
+      "romaji": "yakiniku",
+      "description": "Carne cortada fina que te asas tú en una parrilla en la mesa.",
+      "protein": "carne",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/yakiniku-960.webp",
+          "srcSet": "assets/images/dishes/yakiniku-480.webp 480w, assets/images/dishes/yakiniku-960.webp 960w",
+          "alt": "Carne a la parrilla (焼肉) — Two Butabara pork Yakiniku 焼き肉-焼肉 Samgyeopsalgui14.jpg"
+        }
+      ]
+    },
+    {
+      "id": "teppanyaki",
+      "category": "plancha",
+      "es": "Teppanyaki",
+      "ja": "鉄板焼き",
+      "romaji": "teppanyaki",
+      "description": "Carne, marisco y verduras cocinados en una plancha de hierro.",
+      "protein": "variable",
+      "allergens": [
+        "soja"
+      ],
+      "photos": []
+    },
+    {
+      "id": "okonomiyaki",
+      "category": "plancha",
+      "es": "Tortilla de col",
+      "ja": "お好み焼き",
+      "romaji": "okonomiyaki",
+      "description": "Torta de col y masa con cerdo o marisco, con salsa y mayonesa. Plato estrella de Osaka.",
+      "protein": "variable",
+      "allergens": [
+        "gluten",
+        "huevo",
+        "marisco"
+      ],
+      "region": "Osaka",
+      "photos": [
+        {
+          "src": "assets/images/dishes/okonomiyaki-960.webp",
+          "srcSet": "assets/images/dishes/okonomiyaki-480.webp 480w, assets/images/dishes/okonomiyaki-960.webp 960w",
+          "alt": "Tortilla de col (お好み焼き) — Okonomiyaki"
+        }
+      ]
+    },
+    {
+      "id": "takoyaki",
+      "category": "plancha",
+      "es": "Bolitas de pulpo",
+      "ja": "たこ焼き",
+      "romaji": "takoyaki",
+      "description": "Bolas de masa con trozo de pulpo, con salsa y bonito seco. Muy típicas de Osaka.",
+      "protein": "pescado",
+      "allergens": [
+        "gluten",
+        "huevo",
+        "marisco"
+      ],
+      "region": "Osaka",
+      "photos": [
+        {
+          "src": "assets/images/dishes/takoyaki-960.webp",
+          "srcSet": "assets/images/dishes/takoyaki-480.webp 480w, assets/images/dishes/takoyaki-960.webp 960w",
+          "alt": "Bolitas de pulpo (たこ焼き) — Takoyaki."
+        }
+      ]
+    },
+    {
+      "id": "shioyaki",
+      "category": "plancha",
+      "es": "Pescado a la sal",
+      "ja": "塩焼き",
+      "romaji": "shioyaki",
+      "description": "Pescado entero a la parrilla con sal, a menudo caballa o salmón.",
+      "protein": "pescado",
+      "allergens": [
+        "pescado"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/shioyaki-960.webp",
+          "srcSet": "assets/images/dishes/shioyaki-480.webp 480w, assets/images/dishes/shioyaki-960.webp 960w",
+          "alt": "Pescado a la sal (塩焼き) — Ayu are small fish in the salmon family that, in Japan, are found in fast-flowing rivers from western Hokkaido south through Kyushu. They grow to about 20 - 30 cm long and, when sprinkled with sa"
+        }
+      ]
+    },
+    {
+      "id": "unagi",
+      "category": "plancha",
+      "es": "Anguila a la parrilla",
+      "ja": "鰻の蒲焼",
+      "romaji": "unagi no kabayaki",
+      "description": "Anguila abierta y asada con salsa dulce de soja.",
+      "protein": "pescado",
+      "allergens": [
+        "pescado",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/unagi-960.webp",
+          "srcSet": "assets/images/dishes/unagi-480.webp 480w, assets/images/dishes/unagi-960.webp 960w",
+          "alt": "Anguila a la parrilla (鰻の蒲焼) — FoodCourt"
+        }
+      ]
+    },
+    {
+      "id": "teriyaki",
+      "category": "plancha",
+      "es": "Teriyaki",
+      "ja": "照り焼き",
+      "romaji": "teriyaki",
+      "description": "Pollo o pescado a la plancha glaseado con salsa dulce de soja.",
+      "protein": "variable",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/teriyaki-960.webp",
+          "srcSet": "assets/images/dishes/teriyaki-480.webp 480w, assets/images/dishes/teriyaki-960.webp 960w",
+          "alt": "Teriyaki (照り焼き) — Chicken teriyaki bento box - Massachusetts, USA."
+        }
+      ]
+    },
+    {
+      "id": "nigiri",
+      "category": "sushi",
+      "es": "Sushi nigiri",
+      "ja": "握り寿司",
+      "romaji": "nigiri-zushi",
+      "description": "Bolita de arroz con una lámina de pescado encima.",
+      "protein": "pescado",
+      "allergens": [
+        "pescado",
+        "marisco",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/nigiri-960.webp",
+          "srcSet": "assets/images/dishes/nigiri-480.webp 480w, assets/images/dishes/nigiri-960.webp 960w",
+          "alt": "Sushi nigiri (握り寿司) — From Gourmet Festival 2018, Budapest, Hungary By Sushi Sei Madai (red seabream), tuna and hamachi (amberjack)."
+        }
+      ]
+    },
+    {
+      "id": "maki",
+      "category": "sushi",
+      "es": "Sushi enrollado",
+      "ja": "巻き寿司",
+      "romaji": "maki-zushi",
+      "description": "Arroz y relleno enrollados en alga y cortados en rodajas.",
+      "protein": "variable",
+      "allergens": [
+        "pescado"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/maki-960.webp",
+          "srcSet": "assets/images/dishes/maki-480.webp 480w, assets/images/dishes/maki-960.webp 960w",
+          "alt": "Sushi enrollado (巻き寿司) — 典型的なかんぴょう巻きの参考画像"
+        }
+      ]
+    },
+    {
+      "id": "chirashi",
+      "category": "sushi",
+      "es": "Chirashi",
+      "ja": "ちらし寿司",
+      "romaji": "chirashi-zushi",
+      "description": "Arroz de sushi con pescado y verduras por encima.",
+      "protein": "pescado",
+      "allergens": [
+        "pescado",
+        "huevo",
+        "marisco"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/chirashi-960.webp",
+          "srcSet": "assets/images/dishes/chirashi-480.webp 480w, assets/images/dishes/chirashi-960.webp 960w",
+          "alt": "Chirashi (ちらし寿司) — パックで買ったお寿司をできるだけうまそうに撮ってみようじゃん！と、食べるのガマンして夜中に何やってるんだろうね、の10月8、いやもう9日か。(笑)"
+        }
+      ]
+    },
+    {
+      "id": "sashimi",
+      "category": "sushi",
+      "es": "Sashimi",
+      "ja": "刺身",
+      "romaji": "sashimi",
+      "description": "Láminas de pescado crudo, sin arroz.",
+      "protein": "pescado",
+      "allergens": [
+        "pescado",
+        "marisco"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/sashimi-960.webp",
+          "srcSet": "assets/images/dishes/sashimi-480.webp 480w, assets/images/dishes/sashimi-960.webp 960w",
+          "alt": "Sashimi (刺身) — A plate of Stephanolepis cirrhifer (kawahagi) served as sashimi, served with a dipping sauce made from its liver and soy sauce. Served at Nagomi, Cuppage Plaza, Singapore."
+        }
+      ]
+    },
+    {
+      "id": "temaki",
+      "category": "sushi",
+      "es": "Cono de sushi",
+      "ja": "手巻き寿司",
+      "romaji": "temaki",
+      "description": "Alga enrollada en cono con arroz y relleno, se come con la mano.",
+      "protein": "variable",
+      "allergens": [
+        "pescado"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/temaki-960.webp",
+          "srcSet": "assets/images/dishes/temaki-480.webp 480w, assets/images/dishes/temaki-960.webp 960w",
+          "alt": "Cono de sushi (手巻き寿司) — Hand rolls from left to right: nori kyu (seaweed & cucumber) tuna salmon Description of \"Sushi Hand Roll\" on menu: \"Our hand rolls, inspired by tacos, feature sushi rice and fresh ingredients on a"
+        }
+      ]
+    },
+    {
+      "id": "inari",
+      "category": "sushi",
+      "es": "Sushi inari",
+      "ja": "いなり寿司",
+      "romaji": "inari-zushi",
+      "description": "Bolsa de tofu frito dulce rellena de arroz; típica de Kioto.",
+      "protein": "vegetariano",
+      "allergens": [
+        "soja"
+      ],
+      "region": "Kioto",
+      "photos": [
+        {
+          "src": "assets/images/dishes/inari-960.webp",
+          "srcSet": "assets/images/dishes/inari-480.webp 480w, assets/images/dishes/inari-960.webp 960w",
+          "alt": "Sushi inari (いなり寿司) — Inarizushi"
+        }
+      ]
+    },
+    {
+      "id": "battera",
+      "category": "sushi",
+      "es": "Sushi prensado de caballa",
+      "ja": "バッテラ",
+      "romaji": "battera",
+      "description": "Sushi prensado en caja con caballa marinada; especialidad de Osaka.",
+      "protein": "pescado",
+      "allergens": [
+        "pescado"
+      ],
+      "region": "Osaka",
+      "photos": []
+    },
+    {
+      "id": "miso-shiru",
+      "category": "caldo",
+      "es": "Sopa de miso",
+      "ja": "味噌汁",
+      "romaji": "miso shiru",
+      "description": "Sopa de pasta de miso con tofu y alga wakame.",
+      "protein": "variable",
+      "allergens": [
+        "soja",
+        "pescado"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/miso-shiru-960.webp",
+          "srcSet": "assets/images/dishes/miso-shiru-480.webp 480w, assets/images/dishes/miso-shiru-960.webp 960w",
+          "alt": "Sopa de miso (味噌汁) — Tofu and Pholiota microspora miso soup."
+        }
+      ]
+    },
+    {
+      "id": "oden",
+      "category": "caldo",
+      "es": "Oden",
+      "ja": "おでん",
+      "romaji": "oden",
+      "description": "Cocido de huevo, rábano, tofu y pasta de pescado en caldo; típico del invierno.",
+      "protein": "variable",
+      "allergens": [
+        "pescado",
+        "huevo",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/oden-960.webp",
+          "srcSet": "assets/images/dishes/oden-480.webp 480w, assets/images/dishes/oden-960.webp 960w",
+          "alt": "Oden (おでん) — おでん."
+        }
+      ]
+    },
+    {
+      "id": "sukiyaki",
+      "category": "caldo",
+      "es": "Sukiyaki",
+      "ja": "すき焼き",
+      "romaji": "sukiyaki",
+      "description": "Ternera y verduras estofadas en caldo dulce; se mojan en huevo crudo.",
+      "protein": "carne",
+      "allergens": [
+        "huevo",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/sukiyaki-960.webp",
+          "srcSet": "assets/images/dishes/sukiyaki-480.webp 480w, assets/images/dishes/sukiyaki-960.webp 960w",
+          "alt": "Sukiyaki (すき焼き) — Sukiyaki"
+        }
+      ]
+    },
+    {
+      "id": "shabu-shabu",
+      "category": "caldo",
+      "es": "Shabu-shabu",
+      "ja": "しゃぶしゃぶ",
+      "romaji": "shabu-shabu",
+      "description": "Láminas finas de carne que se hierven en la mesa y se mojan en salsa.",
+      "protein": "carne",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/shabu-shabu-960.webp",
+          "srcSet": "assets/images/dishes/shabu-shabu-480.webp 480w, assets/images/dishes/shabu-shabu-960.webp 960w",
+          "alt": "Shabu-shabu (しゃぶしゃぶ) — Modern Shabu shabu set: Rice, Sesame Seed & bowl, Skimmer and Tongs, Beef: Kobe, Shortribs, Noodles, Split broth pot on stove, Goma with Green onions, Vegetable selection Ponzu with garlic and gree"
+        }
+      ]
+    },
+    {
+      "id": "nabe",
+      "category": "caldo",
+      "es": "Olla caliente",
+      "ja": "鍋",
+      "romaji": "nabe",
+      "description": "Olla compartida en la mesa con carne o pescado y verduras.",
+      "protein": "variable",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/nabe-960.webp",
+          "srcSet": "assets/images/dishes/nabe-480.webp 480w, assets/images/dishes/nabe-960.webp 960w",
+          "alt": "Olla caliente (鍋) — Nabe of Kansai or Osaka style."
+        }
+      ]
+    },
+    {
+      "id": "chawanmushi",
+      "category": "caldo",
+      "es": "Flan de huevo salado",
+      "ja": "茶碗蒸し",
+      "romaji": "chawanmushi",
+      "description": "Crema de huevo al vapor con pollo y gambas.",
+      "protein": "variable",
+      "allergens": [
+        "huevo",
+        "marisco"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/chawanmushi-960.webp",
+          "srcSet": "assets/images/dishes/chawanmushi-480.webp 480w, assets/images/dishes/chawanmushi-960.webp 960w",
+          "alt": "Flan de huevo salado (茶碗蒸し) — Chawan-mushi in a restaurant in Hamamatsu, Japan"
+        }
+      ]
+    },
+    {
+      "id": "nikujaga",
+      "category": "caldo",
+      "es": "Estofado de carne y patata",
+      "ja": "肉じゃが",
+      "romaji": "nikujaga",
+      "description": "Estofado casero de ternera, patata y cebolla.",
+      "protein": "carne",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/nikujaga-960.webp",
+          "srcSet": "assets/images/dishes/nikujaga-480.webp 480w, assets/images/dishes/nikujaga-960.webp 960w",
+          "alt": "Estofado de carne y patata (肉じゃが) — braised pork and potatoes"
+        }
+      ]
+    },
+    {
+      "id": "tamagoyaki",
+      "category": "pequenos",
+      "es": "Tortilla japonesa",
+      "ja": "卵焼き",
+      "romaji": "tamagoyaki",
+      "description": "Tortilla enrollada en capas, algo dulce.",
+      "protein": "vegetariano",
+      "allergens": [
+        "huevo"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/tamagoyaki-960.webp",
+          "srcSet": "assets/images/dishes/tamagoyaki-480.webp 480w, assets/images/dishes/tamagoyaki-960.webp 960w",
+          "alt": "Tortilla japonesa (卵焼き) — 田町"
+        }
+      ]
+    },
+    {
+      "id": "yudofu",
+      "category": "pequenos",
+      "es": "Tofu hervido",
+      "ja": "湯豆腐",
+      "romaji": "yudōfu",
+      "description": "Tofu en caldo caliente con kombu; muy típico de Kioto.",
+      "protein": "vegetariano",
+      "allergens": [
+        "soja"
+      ],
+      "region": "Kioto",
+      "photos": []
+    },
+    {
+      "id": "agedashi-tofu",
+      "category": "pequenos",
+      "es": "Tofu frito en caldo",
+      "ja": "揚げ出し豆腐",
+      "romaji": "agedashi dōfu",
+      "description": "Tofu frito en caldo dashi con rábano rallado.",
+      "protein": "vegetariano",
+      "allergens": [
+        "gluten",
+        "soja",
+        "pescado"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/agedashi-tofu-960.webp",
+          "srcSet": "assets/images/dishes/agedashi-tofu-480.webp 480w, assets/images/dishes/agedashi-tofu-960.webp 960w",
+          "alt": "Tofu frito en caldo (揚げ出し豆腐) — Tofu and yasai agedashi - Massachusetts, USA."
+        }
+      ]
+    },
+    {
+      "id": "hiyayakko",
+      "category": "pequenos",
+      "es": "Tofu frío",
+      "ja": "冷奴",
+      "romaji": "hiyayakko",
+      "description": "Tofu frío con cebolleta, jengibre y salsa de soja.",
+      "protein": "vegetariano",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/hiyayakko-960.webp",
+          "srcSet": "assets/images/dishes/hiyayakko-480.webp 480w, assets/images/dishes/hiyayakko-960.webp 960w",
+          "alt": "Tofu frío (冷奴) — Hiyayakko , a chilled block of tofu, topped with bonito flakes and Welsh onion."
+        }
+      ]
+    },
+    {
+      "id": "edamame",
+      "category": "pequenos",
+      "es": "Edamame",
+      "ja": "枝豆",
+      "romaji": "edamame",
+      "description": "Vainas de soja verde hervidas con sal.",
+      "protein": "vegetariano",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/edamame-960.webp",
+          "srcSet": "assets/images/dishes/edamame-480.webp 480w, assets/images/dishes/edamame-960.webp 960w",
+          "alt": "Edamame (枝豆) — Edamame"
+        }
+      ]
+    },
+    {
+      "id": "tsukemono",
+      "category": "pequenos",
+      "es": "Encurtidos",
+      "ja": "漬物",
+      "romaji": "tsukemono",
+      "description": "Verduras encurtidas que acompañan el arroz.",
+      "protein": "vegetariano",
+      "allergens": [],
+      "photos": [
+        {
+          "src": "assets/images/dishes/tsukemono-960.webp",
+          "srcSet": "assets/images/dishes/tsukemono-480.webp 480w, assets/images/dishes/tsukemono-960.webp 960w",
+          "alt": "Encurtidos (漬物) — A dish of tsukemono ."
+        }
+      ]
+    },
+    {
+      "id": "natto",
+      "category": "pequenos",
+      "es": "Soja fermentada",
+      "ja": "納豆",
+      "romaji": "nattō",
+      "description": "Soja fermentada pegajosa y de olor fuerte, se come con arroz.",
+      "protein": "vegetariano",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/natto-960.webp",
+          "srcSet": "assets/images/dishes/natto-480.webp 480w, assets/images/dishes/natto-960.webp 960w",
+          "alt": "Soja fermentada (納豆) — 日本の納豆かけご飯"
+        }
+      ]
+    },
+    {
+      "id": "nasu-dengaku",
+      "category": "pequenos",
+      "es": "Berenjena con miso",
+      "ja": "茄子田楽",
+      "romaji": "nasu dengaku",
+      "description": "Berenjena asada con una capa dulce de miso.",
+      "protein": "vegetariano",
+      "allergens": [
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/nasu-dengaku-960.webp",
+          "srcSet": "assets/images/dishes/nasu-dengaku-480.webp 480w, assets/images/dishes/nasu-dengaku-960.webp 960w",
+          "alt": "Berenjena con miso (茄子田楽) — Nasu dengaku"
+        }
+      ]
+    },
+    {
+      "id": "tamago-kake-gohan",
+      "category": "pequenos",
+      "es": "Arroz con huevo crudo",
+      "ja": "卵かけご飯",
+      "romaji": "tamago kake gohan",
+      "description": "Arroz caliente con huevo crudo batido y salsa de soja.",
+      "protein": "vegetariano",
+      "allergens": [
+        "huevo",
+        "soja"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/tamago-kake-gohan-960.webp",
+          "srcSet": "assets/images/dishes/tamago-kake-gohan-480.webp 480w, assets/images/dishes/tamago-kake-gohan-960.webp 960w",
+          "alt": "Arroz con huevo crudo (卵かけご飯) — In Japan, people eats raw chicken eggs. This is called Tamago kake gohan , and it has been established as a part of our food culture. We proposed this illustration as a reference to the un"
+        }
+      ]
+    },
+    {
+      "id": "katsu-sando",
+      "category": "pequenos",
+      "es": "Sándwich de cerdo empanado",
+      "ja": "カツサンド",
+      "romaji": "katsu sando",
+      "description": "Chuleta empanada entre pan de molde blando, muy típico de konbini.",
+      "protein": "carne",
+      "allergens": [
+        "gluten",
+        "huevo"
+      ],
+      "photos": [
+        {
+          "src": "assets/images/dishes/katsu-sando-960.webp",
+          "srcSet": "assets/images/dishes/katsu-sando-480.webp 480w, assets/images/dishes/katsu-sando-960.webp 960w",
+          "alt": "Sándwich de cerdo empanado (カツサンド) — Katsu sando かつサンド , deep-fried pork cutlet served as a sandwich on a Shinkansen train."
+        }
+      ]
+    },
+    {
+      "id": "teishoku",
+      "category": "menus",
+      "es": "Menú del día",
+      "ja": "定食",
+      "romaji": "teishoku",
+      "description": "Menú completo en bandeja: plato principal, arroz, sopa de miso y encurtidos.",
+      "protein": "variable",
+      "allergens": [],
+      "photos": [
+        {
+          "src": "assets/images/dishes/teishoku-960.webp",
+          "srcSet": "assets/images/dishes/teishoku-480.webp 480w, assets/images/dishes/teishoku-960.webp 960w",
+          "alt": "Menú del día (定食) — Homemade meal set (teishoku): Pork miso soup (main dish), natto, daikon-citrus salad, pan-fried kombu and bonito as side dishes"
+        }
+      ]
+    },
+    {
+      "id": "bento",
+      "category": "menus",
+      "es": "Caja de comida (bento)",
+      "ja": "弁当",
+      "romaji": "bentō",
+      "description": "Caja con arroz y varios platos pequeños para llevar.",
+      "protein": "variable",
+      "allergens": [],
+      "photos": [
+        {
+          "src": "assets/images/dishes/bento-960.webp",
+          "srcSet": "assets/images/dishes/bento-480.webp 480w, assets/images/dishes/bento-960.webp 960w",
+          "alt": "Caja de comida (bento) (弁当) — Bento Box at Hanabishi, Koyasan. 日々是好日弁当"
+        }
+      ]
+    },
+    {
+      "id": "kaiseki",
+      "category": "menus",
+      "es": "Kaiseki",
+      "ja": "懐石",
+      "romaji": "kaiseki",
+      "description": "Menú degustación tradicional de muchos platos pequeños; típico de Kioto.",
+      "protein": "variable",
+      "allergens": [
+        "pescado",
+        "soja"
+      ],
+      "region": "Kioto",
+      "photos": [
+        {
+          "src": "assets/images/dishes/kaiseki-960.webp",
+          "srcSet": "assets/images/dishes/kaiseki-480.webp 480w, assets/images/dishes/kaiseki-960.webp 960w",
+          "alt": "Kaiseki (懐石) — A Traditional breakfast at Tamahan Ryokan, Kyoto. The dishes include roast mackerel, dashimaki (Japanese omelette, here Kansai style), rice, a paper pot ( kami nabe ) of yudofu over a small brasier, with s"
+        }
+      ]
+    },
+    {
+      "id": "obanzai",
+      "category": "menus",
+      "es": "Obanzai",
+      "ja": "おばんざい",
+      "romaji": "obanzai",
+      "description": "Platitos caseros de Kioto, sobre todo verduras, que se eligen de una barra.",
+      "protein": "vegetariano",
+      "allergens": [
+        "soja"
+      ],
+      "region": "Kioto",
+      "photos": [
+        {
+          "src": "assets/images/dishes/obanzai-960.webp",
+          "srcSet": "assets/images/dishes/obanzai-480.webp 480w, assets/images/dishes/obanzai-960.webp 960w",
+          "alt": "Obanzai (おばんざい) — Simmered season vegetable - Kyoto"
+        }
+      ]
+    }
+  ]
+}

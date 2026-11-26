@@ -7,7 +7,8 @@
     "test": "node --test",
     "test:e2e": "playwright test",
     "test:all": "npm test && npm run test:e2e",
-    "prepare:images": "node scripts/prepare-images.js"
+    "prepare:images": "node scripts/prepare-images.js",
+    "prepare:dishes": "node scripts/prepare-dishes.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",
