@@ -30,7 +30,7 @@ test('artifact producers and consumers use compatible majors and the Pages artif
   assert.equal(majors('actions/upload-artifact').length, 1);
   assert.equal(majors('actions/download-artifact').length, 1);
   // The Pages deploy job needs an artifact called "github-pages": upload-pages-artifact creates it by default.
-  assert.doesNotMatch(workflow, /upload-pages-artifact[\s\S]{0,200}?name:/);
+  assert.match(workflow, /upload-pages-artifact@v\d+\n\s+with:\n\s+path: site\n(?!\s+name:)/);
   assert.match(workflow, /actions\/deploy-pages@v\d+/);
   assert.match(workflow, /needs: \[prepare, unit, browser\]/, 'deployment stays gated on image preparation, data tests and browser tests');
 });
