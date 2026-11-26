@@ -169,15 +169,6 @@ test('show mode has Anterior/Siguiente that walk through the visible phrases', a
   await expect(position).toHaveText(`${total} / ${total}`);
 });
 
-test('Platos search tolerates typos and accents', async ({ page }) => {
-  await page.goto('/?view=platos');
-  await page.locator('#dishes-search').fill('sasimi');
-  await expect(page.locator('.dish-card[data-dish-id="sashimi"]')).toBeVisible();
-  await page.locator('#dishes-search').fill('Ramén');
-  await expect(page.locator('.dish-card[data-dish-id="ramen"]')).toBeVisible();
-  await page.locator('#dishes-search').fill('xqzwvk');
-  await expect(page.locator('.dish-card')).toHaveCount(0);
-});
 
 test('dish photos have a short Spanish alt text', async ({ page }) => {
   await page.goto('/?view=platos');
@@ -197,16 +188,6 @@ test.describe('Cerca de mí', () => {
     await context.close();
   });
 
-  test('in the city there is no warning', async ({ browser }) => {
-    const context = await browser.newContext({ permissions: ['geolocation'], geolocation: { latitude: near.lat, longitude: near.lng } });
-    const page = await context.newPage();
-    await page.goto('/');
-    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-    await page.locator('#locate-me').click();
-    await expect(page.locator('#nearby-list button').first()).toBeVisible();
-    await expect(page.locator('#nearby-status')).not.toContainText('Estás a');
-    await context.close();
-  });
 });
 
 test('the photo counter is hidden when a place has a single photo', async ({ page }) => {

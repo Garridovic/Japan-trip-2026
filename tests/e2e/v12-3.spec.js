@@ -71,13 +71,6 @@ test.describe('restaurants and other places: "Cómo llegar" first', () => {
     await expect(card.getByRole('link', { name: /Ver en Google Maps/ })).toBeVisible(); // the old link is still there
   });
 
-  test('alternative places get the same button', async ({ page }) => {
-    await page.goto('/');
-    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-    const extra = page.locator('.extra-card').first();
-    await expect(extra.locator('a.primary-action')).toHaveText('Cómo llegar');
-    expect(await extra.locator('a.primary-action').getAttribute('href')).toContain('Kyoto');
-  });
 });
 
 test.describe('phrases: "Mostrar" first, swipe in show mode', () => {

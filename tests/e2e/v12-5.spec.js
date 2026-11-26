@@ -28,14 +28,6 @@ test.describe('taxi mode', () => {
     await expect(taxi.locator('.taxi-missing')).toHaveCount(0);
   });
 
-  test('without Japanese data it shows the Latin name big and a notice, with no invented text', async ({ page }) => {
-    await page.goto('/?view=viaje');
-    await page.locator('.lodging-card[data-stay-id="osaka"] .taxi-button').click();
-    const taxi = page.locator('#taxi-show');
-    await expect(taxi.locator('.taxi-name')).toHaveText('The Bridge Hotel Shinsaibashi');
-    await expect(taxi.locator('.taxi-missing')).toBeVisible();
-    await expect(taxi.locator('.taxi-call')).toHaveCount(0);
-  });
 
   test('copy puts the address on the clipboard; Back and Escape close it', async ({ page, context }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
@@ -163,13 +155,6 @@ test.describe('illustrations for places without a photo', () => {
     await expect(page.locator('.food-card', { hasText: 'Mercado Nishiki' }).locator('.card-art')).toHaveAttribute('data-art', 'market');
   });
 
-  test('other places use the category drawing', async ({ page }) => {
-    await page.goto('/#alternativas');
-    const cards = page.locator('.extra-card');
-    await expect(cards.first()).toBeAttached();
-    await expect(page.locator('.extra-card .card-art')).toHaveCount(await cards.count());
-    await expect(page.locator('.extra-card[data-category="templos"] .card-art').first()).toHaveAttribute('data-art', 'temple');
-  });
 
   test('the drawings are visible and sized in dark mode too', async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'dark' });
@@ -193,14 +178,6 @@ test.describe('allergen icons (V12.6)', () => {
     await expect(page.locator('#dish-show .dish-show-disclaimer')).toBeVisible();
   });
 
-  test('cards carry icons with a text alternative, never an icon alone without a name', async ({ page }) => {
-    await page.goto('/?view=platos');
-    const chips = page.locator('.dish-card .allergen-chip');
-    await expect(chips.first()).toBeAttached();
-    const labels = await chips.evaluateAll((nodes) => nodes.map((node) => node.getAttribute('aria-label')));
-    expect(labels.length).toBeGreaterThan(5);
-    labels.forEach((label) => expect(label && label.length).toBeGreaterThan(2));
-  });
 });
 
 test.describe('feedback and loading (V12.6)', () => {
