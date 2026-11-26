@@ -7,6 +7,9 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:4173',
     trace: 'retain-on-failure',
+    // Tests mock network requests with page.route(), which cannot see requests answered by a service worker.
+    // Only tests/e2e/offline.spec.js turns service workers on.
+    serviceWorkers: 'block',
     ...devices['Desktop Chrome']
   },
   webServer: {

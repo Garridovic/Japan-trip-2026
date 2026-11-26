@@ -4,10 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#182a35">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Japón 2026">
   <meta name="guide-version" content="">
   <meta name="description" content="Guía compartida del viaje a Japón en diciembre de 2026: itinerario, mapa GPS, gastronomía y lugares alternativos por ciudad.">
   <title>Japón · Diciembre 2026</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
@@ -79,6 +85,10 @@
           <div class="map-panel">
             <div id="city-map" role="application" aria-label="Mapa interactivo con hoteles, visitas y lugares de interés"></div>
             <div class="map-panel-foot">Mapa © OpenStreetMap · Toca un círculo para abrir una visita o un diamante para abrir un restaurante. Desde cada ficha puedes consultar el lugar o iniciar la navegación en Google Maps. Para usar GPS, abre esta página HTTPS en Safari (iPhone) o Chrome (Android) y concede permiso.</div>
+            <div class="map-offline">
+              <button type="button" class="filter" id="save-offline-map">⬇ Guardar mapa para usar sin conexión</button>
+              <p class="muted small" id="save-offline-status" aria-live="polite">Descarga unas pocas teselas del centro de la ciudad (con conexión). El fondo que veas mientras navegas también se guarda solo.</p>
+            </div>
           </div>
           <aside class="nearby-panel">
             <h3>¿Qué hay cerca de mí?</h3>
@@ -243,7 +253,9 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
+
+  <div class="offline-indicator" id="offline-indicator" role="status" aria-live="polite" hidden></div>
 
   <div class="version-indicator" id="version-indicator" title="Versión desplegada de la guía" aria-label="Versión de la guía">GUÍA · …</div>
 

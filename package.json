@@ -1,6 +1,6 @@
 {
   "name": "japan-trip-guide",
-  "version": "11.4.0",
+  "version": "11.5.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,9 @@
     "test:e2e": "playwright test",
     "test:all": "npm test && npm run test:e2e",
     "prepare:images": "node scripts/prepare-images.js",
-    "prepare:dishes": "node scripts/prepare-dishes.js"
+    "prepare:dishes": "node scripts/prepare-dishes.js",
+    "build:offline": "node scripts/build-offline.js",
+    "make:icons": "node scripts/make-icons.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",

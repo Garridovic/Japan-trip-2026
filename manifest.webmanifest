@@ -1,0 +1,17 @@
+{
+  "name": "Japón · Diciembre 2026",
+  "short_name": "Japón 2026",
+  "description": "Guía del viaje a Japón: itinerario, mapa, frases útiles y platos. Funciona sin conexión.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#182a35",
+  "theme_color": "#182a35",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

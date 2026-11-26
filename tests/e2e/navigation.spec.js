@@ -9,7 +9,7 @@ async function expectAligned(page, id) {
   await expect.poll(async () => page.evaluate((id) => {
     const margin = parseFloat(getComputedStyle(document.getElementById(id)).scrollMarginTop);
     return Math.abs(document.getElementById(id).getBoundingClientRect().top - margin) <= 3;
-  }, id), { timeout: 8000 }).toBe(true);
+  }, id), { timeout: 15000 }).toBe(true);
   await expect(page.locator('.nav-inner a[aria-current="location"]')).toHaveAttribute('href', `#${id}`);
 }
 

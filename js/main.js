@@ -13,6 +13,7 @@ import { initPhrases } from './modules/phrases-ui.js';
 import { VIEW_QUERY_PARAM, viewFromSearch, withView, initViews } from './modules/views.js';
 import { initOverlayHistory, popstateWasOverlay } from './modules/overlay-history.js';
 import { initCollapsibles } from './modules/collapsible.js';
+import { initOffline } from './modules/offline.js';
 import { initDishes } from './modules/dishes-ui.js';
 
 const status = byId('app-status');
@@ -25,6 +26,7 @@ const showStatus = (message, isError = false) => {
 initOverlayHistory(); // registered first so overlays handle Back before navigation does
 
 initCollapsibles();
+initOffline();
 
 async function start() {
   const [journey, global] = await Promise.all([loadJourney(), loadGlobalContent()]);

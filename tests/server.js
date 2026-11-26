@@ -8,7 +8,10 @@ const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
-  '.kml': 'application/vnd.google-earth.kml+xml'
+  '.kml': 'application/vnd.google-earth.kml+xml',
+  '.webmanifest': 'application/manifest+json',
+  '.png': 'image/png',
+  '.webp': 'image/webp'
 };
 
 createServer(async (request, response) => {
@@ -19,7 +22,10 @@ createServer(async (request, response) => {
       response.writeHead(403).end('Forbidden');
       return;
     }
-    const body = await readFile(requestedPath);
+    let body = await readFile(requestedPath);
+    // Test-only: /sw.js?v=x serves the worker as if a new version had been deployed (see offline.spec.js).
+    const fakeVersion = new URL(request.url, 'http://localhost').searchParams.get('v');
+    if (pathname === '/sw.js' && fakeVersion) body = Buffer.from(body.toString().replace(/const VERSION = '[^']*';/, `const VERSION = '${fakeVersion}';`));
     response.writeHead(200, { 'Content-Type': mimeTypes[extname(requestedPath)] ?? 'application/octet-stream' });
     response.end(body);
   } catch {

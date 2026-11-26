@@ -124,3 +124,15 @@ Dish photos come from Wikimedia Commons (CC0, public domain, CC BY, CC BY-SA) an
 ## Usability polish (V11.4)
 
 Full-screen sheets (place sheet, phrase show mode, dish sheet) push a history entry (`overlay-history.js`), so the Back button or the swipe-back gesture closes the sheet instead of leaving the guide. Filter panels (`details[data-open-on-wide]`) start collapsed on phones. Dish search falls back to a typo-tolerant match when nothing matches exactly. Image catalog entries accept `exclude` (list of Commons file titles) to ban a photo.
+
+## Offline mode (V11.5)
+
+`sw.js` (service worker) stores the guide after the first visit so it opens without a connection. `npm run build:offline` writes `offline-manifest.json` (what to cache) and stamps a content hash into `sw.js`; CI runs it after `prepare:images`, so every deploy ships a new worker that installs a fresh cache and deletes the old one.
+
+* **required**: HTML, JS, CSS, data, Leaflet (now in `assets/vendor/leaflet`, no CDN), icons. If one fails, the install fails and the previous version keeps working.
+* **optional**: 480 px place and dish photos, downloaded during install.
+* **background**: 960 px photos, requested ~3 s after load (skipped on data saver / 2G-3G). 1600 px photos are cached when viewed; offline the 960 px copy is shown instead.
+* **Map tiles**: tiles you view are kept (max 700). The "Guardar mapa" button stores at most 120 tiles around the city, one by one with a pause, to respect the OpenStreetMap tile policy (no bulk downloads).
+* The guide can be installed to the home screen (`manifest.webmanifest`, icons from `npm run make:icons`).
+* Recovery: open `?reset-offline` to unregister the worker and clear its caches.
+* Playwright blocks service workers by default (they would hide `page.route()` mocks); only `tests/e2e/offline.spec.js` enables them.
