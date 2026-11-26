@@ -8,6 +8,7 @@ const uses = [...workflow.matchAll(/uses:\s*([\w.-]+\/[\w.-]+)@v(\d+)/g)].map(([
 
 // First major version of each GitHub action that runs on Node.js 24 (Node 20 actions raise a deprecation warning in every run).
 const MINIMUM_NODE24_MAJOR = {
+  'actions/cache': 5,
   'actions/checkout': 5,
   'actions/setup-node': 5,
   'actions/upload-artifact': 6,
