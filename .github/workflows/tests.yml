@@ -78,7 +78,7 @@ jobs:
           include-hidden-files: true
 
   unit:
-    name: Data and image integrity tests
+    name: Unit tests (data, images and logic)
     needs: prepare
     runs-on: ubuntu-latest
     steps:
@@ -90,11 +90,13 @@ jobs:
         with:
           name: prepared-site
           path: .
-      - run: node --test
+      - name: Run unit tests (node --test)
+        run: node --test
 
   browser:
     name: Browser tests
-    needs: prepare
+    # Waits for the unit tests (about 15 s) so a unit failure stops the pipeline before the 4-minute browser run.
+    needs: [prepare, unit]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
