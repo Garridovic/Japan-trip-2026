@@ -47,9 +47,20 @@ initOffline();
 initTheme();
 initUpdates();
 
+/** Optional account (Auth0). Loaded lazily so that a failure there can never stop the guide from starting. */
+async function startAccount() {
+  try {
+    const { AUTH_CONFIG } = await import('../assets/auth-config.js');
+    if (!AUTH_CONFIG.enabled) return null;
+    const { initAccount } = await import('./modules/account.js');
+    return await initAccount({ config: AUTH_CONFIG, userData: userData() });
+  } catch (error) { console.warn('[account] disabled:', error); return null; }
+}
+
 async function start() {
   const [journey, global] = await Promise.all([loadJourney(), loadGlobalContent()]);
   await userData().load(); // with a sync backend connected (see user-data.js) the stored values are in place before any store reads them
+  const account = await startAccount(); // optional Google sign-in; null (and invisible) while disabled or unavailable
   const cities = enabledCities(journey);
   const visitedMarks = visitedStore();
   visitedMarks.subscribe(({ cityId, id, visited: now }) => {
@@ -188,6 +199,7 @@ async function start() {
     const target = document.getElementById(window.location.hash.slice(1));
     if (target) openDay(target, { smooth: false });
   }
+  account?.markStarted();
 }
 
 start().catch((error) => {

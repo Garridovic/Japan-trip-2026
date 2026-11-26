@@ -483,3 +483,34 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 
 /* 320 px phones: with the search button the header is tight, so the round buttons get a little smaller */
 @media (max-width: 359px) { .theme-button, .search-button { width: 40px; height: 40px; } .search-button { margin-right: 4px; } .theme-button svg, .search-button svg { width: 20px; height: 20px; } }
+
+/* Cuenta (login opcional con Google) */
+.account-button { flex: none; position: relative; display: inline-grid; place-items: center; width: 44px; height: 44px; margin: 0 6px 0 0; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--ink); cursor: pointer; font: inherit; font-weight: 850; overflow: visible; }
+.account-button[hidden] { display: none; }
+.account-button svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.account-button:focus-visible { outline: 3px solid var(--net); outline-offset: 2px; }
+.account-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); font-weight: 850; }
+.account-button[data-state="signed-in"] { border-color: var(--accent); }
+.account-dot { position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--surface); background: var(--ok); }
+.account-button[data-sync="pending"] .account-dot, .account-button[data-sync="syncing"] .account-dot { background: var(--warn); }
+.account-button[data-sync="error"] .account-dot, .account-button[data-sync="signed-out"] .account-dot { background: var(--err); }
+.account-popover { right: max(8px, calc((100vw - 1080px) / 2 + 8px)); }
+.account-popover p { margin: 8px 0 0; }
+.account-who { display: flex; align-items: center; gap: 12px; }
+.account-who .account-avatar { width: 44px; height: 44px; flex: none; font-size: 1.1rem; }
+.account-who strong { display: block; font-size: 1rem; }
+.account-who span { color: var(--muted); font-size: .82rem; overflow-wrap: anywhere; }
+.account-status { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--ok-soft); color: var(--ok); font-weight: 700; font-size: .86rem; }
+.account-status[data-sync="pending"], .account-status[data-sync="syncing"] { background: var(--warn-soft); color: var(--warn); }
+.account-status[data-sync="error"], .account-status[data-sync="signed-out"] { background: var(--err-soft); color: var(--err); }
+.account-actions { display: grid; gap: 8px; margin-top: 12px; }
+.account-actions .filter { min-height: 44px; justify-content: center; }
+.account-google { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #fff; color: #1f1f1f; border: 1px solid #c4c7c5; font-weight: 700; }
+.account-google svg { width: 18px; height: 18px; }
+.account-actions .is-danger { color: var(--err); border-color: var(--err); }
+.account-greeting { margin: 0 0 4px; color: var(--accent-text); font-weight: 850; font-size: .95rem; }
+.account-greeting[hidden], .account-invite[hidden] { display: none; }
+.account-invite { margin: 14px 0 0; padding: 12px 14px; max-width: 460px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.account-invite strong { display: block; }
+.account-invite p { margin: 4px 0 8px; color: var(--muted); font-size: .86rem; }
+.account-invite .account-actions { grid-auto-flow: column; grid-auto-columns: auto; justify-content: start; margin-top: 8px; }

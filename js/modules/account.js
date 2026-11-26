@@ -1,0 +1,221 @@
+// Optional account: sign in with Google (Auth0) to keep visited places, favourites and the checklist in the cloud.
+// The guide is complete without it. Everything here is best effort: any failure leaves the app exactly as anonymous.
+import { byId, h } from './dom.js';
+import { toast } from './feedback.js';
+import { SYNCED_KEYS } from './user-data.js';
+import { createCloudSync, SAVE_DELAY_MS, BACKUP_KEY, LAST_SYNC_KEY } from './cloud-sync.js';
+import { createAuth, isConfigured } from './auth.js';
+
+const INVITE_DISMISSED_KEY = 'account-invite-dismissed';
+const STARTUP_WAIT_MS = 1500;
+
+/** "Hola, Alex": first name from Google, or the start of the name, or nothing. */
+export function greetingName(user) {
+  const name = (user?.given_name || user?.name || '').trim().split(/\s+/)[0];
+  return name || '';
+}
+
+export function statusText(state, { online = true, lastSyncAt = 0, now = Date.now() } = {}) {
+  if (state === 'syncing') return 'Sincronizando…';
+  if (state === 'pending') return online ? 'Hay cambios sin enviar. Se reintentará enseguida.' : 'Sin internet: los cambios se enviarán a tu cuenta cuando vuelva la conexión. Nada se pierde.';
+  if (state === 'signed-out') return 'La sesión ha caducado. Vuelve a entrar para seguir sincronizando.';
+  if (state === 'error') return 'No se ha podido sincronizar. La guía sigue funcionando con los datos de este dispositivo.';
+  if (!lastSyncAt) return 'Sincronizado';
+  const minutes = Math.max(0, Math.round((now - lastSyncAt) / 60000));
+  if (minutes < 1) return 'Sincronizado · ahora mismo';
+  if (minutes < 60) return `Sincronizado · hace ${minutes} min`;
+  return `Sincronizado · hace ${Math.round(minutes / 60)} h`;
+}
+
+const googleLogo = () => {
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 48 48');
+  svg.setAttribute('aria-hidden', 'true');
+  [['#EA4335', 'M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z'],
+    ['#4285F4', 'M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z'],
+    ['#FBBC05', 'M10.5 28.6a14.5 14.5 0 0 1 0-9.2l-7.9-6.2a24 24 0 0 0 0 21.6l7.9-6.2z'],
+    ['#34A853', 'M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.2C6.5 42.6 14.6 48 24 48z']]
+    .forEach(([fill, d]) => { const path = document.createElementNS(ns, 'path'); path.setAttribute('fill', fill); path.setAttribute('d', d); svg.append(path); });
+  return svg;
+};
+const personIcon = () => {
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  const circle = document.createElementNS(ns, 'circle'); circle.setAttribute('cx', '12'); circle.setAttribute('cy', '8.5'); circle.setAttribute('r', '3.6');
+  const body = document.createElementNS(ns, 'path'); body.setAttribute('d', 'M4.5 20c.8-3.9 3.9-6 7.5-6s6.7 2.1 7.5 6');
+  svg.append(circle, body);
+  return svg;
+};
+
+export async function initAccount({ config, userData, win = window, storage = null } = {}) {
+  const button = byId('account-button');
+  const popover = byId('account-popover');
+  if (!isConfigured(config) || !button || !popover) return null;
+  try { storage = storage ?? win.localStorage; } catch { /* blocked */ }
+
+  let auth = null;
+  let sync = null;
+  let status = { state: 'synced', lastSyncAt: 0 };
+  let view = 'main'; // 'main' | 'logout'
+  let started = false;
+  let busy = false;
+  const online = () => win.navigator.onLine !== false;
+
+  try {
+    auth = await createAuth(config);
+    await auth?.init();
+  } catch (error) { console.warn('[account] sign-in unavailable', error); auth = null; }
+
+  const user = auth?.user ?? null;
+  if (auth?.callbackError) toast('No se ha podido iniciar sesión. Inténtalo de nuevo.');
+
+  if (user) {
+    sync = createCloudSync({
+      domain: config.domain, userId: user.sub, userData, storage, getToken: () => auth.getToken(),
+      onStatus: (next) => { status = next; render(); },
+      onRemoteChanges: () => { if (started) toast('Se han traído cambios de tu cuenta.', { actionLabel: 'Actualizar', onAction: () => win.location.reload(), duration: 15000 }); else render(); }
+    });
+    userData.connect(sync.backend, { delayMs: SAVE_DELAY_MS });
+    win.addEventListener('online', () => sync.resume());
+    win.document.addEventListener('visibilitychange', () => {
+      if (win.document.visibilityState === 'hidden') { if (userData.hasPendingSave()) userData.flush(); } else sync.resume();
+    });
+    win.addEventListener('pagehide', () => { if (userData.hasPendingSave()) userData.flush(); });
+    // Local first: wait only briefly so a good connection gets merged data before the stores read it; a slow one finishes later.
+    const first = sync.reconcile();
+    await Promise.race([first, new Promise((resolve) => setTimeout(resolve, STARTUP_WAIT_MS))]);
+  }
+
+  // ---------- view ----------
+  function renderButton() {
+    button.hidden = false;
+    button.dataset.state = user ? 'signed-in' : 'anonymous';
+    button.dataset.sync = user ? status.state : '';
+    button.setAttribute('aria-label', user ? `Cuenta de ${greetingName(user) || 'Google'}` : 'Cuenta (sin sesión)');
+    button.replaceChildren();
+    if (!user) { button.append(personIcon()); return; }
+    const initial = (greetingName(user)[0] || '?').toUpperCase();
+    const fallback = () => h('span', { class: 'account-avatar' }, initial);
+    if (user.picture) {
+      const image = h('img', { class: 'account-avatar', src: user.picture, alt: '', referrerpolicy: 'no-referrer', width: 44, height: 44 });
+      image.addEventListener('error', () => image.replaceWith(fallback()));
+      button.append(image);
+    } else button.append(fallback());
+    button.append(h('span', { class: 'account-dot', 'aria-hidden': 'true' }));
+  }
+
+  function renderGreeting() {
+    const greeting = byId('account-greeting');
+    if (!greeting) return;
+    const name = greetingName(user);
+    greeting.hidden = !name;
+    greeting.textContent = name ? `Hola, ${name}` : '';
+  }
+
+  function privacy() { return h('p', {}, '🔒 Los PINs y las reservas del alojamiento nunca salen de este dispositivo.'); }
+  function signInButton() { return h('button', { type: 'button', class: 'filter account-google', onclick: () => signIn(), disabled: !online() || !auth }, googleLogo(), 'Entrar con Google'); }
+
+  function renderPopover() {
+    popover.replaceChildren();
+    if (!user) {
+      popover.append(
+        h('h2', {}, 'Tu cuenta'),
+        h('p', {}, 'Estás usando la guía sin sesión y funciona entera. Si entras con Google, tus visitados, favoritos y checklist se guardan en la nube y los ves en todos tus dispositivos.'),
+        privacy(),
+        h('div', { class: 'account-actions' },
+          signInButton(),
+          !online() ? h('p', {}, 'Para entrar hace falta internet. La guía sigue funcionando sin él.') : null,
+          !auth ? h('p', {}, 'No se ha podido cargar el inicio de sesión ahora mismo.') : null,
+          h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar'))
+      );
+      return;
+    }
+    if (view === 'logout') {
+      popover.append(
+        h('h2', {}, '¿Cerrar sesión?'),
+        h('p', {}, 'Tus datos siguen guardados en tu cuenta. En este dispositivo se mantienen visitados, favoritos y checklist, y seguirás usando la guía sin sesión.'),
+        h('div', { class: 'account-actions' },
+          h('button', { type: 'button', class: 'filter is-danger', onclick: () => signOut(false), disabled: busy }, 'Cerrar sesión'),
+          h('button', { type: 'button', class: 'filter', onclick: () => signOut(true), disabled: busy }, 'Cerrar y borrar los datos de este dispositivo'),
+          h('button', { type: 'button', class: 'filter', onclick: () => { view = 'main'; render(); } }, 'Cancelar'))
+      );
+      return;
+    }
+    const who = h('div', { class: 'account-who' },
+      user.picture ? h('img', { class: 'account-avatar', src: user.picture, alt: '', referrerpolicy: 'no-referrer' }) : h('span', { class: 'account-avatar' }, (greetingName(user)[0] || '?').toUpperCase()),
+      h('div', {}, h('strong', {}, user.name || greetingName(user)), h('span', {}, user.email || '')));
+    popover.append(
+      who,
+      h('div', { class: 'account-status', dataset: { sync: status.state }, role: 'status' }, statusText(status.state, { online: online(), lastSyncAt: status.lastSyncAt })),
+      privacy(),
+      h('div', { class: 'account-actions' },
+        status.state === 'signed-out' ? signInButton() : h('button', { type: 'button', class: 'filter', onclick: () => sync.reconcile(), disabled: busy || !online() }, 'Sincronizar ahora'),
+        h('button', { type: 'button', class: 'filter is-danger', onclick: () => { view = 'logout'; render(); } }, 'Cerrar sesión'),
+        h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar'))
+    );
+  }
+
+  function renderInvite() {
+    const invite = byId('account-invite');
+    if (!invite) return;
+    let dismissed = false;
+    try { dismissed = storage?.getItem(INVITE_DISMISSED_KEY) === '1'; } catch { /* ignore */ }
+    invite.hidden = Boolean(user) || dismissed || !auth;
+    invite.replaceChildren();
+    if (invite.hidden) return;
+    invite.append(
+      h('strong', {}, 'Guarda tus visitados y listas en la nube'),
+      h('p', {}, 'Entra con Google para verlos también en tu ordenador. Es opcional.'),
+      h('div', { class: 'account-actions' },
+        signInButton(),
+        h('button', { type: 'button', class: 'filter', onclick: () => { try { storage?.setItem(INVITE_DISMISSED_KEY, '1'); } catch { /* ignore */ } renderInvite(); } }, 'Ahora no'))
+    );
+  }
+
+  function render() { renderButton(); renderGreeting(); renderPopover(); renderInvite(); }
+
+  function setOpen(open) {
+    if (open) { view = 'main'; renderPopover(); }
+    popover.hidden = !open;
+    button.setAttribute('aria-expanded', String(open));
+    if (open) popover.querySelector('button')?.focus(); else button.focus();
+  }
+  button.addEventListener('click', () => setOpen(popover.hidden));
+  win.document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !popover.hidden) setOpen(false); });
+  win.document.addEventListener('click', (event) => {
+    const path = event.composedPath(); // not contains(): a button the panel just re-rendered is already detached
+    if (!popover.hidden && !path.includes(popover) && !path.includes(button)) { popover.hidden = true; button.setAttribute('aria-expanded', 'false'); }
+  });
+  win.addEventListener('online', render);
+  win.addEventListener('offline', render);
+
+  async function signIn() {
+    if (!auth || !online()) return;
+    try { await userData.flush(); } catch { /* ignore */ }
+    try { await auth.login(); } catch (error) { console.warn('[account] login failed', error); toast('No se ha podido abrir el inicio de sesión.'); }
+  }
+
+  async function signOut(wipe) {
+    busy = true; render();
+    try {
+      if (online() && sync) await Promise.race([sync.reconcile(), new Promise((resolve) => setTimeout(resolve, 3000))]);
+      sync?.stop();
+      userData.disconnect();
+      userData.clearBase(); // the next account that signs in on this device starts from a plain union
+      if (wipe && storage) {
+        for (const key of [...SYNCED_KEYS, BACKUP_KEY, LAST_SYNC_KEY]) { try { storage.removeItem(key); } catch { /* ignore */ } }
+      }
+      await auth.logout();
+    } catch (error) { busy = false; console.warn('[account] logout failed', error); toast('No se ha podido cerrar la sesión.'); render(); }
+  }
+
+  render();
+  return {
+    user, markStarted() { started = true; },
+    /** For tests and the QA thread. */
+    get status() { return status; }
+  };
+}

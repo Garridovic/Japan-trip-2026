@@ -3,20 +3,23 @@
 // removeItem) so the stores that already exist did not change. Lodging notes (PINs, bookings) are NOT here on purpose:
 // they never leave the phone.
 //
-// Sync hook (for a future account sync, e.g. Auth0 user_metadata): call `userData.connect(backend)` before the app
+// Sync hook (used by cloud-sync.js, Auth0 user_metadata): call `userData.connect(backend, { delayMs })` before the app
 // starts, with   backend = { load(): Promise<snapshot|null>, save(snapshot): Promise<void> }.
-//   - `load` runs once at start; its snapshot replaces the local values (use `updatedAt` to decide who wins).
-//   - `save` runs (debounced) after every change of a synced key, with the full snapshot.
+//   - `load` runs once at start; a snapshot it returns replaces the local values (cloud-sync returns null and merges itself).
+//   - `save` runs (debounced by `delayMs`) after every change of a synced key, with the full snapshot.
+//   - `getBase()/setBase()` keep the last version both sides agreed on, for the three-way merge in sync-merge.js.
 // A snapshot is { updatedAt, data: { <key>: <string> } } where the keys are SYNCED_KEYS. The UI never needs to change.
 // Keys are literal on purpose (visited.js imports this module, so importing it back would be a cycle);
 // tests/user-data.test.js checks they match the stores' own constants.
 export const CHECKLIST_KEY = 'checklist-v1';
 export const SYNCED_KEYS = Object.freeze(['visited-v1', 'japan-trip:phrase-favorites', 'japan-trip:dish-favorites', CHECKLIST_KEY]);
 const UPDATED_KEY = 'user-data-updated-at';
+const BASE_KEY = 'user-data-synced-base';
 const SAVE_DELAY_MS = 800;
 
 export function createUserData(storage, { now = () => Date.now(), setTimer = setTimeout, clearTimer = clearTimeout } = {}) {
   let backend = null;
+  let delayMs = SAVE_DELAY_MS;
   let timer = null;
   const listeners = new Set();
 
@@ -39,7 +42,7 @@ export function createUserData(storage, { now = () => Date.now(), setTimer = set
     listeners.forEach((listener) => listener(key));
     if (!backend) return;
     if (timer) clearTimer(timer);
-    timer = setTimer(flush, SAVE_DELAY_MS);
+    timer = setTimer(flush, delayMs);
   };
 
   /** Storage-shaped facade handed to every store. */
@@ -60,7 +63,14 @@ export function createUserData(storage, { now = () => Date.now(), setTimer = set
       return true;
     },
     subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); },
-    connect(newBackend) { backend = newBackend; },
+    connect(newBackend, options = {}) { backend = newBackend; delayMs = options.delayMs ?? SAVE_DELAY_MS; },
+    disconnect() { backend = null; if (timer) clearTimer(timer); timer = null; },
+    /** True while a debounced save is waiting. */
+    hasPendingSave: () => timer !== null,
+    /** Last data both sides agreed on ({ key: rawString }); empty before the first sync. */
+    getBase() { try { const parsed = JSON.parse(read(BASE_KEY) ?? '{}'); return parsed && typeof parsed === 'object' ? parsed : {}; } catch { return {}; } },
+    setBase(data) { write(BASE_KEY, JSON.stringify(data ?? {})); },
+    clearBase() { try { storage?.removeItem(BASE_KEY); } catch { /* ignore */ } },
     /** Loads from the backend (if any). Never throws and never blocks the app for long. */
     async load({ timeoutMs = 3000 } = {}) {
       if (!backend) return false;

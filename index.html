@@ -25,6 +25,7 @@
     <span class="top-bar-title" id="top-bar-title">Japón · 2026</span>
     <button type="button" class="offline-chip" id="offline-chip" data-state="none" aria-haspopup="dialog" aria-expanded="false" aria-controls="offline-popover" hidden><span class="offline-chip-icon" id="offline-chip-icon" aria-hidden="true">⬇</span><span class="offline-chip-label" id="offline-chip-label">Sin conexión</span><span class="offline-chip-short" id="offline-chip-short">Sin conexión</span></button>
     <button type="button" class="theme-button search-button" id="search-button" aria-label="Buscar en la guía"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg></button>
+    <button type="button" class="account-button" id="account-button" data-state="anonymous" aria-haspopup="dialog" aria-expanded="false" aria-controls="account-popover" aria-label="Cuenta" hidden></button>
     <button type="button" class="theme-button" id="theme-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="theme-popover" aria-label="Apariencia: automática"><svg viewBox="0 0 24 24" aria-hidden="true" id="theme-button-icon"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17A8.5 8.5 0 0 0 12 3.5Z" fill="currentColor"/></svg></button>
   </header>
 
@@ -37,6 +38,8 @@
     </div>
     <p>«Automático» sigue el modo de tu móvil. Se guarda en este dispositivo.</p>
   </div>
+
+  <div class="theme-popover account-popover" id="account-popover" role="dialog" aria-label="Cuenta" hidden></div>
 
   <div class="offline-popover" id="offline-popover" role="dialog" aria-label="Uso sin conexión" hidden>
     <h2 class="offline-popover-title" id="offline-summary">Sin conexión</h2>
@@ -54,11 +57,13 @@
   <div class="app-view" id="city-view" data-view="guia" role="tabpanel" tabindex="-1">
     <header class="hero">
       <div class="hero-inner">
+        <p class="account-greeting" id="account-greeting" hidden></p>
         <div class="eyebrow" id="hero-eyebrow">Japón · guía compartida</div>
         <h1><span id="hero-title">…</span><span class="hero-dot">.</span></h1>
         <p class="subtitle" id="hero-subtitle"></p>
         <div class="hero-meta" id="hero-meta"></div>
         <p class="hotel" id="hero-hotel" hidden></p>
+        <aside class="account-invite" id="account-invite" hidden></aside>
         <div class="hero-actions">
           <a class="button primary" href="#mapa">Abrir mapa interactivo</a>
           <a class="button" href="#resumen">Ver recorrido</a>
