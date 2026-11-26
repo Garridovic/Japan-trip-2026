@@ -30,31 +30,40 @@ export function stateFromReport(report) {
   return { kind: 'ready' };
 }
 
-/** What the header chip shows for a state: short label (fits a 320 px phone), tone and a long description for screen readers. */
+/**
+ * What the header chip shows for a state. `label` is the full text; `short` is used when the header is narrow
+ * (the CSS switches at 420 px) so it never overlaps the city tabs on a 320 px phone.
+ */
 export function chipView(state) {
   switch (state.kind) {
-    case 'ready': return { icon: '✓', label: 'Offline', tone: 'ok', aria: 'Sin conexión: todo guardado correctamente' };
-    case 'essentials': return { icon: '✓', label: 'Básico', tone: 'partial', aria: 'Sin conexión: lo esencial guardado, faltan las fotos grandes' };
-    case 'saving': return { icon: '⬇', label: state.total ? `${Math.round((state.done / state.total) * 100)}%` : '…', tone: 'busy', aria: 'Sin conexión: descargando' };
-    case 'installing': return { icon: '⬇', label: '…', tone: 'busy', aria: 'Sin conexión: guardando la guía' };
-    case 'incomplete': return { icon: '⚠', label: 'Offline', tone: 'error', aria: 'Sin conexión: la copia guardada está incompleta' };
-    case 'none': return { icon: '⬇', label: 'Offline', tone: 'none', aria: 'Sin conexión: todavía no guardada' };
+    case 'ready': return { icon: '✓', label: 'Lista sin conexión', short: 'Sin conexión', tone: 'ok', aria: 'Guía lista para usar sin conexión: todo guardado' };
+    case 'essentials': return { icon: '✓', label: 'Sin conexión · fotos pendientes', short: 'Fotos pendientes', tone: 'partial', aria: 'Guía guardada para usar sin conexión, faltan las fotos grandes' };
+    case 'saving': {
+      const percent = state.total ? ` ${Math.round((state.done / state.total) * 100)}%` : '…';
+      return { icon: '⬇', label: `Guardando${state.total ? '…' : ''}${percent}`.replace('……', '…'), short: state.total ? `${Math.round((state.done / state.total) * 100)}%` : '…', tone: 'busy', aria: 'Descargando la guía para usarla sin conexión' };
+    }
+    case 'installing': return { icon: '⬇', label: 'Guardando…', short: '…', tone: 'busy', aria: 'Guardando la guía para usarla sin conexión' };
+    case 'incomplete': return { icon: '⚠', label: 'Copia incompleta · tocar', short: 'Incompleta', tone: 'error', aria: 'La copia para usar sin conexión está incompleta: toca para repararla' };
+    case 'none': return { icon: '☁', label: 'Sin copia · descargar', short: 'Sin copia', tone: 'none', aria: 'Todavía no hay copia para usar sin conexión: toca para descargarla' };
     default: return null; // unsupported: no chip
   }
 }
 
-/** Popover texts and which buttons make sense for a state. */
+/** Popover: the first sentence says in plain words what is saved; then the details and which buttons make sense. */
 export function describe(state, report = null) {
   const sizes = report?.sizes;
-  const all = sizes ? ` (≈ ${formatMegabytes(sizes.warm)})` : '';
+  const photos = sizes ? ` (≈ ${formatMegabytes(sizes.warm)})` : '';
   switch (state.kind) {
-    case 'installing': return { summary: 'Guardando la guía…', detail: 'Guardando la guía y las fotos pequeñas. Necesita conexión solo esta vez.', download: false, retry: false };
-    case 'essentials': return { summary: 'Lo esencial está guardado ✓', detail: `La guía, Frases, Platos, el mapa y las fotos pequeñas funcionan sin conexión. Las fotos grandes se descargan aparte${all}.`, download: true, retry: false };
-    case 'saving': return { summary: `Descargando fotos… ${state.done}/${state.total}`, detail: 'Puedes seguir usando la guía mientras se descarga.', download: false, retry: false };
-    case 'ready': return { summary: 'Todo guardado ✓', detail: 'La guía, Frases, Platos y todas las fotos están guardadas en este dispositivo.', download: false, retry: false };
-    case 'incomplete': return { summary: 'Copia incompleta', detail: `Faltan ${state.missing} archivos de la copia guardada. Con conexión, pulsa «Reintentar» para completarla.`, download: false, retry: true };
-    case 'none': return { summary: 'Sin guardar todavía', detail: 'Abre la guía con conexión para guardarla y usarla sin conexión.', download: false, retry: false };
-    default: return { summary: 'Sin conexión no disponible', detail: 'Este navegador no permite guardar la guía para usarla sin conexión.', download: false, retry: false };
+    case 'installing': return { summary: 'Guardando la guía para usarla sin internet…', detail: 'Necesita conexión solo esta vez.', download: false, retry: false };
+    case 'essentials': return {
+      summary: `Guía guardada para usarla sin internet. Faltan las fotos grandes${photos}.`,
+      detail: 'La guía, el mapa, las frases y los platos ya funcionan sin conexión. Sin las fotos grandes verás versiones pequeñas.', download: true, retry: false
+    };
+    case 'saving': return { summary: `Descargando fotos grandes… ${state.done}/${state.total}`, detail: 'Puedes seguir usando la guía mientras se descarga.', download: false, retry: false };
+    case 'ready': return { summary: 'Todo guardado para usar sin internet ✓', detail: 'La guía, las frases, los platos y todas las fotos están guardadas en este dispositivo.', download: false, retry: false };
+    case 'incomplete': return { summary: 'La copia guardada está incompleta', detail: `Faltan ${state.missing} archivos. Con conexión, pulsa «Reintentar» para completarla.`, download: false, retry: true };
+    case 'none': return { summary: 'Todavía no hay copia para usar sin internet', detail: 'Abre la guía con conexión para guardarla.', download: false, retry: false };
+    default: return { summary: 'Este navegador no puede guardar la guía sin conexión', detail: '', download: false, retry: false };
   }
 }
 
@@ -99,13 +108,14 @@ export async function initOffline({ win = window, doc = document } = {}) {
       chip.dataset.tone = view.tone;
       $('offline-chip-icon').textContent = view.icon;
       $('offline-chip-label').textContent = view.label;
+      $('offline-chip-short').textContent = view.short;
       chip.setAttribute('aria-label', view.aria);
     }
     const text = describe(state, report);
     $('offline-summary').textContent = text.summary;
     $('offline-detail').textContent = text.detail;
     $('offline-download-all').hidden = !text.download || nav.onLine === false;
-    $('offline-download-all').textContent = report ? `Descargar todo (≈ ${formatMegabytes(report.sizes.warm)})` : 'Descargar todo';
+    $('offline-download-all').textContent = report ? `Descargar fotos grandes (≈ ${formatMegabytes(report.sizes.warm)})` : 'Descargar fotos grandes';
     $('offline-retry').hidden = !text.retry || nav.onLine === false;
     $('offline-verify').hidden = !worker();
     $('offline-facts').replaceChildren(...facts(state, report, appVersion).flatMap(([name, value]) => {

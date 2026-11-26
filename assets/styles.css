@@ -503,3 +503,8 @@ body[data-view="frases"] .top-bar-title, body[data-view="platos"] .top-bar-title
 #save-offline-map { min-height: 44px; }
 #save-offline-map[hidden] { display: none; }
 @media print { .map-offline { display: none !important; } }
+
+/* Offline chip: full text on wider headers, short text on narrow phones */
+.offline-chip-short { display: none; }
+@media (max-width: 419px) { .offline-chip-label { display: none; } .offline-chip-short { display: inline; } }
+.offline-chip { max-width: 70vw; white-space: nowrap; }

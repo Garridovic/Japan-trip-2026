@@ -130,26 +130,34 @@ test('the saved copy is judged file by file: incomplete, essentials or ready', (
   assert.equal(stateFromReport(report({ required: 2, optional: 3 })).missing, 5);
 });
 
-test('the header chip has a short label, a tone and a spoken description for every state', () => {
+test('the header chip says in plain words what is saved, with a short version for narrow phones', () => {
   const states = [{ kind: 'ready' }, { kind: 'essentials' }, { kind: 'saving', done: 5, total: 10 }, { kind: 'installing' }, { kind: 'incomplete', missing: 2 }, { kind: 'none' }];
   for (const state of states) {
     const view = chipView(state);
-    assert.ok(view.label.length <= 8, `${state.kind}: label must fit a 320 px header`);
-    assert.ok(view.tone && view.aria.startsWith('Sin conexión'));
+    assert.ok(view.label.length <= 34, `${state.kind}: label too long`);
+    assert.ok(view.short.length <= 17, `${state.kind}: short label must fit a 320 px header`);
+    assert.ok(view.tone && view.aria.length > 20);
+    assert.doesNotMatch(`${view.label} ${view.short} ${view.aria}`, /básico/i, 'the confusing word "Básico" is gone');
   }
-  assert.equal(chipView({ kind: 'saving', done: 5, total: 10 }).label, '50%');
-  assert.equal(chipView({ kind: 'ready' }).tone, 'ok');
+  assert.deepEqual([chipView({ kind: 'ready' }).label, chipView({ kind: 'ready' }).tone], ['Lista sin conexión', 'ok']);
+  assert.deepEqual([chipView({ kind: 'essentials' }).label, chipView({ kind: 'essentials' }).tone], ['Sin conexión · fotos pendientes', 'partial']);
+  assert.equal(chipView({ kind: 'saving', done: 5, total: 10 }).label, 'Guardando… 50%');
+  assert.equal(chipView({ kind: 'saving', done: 5, total: 10 }).short, '50%');
+  assert.equal(chipView({ kind: 'incomplete', missing: 1 }).label, 'Copia incompleta · tocar');
   assert.equal(chipView({ kind: 'incomplete', missing: 1 }).tone, 'error');
+  assert.equal(chipView({ kind: 'none' }).label, 'Sin copia · descargar');
+  assert.equal(chipView({ kind: 'ready' }).short, 'Sin conexión');
+  assert.equal(chipView({ kind: 'essentials' }).short, 'Fotos pendientes');
   assert.equal(chipView({ kind: 'unsupported' }), null, 'no chip where nothing can be saved');
 });
 
 test('the popover offers the right actions for each state', () => {
   assert.equal(describe({ kind: 'essentials' }, report({ warm: 5 })).download, true);
-  assert.match(describe({ kind: 'essentials' }, report({ warm: 5 })).detail, /≈ 13 MB/);
+  assert.match(describe({ kind: 'essentials' }, report({ warm: 5 })).summary, /^Guía guardada para usarla sin internet\. Faltan las fotos grandes \(≈ 13 MB\)\.$/);
   assert.equal(describe({ kind: 'incomplete', missing: 4 }).retry, true);
   assert.match(describe({ kind: 'incomplete', missing: 4 }).detail, /4 archivos/);
+  assert.equal(describe({ kind: 'saving', done: 3, total: 9 }).summary, 'Descargando fotos grandes… 3/9');
   assert.equal(describe({ kind: 'ready' }).download, false);
-  assert.equal(describe({ kind: 'saving', done: 3, total: 9 }).summary, 'Descargando fotos… 3/9');
 });
 
 test('the popover facts show the copy date, the space used and a real file count', () => {
