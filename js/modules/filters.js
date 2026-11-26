@@ -4,9 +4,12 @@ import { byId, h, externalLink, setPressed } from './dom.js';
 const filterButton = (className, dataKey, { value, label }, pressed) =>
   h('button', { class: `filter ${className}`, type: 'button', 'aria-pressed': String(pressed), dataset: { [dataKey]: value } }, label);
 
+/** Google Maps directions to a place; the city is added so a short name resolves to the right one. */
+export const directionsUrl = (name, context) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(context ? `${name}, ${context}` : name)}&travelmode=transit`;
+
 const FOOD_CONTAINERS = ['food-highlights', 'food-day-filters', 'food-type-filters', 'food-grid', 'food-note', 'food-count'];
 
-export function renderFood(food, restaurants) {
+export function renderFood(food, restaurants, queryContext = '') {
   if (!food || restaurants.length === 0) {
     FOOD_CONTAINERS.forEach((id) => byId(id).replaceChildren());
     return;
@@ -33,7 +36,8 @@ export function renderFood(food, restaurants) {
       h('p', {}, item.desc),
       h('div', { class: 'food-meta' }, item.note),
       h('div', { class: 'food-actions' },
-        externalLink(item.mapsUrl, 'Ver en Google Maps ↗'),
+        externalLink(directionsUrl(item.query ?? item.name, queryContext), 'Cómo llegar', 'primary-action'),
+        externalLink(item.mapsUrl, 'Ver en Google Maps ↗', 'secondary'),
         (item.links ?? []).map((link) => externalLink(link.url, link.label, 'secondary'))
       )
     )
@@ -68,7 +72,7 @@ export function renderFood(food, restaurants) {
   bind(typeContainer, 'foodType', (value) => { selectedType = value; });
 }
 
-export function renderExtras(extras, categories) {
+export function renderExtras(extras, categories, queryContext = '') {
   const toolbar = byId('extras-toolbar');
   const grid = byId('extras-grid');
   if (!extras?.items?.length) {
@@ -78,7 +82,8 @@ export function renderExtras(extras, categories) {
   }
   const cards = extras.items.map((item) =>
     h('article', { class: 'extra-card', dataset: { category: item.category } },
-      h('span', { class: 'extra-tag' }, item.tag), h('h3', {}, item.name), h('p', {}, item.desc))
+      h('span', { class: 'extra-tag' }, item.tag), h('h3', {}, item.name), h('p', {}, item.desc),
+      h('div', { class: 'food-actions' }, externalLink(directionsUrl(item.name, queryContext), 'Cómo llegar', 'primary-action')))
   );
   grid.replaceChildren(...cards);
   const filters = [{ value: 'todos', label: 'Todos' }, ...categories.map(({ id, label }) => ({ value: id, label }))];

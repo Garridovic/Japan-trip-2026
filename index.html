@@ -85,6 +85,7 @@
           <div><div class="kicker">Primero, el vistazo general</div><h2>El recorrido en orden</h2></div>
           <p class="muted small">Pulsa «Ver detalle» para horarios, consejos y desplazamientos.</p>
         </div>
+        <article class="today-card" id="today-card" aria-live="polite" hidden></article>
         <div class="quick-grid" id="quick-grid"></div>
         <p class="muted small summary-note" id="quick-note" hidden></p>
       </section>
@@ -352,6 +353,7 @@
       <span class="phrase-show-position" id="phrase-show-position" aria-live="polite"></span>
       <button type="button" class="phrase-btn is-slow" id="phrase-show-next" aria-label="Frase siguiente">Siguiente ›</button>
     </div>
+    <p class="phrase-show-hint" id="phrase-show-hint">Desliza hacia los lados para cambiar de frase</p>
   </div>
 
   <script src="assets/vendor/leaflet/leaflet.js"></script>

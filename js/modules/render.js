@@ -109,9 +109,9 @@ export function renderCity({ journey, cityEntry, bundle, global }) {
   renderHero(journey, cityEntry, bundle.city);
   renderItinerary(bundle.itinerary);
   renderConnections(journey, cityEntry.id);
-  renderFood(bundle.food, bundle.restaurants);
+  renderFood(bundle.food, bundle.restaurants, bundle.city.map.queryContext);
   setSectionVisible('comer', Boolean(bundle.food && bundle.restaurants.length));
-  renderExtras(bundle.extras, bundle.city.map.alternativeCategories ?? []);
+  renderExtras(bundle.extras, bundle.city.map.alternativeCategories ?? [], bundle.city.map.queryContext);
   setSectionVisible('alternativas', Boolean(bundle.extras?.items?.length));
   renderTips(global.tips);
   renderSources(bundle.sources);

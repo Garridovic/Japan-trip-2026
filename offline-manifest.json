@@ -1,7 +1,7 @@
 {
-  "version": "ef1250384d",
+  "version": "62b20e9d78",
   "sizes": {
-    "required": 688123,
+    "required": 699874,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -73,9 +73,11 @@
     "js/modules/render.js",
     "js/modules/scrollspy.js",
     "js/modules/speech.js",
+    "js/modules/swipe.js",
     "js/modules/tabs.js",
     "js/modules/theme.js",
     "js/modules/tiles.js",
+    "js/modules/today.js",
     "js/modules/updates.js",
     "js/modules/version.js",
     "js/modules/views.js",

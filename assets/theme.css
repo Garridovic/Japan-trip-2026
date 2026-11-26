@@ -258,3 +258,33 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 .update-card .filter { min-height: 44px; margin-top: 6px; padding: 0 16px; }
 @media (min-width: 900px) { .update-banner { bottom: calc(var(--bar-height) + 34px); } }
 @media print { .update-card, .update-banner { display: none !important; } }
+
+/* ====== Tarjeta «Hoy» y línea de tiempo del día ====== */
+.today-card { margin: 0 0 16px; padding: 16px 18px; border-radius: 22px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent); }
+.today-card[hidden] { display: none; }
+.today-eyebrow { color: var(--accent-text); font-size: .72rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+.today-card h3 { margin: 4px 0 6px; font-size: 1.2rem; }
+.today-line { display: flex; gap: 10px; align-items: baseline; margin: 4px 0; font-size: .95rem; font-weight: 700; }
+.today-line > span { flex: none; min-width: 72px; color: var(--muted); font-size: .72rem; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
+.today-line.is-now > span { color: var(--ok); }
+.today-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.today-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 24px; background: var(--accent); color: var(--accent-ink); font-weight: 850; text-decoration: none; }
+.today-button:hover { color: var(--accent-ink); }
+.today-button.is-secondary { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.today-button.is-secondary:hover { color: var(--ink); }
+.day-detail .stop.is-done { opacity: .55; }
+.day-detail .stop.is-done .time::after { content: " ✓"; color: var(--ok); }
+.day-detail .stop.is-now::before { background: var(--ok); box-shadow: 0 0 0 4px var(--ok-soft); }
+.day-detail .stop.is-now .time { color: var(--ok); }
+.day-detail .stop.is-next::before { box-shadow: 0 0 0 4px var(--accent-soft); }
+.day-detail[data-today] > summary .day-number { background: var(--accent); color: var(--accent-ink); }
+
+/* ====== Lugares: acción principal «Cómo llegar» ====== */
+.food-actions a.primary-action { flex: 1 1 140px; min-height: 48px; padding: 0 18px; background: var(--accent); color: var(--accent-ink); font-size: .9rem; }
+.food-actions a.primary-action:hover { color: var(--accent-ink); }
+.extra-card .food-actions { padding-top: 10px; }
+
+/* ====== Frases: «Mostrar» como acción principal ====== */
+.phrase-actions .phrase-btn.is-primary { flex: 1 1 auto; min-height: 48px; background: var(--accent); color: var(--accent-ink); font-size: .95rem; }
+.phrase-actions .phrase-btn.is-compact { min-width: 48px; min-height: 48px; }
+.phrase-show-hint { margin: 0; color: #aab6b6; font-size: .78rem; text-align: center; }

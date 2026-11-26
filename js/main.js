@@ -20,6 +20,7 @@ import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
 import { initMapView } from './modules/map-view.js';
 import { initUpdates } from './modules/updates.js';
+import { initToday } from './modules/today.js';
 
 const status = byId('app-status');
 const showStatus = (message, isError = false) => {
@@ -45,6 +46,7 @@ async function start() {
   initDishes(global.dishes, global.dishCredits);
   initPhrases(global.phrases); // global content: rendered once, shared by every city
   const mapView = initMapView({ map });
+  const today = initToday();
   const scrollSpy = initScrollSpy();
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
 
@@ -87,6 +89,7 @@ async function start() {
       renderCity({ journey, cityEntry: cities.find((city) => city.id === cityId), bundle, global });
       details.setCity({ ...index, events: bundle.events });
       map.setCity(index, bundle.city.map);
+      today.show({ days: bundle.itinerary.days, cityName: cities.find((city) => city.id === cityId).name, queryContext: bundle.city.map.queryContext });
       activeCityId = cityId;
       scrollSpy.refresh();
       showStatus('');

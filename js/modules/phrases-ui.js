@@ -5,6 +5,7 @@ import {
   ALL_CATEGORY, FAVORITES_CATEGORY, createFavoritesStore, filterPhrases
 } from './phrases.js';
 import { createSpeech } from './speech.js';
+import { swipeDirection } from './swipe.js';
 
 const NO_VOICE_NOTICE = 'Tu dispositivo no tiene una voz japonesa instalada, así que el audio puede sonar mal o no sonar. Puedes añadirla en los ajustes del sistema (iPhone: Ajustes › Accesibilidad › Contenido leído › Voces › Japonés; Android: Ajustes › Idioma › Salida de texto a voz). Mientras tanto, usa «Mostrar» para enseñar la frase.';
 const NO_SPEECH_NOTICE = 'Este navegador no puede reproducir audio. Usa «Mostrar» para enseñar la frase en pantalla grande.';
@@ -74,6 +75,7 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
     );
     byId('phrase-show-position').textContent = `${position + 1} / ${sequence.length}`;
     byId('phrase-show-pager').hidden = sequence.length < 2;
+    byId('phrase-show-hint').hidden = sequence.length < 2;
   }
   const openShow = (phrase, trigger) => {
     opener = trigger;
@@ -88,6 +90,17 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
   byId('phrase-show-prev').addEventListener('click', () => showPhrase(position - 1));
   byId('phrase-show-next').addEventListener('click', () => showPhrase(position + 1));
   modal.querySelectorAll('[data-close-phrase]').forEach((node) => node.addEventListener('click', closeShow));
+  // Swipe left / right on the big phrase to walk through the list (the Anterior / Siguiente buttons stay).
+  let touchStart = null;
+  modal.addEventListener('touchstart', (event) => { const t = event.changedTouches[0]; touchStart = { x: t.clientX, y: t.clientY }; }, { passive: true });
+  modal.addEventListener('touchend', (event) => {
+    if (!touchStart || sequence.length < 2) return;
+    const t = event.changedTouches[0];
+    const direction = swipeDirection(t.clientX - touchStart.x, t.clientY - touchStart.y);
+    touchStart = null;
+    if (direction === 'left') showPhrase(position + 1);
+    else if (direction === 'right') showPhrase(position - 1);
+  }, { passive: true });
   document.addEventListener('keydown', (event) => {
     if (modal.hidden) return;
     if (event.key === 'Escape') closeShow();
@@ -107,7 +120,7 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
   };
 
   const renderCard = (phrase) => {
-    const trigger = h('button', { type: 'button', class: 'phrase-btn', onclick: (event) => openShow(phrase, event.currentTarget) }, '⤢ Mostrar');
+    const trigger = h('button', { type: 'button', class: 'phrase-btn is-primary', onclick: (event) => openShow(phrase, event.currentTarget) }, '⤢ Mostrar');
     return h('article', { class: 'phrase-card', dataset: { phraseId: phrase.id, category: phrase.category } },
       h('div', { class: 'phrase-top' },
         h('span', { class: 'phrase-cat' }, categoryLabels.get(phrase.category)),
@@ -118,7 +131,7 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
       h('p', { class: 'phrase-ja', lang: 'ja' }, phrase.ja),
       h('p', { class: 'phrase-romaji' }, phrase.romaji),
       phrase.note && h('p', { class: 'phrase-note' }, phrase.note),
-      h('div', { class: 'phrase-actions' }, audioButton(phrase.ja), audioButton(phrase.ja, { slow: true }), trigger),
+      h('div', { class: 'phrase-actions' }, trigger, audioButton(phrase.ja, { compact: true }), audioButton(phrase.ja, { slow: true, compact: true })),
       h('details', { class: 'phrase-examples' },
         h('summary', {}, 'Ejemplos'),
         h('ul', {}, phrase.examples.map((example) =>
