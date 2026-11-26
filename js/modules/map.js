@@ -109,7 +109,7 @@ export function initMap({ openDetail }) {
       })
       : L.circleMarker([point.lat, point.lng], {
         radius: point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7,
-        color: '#fff', weight: 2, fillColor: color, fillOpacity: 0.95
+        color: '#fff', weight: point.type === 'hotel' ? 3 : 2, fillColor: color, fillOpacity: 0.95
       });
     marker.bindPopup(buildPopup(point));
     // In the full-screen map the place goes to the bottom card instead of a popup.
@@ -252,7 +252,7 @@ export function initMap({ openDetail }) {
       ...config.dayFilters.map((day) => item(swatch({ style: `background:${day.color}` }), day.legend)),
       item(swatch({ class: 'restaurant-shape' }), 'Diamante · restaurantes y paradas gastronómicas (el color conserva la jornada)'),
       item(swatch({ class: 'visit-shape', style: 'background:#8a9699' }), 'Círculo · visitas y puntos de interés'),
-      item(swatch({ style: `background:${HOTEL_COLOR}` }), 'Hotel · alojamiento del grupo'),
+      item(swatch({ class: 'hotel-shape', style: `background:${HOTEL_COLOR}` }), 'Hotel · alojamiento del grupo'),
       ...(hasAlternatives() ? config.alternativeCategories.map((category) => item(swatch({ style: `background:${category.color}` }), category.legend)) : []),
       item(swatch({ class: 'visited-shape' }), '✓ Atenuado · ya visitado'),
       item(swatch({ class: 'route-shape' }), 'Número · orden de la ruta del día'),

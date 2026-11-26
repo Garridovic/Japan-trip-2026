@@ -148,7 +148,7 @@ async function start() {
     if (cityId === activeCityId) { showStatus(''); return; }
     showStatus('Cargando la guía…');
     try {
-      const bundle = await loadCity(cityId);
+      const bundle = await loadCity(cityId, cities.find((city) => city.id === cityId));
       if (token !== requestToken) return; // a newer tab selection superseded this one
       const index = indexCity(cityId, bundle);
       renderCity({ journey, cityEntry: cities.find((city) => city.id === cityId), bundle, global });

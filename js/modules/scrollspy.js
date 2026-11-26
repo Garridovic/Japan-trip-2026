@@ -60,6 +60,11 @@ export function initScrollSpy(win = window, doc = document) {
   }
   const schedule = () => { if (frame === null) frame = win.requestAnimationFrame(update); };
 
+  const armSettle = () => {
+    win.clearTimeout(settleTimer);
+    settleTimer = win.setTimeout(finishClickScroll, SETTLE_MS);
+  };
+
   function finishClickScroll() {
     if (!target) return;
     const { section } = target;
