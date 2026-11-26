@@ -28,7 +28,7 @@ test.describe('Back button / swipe-back closes full-screen sheets and they stay 
     ['dish sheet', openDishSheet, '#dish-show', /view=platos/],
     ['place sheet', openPlaceSheet, '#poi-modal', /^(?!.*view=)/]
   ]) {
-    test(`${name}: history.back() closes it without leaving the guide and it does not reopen`, async ({ page }) => {
+    test(`${name}: Back closes it and it stays closed (also after Forward); the in-sheet button releases its history entry`, async ({ page }) => {
       await open(page);
       const startUrl = page.url();
       await page.evaluate(() => history.back()); // what the Android gesture / iOS edge swipe does
@@ -38,24 +38,17 @@ test.describe('Back button / swipe-back closes full-screen sheets and they stay 
       expect(page.url()).toBe(startUrl);
       expect(page.url()).toMatch(url);
       await expect(page.locator('#app-bar')).toBeVisible();
-    });
-
-    test(`${name}: going Forward does not reopen it`, async ({ page }) => {
-      await open(page);
-      await page.evaluate(() => history.back());
-      await expect(page.locator(sheet)).toBeHidden();
       await page.evaluate(() => history.forward());
       await page.waitForTimeout(500);
       await expect(page.locator(sheet)).toBeHidden();
       await expect(page.locator('#app-bar')).toBeVisible();
-    });
 
-    test(`${name}: closing with the in-sheet button releases its history entry`, async ({ page }) => {
-      await open(page);
-      const entries = await page.evaluate(() => history.length);
-      await page.locator(`${sheet} :is(.phrase-show-close, .poi-back)`).first().click();
-      await expect(page.locator(sheet)).toBeHidden();
-      await expect.poll(() => page.evaluate(() => history.state?.overlay ?? null)).toBeNull();
+      const second = await page.context().newPage(); // a clean history, as a real second visit
+      await open(second);
+      const entries = await second.evaluate(() => history.length);
+      await second.locator(`${sheet} :is(.phrase-show-close, .poi-back)`).first().click();
+      await expect(second.locator(sheet)).toBeHidden();
+      await expect.poll(() => second.evaluate(() => history.state?.overlay ?? null)).toBeNull();
       expect(entries).toBeGreaterThan(1);
     });
   }
