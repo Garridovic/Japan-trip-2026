@@ -19,7 +19,41 @@ jobs:
         with:
           node-version: 22
       - run: npm install --no-package-lock
-      - run: npm run prepare:images
+      # Photos come from Wikimedia Commons and take 3-4 min to download and convert. They only change when the
+      # catalogs, the place data or the script change, so the result is cached under a key made from those files.
+      - name: Compute the photo cache key (before the script rewrites details.json)
+        id: key
+        run: echo "key=photos-${{ hashFiles('data/journey.json', 'data/cities/*/image-catalog.json', 'data/cities/*/places.json', 'data/cities/*/details.json', 'scripts/prepare-images.js') }}" >> "$GITHUB_OUTPUT"
+      - name: Restore prepared photos
+        id: photos
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            assets/images
+            data/cities/*/details.json
+            data/cities/*/image-credits.json
+            image-preparation-report.json
+            image-preparation-report.md
+          key: ${{ steps.key.outputs.key }}
+      - name: Download and optimize local images (only when the cache missed)
+        if: steps.photos.outputs.cache-hit != 'true'
+        run: npm run prepare:images
+      - name: Save prepared photos only when every photo was found
+        if: steps.photos.outputs.cache-hit != 'true' && hashFiles('image-preparation-report.json') != ''
+        run: |
+          node -e "const r=JSON.parse(require('fs').readFileSync('image-preparation-report.json','utf8'));process.exit(r.issues.length?1:0)" \
+            && echo "SAVE_PHOTOS=true" >> "$GITHUB_ENV" || echo "Report has warnings: not caching this result."
+      - name: Save photo cache
+        if: env.SAVE_PHOTOS == 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            assets/images
+            data/cities/*/details.json
+            data/cities/*/image-credits.json
+            image-preparation-report.json
+            image-preparation-report.md
+          key: ${{ steps.key.outputs.key }}
       - name: Build the offline manifest (service worker file list and version)
         run: npm run build:offline
       - name: Upload image preparation report
@@ -72,6 +106,12 @@ jobs:
           name: prepared-site
           path: .
       - run: npm install --no-package-lock
+      - name: Cache Playwright browsers
+        id: pw
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('node_modules/@playwright/test/package.json') }}
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
 
@@ -82,6 +122,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      actions: read
       pages: write
       id-token: write
     environment:
@@ -98,7 +139,15 @@ jobs:
         with:
           path: site
       - name: Wait for artifact to be visible to the Pages API
-        run: sleep 30
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 15); do
+            n=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" --jq '[.artifacts[]|select(.name=="github-pages")]|length' || echo 0)
+            [ "$n" -gt 0 ] && exit 0
+            sleep 4
+          done
+          echo "github-pages artifact still not listed; trying the deployment anyway."
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
