@@ -62,6 +62,7 @@ export function initMapView({ map, doc = document }) {
     const wasOpen = Boolean(openSheet);
     openSheet = name;
     sheetTitle.textContent = SHEETS[name];
+    sheet.dataset.sheet = name;
     Object.entries(sections).forEach(([key, section]) => { section.hidden = key !== name; });
     buttons.forEach((button) => {
       const active = button.dataset.mapSheet === name;
