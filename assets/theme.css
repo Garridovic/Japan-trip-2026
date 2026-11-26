@@ -480,3 +480,6 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 .map-card .popup-links a, .map-card .popup-links button, .map-card .popup-visit-button { min-height: 44px; margin: 0; padding: 0 12px; font-size: .86rem; }
 .map-card .popup-visit-button { display: inline-flex; align-items: center; border: 0; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-weight: 750; }
 .map-card-nearby { margin-top: 8px; }
+
+/* 320 px phones: with the search button the header is tight, so the round buttons get a little smaller */
+@media (max-width: 359px) { .theme-button, .search-button { width: 40px; height: 40px; } .search-button { margin-right: 4px; } .theme-button svg, .search-button svg { width: 20px; height: 20px; } }
