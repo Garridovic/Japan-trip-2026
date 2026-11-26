@@ -1,4 +1,5 @@
 // "Platos" section: identify a dish by photo or by name (search), favourites and a full-screen "show" sheet.
+import { haptic } from './feedback.js';
 import { allergenTag, allergenRow } from './allergen-icons.js';
 import { userStorage } from './user-data.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
@@ -89,6 +90,7 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
     const button = h('button', { type: 'button', class: 'phrase-fav dish-fav', 'aria-pressed': String(favorites.has(dish.id)), 'aria-label': `Favorito: ${dish.es}` }, '★');
     button.addEventListener('click', () => {
       favorites.toggle(dish.id);
+      haptic(10);
       if (state.category === FAVORITES) render(); else { button.setAttribute('aria-pressed', String(favorites.has(dish.id))); renderChips(); }
     });
     return button;

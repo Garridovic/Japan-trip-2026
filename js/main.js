@@ -19,6 +19,8 @@ import { initTips } from './modules/tips-ui.js';
 import { initTaxi } from './modules/taxi-ui.js';
 import { initChecklist } from './modules/checklist-ui.js';
 import { userData } from './modules/user-data.js';
+import { toast, haptic } from './modules/feedback.js';
+import { visitedStore } from './modules/visited.js';
 import { initDayLinks, openDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
@@ -27,7 +29,9 @@ import { initUpdates } from './modules/updates.js';
 import { initToday } from './modules/today.js';
 
 const status = byId('app-status');
+const skeleton = byId('app-skeleton');
 const showStatus = (message, isError = false) => {
+  if (skeleton) skeleton.hidden = message !== 'Cargando la guía…';
   status.hidden = !message;
   status.textContent = message;
   status.classList.toggle('is-error', isError);
@@ -46,6 +50,11 @@ async function start() {
   const [journey, global] = await Promise.all([loadJourney(), loadGlobalContent()]);
   await userData().load(); // with a sync backend connected (see user-data.js) the stored values are in place before any store reads them
   const cities = enabledCities(journey);
+  const visitedMarks = visitedStore();
+  visitedMarks.subscribe(({ cityId, id, visited: now }) => {
+    haptic(now ? 16 : 8);
+    toast(now ? '✓ Marcado como visitado' : 'Marca quitada', { actionLabel: 'Deshacer', onAction: () => visitedMarks.set(cityId, id, !now) });
+  });
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
   initChecklist(global.checklist);

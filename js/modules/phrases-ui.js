@@ -1,4 +1,5 @@
 // "Frases" section: search, category chips, favourites, audio and the full-screen show mode.
+import { haptic } from './feedback.js';
 import { userStorage } from './user-data.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { byId, h, setPressed } from './dom.js';
@@ -114,6 +115,7 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
     const button = h('button', { type: 'button', class: 'phrase-fav', 'aria-pressed': String(favorites.has(phrase.id)), 'aria-label': `Favorita: ${phrase.es}` }, '★');
     button.addEventListener('click', () => {
       favorites.toggle(phrase.id);
+      haptic(10);
       // In the favourites view an un-starred phrase must disappear, so re-render; otherwise just flip the star.
       if (state.category === FAVORITES_CATEGORY) render(); else { button.setAttribute('aria-pressed', String(favorites.has(phrase.id))); renderChips(); }
     });

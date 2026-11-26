@@ -202,3 +202,46 @@ test.describe('allergen icons (V12.6)', () => {
     labels.forEach((label) => expect(label && label.length).toBeGreaterThan(2));
   });
 });
+
+test.describe('feedback and loading (V12.6)', () => {
+  test('marking a place as visited shows a toast with Undo', async ({ page }) => {
+    await page.goto('/?view=mapa');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
+    await page.locator('.popup-visit-button').first().click();
+    const toast = page.locator('.toast');
+    await expect(toast).toContainText('Marcado como visitado');
+    await toast.getByRole('button', { name: 'Deshacer' }).click();
+    await expect(page.locator('.popup-visit-button').first()).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  test('the toast sits above the bottom bar and disappears by itself', async ({ page }) => {
+    await page.goto('/?view=mapa');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
+    await page.locator('.popup-visit-button').first().click();
+    const toast = page.locator('.toast');
+    await page.waitForTimeout(400); // let the entrance animation finish
+    const bar = await page.locator('.app-bar').boundingBox();
+    const box = await toast.boundingBox();
+    expect(box.y + box.height).toBeLessThanOrEqual(bar.y + 1);
+    await expect(toast).toHaveCount(0, { timeout: 7000 });
+  });
+
+  test('the loading skeleton shows while the guide loads and goes away afterwards', async ({ page }) => {
+    await page.route('**/data/cities/kyoto/places.json', async (route) => { await new Promise((r) => setTimeout(r, 600)); await route.continue(); });
+    await page.goto('/');
+    await expect(page.locator('#app-skeleton')).toBeVisible();
+    await expect(page.locator('#app-skeleton')).toBeHidden({ timeout: 15_000 });
+  });
+
+  test('views fade in, and with reduced motion there is no animation', async ({ page }) => {
+    await page.goto('/?view=viaje');
+    const animated = await page.locator('#view-viaje').evaluate((el) => getComputedStyle(el).animationName);
+    expect(animated).toBe('view-in');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/?view=frases');
+    const reduced = await page.locator('#view-frases').evaluate((el) => getComputedStyle(el).animationName);
+    expect(reduced).toBe('none');
+  });
+});

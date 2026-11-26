@@ -1,7 +1,7 @@
 {
-  "version": "fd74d60b22",
+  "version": "d3c4934f57",
   "sizes": {
-    "required": 754133,
+    "required": 758893,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -61,6 +61,7 @@
     "js/modules/dishes-ui.js",
     "js/modules/dishes.js",
     "js/modules/dom.js",
+    "js/modules/feedback.js",
     "js/modules/filters.js",
     "js/modules/geo.js",
     "js/modules/ids.js",
