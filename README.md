@@ -130,8 +130,10 @@ Full-screen sheets (place sheet, phrase show mode, dish sheet) push a history en
 `sw.js` (service worker) stores the guide after the first visit so it opens without a connection. `npm run build:offline` writes `offline-manifest.json` (what to cache) and stamps a content hash into `sw.js`; CI runs it after `prepare:images`, so every deploy ships a new worker that installs a fresh cache and deletes the old one.
 
 * **required**: HTML, JS, CSS, data, Leaflet (now in `assets/vendor/leaflet`, no CDN), icons. If one fails, the install fails and the previous version keeps working.
-* **optional**: 480 px place and dish photos, downloaded during install.
-* **background**: 960 px photos, requested ~3 s after load (skipped on data saver / 2G-3G). 1600 px photos are cached when viewed; offline the 960 px copy is shown instead.
+* **optional**: 480 px place and dish photos, downloaded during install. Required + optional is the "essentials" (about 3.5 MB), saved automatically on the first visit.
+* **warm**: 960 px photos ("Descargar todo", about 10 MB): automatic only on wifi/ethernet (Network Information API) and never on data saver; everywhere else (iPhone Safari has no such API) the user taps the button. 1600 px photos are cached when viewed; offline the next smaller copy is shown (1600 → 960 → 480).
+* **Header chip** (`#offline-chip`): the service worker compares the cache with the manifest file by file (`verify`) and reports `missing` counts; the chip shows "Offline ✓" (everything), "Básico" (essentials only), a percentage while downloading, or a red warning when something the app needs is missing (the popover then offers "Reintentar", which re-downloads the missing files). The popover also shows the saved copy date/version, space used and saved map tiles, and has "Borrar datos sin conexión y recargar" (with confirmation; favourites are kept). A red "Sin conexión" banner appears while the network is down.
+* Images: dish and place photos are WebP quality 72 (effort 6, smart subsampling). AVIF would save roughly another 40 % but needs a `<picture>` fallback for older iPhones.
 * **Map tiles**: tiles you view are kept (max 700). The "Guardar mapa" button stores at most 120 tiles around the city, one by one with a pause, to respect the OpenStreetMap tile policy (no bulk downloads).
 * The guide can be installed to the home screen (`manifest.webmanifest`, icons from `npm run make:icons`).
 * Recovery: open `?reset-offline` to unregister the worker and clear its caches.

@@ -15,23 +15,28 @@
     },
     {
       "id": "onigiri",
-      "query": "onigiri rice ball"
+      "query": "onigiri rice ball",
+      "file": "File:Onigiri 002.jpg"
     },
     {
       "id": "gyudon",
-      "query": "gyudon beef bowl"
+      "query": "gyudon beef bowl",
+      "file": "File:Gyuu-don 001.jpg"
     },
     {
       "id": "katsudon",
-      "query": "katsudon"
+      "query": "katsudon",
+      "file": "File:Katsudon 001.jpg"
     },
     {
       "id": "oyakodon",
-      "query": "oyakodon"
+      "query": "oyakodon",
+      "file": "File:Oyakodon 003.jpg"
     },
     {
       "id": "tendon",
-      "query": "tendon tempura rice bowl"
+      "query": "tendon tempura rice bowl",
+      "file": "File:Rice bowl topped with shrimp tempura (8281030764).jpg"
     },
     {
       "id": "unadon",
@@ -40,15 +45,18 @@
     },
     {
       "id": "kare-raisu",
-      "query": "Japanese curry rice"
+      "query": "Japanese curry rice",
+      "file": "File:Beef curry rice 003.jpg"
     },
     {
       "id": "omurice",
-      "query": "omurice"
+      "query": "omurice",
+      "file": "File:Omurice by Taimeiken.jpg"
     },
     {
       "id": "chahan",
-      "query": "chahan fried rice Japan"
+      "query": "chahan fried rice Japan",
+      "file": "File:Ramen and Chahan 002.jpg"
     },
     {
       "id": "kaisendon",
@@ -57,27 +65,33 @@
     },
     {
       "id": "ramen",
-      "query": "ramen noodles Japan"
+      "query": "ramen noodles Japan",
+      "file": "File:Ramen Jump 002.jpg"
     },
     {
       "id": "tonkotsu-ramen",
-      "query": "tonkotsu ramen"
+      "query": "tonkotsu ramen",
+      "file": "File:Tonkotsu ramen in Tokyo.jpg"
     },
     {
       "id": "miso-ramen",
-      "query": "miso ramen"
+      "query": "miso ramen",
+      "file": "File:Chicken miso butter ramen - Goemon Ramen Bar.jpg"
     },
     {
       "id": "shoyu-ramen",
-      "query": "shoyu ramen"
+      "query": "shoyu ramen",
+      "file": "File:Shoyu Ramen.jpg"
     },
     {
       "id": "tsukemen",
-      "query": "tsukemen"
+      "query": "tsukemen",
+      "file": "File:Tsukemen (Dipping Ramen) - Goemon Ramen Bar 2023-07-16.jpg"
     },
     {
       "id": "udon",
-      "query": "udon noodle soup"
+      "query": "udon noodle soup",
+      "file": "File:Udon noodle in curry soup (4316164692).jpg"
     },
     {
       "id": "kitsune-udon",
@@ -111,23 +125,28 @@
     },
     {
       "id": "tonkatsu",
-      "query": "tonkatsu pork cutlet"
+      "query": "tonkatsu pork cutlet",
+      "file": "File:Pork-cutlet.jpg"
     },
     {
       "id": "tempura",
-      "query": "tempura Japanese"
+      "query": "tempura Japanese",
+      "file": "File:KISU no TEMPURA or Sillaginidae Sand Borer Tempura 2021.jpg"
     },
     {
       "id": "karaage",
-      "query": "karaage fried chicken"
+      "query": "karaage fried chicken",
+      "file": "File:Fried potatoes and chicken karaage.jpg"
     },
     {
       "id": "korokke",
-      "query": "korokke croquette"
+      "query": "korokke croquette",
+      "file": "File:Potato croquettes 001.jpg"
     },
     {
       "id": "ebi-furai",
-      "query": "ebi fry fried shrimp Japan"
+      "query": "ebi fry fried shrimp Japan",
+      "file": "File:Fried Shrimp Kurofunetei.jpg"
     },
     {
       "id": "kushikatsu",
@@ -136,11 +155,13 @@
     },
     {
       "id": "gyoza",
-      "query": "gyoza dumplings"
+      "query": "gyoza dumplings",
+      "file": "File:Missgyoza production gyoza dumpling Manufacturer.jpg"
     },
     {
       "id": "yakitori",
-      "query": "yakitori"
+      "query": "yakitori",
+      "file": "File:Cooking yakitori.jpg"
     },
     {
       "id": "yakiniku",
@@ -156,23 +177,28 @@
     },
     {
       "id": "okonomiyaki",
-      "query": "okonomiyaki"
+      "query": "okonomiyaki",
+      "file": "File:Okonomiyaki 001.jpg"
     },
     {
       "id": "takoyaki",
-      "query": "takoyaki"
+      "query": "takoyaki",
+      "file": "File:Takoyaki by yomi955.jpg"
     },
     {
       "id": "shioyaki",
-      "query": "shioyaki grilled fish Japan"
+      "query": "shioyaki grilled fish Japan",
+      "file": "File:Freshly caught ayu (sweetfish) roasting on sticks, Nishiiyayama, Tokushima Prefecture, Shikoku, Japan.jpg"
     },
     {
       "id": "unagi",
-      "query": "unagi kabayaki"
+      "query": "unagi kabayaki",
+      "file": "File:Unagi kabayaki by Kossy@FINEDAYS in Akabane.jpg"
     },
     {
       "id": "teriyaki",
-      "query": "chicken teriyaki Japan"
+      "query": "chicken teriyaki Japan",
+      "file": "File:Chicken teriyaki bento box - Massachusetts.jpg"
     },
     {
       "id": "nigiri",
@@ -181,23 +207,28 @@
     },
     {
       "id": "maki",
-      "query": "makizushi sushi roll"
+      "query": "makizushi sushi roll",
+      "file": "File:Kanpyō-maki 001.jpg"
     },
     {
       "id": "chirashi",
-      "query": "chirashi sushi"
+      "query": "chirashi sushi",
+      "file": "File:Various sushi, beautiful October night at midnight.jpg"
     },
     {
       "id": "sashimi",
-      "query": "sashimi"
+      "query": "sashimi",
+      "file": "File:Kawahagi sashimi with liver sauce.jpg"
     },
     {
       "id": "temaki",
-      "query": "temaki hand roll"
+      "query": "temaki hand roll",
+      "file": "File:Sushi hand roll combo set B - Goemon Hand Roll Bar 2024-09-12.jpg"
     },
     {
       "id": "inari",
-      "query": "inarizushi"
+      "query": "inarizushi",
+      "file": "File:Kantofu Inarizushi.jpg"
     },
     {
       "id": "battera",
@@ -205,35 +236,43 @@
     },
     {
       "id": "miso-shiru",
-      "query": "miso soup"
+      "query": "miso soup",
+      "file": "File:Pholiota microspora miso soup 001.jpg"
     },
     {
       "id": "oden",
-      "query": "oden"
+      "query": "oden",
+      "file": "File:Oden by Mori Chan.jpg"
     },
     {
       "id": "sukiyaki",
-      "query": "sukiyaki"
+      "query": "sukiyaki",
+      "file": "File:Sukiyaki 01.jpg"
     },
     {
       "id": "shabu-shabu",
-      "query": "shabu-shabu"
+      "query": "shabu-shabu",
+      "file": "File:Shabu Shabu photo Don Ramey Logan.jpg"
     },
     {
       "id": "nabe",
-      "query": "nabemono hot pot Japan"
+      "query": "nabemono hot pot Japan",
+      "file": "File:Nabe Kansai style.jpg"
     },
     {
       "id": "chawanmushi",
-      "query": "chawanmushi"
+      "query": "chawanmushi",
+      "file": "File:Chawan-mushi.JPG"
     },
     {
       "id": "nikujaga",
-      "query": "nikujaga"
+      "query": "nikujaga",
+      "file": "File:Braised pork and potatoes (3089327692).jpg"
     },
     {
       "id": "tamagoyaki",
-      "query": "tamagoyaki"
+      "query": "tamagoyaki",
+      "file": "File:鳥焼き居酒屋 (39394233682).jpg"
     },
     {
       "id": "yudofu",
@@ -242,54 +281,66 @@
     },
     {
       "id": "agedashi-tofu",
-      "query": "agedashi tofu"
+      "query": "agedashi tofu",
+      "file": "File:Tofu and yasai agedashi - Massachusetts.jpg"
     },
     {
       "id": "hiyayakko",
-      "query": "hiyayakko"
+      "query": "hiyayakko",
+      "file": "File:Hiyayakko with bonito flakes and welsh onion 2.jpg"
     },
     {
       "id": "edamame",
-      "query": "edamame"
+      "query": "edamame",
+      "file": "File:Edamame in a tray.jpg"
     },
     {
       "id": "tsukemono",
-      "query": "tsukemono pickles"
+      "query": "tsukemono pickles",
+      "file": "File:Tsukemono.jpg"
     },
     {
       "id": "natto",
-      "query": "natto"
+      "query": "natto",
+      "file": "File:Natto-kake gohan4.jpg"
     },
     {
       "id": "nasu-dengaku",
-      "query": "nasu dengaku"
+      "query": "nasu dengaku",
+      "file": "File:Nasu dengaku (15284831066).jpg"
     },
     {
       "id": "tamago-kake-gohan",
-      "query": "tamago kake gohan"
+      "query": "tamago kake gohan",
+      "file": "File:Tamagokake-gohan 001.jpg"
     },
     {
       "id": "katsu-sando",
-      "query": "katsu sando"
+      "query": "katsu sando",
+      "file": "File:KatsuSando6515.jpg"
     },
     {
       "id": "teishoku",
-      "query": "teishoku set meal"
+      "query": "teishoku set meal",
+      "file": "File:Tonjiru teishoku.jpg"
     },
     {
       "id": "bento",
-      "query": "bento box"
+      "query": "bento box",
+      "file": "File:Bento at Hanabishi, Koyasan.jpg"
     },
     {
       "id": "kaiseki",
       "query": "kaiseki ryori dinner",
       "exclude": [
         "File:Tsukemono by Ms. President in Kyoto.jpg"
-      ]
+      ],
+      "file": "File:Breakfast at Tamahan Ryokan, Kyoto.jpg"
     },
     {
       "id": "obanzai",
-      "query": "obanzai Kyoto"
+      "query": "obanzai Kyoto",
+      "file": "File:Obanzai yasai.JPG"
     }
   ]
 }

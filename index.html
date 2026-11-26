@@ -17,7 +17,24 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <div class="city-tabs" id="city-tabs" role="tablist" aria-label="Ciudades del viaje" hidden></div>
+  <header class="top-bar" id="top-bar">
+    <div class="city-tabs" id="city-tabs" role="tablist" aria-label="Ciudades del viaje" hidden></div>
+    <span class="top-bar-title" id="top-bar-title">Japón · 2026</span>
+    <button type="button" class="offline-chip" id="offline-chip" data-state="none" aria-haspopup="dialog" aria-expanded="false" aria-controls="offline-popover" hidden><span class="offline-chip-icon" id="offline-chip-icon" aria-hidden="true">⬇</span><span class="offline-chip-label" id="offline-chip-label">Offline</span></button>
+  </header>
+
+  <div class="offline-popover" id="offline-popover" role="dialog" aria-label="Uso sin conexión" hidden>
+    <h2 class="offline-popover-title" id="offline-summary">Sin conexión</h2>
+    <p class="offline-popover-text" id="offline-detail"></p>
+    <dl class="offline-facts" id="offline-facts"></dl>
+    <div class="offline-actions">
+      <button type="button" class="filter" id="offline-download-all" hidden>Descargar todo</button>
+      <button type="button" class="filter" id="offline-retry" hidden>Reintentar</button>
+      <button type="button" class="filter" id="offline-verify">Comprobar ahora</button>
+      <button type="button" class="filter is-danger" id="offline-reset">Borrar datos sin conexión y recargar</button>
+      <button type="button" class="filter" id="offline-close">Cerrar</button>
+    </div>
+  </div>
 
   <div class="app-view" id="city-view" data-view="guia" role="tabpanel" tabindex="-1">
     <header class="hero">
@@ -202,6 +219,8 @@
     </main>
   </div>
 
+  <p class="offline-banner" id="offline-banner" role="status" aria-live="polite" hidden>Sin conexión · usando la guía guardada</p>
+
   <nav class="app-bar" id="app-bar" aria-label="Secciones de la guía">
     <button type="button" class="app-bar-button" data-view-target="guia" aria-current="page"><span class="app-bar-icon" aria-hidden="true">🧭</span><span class="app-bar-label">Guía</span></button>
     <button type="button" class="app-bar-button" data-view-target="frases"><span class="app-bar-icon" aria-hidden="true">💬</span><span class="app-bar-label">Frases</span></button>
@@ -254,8 +273,6 @@
   </div>
 
   <script src="assets/vendor/leaflet/leaflet.js"></script>
-
-  <div class="offline-indicator" id="offline-indicator" role="status" aria-live="polite" hidden></div>
 
   <div class="version-indicator" id="version-indicator" title="Versión desplegada de la guía" aria-label="Versión de la guía">GUÍA · …</div>
 

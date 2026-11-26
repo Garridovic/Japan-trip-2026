@@ -88,7 +88,7 @@ for (const entry of catalog.dishes) {
     const variants = [];
     for (const width of catalog.variants) {
       const filename = `${entry.id}-${width}.webp`;
-      await sharp(source).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 82, effort: 5 }).toFile(path.join(outDir, filename));
+      await sharp(source).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 72, effort: 6, smartSubsample: true }).toFile(path.join(outDir, filename));
       variants.push({ width, path: `assets/images/dishes/${filename}` });
     }
     const description = meta(info.extmetadata, 'ImageDescription') || page.title.replace(/^File:/, '');

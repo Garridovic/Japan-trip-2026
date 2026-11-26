@@ -467,16 +467,37 @@ body[data-view="frases"] .city-tabs, body[data-view="platos"] .city-tabs { displ
 }
 @media print { .collapsible-filters > summary, .fav-shortcut, .phrase-show-pager { display: none !important; } .collapsible-filters > :not(summary) { display: revert; } }
 
-/* ---------- Offline status ---------- */
-.offline-indicator { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--bar-height) + max(8px, env(safe-area-inset-bottom)) + 40px); z-index: 1000; max-width: calc(100vw - 24px); padding: 6px 12px; border-radius: 999px; background: rgba(24,42,53,.92); color: #f2e5c9; font-size: .74rem; font-weight: 800; text-align: center; box-shadow: 0 2px 10px rgba(18,30,36,.2); pointer-events: none; }
-.offline-indicator[hidden] { display: none; }
-body.is-offline .offline-indicator { background: #8e3d32; color: #fff; }
+/* ---------- Offline: header chip, popover and banner ---------- */
+.top-bar { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; box-sizing: border-box; height: var(--tabs-height); background: #182a35; border-bottom: 1px solid rgba(255,255,255,.12); }
+.top-bar .city-tabs { position: static; flex: 1 1 auto; min-width: 0; height: 100%; border: 0; background: none; }
+.top-bar-title { display: none; flex: 1 1 auto; padding: 0 max(22px, calc((100vw - 1080px) / 2 + 22px)); color: #f2e5c9; font-size: .86rem; font-weight: 850; letter-spacing: .04em; }
+body[data-view="frases"] .top-bar-title, body[data-view="platos"] .top-bar-title { display: block; }
+.offline-chip { flex: none; display: inline-flex; align-items: center; gap: 5px; min-height: 40px; margin: 0 max(10px, calc((100vw - 1080px) / 2 + 12px)) 0 4px; padding: 0 12px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: transparent; color: #e8e6de; font: inherit; font-size: .76rem; font-weight: 850; cursor: pointer; }
+.offline-chip[hidden] { display: none; }
+.offline-chip[data-tone="ok"] { background: #2f6f4f; border-color: #2f6f4f; color: #fff; }
+.offline-chip[data-tone="partial"] { background: #bd8b39; border-color: #bd8b39; color: #1c2b32; }
+.offline-chip[data-tone="busy"] { border-color: #e2b46e; color: #f2e5c9; }
+.offline-chip[data-tone="error"] { background: #b84b3d; border-color: #b84b3d; color: #fff; }
+.offline-chip:focus-visible { outline: 3px solid #e2b46e; outline-offset: 2px; }
+.offline-popover { position: fixed; top: calc(var(--tabs-height) + 6px); right: max(8px, calc((100vw - 1080px) / 2 + 8px)); z-index: 960; width: min(360px, calc(100vw - 16px)); box-sizing: border-box; padding: 14px 16px 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: 0 18px 50px rgba(18,30,36,.28); }
+.offline-popover[hidden] { display: none; }
+.offline-popover-title { margin: 0; font-size: 1rem; }
+.offline-popover-text { margin: 6px 0 10px; color: var(--muted); font-size: .84rem; }
+.offline-facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0 0 12px; font-size: .78rem; }
+.offline-facts dt { color: var(--muted); font-weight: 750; }
+.offline-facts dd { margin: 0; font-weight: 750; }
+.offline-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.offline-actions .filter { min-height: 44px; padding: 0 14px; }
+.offline-actions .filter[hidden] { display: none; }
+.offline-actions .is-danger { color: #8e3d32; border-color: #e1b9b2; }
+.offline-banner { position: fixed; left: 0; right: 0; bottom: calc(var(--bar-height) + env(safe-area-inset-bottom)); z-index: 950; margin: 0; padding: 7px 14px; text-align: center; background: #8e3d32; color: #fff; font-size: .8rem; font-weight: 800; }
+.offline-banner[hidden] { display: none; }
+@media (min-width: 900px) { .offline-banner { left: 50%; right: auto; width: 460px; transform: translateX(-50%); bottom: calc(var(--bar-height) + 22px); border-radius: 12px; } }
 @media (max-width: 700px) {
-  .offline-indicator { position: static; transform: none; width: fit-content; margin: 0 auto 6px; background: none; color: var(--muted); box-shadow: none; padding: 2px 8px; }
-  body.is-offline .offline-indicator { background: #f6e9e5; color: #8e3d32; }
+  .top-bar-title { padding: 0 16px; }
+  .offline-chip { margin-right: 10px; padding: 0 10px; }
 }
-@media print { .offline-indicator { display: none !important; } }
-
+@media print { .top-bar, .offline-banner, .offline-popover { display: none !important; } }
 .map-offline { padding: 10px 14px 12px; border-top: 1px solid var(--line); }
 .map-offline p { margin: 6px 0 0; }
 #save-offline-map { min-height: 44px; }

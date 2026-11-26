@@ -132,7 +132,7 @@ const prepareCity = async (cityId) => {
           for (const width of catalog.variants) {
             const filename = `${imageId}-${width}.webp`;
             const outputPath = path.join(imageDirectory, filename);
-            await sharp(source).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 84, effort: 5 }).toFile(outputPath);
+            await sharp(source).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 72, effort: 6, smartSubsample: true }).toFile(outputPath);
             variants.push({ width, path: `assets/images/${cityId}/${filename}` });
           }
 

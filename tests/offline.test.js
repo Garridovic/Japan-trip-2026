@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { classify, buildOffline } from '../scripts/build-offline.js';
-import { shouldWarm, describe } from '../js/modules/offline.js';
+import { canAutoDownloadAll, describe, stateFromReport, chipView, facts, formatDate, formatMegabytes } from '../js/modules/offline.js';
 import { tileX, tileY, tilesForBox, boxAround, planCityTiles, tileUrl, MAX_SAVED_TILES, TILE_URL } from '../js/modules/tiles.js';
 import { enabledCities } from '../js/modules/journey.js';
 
@@ -100,17 +100,69 @@ test('tile maths and the small, capped tile plan', () => {
   assert.equal(huge.length, MAX_SAVED_TILES, 'a huge area is capped, never a bulk download');
 });
 
-test('background download is polite: not on data saver or slow links', () => {
-  assert.equal(shouldWarm({}), true);
-  assert.equal(shouldWarm({ connection: { effectiveType: '4g' } }), true);
-  assert.equal(shouldWarm({ connection: { effectiveType: '4g', saveData: true } }), false);
-  assert.equal(shouldWarm({ connection: { effectiveType: '3g' } }), false);
-  assert.equal(shouldWarm({ connection: { effectiveType: 'slow-2g' } }), false);
+test('the manifest records how many bytes each download step weighs', async () => {
+  const manifest = await readJson('offline-manifest.json');
+  const { stat } = await import('node:fs/promises');
+  const sum = async (list) => (await Promise.all(list.map(async (file) => (await stat(path.join(root, file))).size))).reduce((a, b) => a + b, 0);
+  assert.deepEqual(manifest.sizes, { required: await sum(manifest.required), optional: await sum(manifest.optional), warm: await sum(manifest.warm) });
+  assert.ok(manifest.sizes.required < 2 * 1024 * 1024, 'the app itself stays small');
 });
 
-test('offline status texts', () => {
-  assert.match(describe({ kind: 'saving', done: 3, total: 10 }), /3\/10/);
-  assert.match(describe({ kind: 'ready' }), /disponible sin conexión/i);
-  assert.match(describe({ kind: 'offline' }), /Sin conexión/);
-  assert.equal(describe({ kind: 'none' }), '');
+test('big photos are only downloaded by themselves on wifi or ethernet, never on data saver', () => {
+  assert.equal(canAutoDownloadAll({}), false, 'unknown connection type (iPhone): ask first');
+  assert.equal(canAutoDownloadAll({ connection: { type: 'wifi' } }), true);
+  assert.equal(canAutoDownloadAll({ connection: { type: 'ethernet' } }), true);
+  assert.equal(canAutoDownloadAll({ connection: { type: 'cellular' } }), false);
+  assert.equal(canAutoDownloadAll({ connection: { type: 'wifi', saveData: true } }), false);
+});
+
+const report = (missing = {}, extra = {}) => ({
+  type: 'offline-report', version: 'abc', installedAt: Date.UTC(2026, 10, 26, 13, 4),
+  missing: { required: 0, optional: 0, warm: 0, ...missing }, totals: { required: 56, optional: 107, warm: 107 },
+  sizes: { required: 800000, optional: 4000000, warm: 14000000 }, tiles: 12, ...extra
+});
+
+test('the saved copy is judged file by file: incomplete, essentials or ready', () => {
+  assert.deepEqual(stateFromReport(report()), { kind: 'ready' });
+  assert.deepEqual(stateFromReport(report({ warm: 40 })), { kind: 'essentials' });
+  assert.deepEqual(stateFromReport(report({ required: 1 })), { kind: 'incomplete', missing: 1 });
+  assert.deepEqual(stateFromReport(report({ optional: 3, warm: 107 })), { kind: 'incomplete', missing: 3 });
+  assert.equal(stateFromReport(report({ required: 2, optional: 3 })).missing, 5);
+});
+
+test('the header chip has a short label, a tone and a spoken description for every state', () => {
+  const states = [{ kind: 'ready' }, { kind: 'essentials' }, { kind: 'saving', done: 5, total: 10 }, { kind: 'installing' }, { kind: 'incomplete', missing: 2 }, { kind: 'none' }];
+  for (const state of states) {
+    const view = chipView(state);
+    assert.ok(view.label.length <= 8, `${state.kind}: label must fit a 320 px header`);
+    assert.ok(view.tone && view.aria.startsWith('Sin conexión'));
+  }
+  assert.equal(chipView({ kind: 'saving', done: 5, total: 10 }).label, '50%');
+  assert.equal(chipView({ kind: 'ready' }).tone, 'ok');
+  assert.equal(chipView({ kind: 'incomplete', missing: 1 }).tone, 'error');
+  assert.equal(chipView({ kind: 'unsupported' }), null, 'no chip where nothing can be saved');
+});
+
+test('the popover offers the right actions for each state', () => {
+  assert.equal(describe({ kind: 'essentials' }, report({ warm: 5 })).download, true);
+  assert.match(describe({ kind: 'essentials' }, report({ warm: 5 })).detail, /≈ 13 MB/);
+  assert.equal(describe({ kind: 'incomplete', missing: 4 }).retry, true);
+  assert.match(describe({ kind: 'incomplete', missing: 4 }).detail, /4 archivos/);
+  assert.equal(describe({ kind: 'ready' }).download, false);
+  assert.equal(describe({ kind: 'saving', done: 3, total: 9 }).summary, 'Descargando fotos… 3/9');
+});
+
+test('the popover facts show the copy date, the space used and a real file count', () => {
+  const rows = Object.fromEntries(facts({ kind: 'ready' }, report(), 'V11.5.0'));
+  assert.match(rows['Copia guardada'], /^V11\.5\.0 · /);
+  assert.equal(rows['Archivos'], '270 de 270');
+  assert.equal(rows['Espacio usado'], '≈ 18 MB');
+  assert.equal(rows['Mapa guardado'], '12 teselas');
+  const partial = Object.fromEntries(facts({ kind: 'essentials' }, report({ warm: 107 }), 'V11.5.0'));
+  assert.equal(partial['Archivos'], '163 de 270');
+  assert.equal(partial['Espacio usado'], '≈ 5 MB');
+  assert.deepEqual(facts({ kind: 'none' }, null), []);
+  assert.equal(formatDate(null), '—');
+  assert.match(formatDate(Date.UTC(2026, 10, 26, 13, 4)), /26/);
+  assert.equal(formatMegabytes(1), '1 MB');
 });

@@ -2,7 +2,8 @@
 // Run after `npm run prepare:images` (CI does) so the list matches the images that are actually published.
 //   required : the app itself (HTML, JS, CSS, data, vendor files, icons). Installing the service worker fails without them.
 //   optional : small place and dish photos (480 px). Downloaded during install; a failed photo does not abort it.
-//   warm     : larger photos (960 px), downloaded in the background after the first visit.
+//   warm     : larger photos (960 px): "download everything" (automatic on wifi, otherwise a button).
+// `sizes` (bytes) lets the interface say how much each step downloads.
 // 1600 px photos are not stored in advance (22 MB): they are cached when viewed, and offline the 960 px copy is used instead.
 import { readdir, readFile, writeFile, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -49,7 +50,9 @@ export async function buildOffline(root = process.cwd()) {
     hash.update(await readFile(path.join(root, file)));
   }
   const version = hash.digest('hex').slice(0, 10);
-  const manifest = { version, ...lists };
+  const sizeOf = async (list) => (await Promise.all(list.map(async (file) => (await stat(path.join(root, file))).size))).reduce((sum, bytes) => sum + bytes, 0);
+  const sizes = { required: await sizeOf(lists.required), optional: await sizeOf(lists.optional), warm: await sizeOf(lists.warm) };
+  const manifest = { version, sizes, ...lists };
   await writeFile(path.join(root, 'offline-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   const worker = await readFile(path.join(root, 'sw.js'), 'utf8');
   await writeFile(path.join(root, 'sw.js'), worker.replace(/const VERSION = '[^']*';/, `const VERSION = '${version}';`));

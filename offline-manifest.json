@@ -1,5 +1,10 @@
 {
-  "version": "a4885e9caf",
+  "version": "d119d49a3d",
+  "sizes": {
+    "required": 569909,
+    "optional": 3584726,
+    "warm": 12792480
+  },
   "required": [
     "assets/icons/apple-touch-icon.png",
     "assets/icons/icon-192.png",
