@@ -1,0 +1,131 @@
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import sharp from 'sharp';
+
+const root = process.cwd();
+const apiUrl = 'https://commons.wikimedia.org/w/api.php';
+const catalog = JSON.parse(await readFile(path.join(root, 'data/image-catalog.json'), 'utf8'));
+const places = JSON.parse(await readFile(path.join(root, 'data/places.json'), 'utf8'));
+const details = JSON.parse(await readFile(path.join(root, 'data/details.json'), 'utf8'));
+const placeById = new Map(places.map((place) => [place.id, place]));
+const detailsById = new Map(details.map((detail) => [detail.id, detail]));
+const credits = [];
+const usedPageIds = new Set();
+
+const cleanHtml = (value = '') => value.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const metadataValue = (metadata, key) => cleanHtml(metadata?.[key]?.value || '');
+const isReusableLicense = (license) => {
+  const value = license.toLowerCase();
+  return value.includes('public domain') ||
+    value.includes('cc0') ||
+    (/cc by(?:-sa)?\s*(1\.0|2\.0|2\.5|3\.0|4\.0)/i.test(license) &&
+      !value.includes('noncommercial') && !value.includes('no derivatives'));
+};
+const requestJson = async (url) => {
+  const response = await fetch(url, {
+    headers: { 'User-Agent': 'KyotoGuide/10.0 (personal travel guide; image attribution included)' }
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status} from ${url}`);
+  return response.json();
+};
+const searchImages = async (query) => {
+  const url = new URL(apiUrl);
+  Object.entries({
+    action: 'query',
+    format: 'json',
+    generator: 'search',
+    gsrsearch: `filetype:bitmap ${query}`,
+    gsrnamespace: '6',
+    gsrlimit: '15',
+    prop: 'imageinfo',
+    iiprop: 'url|size|mime|extmetadata',
+    iiurlwidth: String(catalog.imageWidth),
+    iiextmetadatalanguage: 'en'
+  }).forEach(([key, value]) => url.searchParams.set(key, value));
+  const result = await requestJson(url);
+  return Object.values(result.query?.pages || {});
+};
+const download = async (url) => {
+  const response = await fetch(url, {
+    headers: { 'User-Agent': 'KyotoGuide/10.0 (personal travel guide; image attribution included)' }
+  });
+  if (!response.ok) throw new Error(`Image download failed: HTTP ${response.status}`);
+  return Buffer.from(await response.arrayBuffer());
+};
+const imageDirectory = path.join(root, 'assets', 'images');
+await mkdir(imageDirectory, { recursive: true });
+
+for (const entry of catalog.places) {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  const place = placeById.get(entry.id);
+  const detail = detailsById.get(entry.id);
+  if (!place || !detail) throw new Error(`Unknown place or missing details record: ${entry.id}`);
+
+  const candidates = await searchImages(entry.query);
+  const selected = candidates.filter((page) => {
+    const info = page.imageinfo?.[0];
+    const metadata = info?.extmetadata || {};
+    const license = metadataValue(metadata, 'LicenseShortName');
+    return info && info.width >= 1400 && info.mime?.startsWith('image/') &&
+      !info.mime.includes('svg') && isReusableLicense(license) &&
+      !usedPageIds.has(page.pageid) && info.thumburl;
+  }).slice(0, entry.count);
+
+  if (selected.length < entry.count) {
+    throw new Error(`Only ${selected.length}/${entry.count} reusable images found for ${entry.id}. Refusing to publish an incomplete image set.`);
+  }
+
+  const photos = [];
+  for (const [index, page] of selected.entries()) {
+    const info = page.imageinfo[0];
+    const metadata = info.extmetadata || {};
+    const imageId = `${entry.id}-${index + 1}`;
+    const source = await download(info.thumburl);
+    const image = sharp(source, { failOn: 'error' }).rotate();
+    const metadataInfo = await image.metadata();
+    if (!metadataInfo.width || !metadataInfo.height) throw new Error(`Invalid image dimensions: ${page.title}`);
+
+    const variants = [];
+    for (const width of catalog.variants) {
+      const filename = `${imageId}-${width}.webp`;
+      const outputPath = path.join(imageDirectory, filename);
+      await sharp(source).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 84, effort: 5 }).toFile(outputPath);
+      variants.push({ width, path: `assets/images/${filename}` });
+    }
+
+    const license = metadataValue(metadata, 'LicenseShortName');
+    const author = metadataValue(metadata, 'Artist') || metadataValue(metadata, 'Credit') || info.user || 'Autor no identificado';
+    const description = metadataValue(metadata, 'ImageDescription') || page.title.replace(/^File:/, '');
+    const filePage = info.descriptionurl;
+    const photo = {
+      src: variants[variants.length - 1].path,
+      srcSet: variants.map(({ path: filePath, width }) => `${filePath} ${width}w`).join(', '),
+      alt: `${place.name} — ${description}`
+    };
+    photos.push(photo);
+    credits.push({
+      placeId: entry.id,
+      placeName: place.name,
+      fileTitle: page.title,
+      description,
+      author,
+      license,
+      licenseUrl: metadataValue(metadata, 'LicenseUrl'),
+      sourcePage: filePage,
+      originalUrl: info.descriptionurl,
+      width: info.width,
+      height: info.height
+    });
+    usedPageIds.add(page.pageid);
+  }
+  detail.photos = photos;
+  console.log(`${entry.id}: ${photos.length} image(s) prepared`);
+}
+
+for (const detail of details) {
+  if (!catalog.places.some(({ id }) => id === detail.id)) detail.photos = [];
+}
+
+await writeFile(path.join(root, 'data', 'details.json'), `${JSON.stringify(details, null, 2)}\n`);
+await writeFile(path.join(root, 'data', 'image-credits.json'), `${JSON.stringify(credits, null, 2)}\n`);
+console.log(`Prepared ${credits.length} local images for ${catalog.places.length} places.`);

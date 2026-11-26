@@ -10,7 +10,8 @@ A static, mobile-first Kyoto travel guide for December 11–15, 2026.
 - `js/modules/filters.js`: restaurant and alternative-place filters.
 - `js/modules/map.js`: map, markers, place details, nearby places and geolocation.
 - `js/modules/version.js`: deployed-version indicator.
-- `data/*.json`: itinerary, places, restaurants, details, events and version metadata.
+- `data/*.json`: itinerary, places, restaurants, details, events, image catalog, image credits and version metadata.
+- `scripts/prepare-images.js`: downloads curated Wikimedia Commons images, checks reuse licenses, creates responsive local WebP variants and rewrites `details.json`.
 - `tests/`: Node.js data tests and Playwright browser tests.
 - `.github/workflows/tests.yml`: automated test workflow.
 
@@ -50,3 +51,21 @@ This protects publication even when changes are pushed directly to `main`: they 
 ## Data maintenance
 
 Keep place IDs stable across `data/places.json` and `data/details.json`. Preserve the Spanish editorial content and distinguish official event information from estimates and recommendations.
+
+
+## Local image pipeline
+
+The deployment workflow prepares the image library before testing or publishing:
+
+```sh
+npm install
+npm run prepare:images
+npm test
+npm run test:e2e
+```
+
+`data/image-catalog.json` contains the curated place-specific Commons search terms and image counts. The preparation script uses the Wikimedia Commons API to select reusable files, downloads them, creates 480/960/1600px WebP variants in `assets/images/`, writes local responsive photo references to `data/details.json`, and generates `data/image-credits.json`.
+
+The workflow uploads one prepared-site artifact. Unit tests and Playwright validate that exact artifact, and GitHub Pages deploys that same artifact only after both test jobs pass. If Commons cannot provide enough appropriately licensed high-resolution images, preparation fails and deployment is skipped.
+
+Only Public Domain, CC0, CC BY and CC BY-SA licenses are accepted. Images with NonCommercial or NoDerivatives restrictions are excluded. Attribution metadata is retained in `data/image-credits.json`.

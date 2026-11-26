@@ -21,8 +21,13 @@
       function renderPhoto() {
         const photo = activePhotos[activePhotoIndex];
         poiPhoto.classList.remove('is-fallback');
-        poiPhoto.src = photo || '';
-        poiPhoto.alt = photo ? 'Fotografía del lugar' : 'Fotografía no disponible';
+        const photoSource = typeof photo === 'string' ? { src: photo } : photo;
+        poiPhoto.src = photoSource?.src || '';
+        poiPhoto.srcset = photoSource?.srcSet || '';
+        poiPhoto.sizes = '(max-width: 720px) 100vw, 760px';
+        poiPhoto.alt = photoSource?.alt || (photo ? 'Fotografía del lugar' : 'Fotografía no disponible');
+        poiPhoto.loading = 'lazy';
+        poiPhoto.decoding = 'async';
         poiPhoto.onerror = () => { poiPhoto.classList.add('is-fallback'); };
         document.getElementById('poi-photo-count').textContent = activePhotos.length ? `${activePhotoIndex + 1} / ${activePhotos.length}` : 'Foto no disponible';
         document.getElementById('poi-photo-prev').hidden = activePhotos.length < 2;

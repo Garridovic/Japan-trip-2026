@@ -1,14 +1,16 @@
 {
   "name": "kyoto-guide",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "node --test",
     "test:e2e": "playwright test",
-    "test:all": "npm test && npm run test:e2e"
+    "test:all": "npm test && npm run test:e2e",
+    "prepare:images": "node scripts/prepare-images.js"
   },
   "devDependencies": {
-    "@playwright/test": "^1.56.0"
+    "@playwright/test": "^1.56.0",
+    "sharp": "^0.34.5"
   }
 }

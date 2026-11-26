@@ -10,32 +10,61 @@ permissions:
   contents: read
 
 jobs:
-  unit:
-    name: Data and unit tests
+  prepare:
+    name: Download and optimize local images
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm test
+          cache: npm
+      - run: npm install --no-package-lock
+      - run: npm run prepare:images
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prepared-site
+          path: |
+            .
+            !.git/**
+            !node_modules/**
+            !test-results/**
+          retention-days: 1
+          include-hidden-files: true
+
+  unit:
+    name: Data and image integrity tests
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: prepared-site
+          path: .
+      - run: node --test
 
   browser:
     name: Browser tests
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
+      - uses: actions/download-artifact@v4
+        with:
+          name: prepared-site
+          path: .
+      - run: npm install --no-package-lock
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
 
   deploy:
     name: Deploy to GitHub Pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [unit, browser]
+    needs: [prepare, unit, browser]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -45,11 +74,14 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: prepared-site
+          path: site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

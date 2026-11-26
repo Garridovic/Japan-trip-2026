@@ -51,3 +51,31 @@ test('application version metadata is present', () => {
   assert.match(version.version, /^V\d+$/);
   assert.ok(version.updated);
 });
+
+
+test('all generated place photos use local responsive assets with credits', async () => {
+  const { readFile, access } = await import('node:fs/promises');
+  const { resolve } = await import('node:path');
+  const credits = JSON.parse(await readFile(new URL('../data/image-credits.json', import.meta.url), 'utf8'));
+  const photoRecords = details.flatMap(({ id, photos }) => photos.map((photo) => ({ id, photo })));
+  assert.ok(photoRecords.length > 0, 'Image preparation must produce local photos');
+  assert.equal(photoRecords.length, credits.length, 'Every photo must have a credit record');
+
+  for (const { id, photo } of photoRecords) {
+    assert.equal(typeof photo, 'object', `Photo for ${id} must contain responsive image metadata`);
+    assert.ok(photo.src.startsWith('assets/images/'), `Photo for ${id} must be local`);
+    assert.ok(photo.srcSet.includes('480w') && photo.srcSet.includes('960w') && photo.srcSet.includes('1600w'));
+    await access(resolve(process.cwd(), photo.src));
+    for (const source of photo.srcSet.split(', ')) {
+      const [assetPath] = source.split(' ');
+      assert.ok(assetPath.startsWith('assets/images/'));
+      await access(resolve(process.cwd(), assetPath));
+    }
+  }
+
+  credits.forEach(({ author, license, sourcePage }) => {
+    assert.ok(author, 'Every image must have an author or credited source');
+    assert.ok(license, 'Every image must have a license');
+    assert.ok(sourcePage.startsWith('https://commons.wikimedia.org/'));
+  });
+});

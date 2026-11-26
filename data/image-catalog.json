@@ -1,0 +1,158 @@
+{
+  "provider": "Wikimedia Commons",
+  "api": "https://commons.wikimedia.org/w/api.php",
+  "imageWidth": 1800,
+  "variants": [
+    480,
+    960,
+    1600
+  ],
+  "defaultCount": 1,
+  "places": [
+    {
+      "id": "nishiki",
+      "query": "Nishiki Market Kyoto Japan street market",
+      "count": 2
+    },
+    {
+      "id": "nijo",
+      "query": "Nijo Castle Kyoto Japan Ninomaru Palace",
+      "count": 2
+    },
+    {
+      "id": "pontocho",
+      "query": "Pontocho alley Kyoto Japan",
+      "count": 1
+    },
+    {
+      "id": "fushimi",
+      "query": "Fushimi Inari Taisha Kyoto torii gates",
+      "count": 2
+    },
+    {
+      "id": "kiyomizu",
+      "query": "Kiyomizu dera Kyoto temple Japan",
+      "count": 2
+    },
+    {
+      "id": "sannenzaka",
+      "query": "Sannenzaka Ninenzaka Kyoto historic street",
+      "count": 1
+    },
+    {
+      "id": "yasaka",
+      "query": "Yasaka Shrine Kyoto Japan",
+      "count": 1
+    },
+    {
+      "id": "kodaiji",
+      "query": "Kodai ji temple Kyoto Japan garden",
+      "count": 1
+    },
+    {
+      "id": "kinkaku",
+      "query": "Kinkaku ji Golden Pavilion Kyoto Japan",
+      "count": 2
+    },
+    {
+      "id": "ryoanji",
+      "query": "Ryoan ji Kyoto rock garden Japan",
+      "count": 1
+    },
+    {
+      "id": "toji",
+      "query": "To ji temple Kyoto five story pagoda",
+      "count": 1
+    },
+    {
+      "id": "tenryuji",
+      "query": "Tenryu ji Kyoto temple garden Japan",
+      "count": 1
+    },
+    {
+      "id": "bamboo",
+      "query": "Arashiyama bamboo grove Kyoto Japan",
+      "count": 2
+    },
+    {
+      "id": "okoichi",
+      "query": "Okochi Sanso garden Arashiyama Kyoto",
+      "count": 1
+    },
+    {
+      "id": "togetsu",
+      "query": "Togetsukyo bridge Arashiyama Kyoto Japan",
+      "count": 1
+    },
+    {
+      "id": "bishamondo",
+      "query": "Bishamondo temple Yamashina Kyoto Japan",
+      "count": 1
+    },
+    {
+      "id": "oishi",
+      "query": "Oishi Shrine Yamashina Kyoto Japan",
+      "count": 1
+    },
+    {
+      "id": "ninnaji",
+      "query": "Ninna ji temple Kyoto Japan pagoda",
+      "count": 1
+    },
+    {
+      "id": "ginkaku",
+      "query": "Ginkaku ji Silver Pavilion Kyoto Japan",
+      "count": 1
+    },
+    {
+      "id": "philosopher",
+      "query": "Philosophers Path Kyoto Japan canal",
+      "count": 1
+    },
+    {
+      "id": "nanzenji",
+      "query": "Nanzen ji Kyoto aqueduct temple Japan",
+      "count": 1
+    },
+    {
+      "id": "sanjusangen",
+      "query": "Sanjusangen do Kyoto temple Japan",
+      "count": 1
+    },
+    {
+      "id": "heian",
+      "query": "Heian Jingu shrine Kyoto Japan",
+      "count": 1
+    },
+    {
+      "id": "imperial",
+      "query": "Kyoto Imperial Palace Kyoto Gyoen Japan",
+      "count": 1
+    },
+    {
+      "id": "fushimisake",
+      "query": "Fushimi sake district Kyoto canal Japan",
+      "count": 1
+    },
+    {
+      "id": "kamishichiken",
+      "query": "Kamishichiken Kyoto traditional street",
+      "count": 1
+    },
+    {
+      "id": "manga",
+      "query": "Kyoto International Manga Museum Japan",
+      "count": 1
+    },
+    {
+      "id": "railway",
+      "query": "Kyoto Railway Museum Japan trains",
+      "count": 1
+    },
+    {
+      "id": "monkey",
+      "query": "Arashiyama Monkey Park Iwatayama Kyoto Japan",
+      "count": 1
+    }
+  ]
+}
