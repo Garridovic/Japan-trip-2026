@@ -110,7 +110,7 @@ test('show mode displays the phrase full screen, plays audio and closes with Esc
   await page.keyboard.press('Escape');
   await expect(modal).toBeHidden();
   await page.locator('.phrase-card[data-phrase-id="toire-doko"]').getByRole('button', { name: /Mostrar/ }).click();
-  await page.getByRole('button', { name: 'Cerrar' }).click();
+  await page.getByRole('button', { name: 'Volver' }).click();
   await expect(modal).toBeHidden();
 });
 
