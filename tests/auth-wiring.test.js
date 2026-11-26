@@ -3,7 +3,12 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { AUTH_CONFIG } from '../assets/auth-config.js';
 import { isConfigured, isRedirectCallback, safeReturnTo, managementAudience } from '../js/modules/auth.js';
-import { greetingName, statusText } from '../js/modules/account.js';
+import { greetingName, statusText, RESETS } from '../js/modules/account.js';
+import { SYNCED_KEYS } from '../js/modules/user-data.js';
+import { VISITED_KEY } from '../js/modules/visited.js';
+import { parseVisited } from '../js/modules/visited.js';
+import { FAVORITES_STORAGE_KEY } from '../js/modules/phrases.js';
+import { DISH_FAVORITES_KEY } from '../js/modules/dishes.js';
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
@@ -45,4 +50,12 @@ test('greeting and status texts', () => {
   assert.equal(greetingName(null), '');
   assert.match(statusText('pending', { online: false }), /Sin internet/);
   assert.equal(statusText('synced', { lastSyncAt: 1000, now: 1000 + 5 * 60000 }), 'Sincronizado · hace 5 min');
+});
+
+test('the individual resets target the real storage keys and store an empty value of the right shape', () => {
+  assert.deepEqual(RESETS.map((item) => item.key), [VISITED_KEY, FAVORITES_STORAGE_KEY, DISH_FAVORITES_KEY]);
+  for (const item of RESETS) assert.ok(SYNCED_KEYS.includes(item.key));
+  assert.equal(parseVisited(RESETS[0].empty).size, 0);
+  assert.deepEqual(JSON.parse(RESETS[1].empty), []);
+  assert.deepEqual(JSON.parse(RESETS[2].empty), []);
 });

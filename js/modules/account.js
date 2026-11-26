@@ -6,6 +6,14 @@ import { SYNCED_KEYS } from './user-data.js';
 import { createCloudSync, SAVE_DELAY_MS, BACKUP_KEY, LAST_SYNC_KEY } from './cloud-sync.js';
 import { createAuth, isConfigured } from './auth.js';
 
+/** What the user can reset one by one. `empty` is the value stored for "nothing" (the same shape the stores write). */
+export const RESETS = Object.freeze([
+  { id: 'visited', key: 'visited-v1', empty: '{}', button: 'Restablecer lugares visitados', title: '¿Restablecer los lugares visitados?', done: 'Lugares visitados restablecidos.' },
+  { id: 'phrases', key: 'japan-trip:phrase-favorites', empty: '[]', button: 'Restablecer frases favoritas', title: '¿Restablecer las frases favoritas?', done: 'Frases favoritas restablecidas.' },
+  { id: 'dishes', key: 'japan-trip:dish-favorites', empty: '[]', button: 'Restablecer platos favoritos', title: '¿Restablecer los platos favoritos?', done: 'Platos favoritos restablecidos.' }
+]);
+const RESET_DONE_KEY = 'account-reset-done';
+
 const INVITE_DISMISSED_KEY = 'account-invite-dismissed';
 const STARTUP_WAIT_MS = 1500;
 
@@ -59,7 +67,8 @@ export async function initAccount({ config, userData, win = window, storage = nu
   let auth = null;
   let sync = null;
   let status = { state: 'synced', lastSyncAt: 0 };
-  let view = 'main'; // 'main' | 'logout'
+  let view = 'main'; // 'main' | 'logout' | 'reset'
+  let resetItem = null;
   let started = false;
   let busy = false;
   const online = () => win.navigator.onLine !== false;
@@ -92,6 +101,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
   // ---------- view ----------
   function renderButton() {
     button.hidden = false;
+    win.document.body.classList.add('has-account'); // lets the header shrink its buttons on a 320 px phone
     button.dataset.state = user ? 'signed-in' : 'anonymous';
     button.dataset.sync = user ? status.state : '';
     button.setAttribute('aria-label', user ? `Cuenta de ${greetingName(user) || 'Google'}` : 'Cuenta (sin sesión)');
@@ -118,8 +128,32 @@ export async function initAccount({ config, userData, win = window, storage = nu
   function privacy() { return h('p', {}, '🔒 Los PINs y las reservas del alojamiento nunca salen de este dispositivo.'); }
   function signInButton() { return h('button', { type: 'button', class: 'filter account-google', onclick: () => signIn(), disabled: !online() || !auth }, googleLogo(), 'Entrar con Google'); }
 
+  function resetButtons() {
+    return RESETS.map((item) => h('button', { type: 'button', class: 'filter', onclick: () => { resetItem = item; view = 'reset'; render(); } }, item.button));
+  }
+
+  /** Writes "nothing" through the user-data layer (so it syncs like any change), sends it, and reloads so every screen re-reads it. */
+  async function resetData(item) {
+    busy = true; render();
+    try {
+      userData.storage.setItem(item.key, item.empty);
+      if (sync && online()) await Promise.race([userData.flush(), new Promise((resolve) => setTimeout(resolve, 4000))]);
+      try { win.sessionStorage.setItem(RESET_DONE_KEY, item.done); } catch { /* ignore */ }
+    } finally { win.location.reload(); }
+  }
+
   function renderPopover() {
     popover.replaceChildren();
+    if (view === 'reset' && resetItem) {
+      popover.append(
+        h('h2', {}, resetItem.title),
+        h('p', {}, user ? 'Se borrarán en este dispositivo y también en tu cuenta, y dejarán de aparecer en tus otros dispositivos. No se puede deshacer.' : 'Se borrarán en este dispositivo. No se puede deshacer.'),
+        h('div', { class: 'account-actions' },
+          h('button', { type: 'button', class: 'filter is-danger', onclick: () => resetData(resetItem), disabled: busy }, 'Restablecer'),
+          h('button', { type: 'button', class: 'filter', onclick: () => { view = 'main'; resetItem = null; render(); } }, 'Cancelar'))
+      );
+      return;
+    }
     if (!user) {
       popover.append(
         h('h2', {}, 'Tu cuenta'),
@@ -129,6 +163,8 @@ export async function initAccount({ config, userData, win = window, storage = nu
           signInButton(),
           !online() ? h('p', {}, 'Para entrar hace falta internet. La guía sigue funcionando sin él.') : null,
           !auth ? h('p', {}, 'No se ha podido cargar el inicio de sesión ahora mismo.') : null,
+          h('h3', { class: 'account-subtitle' }, 'Datos de este dispositivo'),
+          ...resetButtons(),
           h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar'))
       );
       return;
@@ -153,6 +189,8 @@ export async function initAccount({ config, userData, win = window, storage = nu
       privacy(),
       h('div', { class: 'account-actions' },
         status.state === 'signed-out' ? signInButton() : h('button', { type: 'button', class: 'filter', onclick: () => sync.reconcile(), disabled: busy || !online() }, 'Sincronizar ahora'),
+        h('h3', { class: 'account-subtitle' }, 'Restablecer mis datos'),
+        ...resetButtons(),
         h('button', { type: 'button', class: 'filter is-danger', onclick: () => { view = 'logout'; render(); } }, 'Cerrar sesión'),
         h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar'))
     );
@@ -178,7 +216,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
   function render() { renderButton(); renderGreeting(); renderPopover(); renderInvite(); }
 
   function setOpen(open) {
-    if (open) { view = 'main'; renderPopover(); }
+    if (open) { view = 'main'; resetItem = null; renderPopover(); }
     popover.hidden = !open;
     button.setAttribute('aria-expanded', String(open));
     if (open) popover.querySelector('button')?.focus(); else button.focus();
@@ -213,6 +251,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
   }
 
   render();
+  try { const done = win.sessionStorage.getItem(RESET_DONE_KEY); if (done) { win.sessionStorage.removeItem(RESET_DONE_KEY); toast(done); } } catch { /* ignore */ }
   return {
     user, markStarted() { started = true; },
     /** For tests and the QA thread. */

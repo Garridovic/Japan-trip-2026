@@ -139,4 +139,39 @@ test.describe('optional account (Auth0, Google)', () => {
     await expect(page).toHaveURL(/view=frases/);
     await expect(page).not.toHaveURL(/code=/);
   });
+
+  test('anonymous: each reset clears only its own list on this device, after a confirmation', async ({ page }) => {
+    await enableAuth(page, { seed: { 'visited-v1': JSON.stringify({ kyoto: ['fushimi'] }), 'japan-trip:phrase-favorites': JSON.stringify(['konichiwa']), 'japan-trip:dish-favorites': JSON.stringify(['gohan']), 'japan-trip:lodging-private': 'PIN 4321' } });
+    await page.goto('/');
+    await page.locator('#account-button').click();
+    await page.getByRole('button', { name: 'Restablecer frases favoritas' }).click();
+    await expect(page.locator('#account-popover')).toContainText('¿Restablecer las frases favoritas?');
+    await page.getByRole('button', { name: 'Cancelar' }).click();
+    expect(await page.evaluate(() => localStorage.getItem('japan-trip:phrase-favorites'))).toBe('["konichiwa"]');
+    await page.getByRole('button', { name: 'Restablecer frases favoritas' }).click();
+    await page.getByRole('button', { name: 'Restablecer', exact: true }).click();
+    await expect(page.locator('.toast')).toContainText('Frases favoritas restablecidas');
+    expect(await page.evaluate(() => localStorage.getItem('japan-trip:phrase-favorites'))).toBe('[]');
+    expect(await page.evaluate(() => localStorage.getItem('visited-v1'))).toContain('fushimi');
+    expect(await page.evaluate(() => localStorage.getItem('japan-trip:dish-favorites'))).toBe('["gohan"]');
+    expect(await page.evaluate(() => localStorage.getItem('japan-trip:lodging-private'))).toBe('PIN 4321');
+  });
+
+  test('signed in: resetting visited places also clears them in the account and keeps the rest', async ({ page }) => {
+    const api = await enableAuth(page, {
+      cloud: { 'visited-v1': JSON.stringify({ kyoto: ['fushimi', 'nishiki'] }), 'japan-trip:phrase-favorites': JSON.stringify(['konichiwa']) },
+      seed: { 'visited-v1': JSON.stringify({ kyoto: ['fushimi'] }) }
+    });
+    await page.goto('/');
+    await signIn(page);
+    expect(JSON.parse(await page.evaluate(() => localStorage.getItem('visited-v1'))).kyoto.sort()).toEqual(['fushimi', 'nishiki']);
+    await page.locator('#account-button').click();
+    await page.getByRole('button', { name: 'Restablecer lugares visitados' }).click();
+    await expect(page.locator('#account-popover')).toContainText('también en tu cuenta');
+    await page.getByRole('button', { name: 'Restablecer', exact: true }).click();
+    await expect(page.locator('.toast')).toContainText('Lugares visitados restablecidos');
+    expect(await page.evaluate(() => localStorage.getItem('visited-v1'))).toBe('{}');
+    expect(JSON.parse(api.cloud.data['visited-v1'])).toEqual({});
+    expect(JSON.parse(api.cloud.data['japan-trip:phrase-favorites'])).toEqual(['konichiwa']);
+  });
 });
