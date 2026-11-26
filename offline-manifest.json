@@ -1,7 +1,7 @@
 {
-  "version": "092457658c",
+  "version": "0935badbd6",
   "sizes": {
-    "required": 873681,
+    "required": 880130,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -43,6 +43,13 @@
     "data/cities/osaka/restaurants.json",
     "data/cities/osaka/sources.json",
     "data/cities/osaka/tips.json",
+    "data/cities/tokyo/city.json",
+    "data/cities/tokyo/details.json",
+    "data/cities/tokyo/extras.json",
+    "data/cities/tokyo/itinerary.json",
+    "data/cities/tokyo/places.json",
+    "data/cities/tokyo/restaurants.json",
+    "data/cities/tokyo/sources.json",
     "data/global/checklist.json",
     "data/global/dish-credits.json",
     "data/global/dishes.json",
