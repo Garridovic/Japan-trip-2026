@@ -1,7 +1,7 @@
 {
-  "version": "5696f1b129",
+  "version": "fd74d60b22",
   "sizes": {
-    "required": 751015,
+    "required": 754133,
     "optional": 4066138,
     "warm": 14431338
   },
@@ -50,6 +50,7 @@
     "data/version.json",
     "index.html",
     "js/main.js",
+    "js/modules/allergen-icons.js",
     "js/modules/anchors.js",
     "js/modules/checklist-ui.js",
     "js/modules/checklist.js",

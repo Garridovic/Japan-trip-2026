@@ -181,3 +181,24 @@ test.describe('illustrations for places without a photo', () => {
     expect(stroke).not.toBe('none');
   });
 });
+
+test.describe('allergen icons (V12.6)', () => {
+  test('the big dish screen shows icon + text for each allergen, plus the disclaimer', async ({ page }) => {
+    await page.goto('/?view=platos');
+    await page.locator('.dish-card:has(.allergen-chip)').first().locator('.dish-open').click();
+    const tags = page.locator('#dish-show .dish-allergen');
+    await expect(tags.first()).toBeVisible();
+    await expect(tags.first().locator('svg.allergen-icon')).toBeVisible();
+    expect((await tags.first().innerText()).trim().length).toBeGreaterThan(2);
+    await expect(page.locator('#dish-show .dish-show-disclaimer')).toBeVisible();
+  });
+
+  test('cards carry icons with a text alternative, never an icon alone without a name', async ({ page }) => {
+    await page.goto('/?view=platos');
+    const chips = page.locator('.dish-card .allergen-chip');
+    await expect(chips.first()).toBeAttached();
+    const labels = await chips.evaluateAll((nodes) => nodes.map((node) => node.getAttribute('aria-label')));
+    expect(labels.length).toBeGreaterThan(5);
+    labels.forEach((label) => expect(label && label.length).toBeGreaterThan(2));
+  });
+});

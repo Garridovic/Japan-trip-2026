@@ -1,4 +1,5 @@
 // "Platos" section: identify a dish by photo or by name (search), favourites and a full-screen "show" sheet.
+import { allergenTag, allergenRow } from './allergen-icons.js';
 import { userStorage } from './user-data.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { byId, h, externalLink } from './dom.js';
@@ -68,7 +69,7 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
       h('p', { class: 'phrase-show-romaji' }, dish.romaji),
       h('p', { class: 'phrase-show-es' }, dish.es),
       h('p', { class: 'dish-show-description' }, dish.description),
-      h('div', { class: 'dish-tags' }, badge(dish), dish.allergens.map((a) => h('span', { class: 'dish-allergen' }, data.allergenLabels[a]))),
+      h('div', { class: 'dish-tags' }, badge(dish), dish.allergens.map((a) => allergenTag(a, data.allergenLabels[a]))),
       h('p', { class: 'dish-show-disclaimer' }, data.disclaimer),
       h('div', { class: 'phrase-show-actions' }, listen),
       creditLine(dish)
@@ -103,6 +104,7 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
     ),
     h('div', { class: 'dish-meta' },
       badge(dish),
+      dish.allergens?.length > 0 && allergenRow(dish.allergens, data.allergenLabels),
       dish.region && h('span', { class: 'dish-region' }, dish.region),
       favoriteButton(dish)
     )
