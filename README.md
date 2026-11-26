@@ -18,6 +18,7 @@ js/modules/
   filters.js          restaurants and alternative places sections with their filters
   map.js              Leaflet map, marker filters, legend, nearby places, GPS
   details.js          place detail sheet (resolved only inside the active city)
+  views.js            app views (Guía, Frases, Platos): URL helpers and bottom bar controller
   phrases.js          pure phrasebook logic (validation, search, filters, favourites)
   phrases-ui.js       "Frases" section: search, chips, favourites, audio, full-screen show mode
   speech.js           Web Speech API wrapper (ja-JP voice, normal and slow rate)
@@ -26,6 +27,7 @@ data/
   version.json        source of truth for the visible version
   journey.json        trip manifest: ordered cities, enabled flag, dates, inter-city connections
   global/tips.json    content shared by every city
+  global/dishes.json  dish guide (Spanish, Japanese, romaji, meat/fish label, allergens, photo); dish-catalog.json and dish-credits.json feed `npm run prepare:dishes`
   global/phrases.json phrasebook shared by every city (Spanish, Japanese, romaji, category, 2 examples; `source` is `pdf` or `added`)
   cities/<id>/        one folder per city with content (see below)
 scripts/prepare-images.js   per-city Wikimedia Commons image pipeline
@@ -111,3 +113,10 @@ Only Public Domain, CC0, CC BY and CC BY-SA licenses are accepted. Images with N
 The visible version indicator reads the full version (for example `V11.0.0`) from `data/version.json`. Image search, download and conversion failures are recorded per place in `image-preparation-report.md` and `.json`; they do not stop image preparation or deployment. The GitHub Actions run publishes these reports as the `image-preparation-report` artifact, available for 30 days.
 
 The image preparation script searches Wikimedia Commons by text and, when needed, by the configured Commons category. It still validates dimensions, MIME type and reusable license metadata before downloading.
+
+
+## App views (V11.3)
+
+The page has three full-screen views chosen with the fixed bottom bar: **Guía** (the active city, with its city tabs and section navigation), **Frases** and **Platos** (both global). The URL keeps the state: `?view=frases` / `?view=platos` (the guide is the default and has no param) next to `?city=…`. Each view keeps its scroll position, search and favourites when you switch.
+
+Dish photos come from Wikimedia Commons (CC0, public domain, CC BY, CC BY-SA) and are prepared manually with `npm run prepare:dishes` (resumable; `--force` redoes all). Set `file`, `exclude` or `skip` per dish in `data/global/dish-catalog.json` to fix a photo. The result is committed so published photos are always reviewed ones.

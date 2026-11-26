@@ -10,6 +10,7 @@ import { initDetails } from './modules/details.js';
 import { initMap } from './modules/map.js';
 import { initScrollSpy } from './modules/scrollspy.js';
 import { initPhrases } from './modules/phrases-ui.js';
+import { VIEW_QUERY_PARAM, viewFromSearch, withView, initViews } from './modules/views.js';
 import { initDishes } from './modules/dishes-ui.js';
 
 const status = byId('app-status');
@@ -29,8 +30,25 @@ async function start() {
   const scrollSpy = initScrollSpy();
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
 
+  let activeView = viewFromSearch(window.location.search);
+  const scrollByView = new Map();
+  const views = initViews((view) => navigateView(view));
   let activeCityId = null;
   let requestToken = 0;
+
+  function applyView(view) {
+    scrollByView.set(activeView, window.scrollY);
+    activeView = view;
+    views.setActive(view);
+    if (view === 'guia') { map.refresh(); scrollSpy.refresh(); }
+    window.scrollTo({ top: scrollByView.get(view) ?? 0, behavior: 'instant' });
+  }
+
+  function navigateView(view) {
+    if (view === activeView) { window.scrollTo({ top: 0 }); return; }
+    history.pushState({ view }, '', withView(window.location.href, view));
+    applyView(view);
+  }
 
   async function showCity(cityId) {
     const token = ++requestToken;
@@ -58,8 +76,10 @@ async function start() {
     if (cityId === resolveActiveCity(journey, requestedCityFromSearch(window.location.search)).cityId) return;
     const url = new URL(window.location.href);
     url.searchParams.set(CITY_QUERY_PARAM, cityId);
+    url.searchParams.delete(VIEW_QUERY_PARAM); // city tabs live in the guide
     url.hash = '';
     history.pushState({ cityId }, '', url);
+    applyView('guia');
     showCity(cityId).then(() => window.scrollTo({ top: 0 }));
   }
 
@@ -69,10 +89,11 @@ async function start() {
     return cityId;
   }
 
-  window.addEventListener('popstate', () => showCity(cityFromLocation()));
+  window.addEventListener('popstate', () => { applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation()); });
+  views.setActive(activeView);
   await showCity(cityFromLocation());
   // Honour an in-page anchor (for example #mapa) once the content exists.
-  if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
+  if (activeView === 'guia' && window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
 }
 
 start().catch((error) => {

@@ -11,6 +11,7 @@
       --shadow: 0 12px 32px rgba(26, 39, 44, .07);
       --radius: 18px;
       --tabs-height: 52px;
+      --bar-height: 68px;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -42,11 +43,11 @@
     .button.primary:hover { color: #24333a; }
     .hotel { color: #d2d8d7; font-size: .9rem; margin-top: 14px; }
     .hotel a { color: #f0d7a7; }
-    nav { position: sticky; top: var(--tabs-height); z-index: 5; background: rgba(246,244,239,.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    #city-view > nav { position: sticky; top: var(--tabs-height); z-index: 5; background: rgba(246,244,239,.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
     .nav-inner { width: min(1080px, 100%); margin: auto; display: flex; gap: 20px; overflow-x: auto; padding: 11px 22px; white-space: nowrap; }
-    nav a { text-decoration: none; color: var(--muted); font-weight: 750; font-size: .82rem; }
-    nav a[aria-current="location"] { color: var(--red); box-shadow: inset 0 -2px 0 var(--red); }
-    @media (hover: hover) { nav a:hover { color: var(--red); } }
+    #city-view > nav a { text-decoration: none; color: var(--muted); font-weight: 750; font-size: .82rem; }
+    #city-view > nav a[aria-current="location"] { color: var(--red); box-shadow: inset 0 -2px 0 var(--red); }
+    @media (hover: hover) { #city-view > nav a:hover { color: var(--red); } }
     main { padding: 30px 22px 64px; }
     section { scroll-margin-top: calc(72px + var(--tabs-height)); margin-bottom: 38px; }
     .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 0 0 17px; }
@@ -204,7 +205,7 @@
     .version-indicator {
       position: fixed;
       right: max(12px, env(safe-area-inset-right));
-      bottom: max(12px, env(safe-area-inset-bottom));
+      bottom: calc(var(--bar-height) + max(8px, env(safe-area-inset-bottom)) + 6px);
       z-index: 1000;
       display: inline-flex;
       align-items: center;
@@ -240,7 +241,7 @@
       body { background: white; font-size: 10pt; }
       .hero { padding: 18px 0; background: #182a35 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .hero-inner, main, .footer-inner { width: 100%; }
-      nav, .city-tabs, .hero-actions, .extras-toolbar, .food-toolbar, .map-link, .map-toolbar, .location-actions, .location-hint, .version-indicator { display: none !important; }
+      #city-view > nav, .app-bar, .city-tabs, .hero-actions, .extras-toolbar, .food-toolbar, .map-link, .map-toolbar, .location-actions, .location-hint, .version-indicator { display: none !important; }
       #city-map { height:360px; }
       main { padding: 18px 0; }
       .quick-grid { grid-template-columns: repeat(2,1fr); }
@@ -415,3 +416,22 @@ body.phrase-show-open { overflow:hidden; }
 @media (max-width: 1000px) { .dish-grid.is-photos { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media (max-width: 700px) { .dish-grid.is-photos { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; } .dish-ja { font-size:1.05rem; } }
 @media print { .dish-views, #dishes-protein, .dish-fav { display:none !important; } .dish-card { box-shadow:none; break-inside:avoid; } }
+
+/* ---------- App views and bottom bar (Guía · Frases · Platos) ---------- */
+body { padding-bottom: calc(var(--bar-height) + env(safe-area-inset-bottom)); }
+.app-view[hidden] { display: none; }
+body[data-view="frases"] .city-tabs, body[data-view="platos"] .city-tabs { display: none; }
+#view-frases main, #view-platos main { padding-top: 26px; }
+.app-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 900; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; box-sizing: border-box; padding: 6px max(10px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)); background: rgba(24,42,53,.97); border-top: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.app-bar-button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: calc(var(--bar-height) - 12px); border: 0; border-radius: 16px; background: transparent; color: #c3cdca; font: inherit; cursor: pointer; }
+.app-bar-icon { font-size: 1.7rem; line-height: 1; }
+.app-bar-label { font-size: .78rem; font-weight: 800; letter-spacing: .02em; }
+.app-bar-button[aria-current="page"] { background: #f2e5c9; color: #24333a; box-shadow: inset 0 -3px 0 var(--red); }
+.app-bar-button:focus-visible { outline: 3px solid #e2b46e; outline-offset: -3px; }
+@media (hover: hover) { .app-bar-button:not([aria-current="page"]):hover { background: rgba(255,255,255,.1); color: #fff; } }
+@media (min-width: 900px) {
+  .app-bar { left: 50%; right: auto; bottom: 14px; width: 460px; transform: translateX(-50%); border: 1px solid rgba(255,255,255,.16); border-radius: 22px; padding-bottom: 6px; box-shadow: 0 10px 30px rgba(18,30,36,.28); }
+  body { padding-bottom: calc(var(--bar-height) + 28px); }
+  .version-indicator { bottom: 22px; }
+}
+@media print { body { padding-bottom: 0; } }

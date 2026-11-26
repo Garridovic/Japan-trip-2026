@@ -291,6 +291,8 @@ export function initMap({ openDetail }) {
       map.setView(config.center, config.zoom);
       map.invalidateSize();
       refreshMapPoints();
-    }
+    },
+    /** Call when the guide view becomes visible again: Leaflet cannot measure a hidden container. */
+    refresh() { map.invalidateSize(); }
   };
 }

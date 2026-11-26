@@ -21,7 +21,6 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
   byId('phrases-title').textContent = data.title;
   byId('phrases-lead').textContent = data.lead;
   section.hidden = false;
-  document.querySelector('[data-nav-section="frases"]')?.removeAttribute('hidden');
 
   // ----- audio availability -----
   const notice = byId('phrases-notice');

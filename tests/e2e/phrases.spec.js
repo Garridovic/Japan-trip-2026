@@ -17,9 +17,9 @@ const installSpeech = (page, { withJapanese = true } = {}) => page.addInitScript
 
 test('the phrases section is global, linked from the navigation and lists every phrase', async ({ page }) => {
   await installSpeech(page);
-  await page.goto('/');
+  await page.goto('/?view=frases');
   await expect(page.locator('.phrase-card')).toHaveCount(total);
-  await expect(page.locator('.nav-inner a[href="#frases"]')).toBeVisible();
+  await expect(page.locator('[data-view-target="frases"]')).toBeVisible();
   await expect(page.locator('#phrases-title')).toHaveText('Frases útiles');
   await expect(page.locator('#phrases-notice')).toBeHidden();
   const card = page.locator('.phrase-card[data-phrase-id="arigato"]');
@@ -30,7 +30,7 @@ test('the phrases section is global, linked from the navigation and lists every 
 
 test('search matches Spanish, Japanese and romaji and category chips filter', async ({ page }) => {
   await installSpeech(page);
-  await page.goto('/');
+  await page.goto('/?view=frases');
   const search = page.locator('#phrases-search');
   await search.fill('baño');
   await expect(page.locator('.phrase-card[data-phrase-id="toire-doko"]')).toBeVisible();
@@ -50,7 +50,7 @@ test('search matches Spanish, Japanese and romaji and category chips filter', as
 
 test('favourites can be starred, filtered and survive a reload', async ({ page }) => {
   await installSpeech(page);
-  await page.goto('/');
+  await page.goto('/?view=frases');
   await page.locator('.phrase-card[data-phrase-id="hai"] .phrase-fav').click();
   await page.locator('.phrase-card[data-phrase-id="sore"] .phrase-fav').click();
   await expect(page.getByRole('button', { name: /Favoritas \(2\)/ })).toBeVisible();
@@ -65,7 +65,7 @@ test('favourites can be starred, filtered and survive a reload', async ({ page }
 
 test('audio, slow audio and example audio speak the Japanese text with a ja-JP voice', async ({ page }) => {
   await installSpeech(page);
-  await page.goto('/');
+  await page.goto('/?view=frases');
   const card = page.locator('.phrase-card[data-phrase-id="arigato"]');
   await card.getByRole('button', { name: /^Escuchar:/ }).click();
   await card.getByRole('button', { name: /^Escuchar despacio:/ }).click();
@@ -81,21 +81,21 @@ test('audio, slow audio and example audio speak the Japanese text with a ja-JP v
 
 test('a clear warning appears when the device has no Japanese voice', async ({ page }) => {
   await installSpeech(page, { withJapanese: false });
-  await page.goto('/');
+  await page.goto('/?view=frases');
   await expect(page.locator('#phrases-notice')).toBeVisible();
   await expect(page.locator('#phrases-notice')).toContainText('voz japonesa');
 });
 
 test('a warning and disabled audio appear when speech is unavailable', async ({ page }) => {
   await page.addInitScript(() => { Object.defineProperty(window, 'speechSynthesis', { configurable: true, value: undefined }); });
-  await page.goto('/');
+  await page.goto('/?view=frases');
   await expect(page.locator('#phrases-notice')).toContainText('no puede reproducir audio');
   await expect(page.locator('.phrase-card[data-phrase-id="arigato"] .phrase-audio').first()).toBeDisabled();
 });
 
 test('show mode displays the phrase full screen, plays audio and closes with Escape', async ({ page }) => {
   await installSpeech(page);
-  await page.goto('/');
+  await page.goto('/?view=frases');
   await page.locator('.phrase-card[data-phrase-id="toire-doko"]').getByRole('button', { name: /Mostrar/ }).click();
   const modal = page.locator('#phrase-show');
   await expect(modal).toBeVisible();
@@ -117,10 +117,9 @@ test('show mode displays the phrase full screen, plays audio and closes with Esc
 test('the section fits a narrow phone and the nav link reaches it', async ({ page }) => {
   await installSpeech(page);
   await page.setViewportSize({ width: 320, height: 640 });
-  await page.goto('/?city=kyoto');
+  await page.goto('/?view=frases&city=kyoto');
   await expect(page.locator('.phrase-card')).toHaveCount(total);
   await page.locator('#phrases-search').fill('gracias');
-  await page.locator('.nav-inner a[href="#frases"]').click();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   const tall = await page.locator('.phrase-card').first().boundingBox();
   expect(tall.width).toBeLessThanOrEqual(320);

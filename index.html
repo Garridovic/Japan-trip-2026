@@ -13,7 +13,7 @@
 <body>
   <div class="city-tabs" id="city-tabs" role="tablist" aria-label="Ciudades del viaje" hidden></div>
 
-  <div id="city-view" role="tabpanel" tabindex="-1">
+  <div class="app-view" id="city-view" data-view="guia" role="tabpanel" tabindex="-1">
     <header class="hero">
       <div class="hero-inner">
         <div class="eyebrow" id="hero-eyebrow">Japón · guía compartida</div>
@@ -35,10 +35,8 @@
         <a href="#mapa">Mapa</a>
         <a href="#detalle">Día a día</a>
         <a href="#comer" data-nav-section="comer">Comer</a>
-        <a href="#platos" data-nav-section="platos" hidden>Platos</a>
         <a href="#alternativas" data-nav-section="alternativas">Otros lugares</a>
         <a href="#practico" data-nav-section="practico">Consejos</a>
-        <a href="#frases" data-nav-section="frases" hidden>Frases</a>
         <a href="#fuentes" data-nav-section="fuentes">Fuentes</a>
       </div>
     </nav>
@@ -116,6 +114,47 @@
         <div class="food-note" id="food-note"></div>
       </section>
 
+      <section id="alternativas" hidden>
+        <div class="section-head"><div><div class="kicker">Para improvisar o sustituir visitas</div><h2>Otros lugares de interés</h2></div></div>
+        <div class="extras-toolbar" id="extras-toolbar" role="group" aria-label="Filtrar lugares por categoría"></div>
+        <div class="extras-grid" id="extras-grid"></div>
+      </section>
+
+      <section id="practico" hidden>
+        <div class="section-head"><div><div class="kicker" id="tips-kicker"></div><h2 id="tips-title"></h2></div></div>
+        <div class="notes-grid" id="notes-grid"></div>
+      </section>
+
+      <section id="fuentes" hidden>
+        <div class="section-head"><div><div class="kicker">Información contrastada</div><h2>Fuentes útiles</h2></div></div>
+        <details class="note-card sources" id="sources-card"></details>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner"><span id="footer-label"></span><span>Guía de viaje compartida · contenido editable en <code>data/</code></span><span id="footer-kml" hidden>Exportación opcional: <a id="footer-kml-link" download>descargar puntos KML</a></span></div>
+    </footer>
+  </div>
+
+  <div class="app-view" id="view-frases" data-view="frases" hidden>
+    <main>
+      <section id="frases" hidden>
+        <div class="section-head"><div><div class="kicker" id="phrases-kicker"></div><h2 id="phrases-title"></h2></div><p class="muted small" id="phrases-lead"></p></div>
+        <p class="phrase-notice" id="phrases-notice" role="status" hidden></p>
+        <div class="phrase-search">
+          <label class="phrase-search-label" for="phrases-search">Buscar en español, japonés o romaji</label>
+          <input type="search" id="phrases-search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ej.: gracias, ありがとう, arigato">
+        </div>
+        <div class="phrase-chips" id="phrases-chips" role="group" aria-label="Filtrar frases por categoría"></div>
+        <p class="muted small" id="phrases-count" aria-live="polite"></p>
+        <div class="phrase-grid" id="phrases-grid"></div>
+        <p class="phrase-empty muted" id="phrases-empty" hidden></p>
+      </section>
+    </main>
+  </div>
+
+  <div class="app-view" id="view-platos" data-view="platos" hidden>
+    <main>
       <section id="platos" hidden>
         <div class="section-head"><div><div class="kicker" id="dishes-kicker"></div><h2 id="dishes-title"></h2></div><p class="muted small" id="dishes-lead"></p></div>
         <p class="phrase-notice" id="dishes-disclaimer"></p>
@@ -139,41 +178,14 @@
           <ul id="dishes-credits-list"></ul>
         </details>
       </section>
-
-      <section id="alternativas" hidden>
-        <div class="section-head"><div><div class="kicker">Para improvisar o sustituir visitas</div><h2>Otros lugares de interés</h2></div></div>
-        <div class="extras-toolbar" id="extras-toolbar" role="group" aria-label="Filtrar lugares por categoría"></div>
-        <div class="extras-grid" id="extras-grid"></div>
-      </section>
-
-      <section id="practico" hidden>
-        <div class="section-head"><div><div class="kicker" id="tips-kicker"></div><h2 id="tips-title"></h2></div></div>
-        <div class="notes-grid" id="notes-grid"></div>
-      </section>
-
-      <section id="frases" hidden>
-        <div class="section-head"><div><div class="kicker" id="phrases-kicker"></div><h2 id="phrases-title"></h2></div><p class="muted small" id="phrases-lead"></p></div>
-        <p class="phrase-notice" id="phrases-notice" role="status" hidden></p>
-        <div class="phrase-search">
-          <label class="phrase-search-label" for="phrases-search">Buscar en español, japonés o romaji</label>
-          <input type="search" id="phrases-search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ej.: gracias, ありがとう, arigato">
-        </div>
-        <div class="phrase-chips" id="phrases-chips" role="group" aria-label="Filtrar frases por categoría"></div>
-        <p class="muted small" id="phrases-count" aria-live="polite"></p>
-        <div class="phrase-grid" id="phrases-grid"></div>
-        <p class="phrase-empty muted" id="phrases-empty" hidden></p>
-      </section>
-
-      <section id="fuentes" hidden>
-        <div class="section-head"><div><div class="kicker">Información contrastada</div><h2>Fuentes útiles</h2></div></div>
-        <details class="note-card sources" id="sources-card"></details>
-      </section>
     </main>
-
-    <footer>
-      <div class="footer-inner"><span id="footer-label"></span><span>Guía de viaje compartida · contenido editable en <code>data/</code></span><span id="footer-kml" hidden>Exportación opcional: <a id="footer-kml-link" download>descargar puntos KML</a></span></div>
-    </footer>
   </div>
+
+  <nav class="app-bar" id="app-bar" aria-label="Secciones de la guía">
+    <button type="button" class="app-bar-button" data-view-target="guia" aria-current="page"><span class="app-bar-icon" aria-hidden="true">🧭</span><span class="app-bar-label">Guía</span></button>
+    <button type="button" class="app-bar-button" data-view-target="frases"><span class="app-bar-icon" aria-hidden="true">💬</span><span class="app-bar-label">Frases</span></button>
+    <button type="button" class="app-bar-button" data-view-target="platos"><span class="app-bar-icon" aria-hidden="true">🍜</span><span class="app-bar-label">Platos</span></button>
+  </nav>
 
   <div class="poi-modal" id="poi-modal" hidden aria-hidden="true">
     <div class="poi-modal-backdrop" data-close-detail></div>

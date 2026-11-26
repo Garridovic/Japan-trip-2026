@@ -27,7 +27,6 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
   byId('dishes-lead').textContent = data.lead;
   byId('dishes-disclaimer').textContent = data.disclaimer;
   section.hidden = false;
-  document.querySelector('[data-nav-section="platos"]')?.removeAttribute('hidden');
 
   const proteinText = (dish) => data.proteinLabels[dish.protein];
   const badge = (dish) => h('span', { class: `dish-protein is-${dish.protein}`, title: proteinText(dish) }, `${PROTEIN_ICON[dish.protein]} ${proteinText(dish)}`);
