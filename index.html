@@ -76,6 +76,7 @@
               <div class="weather-brief" id="weather-brief"></div>
               <p class="weather-note" id="weather-note" role="status"></p>
             </section>
+            <section class="hero-slide progress-card" id="progress-card" data-slide="progreso" aria-label="Tu diario del viaje"></section>
           </div>
         </div>
         <div class="hero-dots" id="hero-dots" aria-hidden="true"></div>
@@ -312,7 +313,10 @@
           <label class="phrase-search-label" for="dishes-search">Buscar por nombre (español, japonés o romaji)</label>
           <input type="search" id="dishes-search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ej.: ramen, ラーメン, tonkatsu, cerdo">
         </div>
-        <button type="button" class="filter fav-shortcut" id="dishes-fav" aria-pressed="false">★ Favoritos</button>
+        <div class="dish-shortcuts">
+          <button type="button" class="filter fav-shortcut" id="dishes-fav" aria-pressed="false">★ Favoritos</button>
+          <button type="button" class="filter fav-shortcut" id="dishes-tried" aria-pressed="false">🍴 Probados</button>
+        </div>
         <details class="collapsible-filters" id="dishes-filters" data-open-on-wide>
           <summary id="dishes-filters-summary">Filtros</summary>
           <div class="phrase-chips" id="dishes-chips" role="group" aria-label="Filtrar platos por categoría"></div>

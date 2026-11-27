@@ -4,7 +4,9 @@ import { normalizeText } from './phrases.js';
 export const ALL = 'todos';
 export const FAVORITES = 'favoritos';
 export const PROTEINS = ['carne', 'pescado', 'vegetariano', 'variable'];
+export const TRIED = 'probados';
 export const DISH_FAVORITES_KEY = 'japan-trip:dish-favorites';
+export const DISH_TRIED_KEY = 'japan-trip:dish-tried';
 
 const searchText = (dish) => normalizeText([dish.es, dish.ja, dish.romaji].join(' '));
 const queryTerms = (query) => String(query ?? '').trim().split(/\s+/).map(normalizeText).filter(Boolean);
@@ -44,10 +46,11 @@ export function matchesDishQuery(dish, query, { fuzzy = false } = {}) {
   return terms.every((term) => (fuzzy ? fuzzyIncludes(haystack, term) : haystack.includes(term)));
 }
 
-export function filterDishes(dishes, { category = ALL, protein = ALL, query = '', favorites = new Set() } = {}) {
+export function filterDishes(dishes, { category = ALL, protein = ALL, query = '', favorites = new Set(), tried = new Set() } = {}) {
   const inScope = dishes.filter((dish) => {
     if (category === FAVORITES && !favorites.has(dish.id)) return false;
-    if (category !== ALL && category !== FAVORITES && dish.category !== category) return false;
+    if (category === TRIED && !tried.has(dish.id)) return false;
+    if (category !== ALL && category !== FAVORITES && category !== TRIED && dish.category !== category) return false;
     return protein === ALL || dish.protein === protein;
   });
   const exact = inScope.filter((dish) => matchesDishQuery(dish, query));

@@ -1,7 +1,7 @@
 {
-  "version": "2c540fa32c",
+  "version": "0bf8034fe5",
   "sizes": {
-    "required": 988151,
+    "required": 1007422,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -103,6 +103,8 @@
     "js/modules/phrases.js",
     "js/modules/placeholder-art.js",
     "js/modules/private-notes.js",
+    "js/modules/progress-ui.js",
+    "js/modules/progress.js",
     "js/modules/proximity-ui.js",
     "js/modules/proximity.js",
     "js/modules/render.js",

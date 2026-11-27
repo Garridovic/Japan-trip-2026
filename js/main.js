@@ -29,6 +29,7 @@ import { initMapView } from './modules/map-view.js';
 import { initUpdates } from './modules/updates.js';
 import { initToday } from './modules/today.js';
 import { initHero } from './modules/hero-ui.js';
+import { initProgress } from './modules/progress-ui.js';
 import { initWeather } from './modules/weather-ui.js';
 import { createProximity } from './modules/proximity-ui.js';
 import { localISO } from './modules/trip-status.js';
@@ -119,6 +120,7 @@ async function start() {
     }
   });
   const hero = initHero();
+  const progress = initProgress({ cities, global });
   const weather = initWeather();
   const today = initToday();
   const scrollSpy = initScrollSpy();
@@ -177,6 +179,7 @@ async function start() {
       map.setCity(index, bundle.city.map);
       search.setCity({ places: bundle.places, restaurants: bundle.restaurants, extras: bundle.extras?.items ?? [] });
       weather.show(whereOf(), stays[stayIndex]);
+      progress.show({ cityId, days: bundle.itinerary.days, places: bundle.places });
       today.show({ days: bundle.itinerary.days, cityName: cities.find((city) => city.id === cityId).name, queryContext: bundle.city.map.queryContext });
       hero.reset(); // opens on "Ahora" during the trip, otherwise on "Tu viaje"
       activeCityId = cityId;

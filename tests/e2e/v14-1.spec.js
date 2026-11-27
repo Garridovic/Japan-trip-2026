@@ -18,7 +18,7 @@ test.describe('V14.1 header carousel and weather', () => {
     await expect(page.locator('#hero-hotel a')).toHaveText('Cómo llegar');
     await expect(page.locator('#today-card')).toBeHidden();
     await expect(page.getByRole('link', { name: 'Abrir mapa interactivo' })).toHaveCount(0);
-    await expect(page.locator('#hero-dots i')).toHaveCount(2);
+    await expect(page.locator('#hero-dots i')).toHaveCount(3);
     expect((await page.locator('.hero').boundingBox()).height).toBeLessThan(360);
   });
 
@@ -75,7 +75,7 @@ test.describe('V14.1 header carousel and weather', () => {
     await expect(page.locator('#hero-status')).toHaveText('Día 2 de 4');
     await expect(page.locator('#today-card')).toBeVisible();
     await expect(page.locator('#today-card')).toContainText('Kiyomizu-dera');
-    await expect(page.locator('#hero-dots i')).toHaveCount(3);
+    await expect(page.locator('#hero-dots i')).toHaveCount(4);
     await expect(page.locator('#weather-strip .wd.is-today')).toContainText('Sáb 12');
     await page.locator('#hero-viewport').focus();
     await page.keyboard.press('ArrowRight');
@@ -132,7 +132,7 @@ test.describe('V14.1.1 fixes', () => {
 test.describe('V14.1.3 equal cards', () => {
   test.use({ timezoneId: 'Asia/Tokyo', viewport: { width: 390, height: 844 }, hasTouch: true });
 
-  for (const [label, iso, count] of [['before the trip', '2026-12-09T10:00:00', 2], ['during the trip', '2026-12-12T10:40:00', 3]]) {
+  for (const [label, iso, count] of [['before the trip', '2026-12-09T10:00:00', 3], ['during the trip', '2026-12-12T10:40:00', 4]]) {
     test(`all header cards have the same height ${label} and the weather card has no empty gap`, async ({ page }) => {
       await page.clock.setFixedTime(tokyo(iso));
       await mockWeather(page);

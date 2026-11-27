@@ -77,6 +77,7 @@ const CODECS = {
   'visited-v1': { merge: (b, l, r) => unflattenVisited(mergeSets(flattenVisited(b), flattenVisited(l), flattenVisited(r))) },
   'japan-trip:phrase-favorites': { merge: (b, l, r) => serializeFavourites(mergeSets(favouritesValue(b), favouritesValue(l), favouritesValue(r))) },
   'japan-trip:dish-favorites': { merge: (b, l, r) => serializeFavourites(mergeSets(favouritesValue(b), favouritesValue(l), favouritesValue(r))) },
+  'japan-trip:dish-tried': { merge: (b, l, r) => serializeFavourites(mergeSets(favouritesValue(b), favouritesValue(l), favouritesValue(r))) },
   'checklist-v1': { merge: mergeChecklist },
   'stamps-v1': { merge: mergeStamps }
 };
