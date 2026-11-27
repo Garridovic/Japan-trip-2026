@@ -214,10 +214,12 @@ test.describe('feedback and loading (V12.6)', () => {
 
   test('views fade in, and with reduced motion there is no animation', async ({ page }) => {
     await page.goto('/?view=viaje');
+    await expect(page.locator('#view-viaje')).toBeVisible(); // the view is shown once the app has started; reading before that raced
     const animated = await page.locator('#view-viaje').evaluate((el) => getComputedStyle(el).animationName);
     expect(animated).toBe('view-in');
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/?view=frases');
+    await expect(page.locator('#view-frases')).toBeVisible();
     const reduced = await page.locator('#view-frases').evaluate((el) => getComputedStyle(el).animationName);
     expect(reduced).toBe('none');
   });

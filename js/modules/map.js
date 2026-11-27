@@ -111,7 +111,8 @@ export function initMap({ openDetail }) {
         radius: point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7,
         color: '#fff', weight: point.type === 'hotel' ? 3 : 2, fillColor: color, fillOpacity: 0.95
       });
-    marker.bindPopup(buildPopup(point));
+    // Keep popups clear of the zoom buttons (top left): they used to cover the popup text.
+    marker.bindPopup(buildPopup(point), { maxWidth: 200, autoPanPaddingTopLeft: [72, 24], autoPanPaddingBottomRight: [24, 24] });
     // In the full-screen map the place goes to the bottom card instead of a popup.
     marker.on('popupopen', () => { if (inMapView()) { marker.closePopup(); selectPoint(point); } });
     marker.bindTooltip(point.name, { direction: 'top', offset: [0, -7] });

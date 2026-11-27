@@ -17,6 +17,19 @@ function renderStays(stays, activeIndex, onStay) {
     h('button', { type: 'button', class: `stay-chip${index === activeIndex ? ' is-active' : ''}`, 'aria-pressed': String(index === activeIndex), onclick: () => onStay(index) }, dateRange(stay.arrival, stay.departure)))));
 }
 
+/** Empties the header while another city loads, so the previous city never shows behind the loading skeleton. */
+export function resetHero() {
+  byId('hero-title').textContent = '…';
+  byId('hero-eyebrow').textContent = 'Tu viaje';
+  byId('hero-range').textContent = '';
+  byId('hero-status').hidden = true;
+  byId('hero-hotel').hidden = true;
+  byId('hero-hotel').replaceChildren();
+  byId('hero-stays').hidden = true;
+  byId('hero-stays').replaceChildren();
+  byId('today-card').hidden = true;
+}
+
 function renderHero(journey, cityEntry, city, { stay, stays, stayIndex, onStay }) {
   const status = tripStatus({ arrival: stay.arrival, departure: stay.departure });
   renderStays(stays, stayIndex, onStay);

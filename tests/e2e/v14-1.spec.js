@@ -161,3 +161,54 @@ test.describe('V14.1.3 equal cards', () => {
     await expect(brief).toContainText('Frío por la mañana (2°): lleva abrigo');
   });
 });
+
+test.describe('V14.2.2 fixes', () => {
+  test.use({ timezoneId: 'Asia/Tokyo', viewport: { width: 390, height: 844 }, hasTouch: true });
+
+  test('a city beyond the forecast says when the days will appear instead of loading forever', async ({ page }) => {
+    await page.clock.setFixedTime(tokyo('2026-11-27T10:00:00'));
+    let calls = 0;
+    await page.route('https://api.open-meteo.com/**', (route) => { calls += 1; return route.abort('failed'); });
+    await page.goto('/?city=osaka');
+    await expect(page.locator('#hero-title')).toHaveText('Osaka');
+    await expect(page.locator('#weather-note')).toContainText('días más aparecerán cuando haya previsión');
+    await expect(page.locator('#weather-note')).not.toContainText('Cargando');
+    await expect(page.locator('#weather-strip .wd.is-empty').first()).toContainText('aún no');
+    expect(calls).toBe(0);
+  });
+
+  test('a failing service in range says so, and never stays on "Cargando"', async ({ page }) => {
+    await page.clock.setFixedTime(tokyo('2026-12-09T10:00:00'));
+    await page.route('https://api.open-meteo.com/**', (route) => route.abort('failed'));
+    await page.goto('/');
+    await expect(page.locator('#weather-note')).toContainText('No se ha podido cargar la previsión');
+  });
+
+  test('switching city empties the header instead of showing the previous city', async ({ page }) => {
+    await page.clock.setFixedTime(tokyo('2026-12-09T10:00:00'));
+    await mockWeather(page);
+    await page.goto('/');
+    await expect(page.locator('#hero-title')).toHaveText('Kioto');
+    await page.route('**/data/cities/osaka/places.json', async (route) => { await new Promise((resolve) => setTimeout(resolve, 1500)); await route.continue(); });
+    await page.locator('#city-select').click();
+    await page.locator('#tab-osaka').click();
+    await expect(page.locator('#hero-title')).toHaveText('…');
+    await expect(page.locator('#hero-hotel')).toBeHidden();
+    await expect(page.locator('#weather-strip .wd')).toHaveCount(0);
+    await expect(page.locator('#hero-title')).toHaveText('Osaka', { timeout: 10_000 });
+  });
+
+  test('map popups open clear of the zoom buttons', async ({ page }) => {
+    await page.goto('/?city=nara');
+    await page.locator('#city-map').scrollIntoViewIfNeeded();
+    const marker = page.locator('.leaflet-overlay-pane path').first();
+    await expect(marker).toBeAttached({ timeout: 20_000 });
+    await marker.dispatchEvent('click');
+    const popup = page.locator('.leaflet-popup-content-wrapper');
+    await expect(popup).toBeVisible();
+    const zoom = await page.locator('.leaflet-control-zoom').boundingBox();
+    const box = await popup.boundingBox();
+    const overlaps = box.x < zoom.x + zoom.width && box.x + box.width > zoom.x && box.y < zoom.y + zoom.height && box.y + box.height > zoom.y;
+    expect(overlaps, JSON.stringify({ zoom, box })).toBe(false);
+  });
+});
