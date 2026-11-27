@@ -6,6 +6,7 @@ import { toast } from './feedback.js';
 import { SYNCED_KEYS } from './user-data.js';
 import { createCloudSync, SAVE_DELAY_MS, BACKUP_KEY, LAST_SYNC_KEY } from './cloud-sync.js';
 import { createAuth, isConfigured } from './auth.js';
+import { updateSection } from './update-settings.js';
 
 /** What the user can reset one by one. `empty` is the value stored for "nothing" (the same shape the stores write). */
 export const RESETS = Object.freeze([
@@ -70,6 +71,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
   let status = { state: 'synced', lastSyncAt: 0 };
   let view = 'main'; // 'main' | 'logout' | 'reset'
   let resetItem = null;
+  let versionNode = null; // the "Versión de la app" block, created once
   let started = false;
   let busy = false;
   const online = () => win.navigator.onLine !== false;
@@ -218,11 +220,8 @@ export async function initAccount({ config, userData, win = window, storage = nu
     );
   }
 
-  /** "Versión de la app: V14.7.4" at the bottom of the panel (the visible version also lives in the bottom corner label). */
-  function versionLine() {
-    const version = document.querySelector('meta[name="guide-version"]')?.getAttribute('content') || document.getElementById('update-version')?.textContent || '—';
-    return h('p', { class: 'account-version', id: 'account-version' }, `Versión de la app: ${version}`);
-  }
+  /** "Versión de la app": installed and published versions plus «Buscar» / «Forzar actualización». One node, moved into each render (it listens to the updater). */
+  function versionLine() { versionNode ??= updateSection(); return versionNode; }
 
   function renderInvite() {
     const invite = byId('account-invite');

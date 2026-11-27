@@ -839,7 +839,7 @@ body.account-open { overflow: hidden; }
 .account-back:focus-visible, .account-row:focus-visible { outline: 3px solid var(--net); outline-offset: 2px; }
 .account-back-icon, .account-chevron { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .account-chevron { width: 18px; height: 18px; color: var(--muted); flex: none; }
-.account-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; box-sizing: border-box; width: min(560px, 100%); margin: 0 auto; padding: 4px 16px calc(32px + env(safe-area-inset-bottom)); }
+.account-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; box-sizing: border-box; width: min(560px, 100%); margin: 0 auto; padding: 4px 16px calc(88px + env(safe-area-inset-bottom)); }
 .account-section { margin: 0; }
 .account-section .account-subtitle { margin: 18px 4px 8px; padding: 0; border: 0; font-size: .74rem; }
 .account-group { padding: 16px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
@@ -877,3 +877,9 @@ body.account-open { overflow: hidden; }
 #hero-hotel-slide { justify-content: flex-start; }
 #hero-hotel-slide .hotel { flex: 0 0 auto; }
 #hero-hotel-slide .hotel-actions { margin-top: var(--s-2); }
+/* Bloque «Versión de la app» dentro de Cuenta y ajustes */
+.settings-facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; font-size: .92rem; }
+.settings-facts dt { color: var(--muted); }
+.settings-facts dd { margin: 0; text-align: right; font-weight: 700; overflow-wrap: anywhere; }
+#settings-version-message { min-height: 1.2em; margin: 10px 0 0; font-size: .86rem; color: var(--muted); }
+.settings-hint { margin: 10px 0 0; font-size: .8rem; line-height: 1.45; color: var(--muted); }

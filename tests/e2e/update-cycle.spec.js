@@ -101,10 +101,7 @@ test('the settings block shows installed and published versions and can force th
   test.setTimeout(120_000);
   await installed(page, context);
   await page.locator('body').click({ position: { x: 5, y: 5 } });
-  await page.evaluate(async () => {
-    const { updateSection } = await import('/js/modules/update-settings.js');
-    document.body.append(updateSection());
-  });
+  await page.locator('#account-button').click(); // the block lives in the «Cuenta y ajustes» screen
   await expect(page.locator('#settings-version-installed')).toHaveText(version.version);
   await page.locator('#settings-update-check').click();
   await expect(page.locator('#settings-version-message')).toHaveText('Tienes la última versión.');

@@ -116,11 +116,11 @@ test.describe('optional account (Auth0, Google)', () => {
     await enableAuth(page, { cloud: {} });
     await page.goto('/');
     await page.locator('#account-button').click();
-    await expect(page.locator('#account-version')).toHaveText(`Versión de la app: ${version}`);
+    await expect(page.locator('#settings-version-installed')).toHaveText(version);
     await page.keyboard.press('Escape'); // close it (the sheet's dimmed background covers the header); signIn opens it again
     await signIn(page);
     await page.locator('#account-button').click();
-    await expect(page.locator('#account-version')).toHaveText(`Versión de la app: ${version}`);
+    await expect(page.locator('#settings-version-installed')).toHaveText(version);
   });
 
   test('sign out keeps the data on this device; "cerrar y borrar" removes it', async ({ page }) => {
@@ -199,7 +199,7 @@ test.describe('optional account (Auth0, Google)', () => {
     const logout = screen.getByRole('button', { name: 'Cerrar sesión' });
     await logout.scrollIntoViewIfNeeded();
     await expect(logout).toBeInViewport();
-    await expect(screen.locator('#account-version')).toBeAttached();
+    await expect(screen.locator('#settings-version')).toBeAttached();
     await screen.getByRole('button', { name: 'Volver' }).click();
     await expect(screen).toBeHidden();
     await page.locator('#account-button').click();
