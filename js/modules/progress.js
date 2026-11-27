@@ -70,14 +70,13 @@ export function computeProgress({ now = new Date(), cities, cityId, placesByCity
   let ring;
   let headline;
   let sub;
-  let nudge = '';
+  let nudge = ''; // one short line under the headline (only while travelling, so the card stays as tall as the weather card)
   if (mode === 'before') {
     const left = span ? daysBetween(today, span.start) : null;
     ring = { ...checklist, tier: tierOf(checklist.done, checklist.total), label: 'tareas' };
     headline = 'Preparativos';
     const pending = checklist.total - checklist.done;
     sub = [pending > 0 ? `Faltan ${pending} ${plural(pending, 'tarea', 'tareas')}` : checklist.total ? 'Todo listo' : '', left !== null ? (left === 1 ? 'mañana sales' : `${left} días para salir`) : ''].filter(Boolean).join(' · ');
-    nudge = pending > 0 ? 'Completa el checklist para estrenar el verde.' : checklist.total ? '¡Checklist completo! Los lugares y los platos se estrenan en el viaje.' : '';
     tiles.push(tile('sellos', 'Sellos', stamps.done, stamps.total), tile('platos', 'Platos probados', dishes.tried, dishes.total));
   } else {
     const dayNumber = span ? daysBetween(span.start, today) + 1 : 0;

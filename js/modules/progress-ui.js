@@ -80,15 +80,14 @@ export function initProgress({ cities, global, storage = userStorage(), load = f
           ringSvg(ring),
           h('b', {}, String(ring.done), h('small', {}, ring.total ? `de ${ring.total}` : ''))
         ),
-        h('div', { class: 'progress-text' }, h('h2', {}, data.headline), h('p', {}, data.sub))
+        h('div', { class: 'progress-text' }, h('h2', {}, data.headline), h('p', {}, data.sub), data.nudge ? h('p', { class: 'progress-nudge' }, data.nudge) : null)
       ),
       h('div', { class: 'progress-tiles' }, ...data.tiles.map((tile) =>
         h('div', { class: `progress-tile tier-${tile.tier.id}`, role: 'group', 'aria-label': `${tile.label}: ${tile.done}${tile.total ? ` de ${tile.total}` : ''}${tierText(tile.tier)}` },
           h('div', { class: 'progress-tile-top' }, h('b', {}, String(tile.done), tile.total ? h('small', {}, `/${tile.total}`) : null), tile.tier.icon ? h('i', { 'aria-hidden': 'true' }, tile.tier.icon) : null),
           h('span', {}, tile.label),
           tile.total ? h('div', { class: 'progress-bar', 'aria-hidden': 'true' }, h('i', { style: `width:${Math.min(100, Math.round((100 * tile.done) / tile.total))}%` })) : null
-        ))),
-      data.nudge ? h('p', { class: 'progress-nudge' }, data.nudge) : null
+        )))
     );
   }
 

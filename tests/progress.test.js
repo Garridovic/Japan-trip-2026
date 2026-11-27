@@ -38,7 +38,7 @@ test('before the trip the card is about preparing: checklist ring, countdown, no
   assert.equal(result.mode, 'before');
   assert.deepEqual([result.ring.done, result.ring.total, result.ring.tier.id], [19, 22, 'almost']);
   assert.match(result.sub, /Faltan 3 tareas · 11 días para salir/);
-  assert.match(result.nudge, /Completa el checklist/);
+  assert.equal(result.nudge, ''); // the countdown and the pending tasks are already in the line above
   assert.deepEqual(result.tiles.map((tile) => tile.id), ['sellos', 'platos', 'guardados']);
   assert.equal(result.tiles.find((tile) => tile.id === 'guardados').done, 7); // 4 dishes + 3 phrases, no colour
   assert.equal(result.tiles.find((tile) => tile.id === 'guardados').tier, TIERS.neutral);
