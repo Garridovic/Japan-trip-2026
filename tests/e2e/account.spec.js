@@ -10,7 +10,8 @@ export class Auth0Client {
   async isAuthenticated() { return Boolean(localStorage.getItem('fake-session')); }
   async getUser() { return JSON.parse(localStorage.getItem('fake-session') || 'null'); }
   async loginWithRedirect({ appState }) {
-    localStorage.setItem('fake-session', JSON.stringify({ sub: 'google-oauth2|123', name: 'Alex García', given_name: 'Alex', email: 'alex@example.com' }));
+    const roles = JSON.parse(sessionStorage.getItem('fake-roles') || 'null'); // what the Auth0 Action would put in the ID token
+    localStorage.setItem('fake-session', JSON.stringify({ sub: 'google-oauth2|123', name: 'Alex García', given_name: 'Alex', email: 'alex@example.com', ...(roles ? { 'https://japan-trip-2026/roles': roles } : {}) }));
     sessionStorage.setItem('fake-app-state', JSON.stringify(appState));
     location.href = this.options.authorizationParams.redirect_uri + '?code=abc&state=xyz';
   }
@@ -121,6 +122,31 @@ test.describe('optional account (Auth0, Google)', () => {
     await signIn(page);
     await page.locator('#account-button').click();
     await expect(page.locator('#settings-version-installed')).toHaveText(version);
+  });
+
+  test('the «Administración» section appears only with the administrator role in the token', async ({ page }) => {
+    await enableAuth(page);
+    await page.addInitScript(() => { if (!sessionStorage.getItem('roles-set')) { sessionStorage.setItem('roles-set', '1'); sessionStorage.setItem('fake-roles', '["administrador"]'); } });
+    await page.goto('/');
+    await expect(page.locator('#hero-title')).not.toHaveText('…');
+    await page.locator('#account-button').click();
+    await expect(page.locator('.account-admin')).toHaveCount(0); // anonymous
+    await page.getByRole('button', { name: 'Entrar con Google' }).first().click();
+    await expect(page.locator('#account-greeting')).toHaveText('Hola, Alex');
+    await page.locator('#account-button').click();
+    await expect(page.locator('.account-admin')).toBeVisible();
+    await expect(page.locator('.account-admin')).toContainText('Administración');
+  });
+
+  test('a signed-in user without the role, or with another role, never sees «Administración»', async ({ page }) => {
+    await enableAuth(page);
+    await page.addInitScript(() => { if (!sessionStorage.getItem('roles-set')) { sessionStorage.setItem('roles-set', '1'); sessionStorage.setItem('fake-roles', '["editor"]'); } });
+    await page.goto('/');
+    await signIn(page);
+    await page.locator('#account-button').click();
+    await expect(page.locator('.account-back')).toBeVisible();
+    await expect(page.locator('.account-admin')).toHaveCount(0);
+    await expect(page.getByText('Administración')).toHaveCount(0);
   });
 
   test('sign out keeps the data on this device; "cerrar y borrar" removes it', async ({ page }) => {

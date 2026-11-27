@@ -4,6 +4,16 @@
 export const SDK_URL = new URL('../../assets/vendor/auth0-spa-js.production.esm.js', import.meta.url).href;
 const SCOPE = 'openid profile email offline_access read:current_user update:current_user_metadata';
 
+/** Custom claim (an Action in Auth0 copies the user's roles into the ID token). Auth0 needs a URL-shaped name; it does not have to resolve. */
+export const ROLES_CLAIM = 'https://japan-trip-2026/roles';
+export const ADMIN_ROLE = 'administrador';
+
+/** Does the signed-in user carry the administrator role? UI only: anyone can edit this code in their own browser, so a real admin action must be checked on a server that verifies the token. */
+export function isAdmin(user) {
+  const roles = user?.[ROLES_CLAIM];
+  return Array.isArray(roles) && roles.includes(ADMIN_ROLE);
+}
+
 export const isConfigured = (config) => Boolean(config?.enabled && config.domain && config.clientId);
 export const managementAudience = (domain) => `https://${domain}/api/v2/`;
 

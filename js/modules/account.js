@@ -5,7 +5,7 @@ import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { toast } from './feedback.js';
 import { SYNCED_KEYS } from './user-data.js';
 import { createCloudSync, SAVE_DELAY_MS, BACKUP_KEY, LAST_SYNC_KEY } from './cloud-sync.js';
-import { createAuth, isConfigured } from './auth.js';
+import { createAuth, isConfigured, isAdmin } from './auth.js';
 import { updateSection } from './update-settings.js';
 
 /** What the user can reset one by one. `empty` is the value stored for "nothing" (the same shape the stores write). */
@@ -215,9 +215,17 @@ export async function initAccount({ config, userData, win = window, storage = nu
           status.state === 'signed-out' ? signInButton() : h('button', { type: 'button', class: 'filter', onclick: () => sync.reconcile(), disabled: busy || !online() }, 'Sincronizar ahora'))),
       proximity ? section('Lugares cercanos', proximity.settingNode()) : null,
       section('Restablecer mis datos', ...resetRows()),
+      isAdmin(user) ? adminSection() : null,
       h('div', { class: 'account-actions account-logout' }, h('button', { type: 'button', class: 'filter is-danger', onclick: () => { view = 'logout'; render(); } }, 'Cerrar sesión')),
       versionLine()
     );
+  }
+
+  /** Only for the administrator role. For now a placeholder: later it will let Victor switch on feature notices for everyone. */
+  function adminSection() {
+    return h('section', { class: 'account-section account-admin', dataset: { role: 'admin' } },
+      h('h3', { class: 'account-subtitle' }, 'Administración'),
+      h('div', { class: 'account-group' }, h('p', {}, 'Panel de administración (en preparación). Solo lo ves tú, con el rol de administrador.')));
   }
 
   /** "Versión de la app": installed and published versions plus «Buscar» / «Forzar actualización». One node, moved into each render (it listens to the updater). */

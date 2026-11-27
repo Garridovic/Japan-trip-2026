@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { AUTH_CONFIG } from '../assets/auth-config.js';
-import { isConfigured, isRedirectCallback, safeReturnTo, managementAudience } from '../js/modules/auth.js';
+import { isConfigured, isRedirectCallback, safeReturnTo, managementAudience, isAdmin, ROLES_CLAIM, ADMIN_ROLE } from '../js/modules/auth.js';
 import { greetingName, statusText, RESETS } from '../js/modules/account.js';
 import { SYNCED_KEYS } from '../js/modules/user-data.js';
 import { VISITED_KEY } from '../js/modules/visited.js';
@@ -58,4 +58,18 @@ test('the individual resets target the real storage keys and store an empty valu
   assert.equal(parseVisited(RESETS[0].empty).size, 0);
   assert.deepEqual(JSON.parse(RESETS[1].empty), []);
   assert.deepEqual(JSON.parse(RESETS[2].empty), []);
+});
+
+test('the administrator role is read only from the roles claim in the ID token', () => {
+  assert.equal(ROLES_CLAIM, 'https://japan-trip-2026/roles');
+  assert.equal(ADMIN_ROLE, 'administrador');
+  assert.equal(isAdmin({ [ROLES_CLAIM]: ['administrador'] }), true);
+  assert.equal(isAdmin({ [ROLES_CLAIM]: ['otro', 'administrador'] }), true);
+  assert.equal(isAdmin({ [ROLES_CLAIM]: [] }), false);
+  assert.equal(isAdmin({ [ROLES_CLAIM]: ['Administrador'] }), false);
+  assert.equal(isAdmin({ [ROLES_CLAIM]: 'administrador' }), false);
+  assert.equal(isAdmin({ roles: ['administrador'] }), false);
+  assert.equal(isAdmin({ user_metadata: { roles: ['administrador'] } }), false);
+  assert.equal(isAdmin({}), false);
+  assert.equal(isAdmin(null), false);
 });
