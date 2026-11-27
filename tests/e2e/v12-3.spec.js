@@ -59,7 +59,7 @@ test.describe('Hoy card', () => {
 
 test.describe('restaurants and other places: "Cómo llegar" first', () => {
   test('every restaurant card leads with a big directions button that includes the city', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?tab=comer');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     const card = page.locator('.food-card').first();
     const primary = card.locator('a.primary-action');

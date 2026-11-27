@@ -158,7 +158,7 @@ test.describe('illustrations for places without a photo', () => {
 
   test('the drawings are visible and sized in dark mode too', async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'dark' });
-    await page.goto('/#gastronomia');
+    await page.goto('/?tab=comer#gastronomia');
     await expect(page.locator('.food-card .card-art svg').first()).toBeAttached();
     const box = await page.locator('.food-card .card-art svg').first().boundingBox();
     expect(box.width).toBeGreaterThan(40);
@@ -305,7 +305,7 @@ test.describe('map card and day route (V12.6)', () => {
   });
 
   test('opening the filters sheet hides the card; the guide map still uses popups', async ({ page }) => {
-    await page.goto('/?view=mapa');
+    await page.goto('/?view=mapa&tab=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
     await expect(page.locator('#map-card')).toBeVisible();

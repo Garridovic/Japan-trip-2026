@@ -10,7 +10,7 @@ const stored = (page) => page.evaluate(() => JSON.parse(localStorage.getItem('vi
 
 test.describe('visited places', () => {
   test('mark a place from its marker, see the counter and keep it after reloading', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?tab=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await expect(page.locator('#visited-summary')).toHaveText(`0 de ${visitable.length} lugares visitados`);
     await openPopup(page);
@@ -27,7 +27,7 @@ test.describe('visited places', () => {
   });
 
   test('a visited marker is faded and the "Pendientes" filter hides it (and the hotel)', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?tab=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await openPopup(page);
     await page.locator('.popup-visit-button').click();
@@ -41,7 +41,7 @@ test.describe('visited places', () => {
   });
 
   test('the place sheet has its own toggle that stays in sync with the marker and the counter', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?tab=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await openPopup(page);
     await page.locator('.popup-detail-button').click();

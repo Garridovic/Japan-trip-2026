@@ -8,7 +8,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.26652,139.00905&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.26652,139.00905&travelmode=walking"
     },
-    "sources": [],
     "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
   },
   {
@@ -20,16 +19,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.25666,139.0212&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.25666,139.0212&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · POLA Museum",
-        "url": "https://www.japan-guide.com/e/e5214.html"
-      },
-      {
-        "label": "OpenStreetMap · coordenadas (Nominatim)",
-        "url": "https://www.openstreetmap.org/"
-      }
-    ],
     "verificationNote": "Horario y precio de Japan Guide (no los he cotejado con la web del museo). Hay días de cierre irregulares por cambio de exposición: mirad el calendario oficial. Coordenada contrastada con OpenStreetMap."
   },
   {
@@ -41,12 +30,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.26206,139.00244&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.26206,139.00244&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Sengokuhara Pampas Grass Field",
-        "url": "https://www.japan-guide.com/e/e5218.html"
-      }
-    ],
     "verificationNote": "No he encontrado horario: es un camino al aire libre. Pin aproximado (centro de «すすきの原» en OpenStreetMap); comprobadlo en Google Maps."
   },
   {
@@ -58,12 +41,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.26618,139.01767&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.26618,139.01767&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Hakone Glass no Mori",
-        "url": "https://www.japan-guide.com/e/e5215.html"
-      }
-    ],
     "verificationNote": "Horario y precio de Japan Guide; confirmad en la web oficial. Si hacéis Pola y el campo de pampas el día 10, probablemente no cabe también el cristal."
   },
   {
@@ -75,16 +52,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.23756,138.99457&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.23756,138.99457&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Lake Ashinoko",
-        "url": "https://www.japan-guide.com/e/e5201.html"
-      },
-      {
-        "label": "Japan Guide · Hakone Ropeway",
-        "url": "https://www.japan-guide.com/e/e5223.html"
-      }
-    ],
     "verificationNote": "No he verificado el horario invernal de los barcos ni si el 11 de dic hay trayecto de mañana: consultadlo en Hakone Sightseeing Boats antes de ir. Coordenada contrastada con OpenStreetMap."
   },
   {
@@ -96,12 +63,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.20283,139.0306&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.20283,139.0306&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Lake Ashinoko",
-        "url": "https://www.japan-guide.com/e/e5201.html"
-      }
-    ],
     "verificationNote": "Coordenada contrastada con OpenStreetMap (puerto de Moto-Hakone). El Fuji no se ve siempre."
   },
   {
@@ -113,16 +74,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.20397,139.02558&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.20397,139.02558&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Hakone Shrine",
-        "url": "https://www.japan-guide.com/e/e5204.html"
-      },
-      {
-        "label": "Sello (goshuin) en la web oficial",
-        "url": "https://www.hakonejinja.or.jp/hakone/amulet.html"
-      }
-    ],
     "verificationNote": "Horario y entrada de Japan Guide. Coordenadas del santuario y del torii contrastadas con OpenStreetMap. Los sellos (goshuin) los trata otro apartado de la guía. Sello comprobado en la web oficial; comprobad el horario del mostrador."
   },
   {
@@ -134,12 +85,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.19632,139.02596&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.19632,139.02596&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Hakone Detached Palace",
-        "url": "https://www.japan-guide.com/e/e5207.html"
-      }
-    ],
     "verificationNote": "Horario del edificio sin verificar. Coordenada contrastada con OpenStreetMap."
   },
   {
@@ -151,12 +96,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.20003,139.03119&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.20003,139.03119&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Narukawa Art Museum",
-        "url": "https://www.japan-guide.com/e/e5221.html"
-      }
-    ],
     "verificationNote": "Horario y precio de Japan Guide; confirmadlo en la web oficial."
   },
   {
@@ -168,12 +107,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.19221,139.02635&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.19221,139.02635&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Old Tokaido and Hakone Checkpoint",
-        "url": "https://www.japan-guide.com/e/e5205.html"
-      }
-    ],
     "verificationNote": "No he verificado horarios ni precios de la reconstrucción ni del museo."
   },
   {
@@ -185,12 +118,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.24428,139.05208&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.24428,139.05208&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Hakone Open Air Museum",
-        "url": "https://www.japan-guide.com/e/e5208.html"
-      }
-    ],
     "verificationNote": "Horario y precio de Japan Guide; no lo he comparado con la web oficial. Coordenada contrastada con OpenStreetMap."
   },
   {
@@ -202,12 +129,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.24864,139.04525&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.24864,139.04525&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Gora Park",
-        "url": "https://www.japan-guide.com/e/e5216.html"
-      }
-    ],
     "verificationNote": "Horario y precio de Japan Guide; coordenada contrastada con OpenStreetMap."
   },
   {
@@ -219,16 +140,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.19891,139.02982&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.19891,139.02982&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Old Tokaido and Hakone Checkpoint",
-        "url": "https://www.japan-guide.com/e/e5205.html"
-      },
-      {
-        "label": "Japan Travel · Hiking the Old Hakone Highway",
-        "url": "https://en.japantravel.com/kanagawa/hiking-the-old-hakone-highway/44573"
-      }
-    ],
     "verificationNote": "El punto de salida exacto no está señalizado en mis fuentes: pin de la avenida de cedros de OpenStreetMap, a unos minutos de Moto-Hakone. No he verificado el estado del camino en diciembre ni la frecuencia del autobús de vuelta."
   },
   {
@@ -240,16 +151,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.204,139.05386&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.204,139.05386&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Old Tokaido and Hakone Checkpoint",
-        "url": "https://www.japan-guide.com/e/e5205.html"
-      },
-      {
-        "label": "Japan Travel · Hiking the Old Hakone Highway",
-        "url": "https://en.japantravel.com/kanagawa/hiking-the-old-hakone-highway/44573"
-      }
-    ],
     "verificationNote": "Pin del paseo de adoquines según OpenStreetMap; no he comprobado cómo está el camino en diciembre."
   },
   {
@@ -261,16 +162,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.21218,139.06283&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.21218,139.06283&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Old Tokaido and Hakone Checkpoint",
-        "url": "https://www.japan-guide.com/e/e5205.html"
-      },
-      {
-        "label": "Japan Travel · Hiking the Old Hakone Highway",
-        "url": "https://en.japantravel.com/kanagawa/hiking-the-old-hakone-highway/44573"
-      }
-    ],
     "verificationNote": "No he verificado la parada ni la frecuencia del autobús de vuelta, ni su precio."
   }
 ]

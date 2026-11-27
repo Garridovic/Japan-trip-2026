@@ -8,12 +8,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.67377,135.49813&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.67377,135.49813&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · The Bridge Hotel Shinsaibashi",
-        "url": "https://osaka-info.jp/en/spot/the-bridge-hotel-sinsaibashi/"
-      }
-    ],
     "verificationNote": "Los tiempos a pie varían entre fuentes (2–7 min a Shinsaibashi). La dirección y el mapa son los de vuestro alojamiento."
   },
   {
@@ -36,16 +30,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.66907,135.5013&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.66907,135.5013&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · Dotonbori",
-        "url": "https://osaka-info.jp/en/spot/dotonbori/"
-      },
-      {
-        "label": "Time Out · cartel de Glico",
-        "url": "https://www.timeout.com/osaka/shopping/glico-ya"
-      }
-    ],
     "verificationNote": "El cartel de Glico se describe como de 1935 en una fuente turística; no está contrastado con una fuente oficial."
   },
   {
@@ -63,16 +47,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.66785,135.5026&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.66785,135.5026&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · Hozenji Yokocho",
-        "url": "https://osaka-info.jp/en/spot/hozenji-yokocho/"
-      },
-      {
-        "label": "Live Japan · Hozenji Yokocho",
-        "url": "https://livejapan.com/en/in-kansai/in-pref-osaka/in-namba_dotonbori_shinsaibashi/article-a2000351/"
-      }
-    ],
     "verificationNote": "No hay horario del callejón (es una calle); los locales tienen el suyo."
   },
   {
@@ -90,12 +64,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.67067,135.50133&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.67067,135.50133&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · Shinsaibashi-suji",
-        "url": "https://osaka-info.jp/en/spot/shinsaibashi-suji-shopping-street/"
-      }
-    ],
     "verificationNote": "Horarios de cada tienda sin verificar; muchas cierran entre las 20:00 y las 21:00 (dato no contrastado)."
   },
   {
@@ -118,16 +86,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68737,135.52586&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68737,135.52586&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · torre principal",
-        "url": "https://osaka-info.jp/en/spot/osaka-castle-main-keep/"
-      },
-      {
-        "label": "Japan Guide · Osaka Castle",
-        "url": "https://www.japan-guide.com/e/e4000.html"
-      }
-    ],
     "verificationNote": "Hora de último acceso con fuentes contradictorias (17:30 o 16:30). Con la entrada a las 9:00 no os afecta. Confirmad en osakacastle.net."
   },
   {
@@ -145,12 +103,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.66148,135.49673&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.66148,135.49673&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · Namba Yasaka",
-        "url": "https://osaka-info.jp/en/spot/nanbayasakajinja/"
-      }
-    ],
     "verificationNote": "Horario según una sola fuente turística; otras dan 6:30–17:00."
   },
   {
@@ -168,20 +120,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.6667,135.50705&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.6667,135.50705&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · Kuromon",
-        "url": "https://osaka-info.jp/en/spot/kuromon-market"
-      },
-      {
-        "label": "Japan Guide · Kuromon",
-        "url": "https://www.japan-guide.com/e/e4031.html"
-      },
-      {
-        "label": "Explore Osaka · Kuromon",
-        "url": "https://explore.osaka/things-to-do/kuromon-ichiba-market/"
-      }
-    ],
     "verificationNote": "Los horarios de las fuentes no coinciden; cada puesto decide el suyo."
   },
   {
@@ -193,16 +131,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.65972,135.50583&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.65972,135.50583&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · Nipponbashi Den Den Town",
-        "url": "https://osaka-info.jp/en/spot/nippombashi-denden-town/"
-      },
-      {
-        "label": "Live Japan · Den Den Town",
-        "url": "https://livejapan.com/en/in-kansai/in-pref-osaka/in-namba_dotonbori_shinsaibashi/article-a2000308"
-      }
-    ],
     "verificationNote": "Horarios por tienda, con fuentes que no coinciden."
   },
   {
@@ -225,20 +153,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.65254,135.50631&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.65254,135.50631&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · Tsutenkaku",
-        "url": "https://osaka-info.jp/en/spot/tsutenkaku/"
-      },
-      {
-        "label": "Time Out · Tsutenkaku",
-        "url": "https://www.timeout.com/osaka/attractions/tsutenkaku"
-      },
-      {
-        "label": "Tsutenkaku · web oficial",
-        "url": "https://www.tsutenkaku.co.jp/"
-      }
-    ],
     "verificationNote": "Horario y precio del mirador sin verificar: consultad la web oficial. En Shinsekai, en las tiendas de kushikatsu no se moja dos veces la brocheta en la salsa común."
   },
   {
@@ -256,20 +170,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.70529,135.49053&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.70529,135.49053&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Umeda Sky Building",
-        "url": "https://www.japan-guide.com/e/e4002.html"
-      },
-      {
-        "label": "Osaka Info · Umeda Sky Building",
-        "url": "https://osaka-info.jp/en/spot/umeda-sky-building/"
-      },
-      {
-        "label": "Osaka Info · Takimi-koji",
-        "url": "https://osaka-info.jp/en/spot/takimi-koji/"
-      }
-    ],
     "verificationNote": "Precio de entrada con ligera discrepancia entre fuentes."
   },
   {
@@ -287,20 +187,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.69354,135.50401&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.69354,135.50401&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Travel · Osaka Hikari-Renaissance 2026",
-        "url": "https://en.japantravel.com/osaka/osaka-christmas-hikari-renaissance/3698"
-      },
-      {
-        "label": "Have a Good Holiday · proyección en la Sala Central",
-        "url": "https://www.haveagood-holiday.com/en/articles/osaka-hikari-no-renaissance-2026-central-public-hall-projection-mapping"
-      },
-      {
-        "label": "Hikari-Renaissance · web oficial",
-        "url": "https://hikari-kyoen.com/"
-      }
-    ],
     "verificationNote": "Fechas y horas del Hikari-Renaissance de fuentes secundarias: confirmar en la web oficial."
   },
   {
@@ -318,16 +204,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.613,135.4931&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.613,135.4931&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Sumiyoshi Taisha",
-        "url": "https://www.japan-guide.com/e/e4007.html"
-      },
-      {
-        "label": "Osaka Info · Sumiyoshi Taisha",
-        "url": "https://osaka-info.jp/en/spot/sumiyoshitaisha"
-      }
-    ],
     "verificationNote": "Horarios y trayecto de fuentes turísticas; tarifa de Nankai con discrepancia (210–240 yenes)."
   },
   {
@@ -339,16 +215,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.65514,135.42876&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.65514,135.42876&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Osaka Info · Acuario Kaiyukan",
-        "url": "https://osaka-info.jp/en/spot/osaka-aquarium-kaiyukan/"
-      },
-      {
-        "label": "Kaiyukan · web oficial",
-        "url": "https://www.kaiyukan.com/"
-      }
-    ],
     "verificationNote": "Confirmar antes de ir: horario y precio varían por temporada (Osaka Info indica 10:00–20:00 y 2.700 ¥ adultos, una sola fuente) y hay días de cierre irregulares. Consultad la web oficial."
   }
 ]

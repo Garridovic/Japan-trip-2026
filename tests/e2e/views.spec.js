@@ -64,17 +64,17 @@ test('opening a view from the URL works and the back button returns to the guide
   await expect(page.locator('#city-view')).toBeHidden();
 });
 
-test('the guide keeps its scroll position, map and section highlight when you leave and come back', async ({ page }) => {
-  await page.goto('/');
+test('the guide keeps its scroll position, map and active tab when you leave and come back', async ({ page }) => {
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-  await page.evaluate(() => window.scrollTo(0, document.getElementById('detalle').offsetTop - 60));
-  await expect(page.locator('.nav-inner a[aria-current="location"]')).toHaveText('Día a día');
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await expect(page.locator('.nav-inner a[aria-selected="true"]')).toHaveText('Mapa');
   const before = await page.evaluate(() => Math.round(window.scrollY));
   await button(page, 'frases').click();
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
   await button(page, 'guia').click();
   await expect.poll(() => page.evaluate(() => Math.round(window.scrollY))).toBe(before);
-  await expect(page.locator('.nav-inner a[aria-current="location"]')).toHaveText('Día a día');
+  await expect(page.locator('.nav-inner a[aria-selected="true"]')).toHaveText('Mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length);
   const size = await page.locator('#city-map').boundingBox();
   expect(size.width).toBeGreaterThan(200);

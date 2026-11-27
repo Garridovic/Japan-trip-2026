@@ -30,7 +30,7 @@ test('after the first visit the whole guide opens with no network at all', async
   await firstVisit(page, context);
 
   await context.setOffline(true);
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator('#hero-title')).toHaveText('Kioto');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
   await expect(page.locator('#offline-banner')).toBeVisible();
@@ -315,7 +315,7 @@ test.describe('"Guardar mapa" control', () => {
   async function ready(page) {
     // Tests-only hook (see pauseScale in map-offline.js): no polite 120 ms pause between tiles, the tile server stand-in has its own delay.
     await page.addInitScript(() => { window.__tilePauseScale = 0; });
-    await page.goto('/?city=kyoto');
+    await page.goto('/?city=kyoto&tab=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await page.evaluate(() => navigator.serviceWorker.ready);
     await expect.poll(() => cacheSize(page, 'japan-guide-'), { timeout: 30_000 }).toBeGreaterThan(100);
@@ -356,7 +356,7 @@ test.describe('"Guardar mapa" control', () => {
     await save(page).click();
     await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
     await context.setOffline(true);
-    await page.goto('/?city=kyoto');
+    await page.goto('/?city=kyoto&tab=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await expect.poll(() => loadedTiles(page), { timeout: 10_000 }).toBeGreaterThan(2);
     // The saved state is remembered after a reload and shown again.

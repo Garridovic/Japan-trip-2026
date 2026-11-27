@@ -8,7 +8,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68114,135.82197&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68114,135.82197&travelmode=walking"
     },
-    "sources": [],
     "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
   },
   {
@@ -20,12 +19,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68297,135.83187&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68297,135.83187&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Kofukuji Temple",
-        "url": "https://www.japan-guide.com/e/e4101.html"
-      }
-    ],
     "verificationNote": "Horarios y precios de Japan Guide; no cotejados con la web oficial. Coordenada contrastada con OpenStreetMap."
   },
   {
@@ -37,12 +30,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.6829,135.8546&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.6829,135.8546&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Nara Park",
-        "url": "https://www.japan-guide.com/e/e4103.html"
-      }
-    ],
     "verificationNote": "El parque no tiene horario (acceso libre). Pin aproximado (centro del parque en OpenStreetMap); los ciervos están sobre todo cerca de Kofuku-ji y Tōdai-ji."
   },
   {
@@ -54,16 +41,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68824,135.8397&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68824,135.8397&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Todaiji Temple",
-        "url": "https://www.japan-guide.com/e/e4100.html"
-      },
-      {
-        "label": "Sello (goshuin) en la web oficial",
-        "url": "https://www.todaiji.or.jp/sutra-and-goshuin/goshuin/"
-      }
-    ],
     "verificationNote": "Horario de invierno y precio de Japan Guide. Coordenada contrastada con OpenStreetMap (centro del templo). Sello comprobado en la web oficial; comprobad el horario del mostrador."
   },
   {
@@ -75,12 +52,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.6776,135.8313&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.6776,135.8313&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Naramachi",
-        "url": "https://www.japan-guide.com/e/e4108.html"
-      }
-    ],
     "verificationNote": "Pin en Gangoji (OpenStreetMap); el barrio es un paseo, no un punto único. Horarios de Japan Guide."
   },
   {
@@ -92,12 +63,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68223,135.8459&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68223,135.8459&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Kasuga Taisha",
-        "url": "https://www.japan-guide.com/e/e4102.html"
-      }
-    ],
     "verificationNote": "Horarios y precios de Japan Guide; otras páginas hablan de cierres del salón principal hacia el 20 de diciembre, fuera de vuestras fechas pero sin confirmar. Coordenada contrastada con OpenStreetMap (honden)."
   },
   {
@@ -109,12 +74,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.67574,135.78535&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=34.67574,135.78535&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Toshodaiji Temple",
-        "url": "https://www.japan-guide.com/e/e4106.html"
-      }
-    ],
     "verificationNote": "Horario y precio de Japan Guide. Con equipaje y la salida hacia Tokio, el día 18 no sobra tiempo: solo si salís tarde."
   }
 ]

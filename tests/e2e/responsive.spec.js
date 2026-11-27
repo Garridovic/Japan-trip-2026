@@ -16,7 +16,7 @@ for (const { name, viewport, deviceScaleFactor, isMobile, hasTouch } of devices)
 
     test('layout, density and city tabs fit the screen', async ({ page }) => {
       await addTestCities(page, ['testville', 'second-city', 'third-city', 'fourth-city', 'fifth-city', 'sixth-city']);
-      await page.goto('/');
+      await page.goto('/?tab=mapa');
       await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
 
       expect(await page.evaluate(() => window.innerWidth)).toBe(viewport.width);
@@ -42,7 +42,7 @@ for (const { name, viewport, deviceScaleFactor, isMobile, hasTouch } of devices)
 
     // The sheet only needs checking on the narrowest phone and on desktop; the other sizes fall between them.
     if (name === 'narrow phone' || name === 'desktop') test('the detail sheet fits the viewport', async ({ page }) => {
-      await page.goto('/');
+      await page.goto('/?tab=mapa');
       await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
       await page.locator(SVG_MARKERS).first().dispatchEvent('click');
       await page.getByRole('button', { name: 'Ver ficha del lugar' }).click();

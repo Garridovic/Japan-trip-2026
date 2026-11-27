@@ -195,7 +195,7 @@ test.describe('V14.2.2 fixes', () => {
   });
 
   test('map popups open clear of the zoom buttons', async ({ page }) => {
-    await page.goto('/?city=nara');
+    await page.goto('/?city=nara&tab=mapa');
     await page.locator('#city-map').scrollIntoViewIfNeeded();
     const marker = page.locator('.leaflet-overlay-pane path').first();
     await expect(marker).toBeAttached({ timeout: 20_000 });

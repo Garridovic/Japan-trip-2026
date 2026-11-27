@@ -14,7 +14,7 @@ js/modules/
   city-index.js       pure lookup tables for one city (points/details by composite key)
   data.js             fetches journey, global content and the datasets of ONE city
   tabs.js             city tabs (generated from the journey, keyboard accessible)
-  render.js           hero, itinerary, connections, tips, sources, footer
+  render.js           hero, itinerary, connections, tips, footer
   filters.js          restaurants and alternative places sections with their filters
   map.js              Leaflet map, marker filters, legend, nearby places, GPS
   details.js          place detail sheet (resolved only inside the active city)
@@ -37,7 +37,7 @@ tests/                      node:test data/logic tests and Playwright browser te
 ### Data model
 
 * **Journey** (`data/journey.json`) decides which cities exist, their order and which are `enabled`. Only enabled cities get a tab, and an enabled city must have a data folder. Inter-city travel (for example Kyoto → Osaka on 15 December) is a journey `connection`, not a place of either city; it is shown at the end of the origin city's itinerary.
-* **City** (`data/cities/<id>/`): `city.json` (hero, map centre, day filters, colours, legend), `places.json`, `restaurants.json`, `details.json`, `itinerary.json` (quick cards and day-by-day plan) are required. `events.json`, `food.json` (restaurants section copy and filters), `extras.json` (alternative places cards), `sources.json` and `image-catalog.json` are optional; a section without data is hidden.
+* **City** (`data/cities/<id>/`): `city.json` (hero, map centre, day filters, colours, legend), `places.json`, `restaurants.json`, `details.json`, `itinerary.json` (quick cards and day-by-day plan) are required. `events.json`, `food.json` (restaurants section copy and filters), `extras.json` (alternative places cards) and `image-catalog.json` are optional; a section without data is hidden.
 * **Global** (`data/global/`): content that applies to the whole trip. Each piece of data has exactly one owner (global, journey or one city).
 * **Ids** are local to a city (`fushimi`, `food-01`). The runtime builds composite keys `<city>:<id>` so a place can never resolve the details of another city, even if two cities reuse an id.
 * **Active city in the URL**: `?city=kyoto`. An unknown or disabled city falls back to the first enabled city and logs a `[journey]` warning. Only the datasets of the active city are downloaded.
@@ -143,7 +143,7 @@ Full-screen sheets (place sheet, phrase show mode, dish sheet) push a history en
 ## Viaje and Osaka (V11.7)
 
 * **Viaje** (`data/global/lodging.json`, `js/modules/lodging*.js`): fourth view of the bottom bar with every stay in chronological order (dates, nights, address, Google Maps link, "copy address"). **The repository is public**: the data must never hold PINs, booking numbers, who paid or amounts. `tests/lodging.test.js` fails if such keys or text appear.
-* **Osaka** (`data/cities/osaka/`, enabled in `data/journey.json`): same structure as Kioto. Days 15 and 16 are Victor's plan with his times; checks and proposals appear as visible "Sugerencia" notes (never applied silently). Day 17 is an optional draft (Sumiyoshi Taisha before Nara). Every place sheet lists its sources (`details[].sources`) and what is unverified (`verificationNote`). Pins marked `pinApproximate` need checking in Google Maps. Photos come from the image pipeline; pin reviewed ones with `files` in `image-catalog.json` (`files: []` = no photo on purpose). `npm run prepare:images -- --city=osaka` runs a single city.
+* **Osaka** (`data/cities/osaka/`, enabled in `data/journey.json`): same structure as Kioto. Days 15 and 16 are Victor's plan with his times; checks and proposals appear as visible "Sugerencia" notes (never applied silently). Day 17 is an optional draft (Sumiyoshi Taisha before Nara). Every place sheet says what is unverified (`verificationNote`). Pins marked `pinApproximate` need checking in Google Maps. Photos come from the image pipeline; pin reviewed ones with `files` in `image-catalog.json` (`files: []` = no photo on purpose). `npm run prepare:images -- --city=osaka` runs a single city.
 * The service worker answers 404 for data files that are not saved, so optional datasets (a city without `events.json`) are skipped offline.
 
 ## Private trip data and PDF (V11.8)

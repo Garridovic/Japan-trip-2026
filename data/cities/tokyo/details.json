@@ -8,7 +8,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.71817,139.80169&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.71817,139.80169&travelmode=walking"
     },
-    "sources": [],
     "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
   },
   {
@@ -20,20 +19,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.71,139.8105&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.71,139.8105&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Sumida Aquarium · preguntas frecuentes",
-        "url": "https://en.sumida-aquarium.com/faq/"
-      },
-      {
-        "label": "Sumida Aquarium · acceso",
-        "url": "https://en.sumida-aquarium.com/about/access/"
-      },
-      {
-        "label": "GO TOKYO · Sumida Aquarium",
-        "url": "https://www.gotokyo.org/en/spot/67/"
-      }
-    ],
     "verificationNote": "Confirmar antes de ir: horario (entre semana 10:00–20:00; fines de semana y festivos 9:00–21:00, última entrada una hora antes; hay cierres anticipados puntuales, por ejemplo el 6 de dic a las 18:00) y precio (GO TOKYO indica 2.500 ¥ de entrada general, sin desglosar). Coordenada orientativa."
   },
   {
@@ -45,12 +30,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.7148,139.7967&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.7148,139.7967&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Sello (goshuin) en la web oficial",
-        "url": "https://www.senso-ji.jp/faq/"
-      }
-    ],
     "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
   },
   {
@@ -62,12 +41,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.715,139.7982&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.715,139.7982&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Sello (goshuin) en la web oficial",
-        "url": "https://asakusajinja.jp/goshuin/"
-      }
-    ],
     "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
   },
   {
@@ -79,16 +52,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.7112,139.7966&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.7112,139.7966&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "GO TOKYO · Nakamise",
-        "url": "https://www.gotokyo.org/en/spot/73/"
-      },
-      {
-        "label": "Japan Guide · Sensō-ji",
-        "url": "https://www.japan-guide.com/e/e3001.html"
-      }
-    ],
     "verificationNote": "Los horarios de las tiendas de Nakamise varían (la página de GO TOKYO no da una hora común). Coordenada orientativa."
   },
   {
@@ -100,12 +63,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.716,139.7737&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.716,139.7737&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Ueno",
-        "url": "https://www.japan-guide.com/e/e3019.html"
-      }
-    ],
     "verificationNote": "El parque en sí no tiene horario propio en las fuentes. Horarios de Japan Guide y del Museo Nacional (web oficial); confirmad antes de ir. Hay avisos de cierres parciales de salas en el Museo Nacional. Coordenada orientativa."
   },
   {
@@ -117,12 +74,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.7102,139.7745&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.7102,139.7745&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Ueno",
-        "url": "https://www.japan-guide.com/e/e3019.html"
-      }
-    ],
     "verificationNote": "Las fuentes consultadas no dan horario, precios ni cierres de la calle; cada puesto decide el suyo. Coordenada orientativa. Descripción general, sin fuente que cite cifras."
   },
   {
@@ -134,12 +85,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6984,139.7731&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6984,139.7731&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Akihabara",
-        "url": "https://www.japan-guide.com/e/e3003.html"
-      }
-    ],
     "verificationNote": "Horarios de tiendas de Japan Guide, que pueden cambiar. Coordenada orientativa (estación de Akihabara)."
   },
   {
@@ -151,12 +96,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6764,139.6993&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6764,139.6993&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Meiji Jingu (web oficial) · cómo visitar",
-        "url": "https://www.meijijingu.or.jp/en/visit/"
-      }
-    ],
     "verificationNote": "Horario de noviembre en la web oficial; el de diciembre no se ha podido leer, comprobadlo. Coordenada orientativa."
   },
   {
@@ -168,12 +107,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6595,139.7005&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6595,139.7005&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "GO TOKYO · Shibuya Sky",
-        "url": "https://www.gotokyo.org/en/spot/1749/index.html"
-      }
-    ],
     "verificationNote": "Descripción general; sin horarios porque es un cruce público. Coordenada orientativa."
   },
   {
@@ -185,12 +118,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6585,139.7022&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6585,139.7022&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "GO TOKYO · Shibuya Sky",
-        "url": "https://www.gotokyo.org/en/spot/1749/index.html"
-      }
-    ],
     "verificationNote": "Precios y horario de GO TOKYO; confirmad en la web oficial al comprar y mirad el estado de la azotea el mismo día. Coordenada orientativa."
   },
   {
@@ -202,12 +129,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6597,139.7634&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6597,139.7634&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Parques de Tokio · Hamarikyu (web oficial)",
-        "url": "https://www.tokyo-park.or.jp/teien/en/hama-rikyu/outline.html"
-      }
-    ],
     "verificationNote": "Horario y precio de la web oficial. Coordenada orientativa."
   },
   {
@@ -219,12 +140,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6717,139.765&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6717,139.765&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Japan Guide · Ginza",
-        "url": "https://www.japan-guide.com/e/e3005.html"
-      }
-    ],
     "verificationNote": "Horarios de Japan Guide sin cotejar con cada tienda; pueden variar en diciembre. Coordenada orientativa."
   },
   {
@@ -236,12 +151,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6655,139.7707&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6655,139.7707&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "GO TOKYO · Mercado exterior de Tsukiji",
-        "url": "https://www.gotokyo.org/en/story/guide/tsukijioutermarket/"
-      }
-    ],
     "verificationNote": "Días de cierre y franja de visita de GO TOKYO (actualizada en agosto de 2026); cada tienda pone su horario. Coordenada orientativa."
   },
   {
@@ -253,16 +162,6 @@
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.7101,139.8107&travelmode=transit",
       "walking": "https://www.google.com/maps/dir/?api=1&destination=35.7101,139.8107&travelmode=walking"
     },
-    "sources": [
-      {
-        "label": "Tokyo Skytree (web oficial) · entradas",
-        "url": "https://en.tokyo-skytree.jp/ticket/"
-      },
-      {
-        "label": "Tokyo Skytree (web oficial) · horario",
-        "url": "https://en.tokyo-skytree.jp/open-hours/"
-      }
-    ],
     "verificationNote": "Precios de la web oficial («desde»); el horario de la web depende del día y el de diciembre no está confirmado. Coordenada orientativa."
   }
 ]

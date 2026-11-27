@@ -191,7 +191,7 @@ test('"Guardar mapa" works from the full-screen map and keeps working after leav
   test.setTimeout(90_000);
   const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
   await context.route('**/tile.openstreetmap.org/**', (route) => route.fulfill({ status: 200, contentType: 'image/png', body: PNG, headers: { 'access-control-allow-origin': '*' } }));
-  await page.goto('/?view=mapa');
+  await page.goto('/?view=mapa&tab=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
   await page.locator('#map-offline-button').click();
   const save = page.locator('#map-sheet #save-offline-map');

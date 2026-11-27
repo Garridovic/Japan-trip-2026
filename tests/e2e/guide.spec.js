@@ -38,7 +38,7 @@ test('the Kyoto content migrated to data is fully rendered', async ({ page }) =>
   await expect(page.locator('.food-highlight')).toHaveCount(8);
   await expect(page.locator('.extra-card')).toHaveCount(kyoto.extras.items.length);
   await expect(page.locator('#notes-grid .note-card')).toHaveCount(4);
-  await expect(page.locator('.sources li')).toHaveCount(24);
+  await expect(page.locator('#fuentes, .sources, a[href="#fuentes"]')).toHaveCount(0); // Fuentes removed in V14.13.0
   await expect(page.locator('.connection-card')).toContainText('Kioto → Osaka');
   await expect(page.getByRole('button', { name: /Imprimir|PDF/ })).toHaveCount(0); // only the Viaje view can be saved as PDF
   const kmlHref = await page.locator('#footer-kml-link').getAttribute('href');
@@ -46,7 +46,7 @@ test('the Kyoto content migrated to data is fully rendered', async ({ page }) =>
 });
 
 test('a place marker opens its detail sheet', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
   await page.locator(SVG_MARKERS).first().click();
   await expect(page.locator('.leaflet-popup')).toBeVisible();
@@ -67,7 +67,7 @@ test('a restaurant marker has no place sheet, only Google Maps links', async ({ 
 });
 
 test('map filters by day and by kind keep the right markers', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
 
   await page.getByRole('button', { name: '14 dic · eventos' }).click();
@@ -88,7 +88,7 @@ test('map filters by day and by kind keep the right markers', async ({ page }) =
 });
 
 test('restaurant filters update the visible restaurant cards', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?tab=comer');
   await expect(page.locator('.food-card:visible')).toHaveCount(restaurantCount);
   await expect(page.locator('#food-count')).toHaveText(`Mostrando ${restaurantCount} lugares.`);
 
@@ -107,7 +107,7 @@ test('restaurant filters update the visible restaurant cards', async ({ page }) 
 });
 
 test('alternative places can be filtered by category', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?tab=alternativas');
   await expect(page.locator('.extra-card:visible')).toHaveCount(kyoto.extras.items.length);
   await page.locator('#extras-toolbar .filter', { hasText: 'Templos' }).click();
   await expect(page.locator('.extra-card:visible')).toHaveCount(kyoto.extras.items.filter((item) => item.category === 'templos').length);
@@ -120,7 +120,7 @@ test('GPS shows the nearest places and opens an event sheet with its route', asy
     geolocation: { latitude: bishamondo.lat, longitude: bishamondo.lng }
   });
   const page = await context.newPage();
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
   await page.locator('#locate-me').click();
   await expect(page.locator('#nearby-list li')).toHaveCount(7);
@@ -141,7 +141,7 @@ test('a place photo that fails to load shows the visual fallback', async ({ brow
   const page = await context.newPage();
   await page.route(/\.(webp|jpe?g)(\?.*)?$/, (route) => route.abort());
   await page.route('**/commons.wikimedia.org/**', (route) => route.abort());
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
   await page.locator('#locate-me').click();
   await page.locator('#nearby-list button', { hasText: nishiki.name }).first().click();
@@ -150,17 +150,3 @@ test('a place photo that fails to load shows the visual fallback', async ({ brow
   await context.close();
 });
 
-test('the section navigation highlights the section being read', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
-  const current = page.locator('.nav-inner a[aria-current="location"]');
-  await expect(current).toHaveText('Vista rápida');
-  await page.locator('#mapa').scrollIntoViewIfNeeded();
-  await page.evaluate(() => window.scrollTo(0, document.getElementById('mapa').offsetTop - 60));
-  await expect(current).toHaveText('Mapa');
-  await page.evaluate(() => window.scrollTo(0, document.getElementById('detalle').offsetTop - 60));
-  await expect(current).toHaveText('Día a día');
-  await expect(current).toHaveCount(1);
-  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-  await expect(current).toHaveText('Fuentes');
-});

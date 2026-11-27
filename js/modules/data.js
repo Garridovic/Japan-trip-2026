@@ -3,7 +3,7 @@ import { isValidId } from './ids.js';
 import { validateJourney } from './journey.js';
 
 export const REQUIRED_CITY_DATASETS = ['city', 'places', 'restaurants', 'details', 'itinerary'];
-export const OPTIONAL_CITY_DATASETS = ['events', 'food', 'extras', 'sources'];
+export const OPTIONAL_CITY_DATASETS = ['events', 'food', 'extras'];
 
 /**
  * Optional files a city really has. The journey entry may list them in `optionalData` (e.g. ["extras", "tips"]) so

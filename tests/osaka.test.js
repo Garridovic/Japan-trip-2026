@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const read = async (file) => JSON.parse(await readFile(`${root}data/cities/osaka/${file}.json`, 'utf8'));
-const [city, places, restaurants, details, itinerary, food, extras, sources, catalog] = await Promise.all(
-  ['city', 'places', 'restaurants', 'details', 'itinerary', 'food', 'extras', 'sources', 'image-catalog'].map(read));
+const [city, places, restaurants, details, itinerary, food, extras, catalog] = await Promise.all(
+  ['city', 'places', 'restaurants', 'details', 'itinerary', 'food', 'extras', 'image-catalog'].map(read));
 const journey = JSON.parse(await readFile(`${root}data/journey.json`, 'utf8'));
 const day = (key) => itinerary.days.find((entry) => entry.key === key);
 const stops = (key) => day(key).detail.stops;
@@ -80,14 +80,13 @@ test('the extra visits have a clear verdict and are marked optional', () => {
   assert.match(day('17').detail.lead, /Borrador/);
 });
 
-test('every detail carries sources, and uncertain data is flagged as unverified', () => {
-  details.forEach(({ id, sources: list = [], verificationNote }) => {
-    assert.ok(list.length > 0, `${id} needs at least one source`);
-    list.forEach(({ label, url }) => assert.ok(label && /^https:\/\//.test(url), `${id}: bad source`));
+test('uncertain data is flagged as unverified, and no city keeps a sources list (removed in V14.13.0)', async () => {
+  details.forEach(({ id, sources, verificationNote }) => {
+    assert.equal(sources, undefined, `${id}: sources are no longer shown`);
     assert.ok(verificationNote, `${id}: say what is not verified`);
   });
-  assert.ok(sources.items.length >= 10);
-  assert.match(sources.note, /no se han confirmado/);
+  const { readdir } = await import('node:fs/promises');
+  for (const cityId of await readdir(`${root}data/cities`)) assert.ok(!(await readdir(`${root}data/cities/${cityId}`)).includes('sources.json'), `${cityId}/sources.json`);
   assert.match(food.note.text, /no he confirmado horarios/i);
 });
 

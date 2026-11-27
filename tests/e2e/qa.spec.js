@@ -4,7 +4,7 @@ import { kyoto, SVG_MARKERS } from './helpers.js';
 const phone = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 };
 
 const openPlaceSheet = async (page) => {
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
   await page.locator(SVG_MARKERS).first().dispatchEvent('click');
   await page.locator('.popup-detail-button').first().click();
@@ -61,7 +61,7 @@ test.describe('Back button / swipe-back closes full-screen sheets and they stay 
   });
 
   test('Back after closing a sheet still navigates between views normally', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?tab=mapa');
     await page.locator('[data-view-target="frases"]').click();
     await page.locator('.phrase-card').first().getByRole('button', { name: /Mostrar/ }).click();
     await page.evaluate(() => history.back());
@@ -106,11 +106,10 @@ test.describe('phone usability', () => {
   });
 
   test('filters start collapsed so the content comes first', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?tab=mapa');
     await expect(page.locator('#map-filters')).not.toHaveAttribute('open', '');
     await expect(page.locator('.map-legend')).not.toHaveAttribute('open', '');
-    await page.locator('.nav-inner a[href="#mapa"]').click();
-    await expect.poll(async () => (await page.locator('#city-map').boundingBox()).y).toBeLessThan(500);
+    await expect.poll(async () => (await page.locator('#city-map').boundingBox()).y).toBeLessThan(800); // the map starts on the first screen of its tab
     await page.locator('#map-filters > summary').click();
     await expect(page.locator('#map-day-filters button').first()).toBeVisible();
 
@@ -174,7 +173,7 @@ test('a place without photos shows a slim band instead of an empty half screen',
     details.find(({ id }) => id === kyoto.places[0].id).photos = [];
     await route.fulfill({ response, json: details });
   });
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
   await page.locator(SVG_MARKERS).first().dispatchEvent('click');
   await page.locator('.popup-detail-button').first().click();
@@ -232,7 +231,7 @@ test.describe('Cerca de mí', () => {
   test('far from the city, the list warns about the distance', async ({ browser }) => {
     const context = await browser.newContext({ permissions: ['geolocation'], geolocation: { latitude: 35.6762, longitude: 139.6503 } });
     const page = await context.newPage();
-    await page.goto('/');
+    await page.goto('/?tab=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await page.locator('#locate-me').click();
     await expect(page.locator('#nearby-status')).toContainText(/Estás a \d+ km de Kioto/);
@@ -251,7 +250,7 @@ test('the photo counter is hidden when a place has a single photo', async ({ pag
     other.photos = [{ src: 'assets/images/dishes/ramen-480.webp', alt: 'Foto 1' }, { src: 'assets/images/dishes/udon-480.webp', alt: 'Foto 2' }];
     await route.fulfill({ response, json: details });
   });
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
   await page.evaluate(() => { document.querySelector('#nearby-list'); });
   // Open both places through the map popups.
@@ -267,12 +266,13 @@ test('the photo counter is hidden when a place has a single photo', async ({ pag
   await expect(page.locator('#poi-photo-count')).toHaveText('1 / 2');
 });
 
-test('an invalid ?view= is cleaned from the URL and the hash is dropped when changing view', async ({ page }) => {
+test('an invalid ?view= is cleaned from the URL and the tab is dropped when changing view', async ({ page }) => {
   await page.goto('/?view=bad');
   await expect(page.locator('#city-view')).toBeVisible();
   await expect(page).not.toHaveURL(/view=/);
   await page.locator('.nav-inner a[href="#mapa"]').click();
-  await expect(page).toHaveURL(/#mapa/);
+  await expect(page).toHaveURL(/tab=mapa/);
   await page.locator('[data-view-target="frases"]').click();
   await expect(page).toHaveURL(/view=frases$/);
+  await expect(page).not.toHaveURL(/tab=/);
 });

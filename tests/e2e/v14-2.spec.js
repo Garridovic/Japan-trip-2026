@@ -15,7 +15,7 @@ test.describe('V14.2 every stop of the route has a page', () => {
       page.on('pageerror', (error) => errors.push(error.message));
       await page.clock.setFixedTime(tokyo('2026-11-27T10:00:00'));
       await mockWeather(page);
-      await page.goto(`/?city=${id}`);
+      await page.goto(`/?city=${id}&tab=mapa`);
       await expect(page.locator('#hero-title')).toHaveText(title);
       await expect(page.locator('#hero-range')).toHaveText(range);
       await expect(page.locator('#hero-hotel')).toContainText(hotel);

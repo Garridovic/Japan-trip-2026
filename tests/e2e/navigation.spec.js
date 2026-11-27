@@ -2,87 +2,84 @@ import { test, expect } from '@playwright/test';
 import { SVG_MARKERS, kyoto } from './helpers.js';
 
 const ids = ['resumen', 'mapa', 'detalle', 'comer', 'alternativas', 'practico'];
-
-/** Resolves once the page has stopped scrolling (same position on several consecutive checks). */
-async function scrollSettled(page) {
-  let previous = -1;
-  let steady = 0;
-  await expect.poll(async () => {
-    const now = await page.evaluate(() => Math.round(window.scrollY));
-    steady = now === previous ? steady + 1 : 0;
-    previous = now;
-    return steady >= 4; // ~400 ms without movement
-  }, { timeout: 15_000, intervals: [100] }).toBe(true);
-}
-
-async function expectAligned(page, id) {
-  // After the scroll has settled the section starts right below the two sticky bars (scroll-margin-top).
-  await expect.poll(async () => page.evaluate((id) => {
-    const margin = parseFloat(getComputedStyle(document.getElementById(id)).scrollMarginTop);
-    return Math.abs(document.getElementById(id).getBoundingClientRect().top - margin) <= 3;
-  }, id), { timeout: 15000 }).toBe(true);
-  await expect(page.locator('.nav-inner a[aria-current="location"]')).toHaveAttribute('href', `#${id}`);
-}
+const panels = (page) => page.evaluate((ids) => ids.filter((id) => document.getElementById(id).offsetHeight > 0), ids);
+const stickPoint = (page) => page.evaluate(() => {
+  const nav = document.querySelector('#city-view > nav');
+  return Math.round(document.querySelector('#city-view > .hero').getBoundingClientRect().bottom + scrollY - parseFloat(getComputedStyle(nav).top));
+});
 
 // Tab behaviour does not depend on the screen size, so one phone run is enough (desktop is covered by "Ver detalle" below).
-for (const [name, viewport, mobile] of [['phone', { width: 390, height: 844 }, true]]) {
-  test.describe(name, () => {
-    test.use({ viewport, isMobile: mobile, hasTouch: mobile });
+test.describe('guide tabs (one section per tab)', () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
-    test('every section tab scrolls to its section from any position, in any order', async ({ page }) => {
-      await page.goto('/');
-      await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-      for (const id of [...ids, 'mapa', 'resumen']) {
-        await page.locator(`.nav-inner a[href="#${id}"]`).click();
-        await expectAligned(page, id);
-      }
-    });
-
-    test('the clicked tab is not overridden by the highlight while the page is scrolling', async ({ page }) => {
-      await page.goto('/');
-      await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-      await page.locator('.nav-inner a[href="#alternativas"]').click();
-      // Long scroll across Mapa, Día a día and Comer: the highlight stays on the clicked tab.
-      const seen = new Set();
-      for (let i = 0; i < 12; i++) {
-        seen.add(await page.locator('.nav-inner a[aria-current="location"]').getAttribute('href'));
-        await page.waitForTimeout(80);
-      }
-      expect([...seen]).toEqual(['#alternativas']);
-      await expectAligned(page, 'alternativas');
-    });
+  test('each tab shows only its own section, in any order, and there is no Fuentes tab', async ({ page }) => {
+    await page.goto('/?city=kyoto');
+    await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible();
+    await expect(page.locator('.nav-inner [role="tab"]')).toHaveText(['Vista rápida', 'Mapa', 'Día a día', 'Comer', 'Otros lugares', 'Consejos']);
+    expect(await panels(page)).toEqual(['resumen']);
+    for (const id of [...ids, 'mapa', 'resumen']) {
+      await page.locator(`.nav-inner a[href="#${id}"]`).click();
+      await expect(page.locator(`.nav-inner a[href="#${id}"]`)).toHaveAttribute('aria-selected', 'true');
+      expect(await panels(page)).toEqual([id]);
+      await expect(page).toHaveURL(new RegExp(`[?&]tab=${id}$`));
+    }
   });
-}
 
-test('a browser that cancels smooth scrolling on scrollIntoView() does not break the tabs', async ({ page }) => {
-  // Safari-like behaviour: any scrollIntoView() call aborts the smooth scroll that is running.
-  await page.addInitScript(() => {
-    Element.prototype.scrollIntoView = function () { window.scrollTo({ top: window.scrollY, behavior: 'instant' }); };
+  test('with the strip stuck, a new tab starts right below it and each tab keeps its own scroll', async ({ page }) => {
+    await page.goto('/?city=kyoto');
+    await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible();
+    await page.locator('.nav-inner a[href="#comer"]').click();
+    const stick = await stickPoint(page);
+    await page.evaluate(() => window.scrollTo({ top: 4000, behavior: 'instant' }));
+    await page.locator('.nav-inner a[href="#practico"]').click();
+    await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(stick);
+    expect(Math.round((await page.locator('#practico').boundingBox()).y)).toBeLessThan(160); // under the bars, not below the header
+    await page.locator('.nav-inner a[href="#comer"]').click();
+    await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(4000);
   });
-  await page.goto('/');
-  await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-  for (const id of ['practico', 'mapa', 'comer', 'resumen']) {
-    await page.locator(`.nav-inner a[href="#${id}"]`).click();
-    await expectAligned(page, id);
-  }
+
+  test('without scrolling, changing tab leaves the header where it is', async ({ page }) => {
+    await page.goto('/?city=kyoto');
+    await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible();
+    await page.locator('.nav-inner a[href="#alternativas"]').click();
+    expect(await page.evaluate(() => scrollY)).toBe(0);
+    await expect(page.locator('#hero-title')).toBeInViewport();
+  });
+
+  test('arrow keys move between tabs', async ({ page }) => {
+    await page.goto('/?city=kyoto&tab=mapa');
+    await expect(page.locator('#quick-grid .quick-card').first()).toBeAttached();
+    await page.locator('.nav-inner a[href="#mapa"]').focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('.nav-inner a[href="#detalle"]')).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('.nav-inner a[href="#detalle"]')).toBeFocused();
+    await page.keyboard.press('Home');
+    await expect(page.locator('.nav-inner a[href="#resumen"]')).toHaveAttribute('aria-selected', 'true');
+  });
 });
 
-test('the last tab works even though the page cannot scroll that far', async ({ page }) => {
-  await page.goto('/');
-  // wait for the city content: on a slow machine the click could otherwise land on a page that is still short
-  await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-  await page.locator('.nav-inner a[href="#fuentes"]').click();
-  await scrollSettled(page);
-  expect(await page.evaluate(() => window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4)).toBe(true);
-  await expect(page.locator('.nav-inner a[aria-current="location"]')).toHaveAttribute('href', '#fuentes', { timeout: 10_000 });
-});
-
-test('the tab updates the URL hash without adding history entries', async ({ page }) => {
+test('the tab goes in the URL without adding history entries, and Back leaves the city instead of walking tabs', async ({ page }) => {
   await page.goto('/?city=kyoto');
+  await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible();
   const before = await page.evaluate(() => history.length);
   await page.locator('.nav-inner a[href="#mapa"]').click();
-  await expect(page).toHaveURL(/\?city=kyoto#mapa$/);
+  await page.locator('.nav-inner a[href="#comer"]').click();
+  await expect(page).toHaveURL(/\?city=kyoto&tab=comer$/);
   expect(await page.evaluate(() => history.length)).toBe(before);
+});
+
+test('a link with ?tab= or an old #anchor opens that tab, and the last tab is remembered', async ({ page }) => {
+  await page.goto('/?city=kyoto&tab=alternativas');
+  await expect(page.locator('#alternativas')).toBeVisible();
+  await expect(page.locator('#resumen')).toBeHidden();
+  await page.goto('/?city=kyoto#comer');
+  await expect(page.locator('#comer')).toBeVisible();
+  await expect(page).toHaveURL(/\?city=kyoto&tab=comer$/);
+  await page.goto('/?city=kyoto');
+  await expect(page.locator('#comer')).toBeVisible(); // remembered on this device
+  await page.goto('/?city=kyoto#dia12');
+  await expect(page.locator('#detalle')).toBeVisible();
+  await expect.poll(() => page.locator('#dia12').evaluate((day) => day.open)).toBe(true);
 });
 
 test.describe('full-screen sheets put the back button on the left', () => {
@@ -109,7 +106,7 @@ test.describe('full-screen sheets put the back button on the left', () => {
   });
 
   test('place sheet closes with a round X on the right, like every other sheet', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?tab=mapa');
     await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
     await page.locator(SVG_MARKERS).first().dispatchEvent('click');
     await page.locator('.popup-detail-button').first().click();
@@ -132,6 +129,7 @@ for (const [city, name, viewport, mobile] of [['kyoto', 'phone', { width: 390, h
         expect(count).toBeGreaterThanOrEqual(3);
         for (let i = 0; i < count; i++) {
           await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+          await page.locator('.nav-inner a[href="#resumen"]').click(); // each link switches to «Día a día»
           const link = page.locator('.quick-card .text-link').nth(i);
           const target = await link.getAttribute('href');
           await link.scrollIntoViewIfNeeded();
@@ -156,10 +154,12 @@ for (const [city, name, viewport, mobile] of [['kyoto', 'phone', { width: 390, h
   }
 }
 
-test('a plain #anchor link (section nav) lands on its section and the scroll is not reset by the app', async ({ page }) => {
-  await page.goto('/');
+test('clicking a tab does not let the app reset the scroll afterwards', async ({ page }) => {
+  await page.goto('/?city=kyoto');
+  await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible();
+  await page.evaluate(() => window.scrollTo({ top: 700, behavior: 'instant' }));
   await page.locator('nav a[href="#mapa"]').click();
-  await expectAligned(page, 'mapa');
+  await page.waitForTimeout(500); // the layout of the new tab settles
   const y = await page.evaluate(() => Math.round(window.scrollY));
   await page.waitForTimeout(600);
   expect(Math.abs((await page.evaluate(() => Math.round(window.scrollY))) - y)).toBeLessThanOrEqual(2);

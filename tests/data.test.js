@@ -166,7 +166,6 @@ for (const { id: cityId } of cities) {
 
   test(`[${cityId}] optional files referenced by the city exist`, async () => {
     if (data.city.kml) assert.ok(await exists(data.city.kml), `${data.city.kml} is missing`);
-    if (data.sources) data.sources.items.forEach(({ label, href }) => assert.ok(label && /^https?:\/\//.test(href)));
   });
 }
 

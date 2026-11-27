@@ -32,7 +32,6 @@ test('switching between Kioto and Osaka keeps both complete and isolated', async
   await expect(page.locator('#hero-title')).toHaveText('Osaka');
   await expect(page.locator('.quick-card')).toHaveCount(3);
   await expect(page.locator('.food-card')).toHaveCount(restaurants.length);
-  await expect(page.locator('.sources li').first()).toBeAttached();
   await selectCity(page, 'Kioto');
   await expect(page.locator('#hero-title')).toHaveText('Kioto');
   await expect(page.locator('#hero-hotel')).toContainText('Agora Kyoto Karasuma');
@@ -61,8 +60,8 @@ test('the Kioto → Osaka connection is shown at the end of the Kioto itinerary'
   await expect(page.locator('.connection-card')).toContainText('The Bridge Hotel Shinsaibashi');
 });
 
-test('a place sheet shows description, photos with credit data, sources and what is unverified', async ({ page }) => {
-  await page.goto('/?city=osaka');
+test('a place sheet shows description, photos with credit data and what is unverified, without a sources list', async ({ page }) => {
+  await page.goto('/?city=osaka&tab=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visits, { timeout: 20_000 });
   // Open the castle through the day-16 map filter and its marker popup.
   await page.getByRole('button', { name: '16 dic', exact: true }).first().click();
@@ -70,15 +69,14 @@ test('a place sheet shows description, photos with credit data, sources and what
   await popupOpener.dispatchEvent('click');
   await page.locator('.popup-detail-button').first().click();
   await expect(page.locator('#poi-modal')).toBeVisible();
-  await expect(page.locator('#poi-sources-section')).toBeVisible();
-  await expect(page.locator('#poi-sources a').first()).toHaveAttribute('href', /^https:\/\//);
+  await expect(page.locator('#poi-sources-section, #poi-sources')).toHaveCount(0);
   await expect(page.locator('#poi-verification')).toBeVisible();
   await expect(page.locator('#poi-photo')).toHaveAttribute('src', /assets\/images\/osaka\//);
 });
 
 
 test('restaurant cards link to Google Maps, cite a source and flag approximate pins', async ({ page }) => {
-  await page.goto('/?city=osaka');
+  await page.goto('/?city=osaka&tab=comer');
   await expect(page.locator('.food-card')).toHaveCount(restaurants.length);
   const mizuno = page.locator('.food-card', { hasText: 'Okonomiyaki Mizuno' });
   await expect(mizuno.getByRole('link', { name: /Google Maps/ })).toHaveAttribute('href', /google\.com\/maps/);

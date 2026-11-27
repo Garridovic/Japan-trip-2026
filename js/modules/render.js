@@ -82,7 +82,7 @@ function renderItinerary(itinerary) {
       h('div', { class: 'quick-top' }, h('span', { class: 'date' }, quick.date), h('span', { class: 'zone' }, quick.zone)),
       h('h3', {}, quick.title),
       renderRoute(quick.route),
-      h('div', { class: 'quick-foot' }, h('small', {}, quick.note), h('a', { class: 'text-link', href: `#dia${key}` }, 'Ver detalle ↓'))
+      h('div', { class: 'quick-foot' }, h('small', {}, quick.note), h('a', { class: 'text-link', href: `#dia${key}` }, 'Ver detalle'))
     )
   ));
   const note = byId('quick-note');
@@ -127,16 +127,6 @@ function renderTips(tips) {
   ));
 }
 
-function renderSources(sources) {
-  setSectionVisible('fuentes', Boolean(sources?.items?.length));
-  if (!sources?.items?.length) return byId('sources-card').replaceChildren();
-  byId('sources-card').replaceChildren(
-    h('summary', {}, sources.summary),
-    h('ul', {}, sources.items.map((item) => h('li', {}, externalLink(item.href, item.label)))),
-    h('p', { class: 'muted' }, sources.note)
-  );
-}
-
 function renderFooter(city) {
   byId('footer-label').textContent = city.footerLabel;
   byId('footer-kml').hidden = !city.kml;
@@ -152,6 +142,5 @@ export function renderCity({ journey, cityEntry, bundle, global, stay, stays, st
   renderExtras(bundle.extras, bundle.city.map.alternativeCategories ?? [], bundle.city.map.queryContext);
   setSectionVisible('alternativas', Boolean(bundle.extras?.items?.length));
   renderTips(global.tips);
-  renderSources(bundle.sources);
   renderFooter(bundle.city);
 }

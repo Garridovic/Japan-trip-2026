@@ -8,7 +8,7 @@ import { initTabs } from './modules/tabs.js';
 import { renderCity, resetHero } from './modules/render.js';
 import { initDetails } from './modules/details.js';
 import { initMap } from './modules/map.js';
-import { initScrollSpy } from './modules/scrollspy.js';
+import { initGuideTabs, tabFromSearch, tabForHash, rememberedTab, withTab } from './modules/guide-tabs.js';
 import { initPhrases } from './modules/phrases-ui.js';
 import { VIEW_QUERY_PARAM, viewFromSearch, withView, initViews } from './modules/views.js';
 import { initOverlayHistory, popstateWasOverlay, whenOverlaySettled } from './modules/overlay-history.js';
@@ -22,7 +22,7 @@ import { userData } from './modules/user-data.js';
 import { toast, haptic } from './modules/feedback.js';
 import { initSearch } from './modules/search-ui.js';
 import { visitedStore } from './modules/visited.js';
-import { initDayLinks, openDay } from './modules/anchors.js';
+import { initDayLinks, openDay, setBeforeOpenDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
 import { initMapView } from './modules/map-view.js';
@@ -102,6 +102,7 @@ async function start() {
       place: async ({ id }) => { await whenOverlaySettled(); details.open(id); },
       restaurant: async ({ id }) => {
         await navigateViewRef('guia');
+        guideTabs.select('comer');
         const card = document.querySelector(`.food-card[data-food-id="${CSS.escape(id)}"]`);
         if (!card) return;
         card.hidden = false;
@@ -111,6 +112,7 @@ async function start() {
       },
       extra: async ({ id }) => {
         await navigateViewRef('guia');
+        guideTabs.select('alternativas');
         const card = [...document.querySelectorAll('.extra-card h3')].find((node) => node.textContent === id)?.closest('.extra-card');
         card?.scrollIntoView({ block: 'center' });
         card?.classList.add('is-found');
@@ -124,7 +126,16 @@ async function start() {
   const progress = initProgress({ cities, global });
   const weather = initWeather();
   const today = initToday();
-  const scrollSpy = initScrollSpy();
+  // Section tabs of the guide: one section at a time. The map is created while its tab may be hidden, so it is
+  // fitted again the first time the Mapa tab is shown after a city change.
+  let mapNeedsFit = false;
+  const guideTabs = initGuideTabs({
+    onChange: (tab) => {
+      if (tab !== 'mapa') return;
+      if (mapNeedsFit) { mapNeedsFit = false; map.refit(); } else map.refresh();
+    }
+  });
+  setBeforeOpenDay(() => guideTabs.select('detalle'));
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
 
   let activeView = viewFromSearch(window.location.search);
@@ -142,8 +153,9 @@ async function start() {
     activeView = view;
     views.setActive(view);
     mapView.sync(view);
+    if (view === 'mapa' && mapNeedsFit) { mapNeedsFit = false; map.refit(); } // the map was built while its guide tab was hidden
     if (view === 'viaje') { tips.show(); stamps.show(); }
-    if (view === 'guia') { map.refresh(); scrollSpy.refresh(); }
+    if (view === 'guia') { map.refresh(); guideTabs.refresh(); }
     window.scrollTo({ top: scrollByView.get(view) ?? 0, behavior: 'instant' });
   }
 
@@ -153,6 +165,7 @@ async function start() {
     if (view === activeView) { window.scrollTo({ top: 0 }); return; }
     const next = withView(window.location.href, view);
     next.hash = ''; // a section anchor of the previous view means nothing here
+    next.searchParams.delete('tab'); // nor does the guide tab (it is remembered on this device)
     history.pushState({ view }, '', next);
     applyView(view);
   }
@@ -179,14 +192,16 @@ async function start() {
       };
       renderCity({ journey, cityEntry: entry, bundle, global, stay: stays[stayIndex], stays, stayIndex, onStay });
       details.setCity({ ...index, events: bundle.events });
+      guideTabs.resetCity();
       map.setCity(index, bundle.city.map);
+      mapNeedsFit = guideTabs.active() !== 'mapa';
       search.setCity({ places: bundle.places, restaurants: bundle.restaurants, extras: bundle.extras?.items ?? [] });
       weather.show(whereOf(), stays[stayIndex]);
       progress.show({ cityId, days: bundle.itinerary.days, places: bundle.places });
       today.show({ days: bundle.itinerary.days, cityName: cities.find((city) => city.id === cityId).name, queryContext: bundle.city.map.queryContext });
       hero.reset(); // opens on "Ahora" during the trip, otherwise on "Tu viaje"
       activeCityId = cityId;
-      scrollSpy.refresh();
+      guideTabs.refresh();
       showStatus('');
     } catch (error) {
       if (token !== requestToken) return;
@@ -213,17 +228,36 @@ async function start() {
     return cityId;
   }
 
+  // An old link such as #comer or #dia12 followed while the guide is open: show its tab (the day opens through anchors.js).
+  window.addEventListener('hashchange', () => {
+    if (activeView !== 'guia') return;
+    const tab = tabForHash(window.location.hash);
+    if (!tab) return;
+    const target = /^#dia/.test(window.location.hash) ? document.getElementById(window.location.hash.slice(1)) : null; // read before select() rewrites the URL
+    guideTabs.select(tab, { source: 'code' });
+    if (target) openDay(target, { smooth: false });
+  });
+
   window.addEventListener('popstate', () => {
     if (popstateWasOverlay()) return;
     // A change of #anchor on the same page is not navigation: leave the scroll position to the browser.
+    const tabInUrl = tabFromSearch(window.location.search);
+    if (tabInUrl) guideTabs.select(tabInUrl, { source: 'history' });
     if (viewFromSearch(window.location.search) === activeView && cityFromLocation() === activeCityId) return;
     applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation());
   });
   views.setActive(activeView);
+  // First tab: ?tab= in the URL, else an old #anchor (#comer, #dia12), else the last one used on this device.
+  const firstTab = tabFromSearch(window.location.search) ?? tabForHash(window.location.hash) ?? rememberedTab() ?? 'resumen';
   await showCity(cityFromLocation());
+  guideTabs.select(firstTab, { source: 'init' });
+  if (!tabFromSearch(window.location.search) && tabForHash(window.location.hash) && !/^#dia/.test(window.location.hash)) {
+    history.replaceState(history.state, '', withTab(window.location.href, guideTabs.active())); // #comer → ?tab=comer
+  }
   mapView.sync(activeView); // opened directly on ?view=mapa
+  if (activeView === 'mapa' && mapNeedsFit) { mapNeedsFit = false; map.refit(); }
   if (activeView === 'viaje') { tips.show(); stamps.show(); }
-  // Honour an in-page anchor (for example #mapa) once the content exists.
+  // Honour an old link to a day (#dia12) once the content exists: «Día a día» with that day open.
   if (activeView === 'guia' && window.location.hash) {
     const target = document.getElementById(window.location.hash.slice(1));
     if (target) openDay(target, { smooth: false });

@@ -78,13 +78,10 @@ export function initDetails() {
     );
   }
 
-  function renderSources(detail) {
-    const section = byId('poi-sources-section');
-    const sources = detail.sources ?? [];
-    section.hidden = sources.length === 0 && !detail.verificationNote;
-    byId('poi-verification').textContent = detail.verificationNote ?? '';
-    byId('poi-verification').hidden = !detail.verificationNote;
-    byId('poi-sources').replaceChildren(...sources.map((source) => h('li', {}, externalLink(source.url, `${source.label} ↗`))));
+  function renderNote(detail) {
+    const note = byId('poi-verification');
+    note.textContent = detail.verificationNote ?? '';
+    note.hidden = !detail.verificationNote;
   }
 
   function open(localId) {
@@ -109,7 +106,7 @@ export function initDetails() {
     byId('poi-audio-section').hidden = guides.length === 0;
     byId('poi-audio-links').replaceChildren(...guides.flatMap((guide) => [h('p', {}, guide.note || ''), externalLink(guide.url, guide.label)]));
 
-    renderSources(detail);
+    renderNote(detail);
     renderEvent(point, cityIndex.events);
     openId = localId;
     paintVisited();

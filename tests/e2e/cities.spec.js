@@ -48,7 +48,7 @@ test('city tabs switch the whole context and Kyoto is restored intact', async ({
 
 test('a shared place id resolves the details of the active city only', async ({ page }) => {
   await addTestCities(page, ['testville']);
-  await page.goto('/?city=testville');
+  await page.goto('/?city=testville&tab=mapa');
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'testville');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(2);
 
@@ -72,7 +72,7 @@ test('a shared place id resolves the details of the active city only', async ({ 
 
 test('switching city resets the map filters', async ({ page }) => {
   await addTestCities(page, ['testville']);
-  await page.goto('/');
+  await page.goto('/?tab=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
   await page.getByRole('button', { name: 'Comida', exact: true }).click();
   await expect(page.locator(SVG_MARKERS)).toHaveCount(0);
