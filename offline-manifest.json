@@ -1,7 +1,7 @@
 {
-  "version": "9f98e8c806",
+  "version": "f53fa16577",
   "sizes": {
-    "required": 1153971,
+    "required": 1161412,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -134,6 +134,7 @@
     "js/modules/tips.js",
     "js/modules/today.js",
     "js/modules/trip-status.js",
+    "js/modules/update-settings.js",
     "js/modules/updates.js",
     "js/modules/user-data.js",
     "js/modules/version.js",

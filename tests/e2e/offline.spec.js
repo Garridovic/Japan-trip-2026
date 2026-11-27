@@ -18,7 +18,7 @@ async function firstVisit(page, context) {
   await page.goto('/');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
   await page.evaluate(() => navigator.serviceWorker.ready);
-  await expect.poll(() => cacheSize(page, 'japan-guide-'), { timeout: 30_000 }).toBeGreaterThan(100);
+  await expect.poll(() => cacheSize(page, 'japan-guide-'), { timeout: 30_000 }).toBeGreaterThan(250); // the app (138 files) plus the small photos, which are saved right after the install
   // The worker takes control of the page after the first load.
   await page.reload();
   await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker.controller))).toBe(true);
