@@ -8,21 +8,23 @@ import { addDays, localISO } from './trip-status.js';
 export const STATE_KEY = 'onboarding-v1';
 export const SESSION_GAP_MS = 30 * 60 * 1000;
 export const MIN_SPACING_MS = 60 * 1000;
-export const SHOW_DELAY_MS = 3000;
+export const SHOW_DELAY_MS = 1500; // automatic tips: a short pause after arriving, then as soon as the element is steady
+export const READY_TIMEOUT_MS = 6000;
+export const REPLAY_EVENT = 'onboarding:replay';
 export const REPLAY_PARAM = 'onboarding';
 export const ENABLE_KEY = 'onboarding-enabled'; // automated browsers (tests) stay free of coach marks unless this is '1'
 
 /** Flows in priority order (the first eligible one wins the visit). `when` runs on the saved state; `target` is a CSS selector. */
 export const FLOWS = Object.freeze([
-  { id: 'taxi', view: 'viaje', label: 'Modo taxi', title: '🚕 Modo taxi', text: 'Al llegar, enseña tu hotel en pantalla grande, con el nombre en japonés, al conductor.', target: '#lodging-list [data-taxi]', action: { label: 'Probarlo ahora', click: true },
-    when: (c) => c.eve },
   { id: 'tabs', view: 'guia', label: 'Pestañas de la guía', title: 'Tu guía, por pestañas', text: 'Desliza las pestañas para ver Día a día, Comer, Otros lugares y Consejos. La guía recuerda la última que abriste.', target: '#city-view .nav-inner',
+    when: (c) => c.eve },
+  { id: 'taxi', view: 'guia', label: 'Modo taxi', title: '🚕 Modo taxi', text: 'Al llegar, enseña tu hotel en pantalla grande, con el nombre en japonés, al conductor.', target: '#hero-hotel .taxi-button', action: { label: 'Probarlo ahora', click: true },
     when: (c) => c.eve },
   { id: 'offline-map', view: 'mapa', label: 'Mapa sin conexión', title: 'Úsala sin conexión', text: 'La guía funciona sin internet. Guarda también el mapa antes de salir (mejor con wifi).', target: '#map-offline-button', action: { label: 'Guardar mapa', click: true },
     when: (c) => c.sessions >= 2 && c.mapOfflineState !== 'complete' },
-  { id: 'checklists', view: 'viaje', label: 'Checklists', title: 'Prepara el viaje', text: 'Marca lo que ya tienes: el progreso se guarda en tu móvil.', target: '#checklist-bar',
+  { id: 'checklists', view: 'viaje', label: 'Checklists', title: 'Prepara el viaje', text: 'Marca lo que ya tienes: el progreso se guarda en tu móvil.', target: '#checklist-count',
     when: (c) => c.sessions >= 2 },
-  { id: 'welcome', view: 'guia', label: 'Bienvenida y cambio de ciudad', title: '👋 Bienvenido a tu guía', text: 'Aquí cambias de ciudad: Tokio, Kioto, Osaka, Nara y Hakone. Todo el contenido cambia con ella.', target: '#city-tabs',
+  { id: 'welcome', view: 'guia', label: 'Bienvenida y cambio de ciudad', title: '👋 Bienvenido a tu guía', text: 'Aquí cambias de ciudad: Tokio, Kioto, Osaka, Nara y Hakone. Todo el contenido cambia con ella.', target: '#city-select',
     when: (c) => c.sessions <= 1 },
   { id: 'map-filters', view: 'mapa', label: 'Mapa y filtros', title: 'Filtra lo que ves', text: 'Toca aquí para elegir tipo de lugar y jornada. Toca un punto del mapa para abrir su ficha.', target: '#map-filters-button',
     when: (c) => c.sessions <= 1 }
@@ -52,7 +54,29 @@ export function pickFlow(state, view, { now = Date.now(), today = localISO(new D
 
 const visible = (element) => Boolean(element) && !element.hidden && element.getClientRects().length > 0;
 
-export function initOnboarding({ win = window, storage = null, tripStart = '', toast = () => {}, delayMs = SHOW_DELAY_MS } = {}) {
+/** Resolves with the element as soon as it is on screen and has stopped moving (three equal readings 60 ms apart); null after the timeout. */
+export function whenReady(doc, selector, { timeoutMs = READY_TIMEOUT_MS, win = window } = {}) {
+  return new Promise((resolve) => {
+    const started = Date.now();
+    let last = '';
+    let same = 0;
+    const check = () => {
+      const element = doc.querySelector(selector);
+      if (visible(element)) {
+        const r = element.getBoundingClientRect();
+        const now = `${Math.round(r.left)},${Math.round(r.top)},${Math.round(r.width)},${Math.round(r.height)}`;
+        same = now === last ? same + 1 : 0;
+        if (same >= 2) return resolve(element); // three equal readings in a row
+        last = now;
+      } else { last = ''; same = 0; }
+      if (Date.now() - started > timeoutMs) return resolve(null);
+      win.setTimeout(check, 60);
+    };
+    check();
+  });
+}
+
+export function initOnboarding({ win = window, storage = null, tripStart = '', toast = () => {}, navigate = null, delayMs = SHOW_DELAY_MS } = {}) {
   const doc = win.document;
   try { storage = storage ?? win.localStorage; } catch { /* blocked */ }
   if (!storage) return null;
@@ -67,7 +91,7 @@ export function initOnboarding({ win = window, storage = null, tripStart = '', t
   const mapOfflineState = () => doc.getElementById('save-offline-map')?.dataset.state || '';
   const dialogOpen = () => [...doc.querySelectorAll('[role="dialog"]:not([hidden]), .account-popover:not([hidden])')].some((dialog) => !dialog.classList.contains('onb-tip') && dialog.getClientRects().length > 0 && win.getComputedStyle(dialog).visibility !== 'hidden');
 
-  function close() { tip?.node.remove(); tip?.highlight?.classList.remove('onb-highlight'); win.removeEventListener('resize', tip?.place); doc.removeEventListener('scroll', tip?.place, true); tip = null; }
+  function close() { win.clearInterval(tip?.follow); tip?.node.remove(); tip?.highlight?.classList.remove('onb-highlight'); win.removeEventListener('resize', tip?.place); doc.removeEventListener('scroll', tip?.place, true); tip = null; }
 
   /** The strip of screen the tip may use: below the header and above the bottom bar. */
   function safeArea() {
@@ -80,7 +104,8 @@ export function initOnboarding({ win = window, storage = null, tripStart = '', t
   /** Brings the target on screen (it may be thousands of pixels down the page) with room for the tip below it. */
   function reveal(target, tipHeight) {
     const { top, bottom } = safeArea();
-    const rect = target.getBoundingClientRect();
+    let rect = target.getBoundingClientRect();
+    if (rect.left < 0 || rect.right > win.innerWidth) { target.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'instant' }); rect = target.getBoundingClientRect(); } // a card in a sideways strip
     if (rect.top >= top && rect.bottom + tipHeight + 12 <= bottom) return;
     win.scrollBy({ top: rect.top - top - 12, behavior: 'instant' });
   }
@@ -121,7 +146,7 @@ export function initOnboarding({ win = window, storage = null, tripStart = '', t
     doc.body.append(node);
     target.classList.add('onb-highlight');
     reveal(target, node.offsetHeight);
-    tip = { node, target, highlight: target, place: () => win.requestAnimationFrame(place) };
+    tip = { node, target, highlight: target, place: () => win.requestAnimationFrame(place), follow: win.setInterval(place, 300) }; // follows the element if the page settles after the tip appears
     place();
     win.addEventListener('resize', tip.place);
     doc.addEventListener('scroll', tip.place, true);
@@ -130,24 +155,45 @@ export function initOnboarding({ win = window, storage = null, tripStart = '', t
     return true;
   }
 
+  let ticket = 0;
+  /** Shows `flow` once its element is steady on screen. `forced` (the user asked) skips the pause and the rules. */
+  async function launch(flow, view, { forced, pause }) {
+    const mine = ++ticket;
+    if (pause) await new Promise((resolve) => { timer = win.setTimeout(resolve, pause); });
+    if (mine !== ticket || currentView !== view) return;
+    const target = await whenReady(doc, flow.target, { win });
+    if (mine !== ticket || currentView !== view) return;
+    if (!target) { if (forced) toast('Esta ayuda no está disponible en esta pantalla ahora mismo.'); return; }
+    if (!forced && dialogOpen()) return;
+    show(flow, { forced });
+  }
+
   function onView(view) {
     currentView = view;
     close();
     win.clearTimeout(timer);
+    ticket += 1; // cancels any tip still waiting for the previous screen
     state = touchSession(state, Date.now());
     writeState(storage, state);
-    const forced = forcedId && FLOWS.find((flow) => flow.id === forcedId && flow.view === view);
-    if (forced) {
-      forcedId = null;
-      timer = win.setTimeout(() => { if (currentView === view) show(forced, { forced: true }); }, 1200);
-      return;
-    }
+    const wanted = forcedId && FLOWS.find((flow) => flow.id === forcedId && flow.view === view);
+    if (wanted) { forcedId = null; launch(wanted, view, { forced: true, pause: 0 }); return; }
     timer = win.setTimeout(() => {
       if (currentView !== view || dialogOpen()) return;
       const flow = pickFlow(state, view, { tripStart, mapOfflineState: mapOfflineState() });
-      if (flow) show(flow);
+      if (flow) launch(flow, view, { forced: false, pause: 0 });
     }, delayMs);
   }
+
+  // «Cómo funciona»: the account panel asks for a tip by id; we go to its screen (no reload) and show it as soon as it is steady.
+  doc.addEventListener(REPLAY_EVENT, async (event) => {
+    const flow = FLOWS.find((candidate) => candidate.id === event.detail?.id);
+    if (!flow || !navigate) return;
+    event.detail.handled = true;
+    close();
+    await navigate(flow.view);
+    currentView = flow.view;
+    launch(flow, flow.view, { forced: true, pause: 0 });
+  });
 
   // «Cómo funciona» (in the account panel) sends people here with ?onboarding=<id>: show that tip once, then clean the URL.
   let forcedId = null;

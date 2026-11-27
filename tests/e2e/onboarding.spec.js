@@ -12,12 +12,12 @@ async function setup(page, state = null) {
 const tip = (page, flow) => page.locator(`.onb-tip[data-flow="${flow}"]`);
 
 test.describe('feature onboarding', () => {
-  test('first open: the welcome tip points at the city tabs, closes with «Entendido» and never returns', async ({ page }) => {
+  test('first open: the welcome tip points at the city button, closes with «Entendido» and never returns', async ({ page }) => {
     await setup(page);
     await page.goto('/');
     await expect(tip(page, 'welcome')).toBeVisible({ timeout: 10_000 });
     await expect(tip(page, 'welcome')).toContainText('cambias de ciudad');
-    await expect(page.locator('#city-tabs')).toHaveClass(/onb-highlight/);
+    await expect(page.locator('#city-select')).toHaveClass(/onb-highlight/);
     await tip(page, 'welcome').getByRole('button', { name: 'Entendido' }).click();
     await expect(page.locator('.onb-tip')).toHaveCount(0);
     await page.reload();
@@ -57,16 +57,18 @@ test.describe('feature onboarding', () => {
     await expect(tip(page, 'checklists')).toContainText('Marca lo que ya tienes');
   });
 
-  test('the day before the trip: tabs in the guide, taxi in Viaje', async ({ page }) => {
+  test('the day before the trip: tabs, then taxi on the hotel card of the guide', async ({ page }) => {
     await setup(page, { sessions: 3, seen: { welcome: 1, 'map-filters': 1, 'offline-map': 1, checklists: 1 } });
     await page.clock.install({ time: new Date('2026-12-07T10:00:00') });
     await page.goto('/');
     await expect(tip(page, 'tabs')).toBeVisible({ timeout: 10_000 });
     await tip(page, 'tabs').getByRole('button', { name: 'Entendido' }).click();
     await page.clock.fastForward(61_000); // past the one-minute spacing between tips
-    await page.locator('[data-view-target="viaje"]').first().click();
+    await page.locator('[data-view-target="mapa"]').first().click();
+    await page.locator('[data-view-target="guia"]').first().click();
     await expect(tip(page, 'taxi')).toBeVisible({ timeout: 10_000 });
     await expect(tip(page, 'taxi').getByRole('button', { name: 'Probarlo ahora' })).toBeVisible();
+    await expect(page.locator('#hero-hotel .taxi-button')).toHaveClass(/onb-highlight/);
   });
 
   test('before the eve there is no tabs or taxi tip', async ({ page }) => {
@@ -92,7 +94,7 @@ test.describe('feature onboarding', () => {
   });
 
   for (const [width, height] of [[390, 844], [320, 568]]) {
-    for (const flow of [{ id: 'taxi', view: 'viaje' }, { id: 'checklists', view: 'viaje' }, { id: 'map-filters', view: 'mapa' }, { id: 'tabs', view: 'guia' }]) {
+    for (const flow of [{ id: 'taxi', view: 'guia' }, { id: 'checklists', view: 'viaje' }, { id: 'map-filters', view: 'mapa' }, { id: 'tabs', view: 'guia' }]) {
       test(`«${flow.id}» tip: the target is scrolled into view and the whole tip, buttons included, stays between header and bottom bar at ${width}×${height}`, async ({ page }) => {
         await page.setViewportSize({ width, height });
         await setup(page, { sessions: 2, seen: {} });
@@ -118,28 +120,49 @@ test.describe('feature onboarding', () => {
     }
   }
 
-  for (const flow of [{ id: 'welcome', view: 'guia' }, { id: 'map-filters', view: 'mapa' }, { id: 'tabs', view: 'guia' }, { id: 'checklists', view: 'viaje' }, { id: 'taxi', view: 'viaje' }]) {
+  for (const flow of [{ id: 'welcome', view: 'guia' }, { id: 'map-filters', view: 'mapa' }, { id: 'tabs', view: 'guia' }, { id: 'checklists', view: 'viaje' }, { id: 'taxi', view: 'guia' }]) {
     test(`«${flow.id}» tip on a desktop screen sits at its element, not in the middle of the page`, async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
       await setup(page, { sessions: 2, seen: {} });
       await page.goto(`/?view=${flow.view}&onboarding=${flow.id}`);
       await expect(tip(page, flow.id)).toBeVisible({ timeout: 10_000 });
-      await page.waitForTimeout(400);
+      await page.waitForTimeout(800); // the tip follows its element for a moment while the page settles
       const geometry = await page.evaluate((id) => {
         const tipNode = document.querySelector(`.onb-tip[data-flow="${id}"]`).getBoundingClientRect();
         const target = document.querySelector('.onb-highlight').getBoundingClientRect();
         const center = target.left + target.width / 2;
         const gap = tipNode.top >= target.bottom ? tipNode.top - target.bottom : target.top - tipNode.bottom;
-        return { tipLeft: tipNode.left, tipRight: tipNode.right, center, gap, vw: innerWidth };
+        return { tipLeft: tipNode.left, tipRight: tipNode.right, center, gap, vw: innerWidth, targetWidth: target.width, targetHeight: target.height };
       }, flow.id);
       expect(geometry.tipLeft).toBeGreaterThanOrEqual(0);
       expect(geometry.tipRight).toBeLessThanOrEqual(geometry.vw);
       // the target's centre is within the tip's horizontal span (or the tip is pinned at the screen edge nearest to it)
       expect(geometry.center >= geometry.tipLeft - 1 && geometry.center <= geometry.tipRight + 1).toBe(true);
+      if (flow.id !== 'tabs') expect(geometry.targetWidth).toBeLessThan(400); // it points at one button or figure, not at a whole bar
+      expect(geometry.targetHeight).toBeGreaterThan(14);
       expect(geometry.gap).toBeGreaterThanOrEqual(0);
       expect(geometry.gap).toBeLessThanOrEqual(24); // right next to it
     });
   }
+
+  test('«Cómo funciona» goes to the right screen without reloading and shows the tip within a second', async ({ page }) => {
+    await page.route('**/assets/auth-config.js', (route) => route.fulfill({ contentType: 'text/javascript', body: "export const AUTH_CONFIG = { enabled: true, domain: 'test.eu.auth0.com', clientId: 'x' };" }));
+    await page.route('**/assets/vendor/auth0-spa-js.production.esm.js', (route) => route.fulfill({ contentType: 'text/javascript', body: 'export class Auth0Client { constructor(){} async isAuthenticated(){return false} async getUser(){return null} }' }));
+    await setup(page, { sessions: 3, seen: { welcome: 1, 'map-filters': 1, 'offline-map': 1, checklists: 1, tabs: 1, taxi: 1 } });
+    await page.goto('/?view=mapa');
+    await expect(page.locator('#hero-title')).not.toHaveText('…');
+    await page.evaluate(() => { window.__sameDocument = true; });
+    for (const [id, view] of [['taxi', 'guia'], ['checklists', 'viaje'], ['map-filters', 'mapa']]) {
+      await page.locator('#account-button').click();
+      const started = Date.now();
+      await page.locator(`[data-how="${id}"]`).click();
+      await expect(tip(page, id)).toBeVisible({ timeout: 5_000 });
+      expect(Date.now() - started).toBeLessThan(2000);
+      expect(await page.evaluate(() => window.__sameDocument)).toBe(true); // no reload
+      expect(page.url()).toContain(view === 'guia' ? '127.0.0.1' : `view=${view}`);
+      await tip(page, id).getByRole('button', { name: 'Entendido' }).click();
+    }
+  });
 
   test('automated browsers stay free of tips unless switched on', async ({ page }) => {
     await page.route(WORKER, (route) => route.abort());

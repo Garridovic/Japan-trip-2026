@@ -7,7 +7,7 @@ import { SYNCED_KEYS } from './user-data.js';
 import { createCloudSync, SAVE_DELAY_MS, BACKUP_KEY, LAST_SYNC_KEY } from './cloud-sync.js';
 import { createAuth, isConfigured, isAdmin } from './auth.js';
 import { updateSection } from './update-settings.js';
-import { FLOWS, REPLAY_PARAM } from './onboarding.js';
+import { FLOWS, REPLAY_PARAM, REPLAY_EVENT } from './onboarding.js';
 import { loadNotices, publishNotices, buildNotice, publishErrorText, MAX_TITLE, MAX_TEXT } from './notices.js';
 
 /** What the user can reset one by one. `empty` is the value stored for "nothing" (the same shape the stores write). */
@@ -238,7 +238,11 @@ export async function initAccount({ config, userData, win = window, storage = nu
   /** «Cómo funciona»: repeats the first-use tip of each feature (works without an account). */
   function howSection() {
     const replay = (flow) => {
-      const url = new URL(win.location.href);
+      setOpen(false);
+      const detail = { id: flow.id, handled: false };
+      win.document.dispatchEvent(new CustomEvent(REPLAY_EVENT, { detail }));
+      if (detail.handled) return; // the guide moves to the right screen and shows the tip, no reload
+      const url = new URL(win.location.href); // fallback: reload on that screen with the tip requested in the URL
       url.search = '';
       url.hash = '';
       if (flow.view !== 'guia') url.searchParams.set('view', flow.view);

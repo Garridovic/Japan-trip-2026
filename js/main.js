@@ -271,7 +271,7 @@ async function start() {
   import('./modules/notices.js').then(({ initNotices }) => initNotices()).catch((error) => console.warn('[notices] disabled:', error)); // best effort: never blocks the guide
   import('./modules/onboarding.js').then(({ initOnboarding }) => {
     const tripStart = cities.map((city) => city.arrivalDate).filter(Boolean).sort()[0] ?? '';
-    onboarding = initOnboarding({ tripStart, toast });
+    onboarding = initOnboarding({ tripStart, toast, navigate: (view) => navigateViewRef(view) });
     onboarding?.onView(activeView);
   }).catch((error) => console.warn('[onboarding] disabled:', error)); // best effort: never blocks the guide
 }

@@ -25,7 +25,7 @@ test('second session: offline map in Mapa, checklists in Viaje; the first-sessio
   assert.equal(pickFlow(second, 'mapa', { ...ctx, mapOfflineState: 'complete' }), null); // already saved: nothing to teach
 });
 
-test('the day before the trip: tabs in the guide and taxi in Viaje (taxi beats checklists)', () => {
+test('the day before the trip: tabs, then taxi, both in the guide (hotel card); Viaje keeps its checklists', () => {
   const eve = { ...ctx, today: '2026-12-07' };
   assert.equal(isEve('2026-12-08', '2026-12-06'), false);
   assert.equal(isEve('2026-12-08', '2026-12-07'), true);
@@ -33,8 +33,8 @@ test('the day before the trip: tabs in the guide and taxi in Viaje (taxi beats c
   assert.equal(isEve('', '2026-12-07'), false);
   const state = fresh({ sessions: 3 });
   assert.equal(pickFlow(state, 'guia', eve).id, 'tabs');
-  assert.equal(pickFlow(state, 'viaje', eve).id, 'taxi');
-  assert.equal(pickFlow(fresh({ sessions: 3, seen: { taxi: 1 } }), 'viaje', eve).id, 'checklists');
+  assert.equal(pickFlow(fresh({ sessions: 3, seen: { tabs: 1 } }), 'guia', eve).id, 'taxi'); // next visit to the guide
+  assert.equal(pickFlow(state, 'viaje', eve).id, 'checklists');
   assert.equal(pickFlow(state, 'guia', ctx), null); // not yet the eve
 });
 
