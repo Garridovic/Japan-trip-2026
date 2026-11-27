@@ -1,10 +1,11 @@
-// "Mis sellos" section at the top of the Viaje view: a goshuin-style stamp for every visited place, grouped by city,
-// with a progress ring per city and a small celebration when a city is completed. Calm by design: no streaks, no ranking.
+// "Mis sellos" section at the top of the Viaje view: the traveller notes each real stamp they collect (goshuin or
+// gojōin), with an optional note and place. "Ver en el mapa" opens the map showing only the places where a real stamp
+// is confirmed. Calm by design: no streaks, no ranking, no reminders.
 import { byId, h } from './dom.js';
 import { fetchJson, cityDataPath } from './data.js';
-import { visitedStore } from './visited.js';
-import { toast } from './feedback.js';
-import { buildCollections, stampLook, percent } from './stamps.js';
+import { toast, haptic } from './feedback.js';
+import { userStorage } from './user-data.js';
+import { createStampStore, countStamps, stampLook, stampPlaces, STAMP_KINDS } from './stamps.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 const svg = (tag, attrs = {}, ...children) => {
@@ -27,90 +28,91 @@ const MOTIF_ART = {
   mountain: () => [svg('path', { d: 'M18 55 33 30l8 12 6-8 15 21Z', class: 'stamp-solid' }), svg('path', { d: 'M18 55h44', class: 'stamp-fill-line' })]
 };
 
-/** The stamp artwork for one place (decorative: the name is written next to it as text). */
-export function stampSvg(cityId, id) {
-  const { shape, motif } = stampLook(cityId, id);
+/** Decorative artwork for one entry (the label is written next to it as text). */
+export function stampSvg(id) {
+  const { shape, motif } = stampLook(id);
   return svg('svg', { viewBox: '0 0 80 80', class: 'stamp-art', 'aria-hidden': 'true', focusable: 'false' }, ...FRAMES[shape](), ...MOTIF_ART[motif]());
 }
 
-const RADIUS = 15.9155; // circumference 100: stroke-dasharray is directly a percentage
-function ring(collection) {
-  const pct = percent(collection);
-  return svg('svg', { viewBox: '0 0 40 40', class: 'stamp-ring', 'aria-hidden': 'true', focusable: 'false' },
-    svg('circle', { cx: 20, cy: 20, r: RADIUS, class: 'stamp-ring-track' }),
-    svg('circle', { cx: 20, cy: 20, r: RADIUS, class: 'stamp-ring-fill', 'stroke-dasharray': `${pct} ${100 - pct}`, transform: 'rotate(-90 20 20)' }));
-}
+const DATE_FORMAT = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+const shortDate = (iso) => { const time = Date.parse(`${iso}T00:00:00Z`); return Number.isFinite(time) ? DATE_FORMAT.format(time) : ''; };
 
-function stampCell(cityId, stamp, isNew) {
-  const look = stampLook(cityId, stamp.id);
-  return h('li', { class: `stamp${stamp.visited ? ' is-earned' : ''}${isNew ? ' is-new' : ''}`, dataset: { stampId: stamp.id }, style: `--tilt:${look.tilt}deg` },
-    stamp.visited ? stampSvg(cityId, stamp.id) : h('span', { class: 'stamp-slot', 'aria-hidden': 'true' }),
-    h('span', { class: 'stamp-name' }, stamp.name),
-    h('span', { class: 'visually-hidden' }, stamp.visited ? ' (sello conseguido)' : ' (sello por conseguir)'));
-}
-
-/** Loads the places of every enabled city in the background (small files, already cached for offline use). */
+/** Places of every enabled city (small files, cached for offline use). Loaded the first time Viaje opens. */
 async function loadCityPlaces(cities, load) {
   const loaded = await Promise.all(cities.map(async ({ id, name }) => {
-    try { return { id, name, places: (await load(cityDataPath(id, 'places'))) ?? [] }; } catch (error) { console.warn(`[sellos] ${id}: ${error.message}`); return null; }
+    try { return { id, name, places: (await load(cityDataPath(id, 'places'))) ?? [] }; } catch (error) { console.warn(`[sellos] ${id}: ${error.message}`); return { id, name, places: [] }; }
   }));
-  return loaded.filter(Boolean);
+  return loaded;
 }
 
-export function initStamps(cities, { store = visitedStore(), load = fetchJson, notify = toast } = {}) {
+export function initStamps(cities, { storage = userStorage(), load = fetchJson, notify = toast, openMap = () => {} } = {}) {
   const section = byId('sellos');
-  if (!section || !cities.length) { section?.setAttribute('hidden', ''); return { show: async () => {} }; }
-  const list = byId('stamps-cities');
-  const openCities = new Set();
-  let placesByCity = [];
-  let lastComplete = new Set();
-  let newest = null; // { cityId, id }: the stamp that just arrived, to animate it once
+  if (!section) return { show: async () => {} };
+  const store = createStampStore(storage);
+  const list = byId('stamps-list');
+  const select = byId('stamp-place');
+  const input = byId('stamp-label');
+  let cityPlaces = cities.map(({ id, name }) => ({ id, name, places: [] }));
+  let newestId = null;
 
-  function render() {
-    const collections = buildCollections(placesByCity, store);
-    const total = collections.reduce((sum, c) => sum + c.done, 0);
-    byId('stamps-total').textContent = total === 1 ? '1 sello' : `${total} sellos`;
-    section.hidden = collections.length === 0;
-    list.replaceChildren(...collections.map((collection) => {
-      const earned = collection.stamps.filter((stamp) => stamp.visited);
-      const pending = collection.stamps.filter((stamp) => !stamp.visited);
-      const details = h('details', { class: `stamps-city${collection.complete ? ' is-complete' : ''}`, dataset: { city: collection.id }, open: openCities.has(collection.id) },
-        h('summary', {},
-          ring(collection),
-          h('span', { class: 'stamps-city-name' }, collection.name),
-          h('span', { class: 'stamps-count', dataset: { done: collection.done, total: collection.total } }, `${collection.done}/${collection.total}`),
-          collection.complete ? h('span', { class: 'stamps-badge' }, 'Colección completa') : null),
-        collection.done === 0 ? h('p', { class: 'muted small stamps-empty' }, 'Marca un lugar como visitado y se estampará aquí su sello.') : null,
-        collection.done ? h('ul', { class: 'stamps-grid' }, earned.map((stamp) => stampCell(collection.id, stamp, newest?.cityId === collection.id && newest.id === stamp.id))) : null,
-        pending.length ? h('details', { class: 'stamps-pending' }, h('summary', {}, `Por conseguir (${pending.length})`), h('ul', { class: 'stamps-grid' }, pending.map((stamp) => stampCell(collection.id, stamp, false)))) : null);
-      details.addEventListener('toggle', () => { if (details.open) openCities.add(collection.id); else openCities.delete(collection.id); });
-      return details;
-    }));
-    newest = null;
-    return collections;
+  const placeName = (key) => {
+    const [cityId, id] = String(key ?? '').split(':');
+    return cityPlaces.find((city) => city.id === cityId)?.places.find((place) => place.id === id)?.name ?? '';
+  };
+  const cityName = (cityId) => cityPlaces.find((city) => city.id === cityId)?.name ?? cityId;
+
+  function renderPlaces() {
+    const groups = cityPlaces.map((city) => ({ city, places: stampPlaces(city.places) })).filter(({ places }) => places.length);
+    select.replaceChildren(h('option', { value: '' }, 'Sin lugar'),
+      ...groups.map(({ city, places }) => h('optgroup', { label: city.name },
+        places.map((place) => h('option', { value: `${city.id}:${place.id}` }, `${place.name} · ${STAMP_KINDS[place.stamp.kind]}`)))));
+    byId('stamps-map').hidden = groups.length === 0;
   }
 
-  /** Fetches the places of every city once: the first time Viaje opens, or the first time a place is marked. */
-  let ready = null;
-  const ensure = () => (ready ??= loadCityPlaces(cities, load).then((loaded) => {
-    placesByCity = loaded;
-    lastComplete = new Set(render().filter((c) => c.complete).map((c) => c.id));
-  }));
+  function render() {
+    const entries = store.entries();
+    const { total, byCity } = countStamps(entries);
+    byId('stamps-total').textContent = total === 1 ? '1 sello' : `${total} sellos`;
+    byId('stamps-cities').replaceChildren(...[...byCity].map(([cityId, count]) => h('span', { class: 'stamps-city-chip', dataset: { city: cityId } }, `${cityName(cityId)} ${count}`)));
+    byId('stamps-empty').hidden = total > 0;
+    list.replaceChildren(...entries.map((entry) => {
+      const place = entry.place ? placeName(entry.place) : '';
+      const meta = [place && place !== entry.label ? place : '', shortDate(entry.date)].filter(Boolean).join(' · ');
+      return h('li', { class: `stamp${entry.id === newestId ? ' is-new' : ''}`, dataset: { stampId: entry.id }, style: `--tilt:${stampLook(entry.id).tilt}deg` },
+        stampSvg(entry.id),
+        h('span', { class: 'stamp-name' }, entry.label),
+        meta ? h('span', { class: 'stamp-meta' }, meta) : null,
+        h('button', { type: 'button', class: 'stamp-remove', 'aria-label': `Quitar el sello «${entry.label}»`, onclick: () => removeEntry(entry.id) }, '✕'));
+    }));
+    newestId = null;
+  }
 
-  store.subscribe(async ({ cityId, id, visited }) => {
-    const wasLoaded = placesByCity.length > 0;
-    if (!wasLoaded) { await ensure(); return; } // first load already shows the new mark; nothing to celebrate yet
-    if (visited) { newest = { cityId, id }; openCities.add(cityId); }
-    const collections = render();
-    const complete = new Set(collections.filter((c) => c.complete).map((c) => c.id));
-    for (const collection of collections) {
-      if (complete.has(collection.id) && !lastComplete.has(collection.id)) {
-        notify(`Colección de ${collection.name} completa: ${collection.total} sellos`, { duration: 6000 });
-        list.querySelector(`[data-city="${CSS.escape(collection.id)}"]`)?.classList.add('is-celebrating');
-      }
-    }
-    lastComplete = complete;
+  function removeEntry(id) {
+    const entry = store.remove(id);
+    if (entry) notify('Sello quitado', { actionLabel: 'Deshacer', onAction: () => store.restore(entry) });
+  }
+
+  store.subscribe(render);
+  byId('stamp-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const place = select.value || null;
+    const entry = store.add({ label: input.value, place, placeName: placeName(place) });
+    if (!entry) { notify('Has llegado al máximo de sellos que caben en la guía.'); return; }
+    newestId = entry.id;
+    render();
+    haptic(16);
+    input.value = '';
+    select.value = '';
+    notify(`Sello añadido: ${entry.label}`);
   });
+  byId('stamps-map').addEventListener('click', () => openMap());
 
-  return { show: ensure, render };
+  render();
+  section.hidden = false;
+  let ready = null;
+  return {
+    store,
+    /** Fills the place list the first time Viaje opens (it needs the places of every city). */
+    show: () => (ready ??= loadCityPlaces(cities, load).then((loaded) => { cityPlaces = loaded; renderPlaces(); render(); }))
+  };
 }

@@ -70,7 +70,9 @@ async function start() {
   });
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
-  const stamps = initStamps(cities); // goshuin-style stamps and progress per city, derived from the visited marks
+  const stamps = initStamps(cities, { // stamp book; "Ver en el mapa" opens the map with only the places that have a real stamp
+    openMap: async () => { await navigateViewRef('mapa'); document.querySelector('[data-map-kind="sellos"]')?.click(); }
+  });
   initChecklist(global.checklist);
   initTaxi(global.lodging?.stays); // the taxi screen opens from any button with data-taxi
   initLodging(global.lodging);
