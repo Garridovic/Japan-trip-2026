@@ -106,3 +106,30 @@ test.describe('map search', () => {
     expect(await input(page).evaluate((el) => parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(16);
   });
 });
+
+test.describe('map search with a notice banner', () => {
+  const withNotice = async (page, width) => {
+    await page.setViewportSize({ width, height: 700 });
+    await page.addInitScript(() => { localStorage.setItem('notices-enabled', '1'); localStorage.setItem('notices-cache', JSON.stringify([{ id: 'n1', tipo: 'aviso', titulo: 'Aviso de prueba', texto: 'Texto del aviso para comprobar que no tapa el buscador.', caduca: 0 }])); });
+    await page.route('https://japon-avisos.garridovic.workers.dev/avisos', (route) => route.abort());
+    await openMap(page);
+    await expect(page.locator('#app-notice')).toBeVisible();
+  };
+  for (const width of [390, 320]) {
+    test(`the banner and the search field never overlap at ${width} px, and the map moves back when the notice is closed`, async ({ page }) => {
+      await withNotice(page, width);
+      const notice = await page.locator('#app-notice').boundingBox();
+      await expect.poll(async () => (await page.locator('#view-mapa').boundingBox()).y).toBeGreaterThanOrEqual(notice.y + notice.height - 1);
+      const field = await page.locator('#map-search-field').boundingBox();
+      expect(field.y).toBeGreaterThanOrEqual(notice.y + notice.height);
+      // Nothing of the banner is under the field at the field's centre.
+      const onTop = await page.locator('#map-search-input').evaluate((el) => { const r = el.getBoundingClientRect(); return el.contains(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2)); });
+      expect(onTop).toBe(true);
+      await input(page).fill('kinkakuji');
+      await expect(page.locator('#map-search-drop .map-search-foot')).toHaveText('Ver en el mapa'); // singular
+      await page.locator('#app-notice').getByRole('button', { name: 'Entendido' }).click();
+      await expect(page.locator('#app-notice')).toBeHidden();
+      await expect.poll(async () => (await page.locator('#view-mapa').boundingBox()).y).toBeLessThan(notice.y + 2);
+    });
+  }
+});

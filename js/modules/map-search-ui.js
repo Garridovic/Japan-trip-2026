@@ -73,7 +73,7 @@ export function initMapSearch({ map, doc = document }) {
         drop.append(row);
       });
       drop.append(h('button', { type: 'button', class: 'map-search-foot', onclick: () => { apply(); closeDrop(); input.blur(); } },
-        `Ver ${outcome.results.length === 1 ? 'el' : `los ${outcome.results.length}`} en el mapa`));
+        outcome.results.length === 1 ? 'Ver en el mapa' : `Ver los ${outcome.results.length} en el mapa`));
     }
     drop.hidden = false;
     input.setAttribute('aria-expanded', 'true');

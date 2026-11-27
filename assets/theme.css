@@ -182,7 +182,7 @@ a:hover { color: var(--accent); }
 .offline-chip-icon { display: none; }
 
 /* ====== Mapa a pantalla completa (?view=mapa) ====== */
-.map-view { position: fixed; z-index: 20; top: var(--tabs-height); left: 0; right: 0; bottom: calc(var(--bar-height) + env(safe-area-inset-bottom)); }
+.map-view { position: fixed; z-index: 20; top: calc(var(--tabs-height) + var(--notice-height, 0px)); left: 0; right: 0; bottom: calc(var(--bar-height) + env(safe-area-inset-bottom)); }
 .map-view[hidden] { display: none; }
 body[data-view="mapa"] { overflow: hidden; }
 .map-view-canvas { position: absolute; inset: 0; }

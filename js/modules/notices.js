@@ -81,17 +81,25 @@ export function initNotices({ win = window, storage = null, fetchFn, url } = {})
   // Only the published site (or an explicit switch) talks to the Worker: local servers and test runs stay offline and free of CORS noise.
   if (win.location.hostname !== SITE_HOST && storage?.getItem(ENABLE_KEY) !== '1') return null;
   let lastLoad = 0;
+  // The full-screen map starts below the banner: its height is published as --notice-height (0 while the banner is hidden).
+  const root = win.document.documentElement;
+  const publishHeight = () => {
+    root.style.setProperty('--notice-height', host.hidden ? '0px' : `${host.offsetHeight + 8}px`);
+    win.dispatchEvent(new win.Event('resize')); // the map re-measures its container
+  };
+  if (typeof win.ResizeObserver === 'function') new win.ResizeObserver(publishHeight).observe(host);
 
   function render(list) {
     const seen = readJSON(storage, SEEN_KEY, []);
     const [notice] = visibleNotices(list, { now: Date.now(), seen }).slice(-1);
     host.replaceChildren();
     host.hidden = !notice;
-    if (!notice) return;
+    if (!notice) { publishHeight(); return; }
     host.append(
       h('strong', {}, notice.titulo),
       notice.texto ? h('p', {}, notice.texto) : null,
       h('button', { type: 'button', class: 'filter', onclick: () => { writeJSON(storage, SEEN_KEY, [...seen, notice.id].slice(-30)); render(list); } }, 'Entendido'));
+    publishHeight();
   }
 
   async function refresh() {
