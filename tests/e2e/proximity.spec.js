@@ -31,6 +31,7 @@ const turnOn = async (page) => {
   await page.getByRole('switch', { name: /Avisos de lugares cercanos/ }).click();
   await expect(page.locator('#proximity-consent')).toContainText('no puede avisarte con la app cerrada ni con el móvil bloqueado');
   await page.getByRole('button', { name: 'Activar avisos' }).click();
+  await page.keyboard.press('Escape'); // the account screen stays open behind the consent sheet
 };
 const near = (p, metres = 20, accuracy = 15) => ({ latitude: p.lat + metres / 111195, longitude: p.lng, accuracy });
 const card = (page) => page.locator('.proximity-card');

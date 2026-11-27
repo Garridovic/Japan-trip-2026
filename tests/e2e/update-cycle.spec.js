@@ -20,7 +20,7 @@ async function installed(page, context) {
   await expect(page.locator('#update-version')).toHaveText(version.version);
 }
 
-const deploy = (context, delay = 1500) => context.addCookies([{ name: 'fake-deploy', value: `${NEW_VERSION}~${delay}`, url: `http://127.0.0.1:${process.env.E2E_PORT ?? 4173}` }]);
+const deploy = (context, delay = 1500, flag = '') => context.addCookies([{ name: 'fake-deploy', value: `${NEW_VERSION}~${delay}${flag ? `~${flag}` : ''}`, url: `http://127.0.0.1:${process.env.E2E_PORT ?? 4173}` }]);
 const checkNow = (page) => page.evaluate(() => window.dispatchEvent(new Event('online')));
 
 test('a new version is applied by itself when the app is opened and nothing is half-done, even with slow photos', async ({ page, context }) => {
@@ -68,4 +68,49 @@ test('the small photos of the new version are downloaded in the background after
   await checkNow(page);
   await expect(page.locator('#update-version')).toHaveText(NEW_VERSION, { timeout: 20_000 });
   await expect.poll(() => page.evaluate(async () => { const n = (await caches.keys()).find((k) => k.startsWith('japan-guide-')); return n ? (await (await caches.open(n)).keys()).length : 0; }), { timeout: 60_000 }).toBeGreaterThan(250);
+});
+
+test('even when the new worker can never install, "Actualizar" ends on the new version (start-over route)', async ({ page, context }) => {
+  test.setTimeout(120_000);
+  await installed(page, context);
+  await page.locator('body').click({ position: { x: 5, y: 5 } });
+  await deploy(context, 0, 'broken');
+  await checkNow(page);
+  await expect(page.locator('#update-banner')).toBeVisible({ timeout: 15_000 });
+  await page.locator('#update-reload').click();
+  await expect(page.locator('#update-version')).toHaveText(NEW_VERSION, { timeout: 60_000 });
+  expect(page.url()).not.toContain('_u='); // the cache-busting parameter is taken off the address again
+  await expect(page.locator('#update-banner')).toBeHidden();
+});
+
+test('after a start-over the check still runs: a newer version published later shows the banner again', async ({ page, context }) => {
+  test.setTimeout(120_000);
+  await installed(page, context);
+  await page.locator('body').click({ position: { x: 5, y: 5 } });
+  await deploy(context, 0, 'broken');
+  await checkNow(page);
+  await page.locator('#update-reload').click();
+  await expect(page.locator('#update-version')).toHaveText(NEW_VERSION, { timeout: 60_000 });
+  await context.addCookies([{ name: 'fake-deploy', value: 'V99.1.0~0~broken', url: `http://127.0.0.1:${process.env.E2E_PORT ?? 4173}` }]);
+  await page.locator('body').click({ position: { x: 5, y: 5 } });
+  await checkNow(page);
+  await expect(page.locator('#update-banner-text')).toContainText('V99.1.0', { timeout: 20_000 });
+});
+
+test('the settings block shows installed and published versions and can force the update', async ({ page, context }) => {
+  test.setTimeout(120_000);
+  await installed(page, context);
+  await page.locator('body').click({ position: { x: 5, y: 5 } });
+  await page.evaluate(async () => {
+    const { updateSection } = await import('/js/modules/update-settings.js');
+    document.body.append(updateSection());
+  });
+  await expect(page.locator('#settings-version-installed')).toHaveText(version.version);
+  await page.locator('#settings-update-check').click();
+  await expect(page.locator('#settings-version-message')).toHaveText('Tienes la última versión.');
+  await deploy(context, 0, 'broken');
+  await page.locator('#settings-update-check').click();
+  await expect(page.locator('#settings-version-published')).toHaveText(NEW_VERSION);
+  await page.locator('#settings-update-force').click();
+  await expect(page.locator('#update-version')).toHaveText(NEW_VERSION, { timeout: 60_000 });
 });

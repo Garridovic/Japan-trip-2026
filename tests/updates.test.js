@@ -18,7 +18,7 @@ test('every outcome has a plain-language message', () => {
   assert.match(describeCheck('offline'), /sigue funcionando/);
 });
 
-import { waitForTakeover, forceFreshStart } from '../js/modules/updates.js';
+import { waitForTakeover, forceFreshStart, reloadFresh, settle, HARD_PARAM } from '../js/modules/updates.js';
 import { readFileSync } from 'node:fs';
 
 function fakeWin({ onUpdate } = {}) {
@@ -59,13 +59,18 @@ test('waitForTakeover reports a worker that could not install, and a timeout', a
 test('forceFreshStart unregisters every worker and deletes only the guide caches', async () => {
   const removed = [];
   const deleted = [];
+  const fetched = [];
   const win = {
+    setTimeout, clearTimeout,
+    fetch: async (url, options) => { fetched.push([url, options?.cache]); return url === 'offline-manifest.json' ? { json: async () => ({ required: ['index.html', 'js/main.js'] }) } : { arrayBuffer: async () => new ArrayBuffer(0) }; },
     navigator: { serviceWorker: { getRegistrations: async () => [{ unregister: async () => removed.push('a') }, { unregister: async () => removed.push('b') }] } },
     caches: { keys: async () => ['japan-guide-x', 'japan-tiles-v1', 'japan-guide-y'], delete: async (name) => deleted.push(name) }
   };
   await forceFreshStart(win);
   assert.deepEqual(removed, ['a', 'b']);
   assert.deepEqual(deleted, ['japan-guide-x', 'japan-guide-y'], 'saved map tiles are kept');
+  assert.deepEqual(fetched.map(([url]) => url), ['offline-manifest.json', 'index.html', 'js/main.js'], 'the browser copies of the app are refreshed too');
+  assert.ok(fetched.every(([, cache]) => cache === 'reload'));
 });
 
 test('the worker takes over once the app is saved and fetches the small photos only afterwards', () => {
@@ -75,4 +80,38 @@ test('the worker takes over once the app is saved and fetches the small photos o
   assert.doesNotMatch(install, /manifest\.optional/, 'photos must not delay the install');
   assert.match(worker, /type === 'skip-waiting'/);
   assert.match(worker, /fillInBackground\(\)/);
+});
+
+test('forceFreshStart never hangs or throws, even if the browser calls do', async () => {
+  const win = {
+    setTimeout: (fn, ms) => setTimeout(fn, Math.min(ms, 20)), clearTimeout,
+    navigator: { serviceWorker: { getRegistrations: () => new Promise(() => {}) } }, // never answers
+    caches: { keys: async () => { throw new Error('boom'); } },
+    fetch: () => new Promise(() => {})
+  };
+  await forceFreshStart(win); // resolves once every step has used up its (shortened) time limit
+});
+
+test('reloadFresh loads the same page on an address no cache has seen, and keeps the rest of the query', () => {
+  let replaced = null;
+  reloadFresh({ location: { href: 'https://example.com/Japan/?view=mapa&city=osaka', replace: (url) => { replaced = url; } } }, 123);
+  const url = new URL(replaced);
+  assert.equal(url.searchParams.get(HARD_PARAM), '123');
+  assert.equal(url.searchParams.get('view'), 'mapa');
+  assert.equal(url.searchParams.get('city'), 'osaka');
+});
+
+test('settle gives the fallback when a promise hangs or fails', async () => {
+  const win = { setTimeout: (fn) => setTimeout(fn, 10), clearTimeout };
+  assert.equal(await settle(new Promise(() => {}), 1000, 'late', win), 'late');
+  assert.equal(await settle(Promise.reject(new Error('x')), 1000, 'failed', win), 'failed');
+  assert.equal(await settle(Promise.resolve(7), 1000, 'no', win), 7);
+});
+
+import { formatChecked } from '../js/modules/update-settings.js';
+test('the settings block says when the last check was', () => {
+  const now = Date.UTC(2026, 10, 27, 12, 0);
+  assert.equal(formatChecked(0, now), 'todavía no');
+  assert.equal(formatChecked(now - 20_000, now), 'ahora mismo');
+  assert.equal(formatChecked(now - 7 * 60_000, now), 'hace 7 min');
 });

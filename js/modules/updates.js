@@ -9,11 +9,56 @@ export const AUTO_RETRY_AFTER_MS = 2 * 60 * 1000; // an automatic update that di
 export const ATTEMPT_KEY = 'japan-trip:update-attempt'; // sessionStorage: "I reloaded to update at this time, towards this version"
 export const AUTO_KEY = 'japan-trip:update-auto-at';
 
-/** Cache names of the app and the files the service worker keeps; deleting them (and the worker) is the "start over" of last resort. */
+export const HARD_PARAM = '_u'; // added to the address by a "start over" reload so the page itself never comes from a stale HTTP cache
+export const TAKEOVER_FIRST_MS = 15 * 1000; // how long the normal route (new worker takes over) gets before the sure route starts
+export const WATCHDOG_MS = 75 * 1000; // whatever hangs, the page reloads after this long
+
+/** Resolves with the promise's value, or with `fallback` after `ms` (or if it throws): one hanging browser call never blocks the rest. */
+export function settle(promise, ms, fallback = undefined, win = window) {
+  return new Promise((resolve) => {
+    const timer = win.setTimeout(() => resolve(fallback), ms);
+    Promise.resolve(promise).then((value) => { win.clearTimeout(timer); resolve(value); }, () => { win.clearTimeout(timer); resolve(fallback); });
+  });
+}
+
+/**
+ * The browser's own HTTP cache (GitHub Pages sends max-age=600) can still hold the previous version's files. Asking for each
+ * file of the app with `reload` replaces those copies, so the page that loads next is made of new files only.
+ */
+export async function refreshHttpCache(win = window, { batch = 8 } = {}) {
+  const manifest = await (await win.fetch('offline-manifest.json', { cache: 'reload' })).json();
+  const files = [...new Set(['index.html', ...manifest.required])];
+  let next = 0;
+  await Promise.all(Array.from({ length: batch }, async () => {
+    while (next < files.length) {
+      const file = files[next++];
+      await win.fetch(file, { cache: 'reload' }).then((response) => response.arrayBuffer()).catch(() => {});
+    }
+  }));
+}
+
+/**
+ * "Start over" of last resort: delete the saved app, remove the worker, refresh the browser's cached copies. Every step has
+ * its own time limit and none can throw, so the caller can always go on to reload. The saved map tiles are kept.
+ */
 export async function forceFreshStart(win = window) {
   const nav = win.navigator;
-  if (nav.serviceWorker?.getRegistrations) for (const registration of await nav.serviceWorker.getRegistrations()) await registration.unregister();
-  if (win.caches) for (const name of await win.caches.keys()) if (name.startsWith('japan-guide-')) await win.caches.delete(name);
+  await settle((async () => {
+    if (win.caches) for (const name of await win.caches.keys()) if (name.startsWith('japan-guide-')) await win.caches.delete(name);
+  })(), 6000, undefined, win);
+  await settle((async () => {
+    if (nav.serviceWorker?.getRegistrations) for (const registration of await nav.serviceWorker.getRegistrations()) await registration.unregister();
+  })(), 6000, undefined, win);
+  await settle(refreshHttpCache(win), 25000, undefined, win);
+}
+
+/** Reloads on a slightly different address, which no cache can answer from an old copy. */
+export function reloadFresh(win = window, at = Date.now()) {
+  try {
+    const url = new URL(win.location.href);
+    url.searchParams.set(HARD_PARAM, String(at));
+    win.location.replace(url.href);
+  } catch { win.location.reload(); }
 }
 
 /**
@@ -84,6 +129,8 @@ export function initUpdates({ win = window, doc = document, fetchFn = (...args) 
   let latest = null;
   let dismissed = false;
   let lastCheck = 0;
+  let lastResult = 'unknown';
+  let checkedAt = 0;
   let hadController = Boolean(win.navigator.serviceWorker?.controller);
   let touched = false; // the person already did something on this screen since it opened or came back
   let applying = false;
@@ -109,24 +156,35 @@ export function initUpdates({ win = window, doc = document, fetchFn = (...args) 
     banner.hidden = false;
   }
 
+  /** Tells the settings screen what is going on (installed, published, last check). */
+  function emit(extra = {}) {
+    try { doc.dispatchEvent(new win.CustomEvent('updates:status', { detail: { running, latest, result: lastResult, checkedAt, applying, ...extra } })); } catch { /* no CustomEvent in a test double */ }
+  }
+
   function setStatus(result) {
     if (statusLabel) statusLabel.textContent = describeCheck(result);
   }
 
   async function checkNow({ manual = false } = {}) {
     if (win.navigator.onLine === false) { if (manual) setStatus('offline'); return 'offline'; }
-    if (manual) setStatus('checking');
+    if (manual) { setStatus('checking'); lastResult = 'checking'; emit(); }
     lastCheck = now();
     try {
       (await registration())?.update?.().catch(() => {}); // let the browser look for a new service worker in parallel
       const newest = await readVersion(freshVersionUrl('data/version.json', lastCheck), { cache: 'no-store' });
       const result = compareVersions(running, newest);
-      if (result === 'new') { latest = newest; offerOrApply(); }
+      latest = newest;
+      lastResult = result;
+      checkedAt = now();
+      if (result === 'new') offerOrApply();
       if (manual) setStatus(result);
+      emit();
       return result;
     } catch {
-      if (manual) setStatus(win.navigator.onLine === false ? 'offline' : 'error');
-      return win.navigator.onLine === false ? 'offline' : 'error';
+      lastResult = win.navigator.onLine === false ? 'offline' : 'error';
+      if (manual) setStatus(lastResult);
+      emit();
+      return lastResult;
     }
   }
 
@@ -140,21 +198,26 @@ export function initUpdates({ win = window, doc = document, fetchFn = (...args) 
     applying = true;
     tookOver = tookOver || workerChanged;
     if (reloadButton) { reloadButton.disabled = true; reloadButton.textContent = 'Actualizando…'; }
-    store?.setItem(ATTEMPT_KEY, JSON.stringify({ at: now(), from: running, to: latest }));
+    emit({ applying: true });
+    store?.setItem(ATTEMPT_KEY, JSON.stringify({ at: now(), from: running, to: latest, hard: false }));
     if (auto) store?.setItem(AUTO_KEY, String(now()));
+    const watchdog = win.setTimeout(() => reloadFresh(win, now()), WATCHDOG_MS); // nothing may leave the button stuck on "Actualizando…"
     let outcome = tookOver ? 'took-over' : 'timeout';
-    if (!tookOver) try { outcome = await waitForTakeover({ win, registration: await registration() }); } catch { /* handled below */ }
-    if (outcome !== 'took-over') {
-      if (win.navigator.onLine === false) {
-        applying = false;
-        if (reloadButton) { reloadButton.disabled = false; reloadButton.textContent = 'Actualizar'; }
-        setStatus('offline');
-        return 'offline';
-      }
-      try { await forceFreshStart(win); } catch { /* reload anyway */ }
+    if (!tookOver) outcome = await settle(waitForTakeover({ win, registration: await settle(registration(), 3000, null, win), timeoutMs: TAKEOVER_FIRST_MS }), TAKEOVER_FIRST_MS + 5000, 'timeout', win);
+    if (outcome === 'took-over') { win.clearTimeout(watchdog); win.location.reload(); return 'reloading'; }
+    if (win.navigator.onLine === false) {
+      win.clearTimeout(watchdog);
+      applying = false;
+      if (reloadButton) { reloadButton.disabled = false; reloadButton.textContent = 'Actualizar'; }
+      setStatus('offline');
+      emit({ applying: false, result: 'offline' });
+      return 'offline';
     }
-    win.location.reload();
-    return outcome === 'took-over' ? 'reloading' : 'fresh-start';
+    store?.setItem(ATTEMPT_KEY, JSON.stringify({ at: now(), from: running, to: latest, hard: true }));
+    await forceFreshStart(win);
+    win.clearTimeout(watchdog);
+    reloadFresh(win, now());
+    return 'fresh-start';
   }
 
   /** Called when something says a new version exists: applies it by itself if nothing is half-done, otherwise shows the banner. */
@@ -165,17 +228,16 @@ export function initUpdates({ win = window, doc = document, fetchFn = (...args) 
     return 'banner';
   }
 
-  // We reloaded to update and, after all that, the screen still shows the old version: wipe the saved copy once and start over.
+  // We reloaded to update and the screen still shows the old version: start over once (never twice), and keep checking either way.
   function verifyAfterReload() {
     let attempt = null;
     try { attempt = JSON.parse(store?.getItem(ATTEMPT_KEY) ?? 'null'); } catch { attempt = null; }
-    if (!attempt) return false;
+    if (!attempt) return;
     store?.removeItem(ATTEMPT_KEY);
-    if (now() - attempt.at > 10 * 60 * 1000 || !attempt.to || running !== attempt.from) return false;
-    // Still on the same version as before the update: one clean start (never twice in a row).
-    if (win.navigator.onLine === false) return false;
-    forceFreshStart(win).then(() => win.location.reload());
-    return true;
+    if (now() - attempt.at > 10 * 60 * 1000 || !attempt.to || running !== attempt.from || attempt.hard || win.navigator.onLine === false) return;
+    store?.setItem(ATTEMPT_KEY, JSON.stringify({ ...attempt, at: now(), hard: true }));
+    applying = true;
+    forceFreshStart(win).then(() => reloadFresh(win, now()));
   }
 
   reloadButton?.addEventListener('click', () => applyUpdate());
@@ -198,13 +260,41 @@ export function initUpdates({ win = window, doc = document, fetchFn = (...args) 
   });
   win.addEventListener('online', () => checkNow());
 
-  // The version on screen is the one saved with the app files (the worker answers this URL from its copy).
-  readVersion('data/version.json').then((version) => {
-    running = version;
-    if (verifyAfterReload()) return;
-    if (versionLabel) versionLabel.textContent = version ?? '—';
-    win.setTimeout(() => checkNow(), 1500);
-  }).catch(() => { if (versionLabel) versionLabel.textContent = '—'; });
+  // The "start over" reload adds ?_u=…; take it off the address again so it never stays in a bookmark or the home-screen link.
+  try {
+    const url = new URL(win.location.href);
+    if (url.searchParams.has(HARD_PARAM)) { url.searchParams.delete(HARD_PARAM); win.history.replaceState(win.history.state, '', url.href); }
+  } catch { /* ignore */ }
 
-  return { checkNow, applyUpdate, isIdle, getVersions: () => ({ running, latest }) };
+  // The version on screen is the one saved with the app files (the worker answers this URL from its copy).
+  readVersion('data/version.json').then((version) => version, () => null).then((version) => {
+    running = version;
+    if (versionLabel) versionLabel.textContent = version ?? '—';
+    emit();
+    verifyAfterReload();
+    if (!applying) win.setTimeout(() => checkNow(), 1500);
+  });
+
+  // The settings screen asks through events, so it never needs to import this module.
+  doc.addEventListener('updates:request', (event) => {
+    if (event.detail?.action === 'check') { dismissed = false; checkNow({ manual: true }); }
+    else if (event.detail?.action === 'force') forceUpdate();
+    else if (event.detail?.action === 'status') emit();
+  });
+
+  /** The sure route, on demand: wipe the saved app and load everything again from the network. */
+  async function forceUpdate() {
+    if (win.navigator.onLine === false) { setStatus('offline'); emit({ result: 'offline' }); return 'offline'; }
+    if (applying) return 'busy';
+    applying = true;
+    emit({ applying: true });
+    store?.setItem(ATTEMPT_KEY, JSON.stringify({ at: now(), from: running, to: latest, hard: true }));
+    const watchdog = win.setTimeout(() => reloadFresh(win, now()), WATCHDOG_MS);
+    await forceFreshStart(win);
+    win.clearTimeout(watchdog);
+    reloadFresh(win, now());
+    return 'fresh-start';
+  }
+
+  return { checkNow, applyUpdate, forceUpdate, isIdle, getVersions: () => ({ running, latest }) };
 }
