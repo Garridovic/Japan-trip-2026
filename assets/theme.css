@@ -747,3 +747,84 @@ body.has-weather-sheet { overflow: hidden; }
 .dish-tried[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
 .dish-meta .dish-tried + .dish-fav { margin-left: 0; }
 @media (prefers-reduced-motion: no-preference) { .progress-bar i { transition: width .4s ease; } .progress-ring-arc { transition: stroke-dasharray .4s ease; } }
+@media (max-width: 360px) { .progress-tile { padding: 5px 6px 6px; } .progress-tile span { font-size: .6rem; } .progress-tile b { font-size: 1rem; } }
+
+/* ====== Look & feel unificado (propuesta A): mismas piezas que el mapa en toda la app ====== */
+/* Botón redondo de 44 px en la cabecera (ciudad, nube, buscar, cuenta, tema) */
+.top-bar { gap: 6px; }
+.theme-button, .account-button, .offline-chip { box-sizing: border-box; flex: none; display: inline-grid; place-items: center; width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--ink); box-shadow: none; max-width: none; font-size: 0; cursor: pointer; }
+.top-bar { padding-right: max(8px, calc((100vw - 1080px) / 2 + 8px)); }
+.offline-chip[hidden] { display: none; }
+.offline-chip::before { display: none; }
+.offline-chip-label, .offline-chip-short, .offline-chip-icon { display: none !important; }
+.offline-chip::after { content: ""; width: 22px; height: 22px; background: currentColor; -webkit-mask: var(--cloud-down) center / contain no-repeat; mask: var(--cloud-down) center / contain no-repeat; }
+.offline-chip[data-tone="ok"]::after { -webkit-mask-image: var(--cloud-ok); mask-image: var(--cloud-ok); }
+.offline-chip[data-tone="busy"]::after { animation: chip-pulse 1s infinite; }
+.offline-chip[data-tone] { background: var(--surface); }
+.offline-chip[data-tone="ok"] { box-shadow: none; border-color: var(--ok); }
+.offline-chip[data-tone="partial"], .offline-chip[data-tone="busy"] { box-shadow: none; border-color: var(--warn); }
+.offline-chip[data-tone="error"] { box-shadow: none; border-color: var(--err); }
+.offline-chip[data-tone="net"] { box-shadow: none; border-color: var(--net); }
+.offline-chip[data-tone="none"] { box-shadow: none; border-color: var(--idle); }
+:root {
+  --cloud-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.5 4.25 4.25 0 0 0 7 18Z'/%3E%3Cpath d='M12 10.5v5m-2.2-2.2L12 15.5l2.2-2.2'/%3E%3C/svg%3E");
+  --cloud-ok: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.5 4.25 4.25 0 0 0 7 18Z'/%3E%3Cpath d='m9.5 13.5 2 2 3.5-3.5'/%3E%3C/svg%3E");
+}
+.account-button { font-size: .95rem; font-weight: 850; overflow: hidden; }
+@media (max-width: 359px) { .top-bar { gap: 4px; } .theme-button, .account-button, .offline-chip { margin: 0; padding: 0; } .city-tab { padding: 0 12px; } }
+.city-tab { min-height: 44px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.city-tab[aria-selected="true"] { background: var(--surface); border-color: var(--line); color: var(--ink); }
+
+/* Chips y filtros: el seleccionado es siempre rojo torii */
+.filter { min-height: 44px; display: inline-flex; align-items: center; gap: 7px; padding: 0 14px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); font-weight: 700; font-size: .86rem; }
+.filter[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.dish-views .filter, .phrase-chip, .map-toolbar .filter { min-height: 44px; }
+
+/* Hojas: todo lo que se abre encima es una hoja inferior con asa, título y cierre redondo */
+body:has(.theme-popover:not([hidden]), .offline-popover:not([hidden]), .poi-modal:not([hidden]), .collapsible-filters.is-sheet[open])::after { content: ""; position: fixed; inset: 0; z-index: 955; background: rgba(5, 12, 16, .35); }
+.theme-popover, .offline-popover { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: min(520px, 100%); margin: 0 auto; max-height: 86vh; overflow-y: auto; box-sizing: border-box; padding: 22px 16px calc(16px + env(safe-area-inset-bottom)); border: 0; border-radius: 22px 22px 0 0; background: var(--surface); color: var(--ink); box-shadow: 0 -10px 40px rgba(0,0,0,.28); z-index: 960; animation: sheet-up .28s cubic-bezier(.2,.9,.3,1); }
+.theme-popover::before, .offline-popover::before { content: ""; position: absolute; top: 10px; left: 50%; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: var(--line); }
+.theme-popover[hidden], .offline-popover[hidden] { display: none; }
+.theme-popover h2, .offline-popover-title { margin: 6px 0 10px; font-size: 1.15rem; font-weight: 800; }
+.theme-options { border-radius: 999px; }
+.theme-option { border-radius: 999px; }
+.account-actions .filter, .offline-actions .filter { width: 100%; justify-content: center; min-height: 48px; background: var(--surface-2); }
+.account-actions .filter.is-danger, .offline-actions .filter.is-danger { background: transparent; }
+
+/* Ficha del lugar: hoja alta en toda la app, no pantalla completa */
+.poi-modal-backdrop { background: transparent; backdrop-filter: none; }
+.poi-detail { inset: auto 0 0 0; max-width: 760px; max-height: 92vh; margin: 0 auto; border-radius: 22px 22px 0 0; background: var(--surface); animation: sheet-up .3s cubic-bezier(.2,.9,.3,1); }
+@media (max-width: 700px) { .poi-detail { inset: auto 0 0 0; max-height: 92vh; border-radius: 22px 22px 0 0; } }
+.poi-detail-header { padding: 10px 12px 6px 16px; }
+.poi-back { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; background: var(--surface-2); font-size: 0; order: 2; }
+.poi-back::before { content: ""; width: 18px; height: 18px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E") center / contain no-repeat; }
+.poi-kicker { color: var(--accent-text); font-weight: 800; }
+
+/* Tarjetas, botones y filtros de Frases y Platos */
+.phrase-card, .dish-card, .note-card, .lodging-card { border-radius: 20px; box-shadow: none; }
+.collapsible-filters.is-sheet { border: 0; background: transparent; margin: 0 0 12px; }
+.collapsible-filters.is-sheet > summary { display: inline-flex; width: auto; min-height: 44px; padding: 0 16px 0 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); box-shadow: var(--shadow); }
+.collapsible-filters.is-sheet > summary::after { display: none; }
+.collapsible-filters.is-sheet[open] > :not(summary) { margin-left: 0; margin-right: 0; }
+.collapsible-filters.is-sheet[open] > :not(summary):not(.sheet-close) { position: relative; }
+.collapsible-filters.is-sheet[open] { position: fixed; z-index: 960; left: 0; right: 0; bottom: 0; margin: 0 auto; width: min(520px, 100%); max-height: 86vh; overflow-y: auto; box-sizing: border-box; padding: 22px 16px calc(16px + env(safe-area-inset-bottom)); border-radius: 22px 22px 0 0; background: var(--surface); box-shadow: 0 -10px 40px rgba(0,0,0,.28); animation: sheet-up .28s cubic-bezier(.2,.9,.3,1); }
+.collapsible-filters.is-sheet[open] > summary { box-shadow: none; border: 0; background: transparent; padding: 0; font-size: 1.15rem; font-weight: 800; min-height: 44px; }
+.collapsible-filters.is-sheet[open] .sheet-close { display: inline-flex; }
+.sheet-close { display: none; position: absolute; top: 14px; right: 12px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; align-items: center; justify-content: center; background: var(--surface-2); color: var(--ink); cursor: pointer; }
+.sheet-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.filter-count { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-size: .75rem; font-weight: 800; }
+.filter-count[hidden] { display: none; }
+
+/* Aviso de versión: tarjeta flotante como el resto */
+.update-banner { border-radius: 20px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.update-banner .update-action { border-radius: 999px; min-height: 44px; background: var(--accent); color: var(--accent-ink); border: 0; font-weight: 800; padding: 0 16px; }
+.update-banner .update-later { min-height: 44px; border: 0; background: transparent; color: var(--accent-text); font-weight: 800; }
+@media (prefers-reduced-motion: reduce) { .theme-popover, .offline-popover, .poi-detail, .collapsible-filters.is-sheet[open] { animation: none; } }
+/* La cabecera gana a las reglas antiguas por cuenta y por pantallas estrechas: siempre 44 px y el mismo hueco */
+body .top-bar .theme-button, body .top-bar .search-button, body .top-bar .account-button, body .top-bar .offline-chip { width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; }
+body .top-bar .theme-button svg, body .top-bar .search-button svg { width: 22px; height: 22px; }
+body .top-bar .account-button svg { width: 20px; height: 20px; }
+.collapsible-filters.is-sheet > summary::before { content: ""; width: 18px; height: 18px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 7h10M18 7h2M4 17h4M12 17h8'/%3E%3Ccircle cx='16' cy='7' r='2'/%3E%3Ccircle cx='10' cy='17' r='2'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 7h10M18 7h2M4 17h4M12 17h8'/%3E%3Ccircle cx='16' cy='7' r='2'/%3E%3Ccircle cx='10' cy='17' r='2'/%3E%3C/svg%3E") center / contain no-repeat; }
+.collapsible-filters.is-sheet > summary { gap: 8px; }
+.collapsible-filters.is-sheet[open] > summary::before { display: none; }
+@media (max-width: 359px) { .top-bar-title { padding: 0 6px 0 12px; font-size: .8rem; letter-spacing: 0; white-space: nowrap; } }

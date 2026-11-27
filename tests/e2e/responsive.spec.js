@@ -46,6 +46,7 @@ for (const { name, viewport, deviceScaleFactor, isMobile, hasTouch } of devices)
       await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
       await page.locator(SVG_MARKERS).first().dispatchEvent('click');
       await page.getByRole('button', { name: 'Ver ficha del lugar' }).click();
+      await page.locator('.poi-detail').evaluate((el) => Promise.all(el.getAnimations().map((animation) => animation.finished)));
       const sheet = await page.locator('.poi-detail').boundingBox();
       expect(sheet.x).toBeGreaterThanOrEqual(0);
       expect(sheet.x + sheet.width).toBeLessThanOrEqual(viewport.width);

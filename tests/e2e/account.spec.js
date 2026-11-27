@@ -117,7 +117,7 @@ test.describe('optional account (Auth0, Google)', () => {
     await page.goto('/');
     await page.locator('#account-button').click();
     await expect(page.locator('#account-version')).toHaveText(`Versión de la app: ${version}`);
-    await page.locator('#account-button').click(); // close it; signIn opens it again
+    await page.keyboard.press('Escape'); // close it (the sheet's dimmed background covers the header); signIn opens it again
     await signIn(page);
     await page.locator('#account-button').click();
     await expect(page.locator('#account-version')).toHaveText(`Versión de la app: ${version}`);

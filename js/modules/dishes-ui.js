@@ -1,4 +1,5 @@
 // "Platos" section: identify a dish by photo or by name (search), favourites and a full-screen "show" sheet.
+import { setFilterSummary } from './collapsible.js';
 import { haptic, toast } from './feedback.js';
 import { allergenTag, allergenRow } from './allergen-icons.js';
 import { userStorage } from './user-data.js';
@@ -166,7 +167,7 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
     triedFilter.setAttribute('aria-pressed', String(state.category === TRIED));
     const parts = [categories.find(({ id }) => id === state.category), PROTEIN_FILTERS.find(({ id }) => id === state.protein)]
       .filter((entry) => entry && entry.id !== ALL).map((entry) => entry.short ?? entry.label);
-    filtersSummary.textContent = parts.length ? `Filtros · ${parts.join(' · ')}` : 'Filtros';
+    setFilterSummary(filtersSummary, parts.length);
   };
   triedFilter.addEventListener('click', () => {
     state.category = state.category === TRIED ? ALL : TRIED;

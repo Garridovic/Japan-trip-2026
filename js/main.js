@@ -12,7 +12,7 @@ import { initScrollSpy } from './modules/scrollspy.js';
 import { initPhrases } from './modules/phrases-ui.js';
 import { VIEW_QUERY_PARAM, viewFromSearch, withView, initViews } from './modules/views.js';
 import { initOverlayHistory, popstateWasOverlay, whenOverlaySettled } from './modules/overlay-history.js';
-import { initCollapsibles } from './modules/collapsible.js';
+import { initCollapsibles, initFilterSheets } from './modules/collapsible.js';
 import { initOffline } from './modules/offline.js';
 import { initLodging } from './modules/lodging-ui.js';
 import { initTips } from './modules/tips-ui.js';
@@ -48,6 +48,7 @@ userData(); // creates window.japanTripUserData right away so an account-sync mo
 initOverlayHistory(); // registered first so overlays handle Back before navigation does
 
 initCollapsibles();
+initFilterSheets();
 initDayLinks();
 initOffline();
 initTheme();

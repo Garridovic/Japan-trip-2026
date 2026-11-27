@@ -1,4 +1,5 @@
 // "Frases" section: search, category chips, favourites, audio and the full-screen show mode.
+import { setFilterSummary } from './collapsible.js';
 import { haptic } from './feedback.js';
 import { userStorage } from './user-data.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
@@ -169,7 +170,7 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
     favButton.textContent = `★ Favoritas (${favorites.all().size})`;
     favButton.setAttribute('aria-pressed', String(state.category === FAVORITES_CATEGORY));
     const active = chips.find(({ id }) => id === state.category);
-    filtersSummary.textContent = active && active.id !== ALL_CATEGORY ? `Filtros · ${active.label}` : 'Filtros';
+    setFilterSummary(filtersSummary, active && active.id !== ALL_CATEGORY ? 1 : 0);
   };
   // One tap to jump to / leave the favourites, handy at the restaurant table.
   favButton.addEventListener('click', () => {

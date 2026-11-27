@@ -242,7 +242,7 @@ test.describe('offline indicator in the header', () => {
     await popover(page).locator('#offline-close').click();
     await expect(popover(page)).toBeHidden();
     await chip(page).click();
-    await page.locator('.app-bar').click({ position: { x: 40, y: 6 } });
+    await page.mouse.click(160, 20); // the dimmed background above the sheet
     await expect(popover(page)).toBeHidden();
   });
 
@@ -256,25 +256,26 @@ test.describe('offline indicator in the header', () => {
 });
 
 test.describe('chip text and layout', () => {
-  test('on a 320 px phone the short text never overlaps the city tabs; on a wide phone the full text shows', async ({ page, context }) => {
+  test('the chip is a 44 px round cloud button that never overlaps the city selector at 320 px, and says its state in its accessible name', async ({ page, context }) => {
     await page.setViewportSize({ width: 320, height: 640 });
     await firstVisit(page, context);
     await expect(page.locator('#offline-chip')).toBeVisible();
     await expect.poll(() => page.locator('#offline-chip').getAttribute('data-state')).toBe('essentials');
-    await expect(page.locator('.offline-chip-short')).toBeVisible();
+    await expect(page.locator('.offline-chip-short')).toBeHidden();
     await expect(page.locator('.offline-chip-label')).toBeHidden();
+    await expect(page.locator('#offline-chip')).toHaveAttribute('aria-label', /faltan las fotos grandes/);
     const tabs = await page.locator('#city-select').boundingBox();
     const chip = await page.locator('#offline-chip').boundingBox();
+    expect(chip.width).toBe(44);
+    expect(chip.height).toBe(44);
     expect(tabs.x + tabs.width).toBeLessThanOrEqual(chip.x + 1); // side by side, no overlap
     expect(chip.x + chip.width).toBeLessThanOrEqual(320);
     await expect(citySelect(page)).toContainText('Kioto');
-
-    await page.setViewportSize({ width: 430, height: 800 });
-    await expect(page.locator('.offline-chip-label')).toBeVisible();
-    await expect(page.locator('.offline-chip-short')).toBeHidden();
-    await expect(page.locator('#offline-chip')).toContainText('Sin fotos grandes');
-    const wide = await page.locator('#offline-chip').boundingBox();
-    expect(wide.x + wide.width).toBeLessThanOrEqual(430);
+    for (const id of ['#search-button', '#theme-button']) {
+      const box = await page.locator(id).boundingBox();
+      expect(box.x + box.width).toBeLessThanOrEqual(320);
+      expect(box.width).toBe(44);
+    }
   });
 
   test('the word "Básico" no longer appears anywhere in the interface', async ({ page, context }) => {

@@ -121,16 +121,21 @@ test.describe('phone usability', () => {
     await expect(page.locator('#phrases-filters')).not.toHaveAttribute('open', '');
     await page.locator('#phrases-filters > summary').click();
     await page.getByRole('button', { name: 'Comida', exact: true }).click();
-    await expect(page.locator('#phrases-filters-summary')).toHaveText('Filtros · Comida');
+    await expect(page.locator('#phrases-filters-summary')).toHaveText('Filtros1');
+    await expect(page.locator('#phrases-filters-summary')).toHaveAttribute('aria-label', 'Filtros, 1 activo');
   });
 });
 
-test('on wide screens the filter panels start open', async ({ page }) => {
+test('on wide screens the guide filters start open, while Frases and Platos filters stay a button that opens a sheet', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/');
   await expect(page.locator('#map-filters')).toHaveAttribute('open', '');
   await page.goto('/?view=platos');
+  await expect(page.locator('#dishes-filters')).not.toHaveAttribute('open', '');
+  await page.locator('#dishes-filters > summary').click();
   await expect(page.locator('#dishes-filters')).toHaveAttribute('open', '');
+  await page.getByRole('button', { name: 'Cerrar filtros' }).click();
+  await expect(page.locator('#dishes-filters')).not.toHaveAttribute('open', '');
 });
 
 test('favourites shortcut in Frases and Platos jumps to the starred items and back', async ({ page }) => {
@@ -154,7 +159,9 @@ test('favourites shortcut in Frases and Platos jumps to the starred items and ba
 
 test('show mode has Anterior/Siguiente that walk through the visible phrases', async ({ page }) => {
   await page.goto('/?view=frases');
+  await page.locator('#phrases-filters > summary').click();
   await page.getByRole('button', { name: 'Saludos' }).click();
+  await page.getByRole('button', { name: 'Cerrar filtros' }).click();
   await page.locator('.phrase-card').first().getByRole('button', { name: /Mostrar/ }).click();
   const position = page.locator('#phrase-show-position');
   await expect(position).toHaveText(/^1 \/ \d+$/);

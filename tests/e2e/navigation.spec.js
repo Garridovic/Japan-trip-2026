@@ -108,12 +108,14 @@ test.describe('full-screen sheets put the back button on the left', () => {
     await expectLeft(page, '#dish-show-close');
   });
 
-  test('place sheet already had it on the left (consistency check)', async ({ page }) => {
+  test('place sheet closes with a round X on the right, like every other sheet', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
     await page.locator(SVG_MARKERS).first().dispatchEvent('click');
     await page.locator('.popup-detail-button').first().click();
-    await expectLeft(page, '#poi-modal .poi-back');
+    const box = await page.locator('#poi-modal .poi-back').boundingBox();
+    expect(box.width).toBe(44);
+    expect(box.x + box.width / 2).toBeGreaterThan(390 / 2);
   });
 });
 
