@@ -14,7 +14,7 @@ const kyotoPlaces = [
   { id: 'a', type: 'itinerary', day: '11' }, { id: 'b', type: 'itinerary', day: '11', stamp: { kind: 'goshuin', source: 'x' } },
   { id: 'c', type: 'itinerary', day: '12' }, { id: 'd', type: 'alternative' }
 ];
-const base = { cities, cityId: 'kyoto', placesByCity: new Map([['kyoto', kyotoPlaces], ['tokyo', [{ id: 'h', type: 'hotel' }]], ['osaka', []]]), dishes: { total: 56, tried: 5, favorites: 4 }, phrasesFavorites: 3, checklist: { done: 19, total: 22 } };
+const base = { cities, cityId: 'kyoto', totals: { tokyo: { visitable: 0, stamps: 0 }, kyoto: { visitable: 4, stamps: 1 }, osaka: { visitable: 3, stamps: 1 } }, placesByCity: new Map([['kyoto', kyotoPlaces]]), dishes: { total: 56, tried: 5, favorites: 4 }, phrasesFavorites: 3, checklist: { done: 19, total: 22 } };
 
 test('tiers: grey, amber, gold, light green, green; never red; no goal means no colour', () => {
   assert.equal(tierOf(0, 12), TIERS.none);
@@ -53,14 +53,14 @@ test('during the trip: places of the city (hotels never count), stamps against t
   assert.match(result.sub, /Día 6 de 15/);
   const tile = (id) => result.tiles.find((item) => item.id === id);
   assert.deepEqual([tile('hoy').done, tile('hoy').total], [1, 2]);
-  assert.deepEqual([tile('sellos').done, tile('sellos').total], [1, 1]); // only one place has a confirmed stamp: never above the goal
+  assert.deepEqual([tile('sellos').done, tile('sellos').total], [2, 2]); // goal = stamps of every city (1 Kioto + 1 Osaka), never above it
   assert.deepEqual([tile('ciudades').done, tile('ciudades').total], [2, 3]);
   assert.match(result.nudge, /Te falta 1 parada/);
 });
 
 test('a city with no visitable places (only a hotel) shows the trip total instead of an empty ring', () => {
   const result = computeProgress({ ...base, cityId: 'tokyo', now: new Date(2026, 11, 9, 10), visited: new Map([['kyoto', new Set(['a'])]]) });
-  assert.deepEqual([result.ring.done, result.ring.total], [1, 4]);
+  assert.deepEqual([result.ring.done, result.ring.total], [1, 7]); // Kioto 4 + Osaka 3
   assert.equal(result.headline, '1 lugar del viaje');
 });
 
@@ -86,4 +86,11 @@ test('"Lo probé": the Probados filter keeps only tried dishes and is its own ke
 test('tried dishes from two devices are merged as a union and a removal sticks', () => {
   const merged = mergeValue('japan-trip:dish-tried', '["a","b"]', '["a","b","c"]', '["a"]');
   assert.deepEqual(JSON.parse(merged), ['a', 'c']);
+});
+
+test('the stamp goal is the same whichever city is open (no jump when the other cities load)', () => {
+  const total = (cityId, placesByCity) => computeProgress({ ...base, cityId, placesByCity, now: new Date(2026, 11, 13, 10), stampEntries: [] }).tiles.find((tile) => tile.id === 'sellos').total;
+  assert.equal(total('kyoto', new Map([['kyoto', kyotoPlaces]])), 2);
+  assert.equal(total('osaka', new Map()), 2);
+  assert.equal(total('tokyo', new Map()), 2);
 });

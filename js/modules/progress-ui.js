@@ -2,7 +2,7 @@
 // It reads the traveller's data straight from the shared user-data storage on every render, so it never gets out of
 // step with the stores that write it, and it repaints whenever one of the synced keys changes.
 import { byId, h } from './dom.js';
-import { fetchJson, cityDataPath } from './data.js';
+import { fetchJson } from './data.js';
 import { userData, userStorage } from './user-data.js';
 import { computeProgress } from './progress.js';
 import { parseVisited, VISITED_KEY } from './visited.js';
@@ -38,18 +38,8 @@ export function initProgress({ cities, global, storage = userStorage(), load = f
   let current = null; // { cityId, days }
   let queued = false;
 
-  // The open city's places come with its page. The other cities' small place files are fetched only once the card is
-  // actually on screen, so opening the guide still downloads one city (see the "only the active city" e2e test).
-  let othersRequested = false;
-  async function loadPlaces() {
-    if (othersRequested) return;
-    othersRequested = true;
-    await Promise.all(cities.map(async ({ id }) => {
-      if (placesByCity.has(id)) return;
-      try { placesByCity.set(id, (await load(cityDataPath(id, 'places'))) ?? []); } catch { /* offline and not cached: that city counts as empty */ }
-    }));
-    render();
-  }
+  let totals = {}; // per-city totals (data/global/progress-index.json), fetched once; the open city's places come with its page
+  const totalsReady = load('data/global/progress-index.json', { optional: true }).then((index) => { totals = index?.cities ?? {}; render(); }, () => {});
 
   function read() {
     const dishList = global.dishes?.dishes ?? [];
@@ -69,7 +59,7 @@ export function initProgress({ cities, global, storage = userStorage(), load = f
     queued = false;
     if (!current) return;
     const moment = current.days ? tripMoment(current.days, new Date()) : { kind: 'none' };
-    const data = computeProgress({ cities, cityId: current.cityId, placesByCity, todayKey: moment.kind === 'today' ? moment.day.key : null, ...read() });
+    const data = computeProgress({ cities, cityId: current.cityId, totals, placesByCity, todayKey: moment.kind === 'today' ? moment.day.key : null, ...read() });
     const { ring } = data;
     const tierText = (tier) => (tier.label ? `, ${tier.label.toLowerCase()}` : '');
     slide.dataset.mode = data.mode;
@@ -83,7 +73,7 @@ export function initProgress({ cities, global, storage = userStorage(), load = f
         h('div', { class: 'progress-text' }, h('h2', {}, data.headline), h('p', {}, data.sub), data.nudge ? h('p', { class: 'progress-nudge' }, data.nudge) : null)
       ),
       h('div', { class: 'progress-tiles' }, ...data.tiles.map((tile) =>
-        h('div', { class: `progress-tile tier-${tile.tier.id}`, role: 'group', 'aria-label': `${tile.label}: ${tile.done}${tile.total ? ` de ${tile.total}` : ''}${tierText(tile.tier)}` },
+        h('div', { class: `progress-tile tier-${tile.tier.id}`, role: 'group', 'aria-label': `${tile.full}: ${tile.done}${tile.total ? ` de ${tile.total}` : ''}${tierText(tile.tier)}` },
           h('div', { class: 'progress-tile-top' }, h('b', {}, String(tile.done), tile.total ? h('small', {}, `/${tile.total}`) : null), tile.tier.icon ? h('i', { 'aria-hidden': 'true' }, tile.tier.icon) : null),
           h('span', {}, tile.label),
           tile.total ? h('div', { class: 'progress-bar', 'aria-hidden': 'true' }, h('i', { style: `width:${Math.min(100, Math.round((100 * tile.done) / tile.total))}%` })) : null
@@ -93,14 +83,13 @@ export function initProgress({ cities, global, storage = userStorage(), load = f
 
   const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(render); } };
   userData().subscribe(schedule);
-  if (typeof IntersectionObserver === 'function') {
-    new IntersectionObserver((entries) => { if (entries.some((entry) => entry.isIntersecting)) void loadPlaces(); }, { threshold: 0.6 }).observe(slide);
-  }
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') schedule(); });
+  void totalsReady;
   return {
     /** Call when a city page is shown. `days` are its itinerary days (to know today's stops). */
     show({ cityId, days, places }) {
       current = { cityId, days };
+      placesByCity.clear(); // only the open city's places are ever in memory
       placesByCity.set(cityId, places ?? []);
       render();
     }

@@ -39,31 +39,35 @@ export function tripSpan(cities) {
  * Everything the card shows. Inputs are plain data so this can be tested without a DOM:
  *  cities        enabled journey cities ({ id, name, arrivalDate, departureDate })
  *  cityId        the city whose page is open
- *  placesByCity  Map(cityId → places[]) of the cities already loaded
+ *  totals        { cityId: { visitable, stamps } } for every city (data/global/progress-index.json), so totals never depend on
+ *                which city is open
+ *  placesByCity  Map(cityId → places[]) of the open city only: gives exact counts and today's stops there
  *  visited       Map(cityId → Set(ids)) as parsed by visited.js
  *  stampEntries  entries of the stamp book
  *  dishes        { total, tried, favorites }  phrases: favourites count
  *  checklist     { done, total }
  *  todayKey      key of today's itinerary day in the open city (or null)
  */
-export function computeProgress({ now = new Date(), cities, cityId, placesByCity = new Map(), visited = new Map(), stampEntries = [], dishes = { total: 0, tried: 0, favorites: 0 }, phrasesFavorites = 0, checklist = { done: 0, total: 0 }, todayKey = null }) {
+export function computeProgress({ now = new Date(), cities, cityId, totals = {}, placesByCity = new Map(), visited = new Map(), stampEntries = [], dishes = { total: 0, tried: 0, favorites: 0 }, phrasesFavorites = 0, checklist = { done: 0, total: 0 }, todayKey = null }) {
   const today = localISO(now);
   const span = tripSpan(cities);
   const city = cities.find(({ id }) => id === cityId) ?? null;
   const mode = !span || today < span.start ? 'before' : today > span.end ? 'after' : 'during';
 
   const visitable = (id) => (placesByCity.get(id) ?? []).filter(isVisitable);
-  const doneIn = (id) => visitable(id).filter((place) => visited.get(id)?.has(place.id)).length;
-  const cityPlaces = { done: city ? doneIn(city.id) : 0, total: city ? visitable(city.id).length : 0 };
-  const tripPlaces = cities.reduce((sum, { id }) => ({ done: sum.done + doneIn(id), total: sum.total + visitable(id).length }), { done: 0, total: 0 });
+  // The open city is counted exactly against its places; the others by what is stored (hotels can never be marked).
+  const doneIn = (id) => (placesByCity.has(id) ? visitable(id).filter((place) => visited.get(id)?.has(place.id)).length : visited.get(id)?.size ?? 0);
+  const totalIn = (id) => (placesByCity.has(id) ? visitable(id).length : totals[id]?.visitable ?? 0);
+  const cityPlaces = { done: city ? doneIn(city.id) : 0, total: city ? totalIn(city.id) : 0 };
+  const tripPlaces = cities.reduce((sum, { id }) => ({ done: sum.done + doneIn(id), total: sum.total + totalIn(id) }), { done: 0, total: 0 });
 
-  const possibleStamps = cities.reduce((sum, { id }) => sum + stampPlaces(placesByCity.get(id) ?? []).length, 0);
+  const possibleStamps = cities.reduce((sum, { id }) => sum + (placesByCity.has(id) ? stampPlaces(placesByCity.get(id)).length : totals[id]?.stamps ?? 0), 0);
   const stamps = { done: Math.min(stampEntries.length, possibleStamps || stampEntries.length), total: possibleStamps };
 
   const stops = todayKey && city ? visitable(city.id).filter((place) => place.day === todayKey) : [];
   const stopsDone = stops.filter((place) => visited.get(city.id)?.has(place.id)).length;
 
-  const tile = (id, label, done, total, extra = {}) => ({ id, label, done, total, tier: tierOf(done, total), ...extra });
+  const tile = (id, label, done, total, full = label) => ({ id, label, full, done, total, tier: tierOf(done, total) });
   const tiles = [];
   const tilePlaces = cityPlaces.total > 0 ? cityPlaces : tripPlaces;
 
@@ -77,7 +81,7 @@ export function computeProgress({ now = new Date(), cities, cityId, placesByCity
     headline = 'Preparativos';
     const pending = checklist.total - checklist.done;
     sub = [pending > 0 ? `Faltan ${pending} ${plural(pending, 'tarea', 'tareas')}` : checklist.total ? 'Todo listo' : '', left !== null ? (left === 1 ? 'mañana sales' : `${left} días para salir`) : ''].filter(Boolean).join(' · ');
-    tiles.push(tile('sellos', 'Sellos', stamps.done, stamps.total), tile('platos', 'Platos probados', dishes.tried, dishes.total));
+    tiles.push(tile('sellos', 'Sellos', stamps.done, stamps.total), tile('platos', 'Platos', dishes.tried, dishes.total, 'Platos probados'));
   } else {
     const dayNumber = span ? daysBetween(span.start, today) + 1 : 0;
     const dayCount = span ? daysBetween(span.start, span.end) + 1 : 0;
@@ -85,13 +89,13 @@ export function computeProgress({ now = new Date(), cities, cityId, placesByCity
     const where = cityPlaces.total > 0 ? ` en ${city.name}` : ' del viaje';
     headline = tilePlaces.total > 0 && tilePlaces.done === tilePlaces.total ? (cityPlaces.total > 0 ? `¡${city.name} completado!` : '¡Todo visitado!') : `${tilePlaces.done} ${plural(tilePlaces.done, 'lugar', 'lugares')}${where}`;
     sub = [mode === 'during' && dayCount ? `Día ${dayNumber} de ${dayCount}` : 'Viaje terminado', cityPlaces.total > 0 && tripPlaces.done !== cityPlaces.done ? `${tripPlaces.done} en todo el viaje` : ''].filter(Boolean).join(' · ');
-    if (mode === 'during' && stops.length) tiles.push(tile('hoy', 'Hoy', stopsDone, stops.length));
-    tiles.push(tile('sellos', 'Sellos', stamps.done, stamps.total), tile('platos', 'Platos probados', dishes.tried, dishes.total), tile('checklist', 'Checklist', checklist.done, checklist.total));
+    if (mode === 'during' && stops.length) tiles.push(tile('hoy', 'Hoy', stopsDone, stops.length, 'Paradas de hoy'));
+    tiles.push(tile('sellos', 'Sellos', stamps.done, stamps.total), tile('platos', 'Platos', dishes.tried, dishes.total, 'Platos probados'), tile('checklist', 'Checklist', checklist.done, checklist.total));
     if (span) tiles.push(tile('ciudades', 'Ciudades', cities.filter((item) => item.arrivalDate && item.arrivalDate <= today).length, cities.length));
     const remaining = stops.length - stopsDone;
     nudge = mode === 'during' && stops.length ? (remaining > 0 ? `Te ${plural(remaining, 'falta', 'faltan')} ${remaining} ${plural(remaining, 'parada', 'paradas')} para completar el día de hoy.` : '¡Día completado! Disfruta del resto.') : '';
   }
   const saved = dishes.favorites + phrasesFavorites;
-  tiles.push({ id: 'guardados', label: 'Guardados', done: saved, total: null, tier: TIERS.neutral });
+  tiles.push({ id: 'guardados', label: 'Guardados', full: 'Guardados', done: saved, total: null, tier: TIERS.neutral });
   return { mode, ring, headline, sub, tiles: tiles.filter((item) => item.total !== 0 || item.id === 'guardados'), nudge };
 }

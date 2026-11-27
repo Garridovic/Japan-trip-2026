@@ -15,7 +15,7 @@ test.describe('V14.3 "Tu diario del viaje"', () => {
     await expect(card).toHaveAttribute('data-mode', 'before');
     await expect(card.locator('h2')).toHaveText('Preparativos');
     await expect(card).toContainText('días para salir');
-    await expect(card.locator('.progress-tile', { hasText: 'Platos probados' })).toHaveClass(/tier-none/);
+    await expect(card.locator('.progress-tile', { hasText: 'Platos' })).toHaveClass(/tier-none/);
     await page.locator('#hero-viewport').evaluate((node) => node.scrollTo({ left: node.scrollWidth, behavior: 'instant' }));
     await expect(page.locator('#hero-dots i.on')).toHaveCount(1);
     expect(errors).toEqual([]);
@@ -56,5 +56,25 @@ test.describe('V14.3 "Tu diario del viaje"', () => {
     await expect(page.locator('.dish-card')).toHaveCount(1);
     await expect(page.locator('.dish-card .dish-tried')).toHaveText('✓ Probado');
     expect(await page.evaluate(() => JSON.parse(localStorage.getItem('japan-trip:dish-tried')).length)).toBe(1);
+  });
+});
+
+test.describe('V14.3.1 fixes', () => {
+  test('the stamp goal is the same when a city is opened directly, and tile labels are never cut at 320 px', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.clock.setFixedTime(tokyo('2026-12-08T12:00:00'));
+    await mockWeather(page);
+    const goals = [];
+    for (const city of ['nara', 'hakone', 'kyoto', 'tokyo']) {
+      await page.goto(`/?city=${city}`);
+      const tile = page.locator('#progress-card .progress-tile', { hasText: 'Sellos' });
+      await expect(tile).toBeVisible();
+      goals.push(await tile.locator('b small').textContent());
+    }
+    expect(new Set(goals).size).toBe(1);
+    expect(goals[0]).toBe('/18');
+    await page.waitForTimeout(300);
+    const cut = await page.locator('#progress-card .progress-tile span').evaluateAll((nodes) => nodes.filter((node) => { const probe = Object.assign(document.createElement('em'), { textContent: node.textContent }); probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;display:inline-block'; node.append(probe); const full = probe.getBoundingClientRect().width; probe.remove(); return full > node.getBoundingClientRect().width; }).map((node) => node.textContent)) // measures the whole word, since ellipsis hides the overflow from scrollWidth;
+    expect(cut).toEqual([]);
   });
 });

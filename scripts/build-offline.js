@@ -8,6 +8,7 @@
 import { readdir, readFile, writeFile, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { buildProgressIndex } from './progress-index.js';
 
 export const SKIPPED = ['image-catalog.json', 'dish-catalog.json'];
 const isImage = (file) => file.startsWith('assets/images/');
@@ -40,6 +41,7 @@ export function classify(files) {
 }
 
 export async function buildOffline(root = process.cwd()) {
+  await buildProgressIndex(root); // small per-city totals for the header's progress card (written before the files are hashed)
   const files = [];
   for (const top of ['index.html', 'manifest.webmanifest', 'kyoto-points.kml']) if (await exists(path.join(root, top))) files.push(top);
   for (const directory of ['assets', 'js', 'data']) files.push(...await walk(root, directory));

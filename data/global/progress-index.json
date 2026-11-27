@@ -1,0 +1,24 @@
+{
+  "cities": {
+    "hakone": {
+      "visitable": 14,
+      "stamps": 1
+    },
+    "kyoto": {
+      "visitable": 31,
+      "stamps": 12
+    },
+    "nara": {
+      "visitable": 6,
+      "stamps": 1
+    },
+    "osaka": {
+      "visitable": 12,
+      "stamps": 2
+    },
+    "tokyo": {
+      "visitable": 14,
+      "stamps": 2
+    }
+  }
+}

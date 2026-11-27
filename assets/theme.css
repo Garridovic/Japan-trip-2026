@@ -652,7 +652,7 @@ body.has-weather-sheet { overflow: hidden; }
 /* V14.1.3: every carousel card has the same height (the tallest) and the weather card uses its space */
 .hero-slide { min-height: 236px; margin: 0; display: flex; flex-direction: column; }
 .hero-slide > .weather-note { margin-top: auto; padding-top: 8px; }
-.weather-brief { margin-top: 10px; font-size: .84rem; line-height: 1.35; color: #e7e1d6; }
+.weather-brief { margin: auto 0; padding-top: 10px; font-size: .84rem; line-height: 1.35; color: #e7e1d6; }
 .weather-brief p { margin: 2px 0; }
 .weather-brief-title b { color: #fffaf1; }
 .weather-tip { color: #f0d7a7; font-weight: 700; }
@@ -664,6 +664,7 @@ body.has-weather-sheet { overflow: hidden; }
 
 /* "Tu diario del viaje" (header card): a colour tier per indicator. Never red: grey invites, amber and gold encourage, green rewards. */
 .progress-card { --pr-none: #9aa7ad; --pr-start: #e8a24a; --pr-half: #e5c58d; --pr-almost: #8ccf9f; --pr-done: #4fd18b; --pr-neutral: #d2d8d7; }
+.progress-card { display: flex; flex-direction: column; }
 .progress-card .eyebrow { margin-bottom: 8px; }
 .progress-top { display: flex; align-items: center; gap: 14px; }
 .progress-ring { position: relative; flex: none; width: 72px; height: 72px; }
@@ -677,7 +678,7 @@ body.has-weather-sheet { overflow: hidden; }
 .progress-text h2 { margin: 0 0 3px; font-size: 1.1rem; line-height: 1.2; color: #fffaf1; }
 .progress-text p { margin: 0; font-size: .8rem; color: #d2d8d7; }
 .progress-card:has(.progress-ring.tier-done) .progress-text h2 { color: var(--pr-done); }
-.progress-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 9px; }
+.progress-tiles { flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 9px; }
 .progress-tile { --c: var(--pr-neutral); padding: 5px 8px 6px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1.5px solid color-mix(in srgb, var(--c) 70%, transparent); min-width: 0; }
 .progress-tile.tier-none { --c: var(--pr-none); } .progress-tile.tier-start { --c: var(--pr-start); } .progress-tile.tier-half { --c: var(--pr-half); }
 .progress-tile.tier-almost { --c: var(--pr-almost); } .progress-tile.tier-done { --c: var(--pr-done); } .progress-tile.tier-neutral { border-color: rgba(255,255,255,.14); }
@@ -694,3 +695,4 @@ body.has-weather-sheet { overflow: hidden; }
 .dish-tried[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
 .dish-meta .dish-tried + .dish-fav { margin-left: 0; }
 @media (prefers-reduced-motion: no-preference) { .progress-bar i { transition: width .4s ease; } .progress-ring-arc { transition: stroke-dasharray .4s ease; } }
+@media (max-width: 360px) { .progress-tile { padding: 5px 6px 6px; } .progress-tile span { font-size: .6rem; } .progress-tile b { font-size: 1rem; } }
