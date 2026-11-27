@@ -9,6 +9,12 @@ on:
 permissions:
   contents: read
 
+# A newer push to the same pull request cancels the older, obsolete run. Runs on main are never cancelled
+# (each one deploys, and an interrupted deploy is worse than a queued one).
+concurrency:
+  group: tests-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   prepare:
     name: Build offline manifest
