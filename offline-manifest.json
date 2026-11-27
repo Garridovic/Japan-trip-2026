@@ -1,7 +1,7 @@
 {
-  "version": "86a80119cb",
+  "version": "37720c22bd",
   "sizes": {
-    "required": 1172890,
+    "required": 1184289,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -105,6 +105,7 @@
     "js/modules/notices.js",
     "js/modules/offline-texts.js",
     "js/modules/offline.js",
+    "js/modules/onboarding.js",
     "js/modules/overlay-history.js",
     "js/modules/phrases-ui.js",
     "js/modules/phrases.js",

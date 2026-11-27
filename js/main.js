@@ -138,6 +138,7 @@ async function start() {
   setBeforeOpenDay(() => guideTabs.select('detalle'));
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
 
+  let onboarding = null; // coach marks (lazy, optional)
   let activeView = viewFromSearch(window.location.search);
   if (new URLSearchParams(window.location.search).has(VIEW_QUERY_PARAM) && withView(window.location.href, activeView).search !== window.location.search) {
     history.replaceState(history.state, '', withView(window.location.href, activeView)); // drop an invalid ?view=
@@ -157,6 +158,7 @@ async function start() {
     if (view === 'viaje') { tips.show(); stamps.show(); }
     if (view === 'guia') { map.refresh(); guideTabs.refresh(); }
     window.scrollTo({ top: scrollByView.get(view) ?? 0, behavior: 'instant' });
+    onboarding?.onView(view);
   }
 
   navigateViewRef = (view) => navigateView(view);
@@ -265,6 +267,11 @@ async function start() {
   proximity.start();
   account?.markStarted();
   import('./modules/notices.js').then(({ initNotices }) => initNotices()).catch((error) => console.warn('[notices] disabled:', error)); // best effort: never blocks the guide
+  import('./modules/onboarding.js').then(({ initOnboarding }) => {
+    const tripStart = cities.map((city) => city.arrivalDate).filter(Boolean).sort()[0] ?? '';
+    onboarding = initOnboarding({ tripStart, toast });
+    onboarding?.onView(activeView);
+  }).catch((error) => console.warn('[onboarding] disabled:', error)); // best effort: never blocks the guide
 }
 
 start().catch((error) => {

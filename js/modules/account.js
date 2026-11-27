@@ -7,6 +7,7 @@ import { SYNCED_KEYS } from './user-data.js';
 import { createCloudSync, SAVE_DELAY_MS, BACKUP_KEY, LAST_SYNC_KEY } from './cloud-sync.js';
 import { createAuth, isConfigured, isAdmin } from './auth.js';
 import { updateSection } from './update-settings.js';
+import { FLOWS, REPLAY_PARAM } from './onboarding.js';
 import { loadNotices, publishNotices, buildNotice, publishErrorText, MAX_TITLE, MAX_TEXT } from './notices.js';
 
 /** What the user can reset one by one. `empty` is the value stored for "nothing" (the same shape the stores write). */
@@ -201,6 +202,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
             !auth ? h('p', {}, 'No se ha podido cargar el inicio de sesión ahora mismo.') : null)),
         proximity ? section('Lugares cercanos', proximity.settingNode()) : null,
         section('Datos de este dispositivo', ...resetRows()),
+        howSection(),
         versionLine()
       );
       return;
@@ -226,10 +228,27 @@ export async function initAccount({ config, userData, win = window, storage = nu
           status.state === 'signed-out' ? signInButton() : h('button', { type: 'button', class: 'filter', onclick: () => sync.reconcile(), disabled: busy || !online() }, 'Sincronizar ahora'))),
       proximity ? section('Lugares cercanos', proximity.settingNode()) : null,
       section('Restablecer mis datos', ...resetRows()),
+      howSection(),
       isAdmin(user) ? adminSection() : null,
       h('div', { class: 'account-actions account-logout' }, h('button', { type: 'button', class: 'filter is-danger', onclick: () => { view = 'logout'; render(); } }, 'Cerrar sesión')),
       versionLine()
     );
+  }
+
+  /** «Cómo funciona»: repeats the first-use tip of each feature (works without an account). */
+  function howSection() {
+    const replay = (flow) => {
+      const url = new URL(win.location.href);
+      url.search = '';
+      url.hash = '';
+      if (flow.view !== 'guia') url.searchParams.set('view', flow.view);
+      url.searchParams.set(REPLAY_PARAM, flow.id);
+      win.location.assign(url.href);
+    };
+    return section('Cómo funciona',
+      h('p', { class: 'muted small' }, 'Vuelve a ver cómo se usa cada función.'),
+      h('div', { class: 'account-how' }, FLOWS.slice().sort((a, b) => ['welcome', 'tabs', 'map-filters', 'offline-map', 'checklists', 'taxi'].indexOf(a.id) - ['welcome', 'tabs', 'map-filters', 'offline-map', 'checklists', 'taxi'].indexOf(b.id))
+        .map((flow) => h('button', { type: 'button', class: 'filter', dataset: { how: flow.id }, onclick: () => replay(flow) }, flow.label))));
   }
 
   /** Only for the administrator role: publish a notice for everyone (or withdraw it). The Worker re-checks the role from the signed ID token. */
