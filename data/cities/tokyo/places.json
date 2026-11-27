@@ -1,0 +1,13 @@
+[
+  {
+    "id": "sumida",
+    "name": "Acuario de Sumida (visita extra)",
+    "lat": 35.71,
+    "lng": 139.8105,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "extra",
+    "desc": "Acuario en las plantas 5 y 6 de Tokyo Skytree Town (Solamachi). Visita extra opcional. Coordenada orientativa.",
+    "query": "Sumida Aquarium Tokyo Skytree Town"
+  }
+]

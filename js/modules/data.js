@@ -5,6 +5,13 @@ import { validateJourney } from './journey.js';
 export const REQUIRED_CITY_DATASETS = ['city', 'places', 'restaurants', 'details', 'itinerary'];
 export const OPTIONAL_CITY_DATASETS = ['events', 'food', 'extras', 'sources'];
 
+/**
+ * Optional files a city really has. The journey entry may list them in `optionalData` (e.g. ["extras", "tips"]) so
+ * the app does not request files that do not exist (each one is a 404 in the console). Without the list every
+ * optional file is requested, as before.
+ */
+export const hasOptionalData = (cityEntry, name) => !Array.isArray(cityEntry?.optionalData) || cityEntry.optionalData.includes(name);
+
 export async function fetchJson(path, { optional = false } = {}) {
   const response = await fetch(path);
   if (response.status === 404 && optional) return null;
@@ -35,13 +42,13 @@ export async function loadGlobalContent() {
 const cityCache = new Map();
 
 /** Loads every dataset of one city (only that city: other cities are never downloaded). */
-export function loadCity(cityId) {
+export function loadCity(cityId, cityEntry = null) {
   if (!isValidId(cityId)) return Promise.reject(new Error(`Invalid city id: ${cityId}`));
   if (!cityCache.has(cityId)) {
     const request = (async () => {
       const entries = await Promise.all([
         ...REQUIRED_CITY_DATASETS.map(async (name) => [name, await fetchJson(cityDataPath(cityId, name))]),
-        ...OPTIONAL_CITY_DATASETS.map(async (name) => [name, await fetchJson(cityDataPath(cityId, name), { optional: true })])
+        ...OPTIONAL_CITY_DATASETS.map(async (name) => [name, hasOptionalData(cityEntry, name) ? await fetchJson(cityDataPath(cityId, name), { optional: true }) : null])
       ]);
       return { id: cityId, ...Object.fromEntries(entries) };
     })();

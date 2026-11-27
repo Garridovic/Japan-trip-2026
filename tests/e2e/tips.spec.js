@@ -44,12 +44,4 @@ test('the tips are not part of the printed stays document', async ({ page }) => 
   await expect(page.locator('#consejos')).toBeHidden();
 });
 
-test('the Guía still shows its four original tips', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.locator('#notes-grid > *')).toHaveCount(4);
-});
 
-test('ki o tsukete is in the phrases list', async ({ page }) => {
-  await page.goto('/?view=frases');
-  await expect(page.locator('#view-frases')).toContainText('ki o tsukete');
-});

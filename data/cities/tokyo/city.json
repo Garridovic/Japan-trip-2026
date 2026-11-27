@@ -1,0 +1,32 @@
+{
+  "id": "tokyo",
+  "timezone": "Asia/Tokyo",
+  "pageTitle": "Tokio · 8–10 y 18–22 diciembre 2026",
+  "description": "Guía compartida de Tokio (8–10 y 18–22 de diciembre de 2026). Todavía sin itinerario: de momento solo visitas extra.",
+  "hero": {
+    "subtitle": "Tokio aún no tiene itinerario en esta guía. Por ahora solo incluye visitas extra opcionales.",
+    "meta": [
+      "8–10 y 18–22 diciembre 2026",
+      "Contenido en preparación"
+    ]
+  },
+  "map": {
+    "center": [
+      35.6895,
+      139.75
+    ],
+    "zoom": 11,
+    "queryContext": "Tokyo, Japan",
+    "legendSummary": "Leyenda del mapa",
+    "dayFilters": [],
+    "alternativeCategories": [
+      {
+        "id": "extra",
+        "label": "Visitas extra",
+        "color": "#8554a4",
+        "legend": "Visitas extra opcionales"
+      }
+    ]
+  },
+  "footerLabel": "Tokio · diciembre 2026"
+}

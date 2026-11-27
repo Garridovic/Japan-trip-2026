@@ -27,7 +27,11 @@
     "day": "11",
     "type": "itinerary",
     "desc": "Castillo y palacio Ninomaru.",
-    "query": "Nijo Castle Kyoto"
+    "query": "Nijo Castle Kyoto",
+    "proximity": {
+      "kind": "monument",
+      "radius": 150
+    }
   },
   {
     "id": "pontocho",
@@ -47,7 +51,15 @@
     "day": "12",
     "type": "itinerary",
     "desc": "Santuario de los miles de torii rojos.",
-    "query": "Fushimi Inari Taisha Kyoto"
+    "query": "Fushimi Inari Taisha Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 400
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
+    }
   },
   {
     "id": "kiyomizu",
@@ -57,7 +69,15 @@
     "day": "12",
     "type": "itinerary",
     "desc": "Visita turística el 12. El 14 se anuncia aquí el Kanji del Año, pero la zona de la caligrafía está restringida y no se puede presenciar el acto.",
-    "query": "Kiyomizu dera Kyoto"
+    "query": "Kiyomizu dera Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 150
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
+    }
   },
   {
     "id": "sannenzaka",
@@ -77,7 +97,15 @@
     "day": "12",
     "type": "itinerary",
     "desc": "Santuario sintoísta en la entrada de Gion.",
-    "query": "Yasaka Shrine Kyoto"
+    "query": "Yasaka Shrine Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 120
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
+    }
   },
   {
     "id": "kodaiji",
@@ -87,7 +115,15 @@
     "day": "12",
     "type": "itinerary",
     "desc": "Templo y jardines con iluminación nocturna especial.",
-    "query": "Kodai ji Kyoto"
+    "query": "Kodai ji Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 100
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.enjoy-osaka-kyoto-kobe.com/ja/article/a/kyoto-goshuin/"
+    }
   },
   {
     "id": "kinkaku",
@@ -97,7 +133,15 @@
     "day": "13",
     "type": "itinerary",
     "desc": "Pabellón Dorado y estanque.",
-    "query": "Kinkakuji Kyoto"
+    "query": "Kinkakuji Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 150
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.shokoku-ji.jp/kinkakuji/"
+    }
   },
   {
     "id": "ryoanji",
@@ -107,7 +151,11 @@
     "day": "13",
     "type": "itinerary",
     "desc": "Templo zen famoso por su jardín de rocas.",
-    "query": "Ryoanji Kyoto"
+    "query": "Ryoanji Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 150
+    }
   },
   {
     "id": "toji",
@@ -117,7 +165,15 @@
     "day": "13",
     "type": "itinerary",
     "desc": "Pagoda de cinco plantas e iluminación nocturna final del 13 de diciembre.",
-    "query": "Toji Temple Kyoto"
+    "query": "Toji Temple Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 200
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
+    }
   },
   {
     "id": "tenryuji",
@@ -127,7 +183,11 @@
     "day": "13",
     "type": "itinerary",
     "desc": "Templo zen y jardín Sōgenchi.",
-    "query": "Tenryuji Kyoto"
+    "query": "Tenryuji Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 150
+    }
   },
   {
     "id": "bamboo",
@@ -137,7 +197,11 @@
     "day": "13",
     "type": "itinerary",
     "desc": "Sendero entre altos bambús.",
-    "query": "Arashiyama Bamboo Grove Kyoto"
+    "query": "Arashiyama Bamboo Grove Kyoto",
+    "proximity": {
+      "kind": "park",
+      "radius": 250
+    }
   },
   {
     "id": "okoichi",
@@ -147,7 +211,11 @@
     "day": "13",
     "type": "itinerary",
     "desc": "Villa y jardín tradicional; visita opcional.",
-    "query": "Okochi Sanso Kyoto"
+    "query": "Okochi Sanso Kyoto",
+    "proximity": {
+      "kind": "park",
+      "radius": 150
+    }
   },
   {
     "id": "togetsu",
@@ -157,7 +225,11 @@
     "day": "13",
     "type": "itinerary",
     "desc": "Puente histórico y paseo junto al río Katsura.",
-    "query": "Togetsukyo Bridge Kyoto"
+    "query": "Togetsukyo Bridge Kyoto",
+    "proximity": {
+      "kind": "monument",
+      "radius": 100
+    }
   },
   {
     "id": "bishamondo",
@@ -167,7 +239,11 @@
     "day": "14",
     "type": "event",
     "desc": "Punto de salida del Yamashina Gishi Matsuri a las 10:00.",
-    "query": "Bishamondo Kyoto"
+    "query": "Bishamondo Kyoto",
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.gltjp.com/ja/directory/item/15404/"
+    }
   },
   {
     "id": "tobu",
@@ -208,7 +284,15 @@
     "type": "alternative",
     "altCategory": "templos",
     "desc": "Gran complejo monumental y pagoda. Coordenada orientativa.",
-    "query": "Ninna ji Kyoto"
+    "query": "Ninna ji Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 200
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.enjoy-osaka-kyoto-kobe.com/ja/article/a/kyoto-goshuin/"
+    }
   },
   {
     "id": "ginkaku",
@@ -219,7 +303,15 @@
     "type": "alternative",
     "altCategory": "templos",
     "desc": "Templo y jardines de arena y musgo.",
-    "query": "Ginkakuji Kyoto"
+    "query": "Ginkakuji Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 120
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.shokoku-ji.jp/ginkakuji/"
+    }
   },
   {
     "id": "philosopher",
@@ -241,7 +333,15 @@
     "type": "alternative",
     "altCategory": "templos",
     "desc": "Complejo zen con jardines y acueducto. Coordenada orientativa.",
-    "query": "Nanzenji Kyoto"
+    "query": "Nanzenji Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 200
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
+    }
   },
   {
     "id": "sanjusangen",
@@ -252,7 +352,15 @@
     "type": "alternative",
     "altCategory": "templos",
     "desc": "Templo conocido por sus 1.001 figuras de Kannon.",
-    "query": "Sanjusangendo Kyoto"
+    "query": "Sanjusangendo Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 100
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
+    }
   },
   {
     "id": "heian",
@@ -263,7 +371,15 @@
     "type": "alternative",
     "altCategory": "templos",
     "desc": "Santuario con gran torii y arquitectura de inspiración imperial.",
-    "query": "Heian Jingu Kyoto"
+    "query": "Heian Jingu Kyoto",
+    "proximity": {
+      "kind": "temple",
+      "radius": 200
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
+    }
   },
   {
     "id": "imperial",
@@ -274,7 +390,11 @@
     "type": "alternative",
     "altCategory": "naturaleza",
     "desc": "Parque histórico y antiguo Palacio Imperial. Pin aproximado.",
-    "query": "Kyoto Imperial Palace"
+    "query": "Kyoto Imperial Palace",
+    "proximity": {
+      "kind": "park",
+      "radius": 400
+    }
   },
   {
     "id": "fushimisake",
@@ -307,7 +427,11 @@
     "type": "alternative",
     "altCategory": "cultura",
     "desc": "Museo dedicado al manga.",
-    "query": "Kyoto International Manga Museum"
+    "query": "Kyoto International Manga Museum",
+    "proximity": {
+      "kind": "museum",
+      "radius": 100
+    }
   },
   {
     "id": "railway",
@@ -318,7 +442,11 @@
     "type": "alternative",
     "altCategory": "cultura",
     "desc": "Museo ferroviario con locomotoras y trenes históricos. Pin aproximado.",
-    "query": "Kyoto Railway Museum"
+    "query": "Kyoto Railway Museum",
+    "proximity": {
+      "kind": "museum",
+      "radius": 150
+    }
   },
   {
     "id": "monkey",
@@ -329,6 +457,10 @@
     "type": "alternative",
     "altCategory": "naturaleza",
     "desc": "Parque de macacos con subida a pie. Pin aproximado.",
-    "query": "Arashiyama Monkey Park Iwatayama"
+    "query": "Arashiyama Monkey Park Iwatayama",
+    "proximity": {
+      "kind": "park",
+      "radius": 150
+    }
   }
 ]

@@ -329,5 +329,26 @@
       }
     ],
     "verificationNote": "Horarios y trayecto de fuentes turísticas; tarifa de Nankai con discrepancia (210–240 yenes)."
+  },
+  {
+    "id": "kaiyukan",
+    "description": "Visita extra opcional. Uno de los acuarios más grandes del mundo, en el puerto de Osaka: recorre el Pacífico en un gran tanque central con tiburón ballena, rayas y mamíferos marinos, y se baja en espiral por las plantas. Según Osaka Info, se llega en unos 5 minutos a pie desde la salida 1 de Osakako (línea Chuo del metro). La visita dura unas 2 horas. Es una excursión que ocupa media jornada desde el centro: solo cabe si sacrificáis otra visita.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.65514,135.42876",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.65514,135.42876&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.65514,135.42876&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Osaka Info · Acuario Kaiyukan",
+        "url": "https://osaka-info.jp/en/spot/osaka-aquarium-kaiyukan/"
+      },
+      {
+        "label": "Kaiyukan · web oficial",
+        "url": "https://www.kaiyukan.com/"
+      }
+    ],
+    "verificationNote": "Confirmar antes de ir: horario y precio varían por temporada (Osaka Info indica 10:00–20:00 y 2.700 ¥ adultos, una sola fuente) y hay días de cierre irregulares. Consultad la web oficial."
   }
 ]

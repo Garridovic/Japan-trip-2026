@@ -27,7 +27,11 @@
     "day": "15",
     "type": "itinerary",
     "desc": "Callejón empedrado con faroles junto al templo Hozenji y su estatua cubierta de musgo.",
-    "query": "Hozenji Yokocho Osaka"
+    "query": "Hozenji Yokocho Osaka",
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://metronine.osaka/article_tour/goshuin-stamps-tour"
+    }
   },
   {
     "id": "shinsaibashisuji",
@@ -47,7 +51,11 @@
     "day": "16",
     "type": "itinerary",
     "desc": "Torre principal del castillo con museo y mirador, dentro de un gran parque.",
-    "query": "Osaka Castle Main Tower"
+    "query": "Osaka Castle Main Tower",
+    "proximity": {
+      "kind": "monument",
+      "radius": 300
+    }
   },
   {
     "id": "nambayasaka",
@@ -57,7 +65,15 @@
     "day": "16",
     "type": "itinerary",
     "desc": "Santuario con el escenario en forma de cabeza de león de unos 12 m de altura.",
-    "query": "Namba Yasaka Shrine Osaka"
+    "query": "Namba Yasaka Shrine Osaka",
+    "proximity": {
+      "kind": "temple",
+      "radius": 100
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://metronine.osaka/article_tour/goshuin-stamps-tour"
+    }
   },
   {
     "id": "kuromon",
@@ -97,7 +113,11 @@
     "day": "16",
     "type": "itinerary",
     "desc": "Dos torres unidas por el Observatorio del Jardín Flotante, con vistas nocturnas.",
-    "query": "Umeda Sky Building Osaka"
+    "query": "Umeda Sky Building Osaka",
+    "proximity": {
+      "kind": "monument",
+      "radius": 100
+    }
   },
   {
     "id": "nakanoshima",
@@ -117,6 +137,25 @@
     "day": "17",
     "type": "itinerary",
     "desc": "Gran santuario con el puente arqueado Sorihashi. Visita extra opcional la mañana del 17.",
-    "query": "Sumiyoshi Taisha Osaka"
+    "query": "Sumiyoshi Taisha Osaka",
+    "proximity": {
+      "kind": "temple",
+      "radius": 250
+    }
+  },
+  {
+    "id": "kaiyukan",
+    "name": "Acuario Kaiyukan (visita extra)",
+    "lat": 34.65514,
+    "lng": 135.42876,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "extra",
+    "desc": "Uno de los acuarios más grandes del mundo, con el tanque del tiburón ballena. Visita extra opcional, en el puerto de Osaka.",
+    "query": "Osaka Aquarium Kaiyukan",
+    "proximity": {
+      "kind": "museum",
+      "radius": 200
+    }
   }
 ]

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "sumida",
+    "description": "Visita extra opcional. Acuario en las plantas 5 y 6 de Tokyo Solamachi, el centro comercial al pie de la Tokyo Skytree. Destaca el gran estanque abierto de pingüinos y la zona de anguilas de jardín, además de medusas y un tanque con peces de las islas Ogasawara. Está junto a la estación Tokyo Skytree (línea Tobu Skytree) y a unos 5 minutos andando de Oshiage (Skytree-mae). La web oficial recomienda comprar la entrada online con antelación, aunque para visitas individuales no es obligatorio.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.71,139.8105",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.71,139.8105&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.71,139.8105&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Sumida Aquarium · preguntas frecuentes",
+        "url": "https://en.sumida-aquarium.com/faq/"
+      },
+      {
+        "label": "Sumida Aquarium · acceso",
+        "url": "https://en.sumida-aquarium.com/about/access/"
+      },
+      {
+        "label": "GO TOKYO · Sumida Aquarium",
+        "url": "https://www.gotokyo.org/en/spot/67/"
+      }
+    ],
+    "verificationNote": "Confirmar antes de ir: horario (entre semana 10:00–20:00; fines de semana y festivos 9:00–21:00, última entrada una hora antes; hay cierres anticipados puntuales, por ejemplo el 6 de dic a las 18:00) y precio (GO TOKYO indica 2.500 ¥ de entrada general, sin desglosar). Coordenada orientativa."
+  }
+]

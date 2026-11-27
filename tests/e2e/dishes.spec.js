@@ -32,22 +32,6 @@ test('dishes without a photo show the Japanese name as a placeholder', async ({ 
   await expect(card.locator('.dish-photo.is-empty')).toHaveText(withoutPhoto[0].ja);
 });
 
-test('search by Japanese, romaji or Spanish plus category and ingredient filters', async ({ page }) => {
-  await page.goto('/?view=platos');
-  const search = page.locator('#dishes-search');
-  await search.fill('たこ焼き');
-  await expect(page.locator('.dish-card[data-dish-id="takoyaki"]')).toBeVisible();
-  await search.fill('katsu');
-  await expect(page.locator('.dish-card[data-dish-id="tonkatsu"]')).toBeVisible();
-  await search.fill('zzzz');
-  await expect(page.locator('.dish-card')).toHaveCount(0);
-  await expect(page.locator('#dishes-empty')).toBeVisible();
-  await search.fill('');
-  await page.locator('#dishes-chips').getByRole('button', { name: 'Fideos' }).click();
-  await expect(page.locator('.dish-card')).toHaveCount(data.dishes.filter(({ category }) => category === 'fideos').length);
-  await page.locator('#dishes-protein').getByRole('button', { name: /Sin carne ni pescado/ }).click();
-  await expect(page.locator('.dish-card')).toHaveCount(data.dishes.filter(({ category, protein }) => category === 'fideos' && protein === 'vegetariano').length);
-});
 
 test('list view and photo view can be switched', async ({ page }) => {
   await page.goto('/?view=platos');

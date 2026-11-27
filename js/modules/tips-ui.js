@@ -1,7 +1,7 @@
 // "Consejos prácticos" block at the top of the Viaje view: collapsible categories.
 // City tips are listed under their city whichever tab is active, so they also work offline.
 import { byId, h, externalLink } from './dom.js';
-import { fetchJson } from './data.js';
+import { fetchJson, hasOptionalData } from './data.js';
 import { validateTips, groupTips } from './tips.js';
 
 const tipCard = (tip) => h('article', { class: 'tip-item', dataset: { tipId: tip.id } },
@@ -22,7 +22,7 @@ export function initTips(practical, cities, { load = fetchJson } = {}) {
 
 async function render(practical, cities, load, section) {
   const cityTips = new Map();
-  await Promise.all(cities.map(async ({ id }) => {
+  await Promise.all(cities.filter((city) => hasOptionalData(city, 'tips')).map(async ({ id }) => {
     try {
       const data = await load(`data/cities/${id}/tips.json`, { optional: true });
       if (data?.items?.length) cityTips.set(id, data);

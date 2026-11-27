@@ -8,14 +8,38 @@
       "name": "Kioto",
       "enabled": true,
       "arrivalDate": "2026-12-11",
-      "departureDate": "2026-12-15"
+      "departureDate": "2026-12-15",
+      "optionalData": [
+        "events",
+        "food",
+        "extras",
+        "sources",
+        "tips"
+      ]
     },
     {
       "id": "osaka",
       "name": "Osaka",
       "enabled": true,
       "arrivalDate": "2026-12-15",
-      "departureDate": "2026-12-17"
+      "departureDate": "2026-12-17",
+      "optionalData": [
+        "food",
+        "extras",
+        "sources",
+        "tips"
+      ]
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokio",
+      "enabled": true,
+      "arrivalDate": "2026-12-08",
+      "departureDate": "2026-12-22",
+      "optionalData": [
+        "extras",
+        "sources"
+      ]
     }
   ],
   "connections": [

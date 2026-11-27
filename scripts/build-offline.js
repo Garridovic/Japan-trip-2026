@@ -1,5 +1,5 @@
 // Builds offline-manifest.json (what the service worker caches) and stamps its version into sw.js.
-// Run after `npm run prepare:images` (CI does) so the list matches the images that are actually published.
+// Run after the photos are committed (`npm run prepare:images`, by hand) so the list matches the images that are actually published.
 //   required : the app itself (HTML, JS, CSS, data, vendor files, icons). Installing the service worker fails without them.
 //   optional : small place and dish photos (480 px). Downloaded during install; a failed photo does not abort it.
 //   warm     : larger photos (960 px): "download everything" (automatic on wifi, otherwise a button).

@@ -4,12 +4,13 @@ import { createUserData, SYNCED_KEYS, CHECKLIST_KEY } from '../js/modules/user-d
 import { VISITED_KEY } from '../js/modules/visited.js';
 import { FAVORITES_STORAGE_KEY } from '../js/modules/phrases.js';
 import { DISH_FAVORITES_KEY } from '../js/modules/dishes.js';
+import { STAMPS_KEY } from '../js/modules/stamps.js';
 
 const memory = (initial = {}) => { const map = new Map(Object.entries(initial)); return { getItem: (k) => map.get(k) ?? null, setItem: (k, v) => map.set(k, v), removeItem: (k) => map.delete(k), map }; };
 const fakeTimers = () => { const queue = []; return { setTimer: (fn) => { queue.push(fn); return queue.length; }, clearTimer: () => { queue.length = 0; }, run: async () => { while (queue.length) await queue.shift()(); } }; };
 
 test('the synced keys are exactly the keys the stores use', () => {
-  assert.deepEqual([...SYNCED_KEYS].sort(), [VISITED_KEY, FAVORITES_STORAGE_KEY, DISH_FAVORITES_KEY, CHECKLIST_KEY].sort());
+  assert.deepEqual([...SYNCED_KEYS].sort(), [VISITED_KEY, FAVORITES_STORAGE_KEY, DISH_FAVORITES_KEY, CHECKLIST_KEY, STAMPS_KEY].sort());
 });
 
 test('the facade reads and writes the underlying storage', () => {

@@ -13,7 +13,7 @@ test('city tabs switch the whole context and Kyoto is restored intact', async ({
   await page.goto('/');
 
   const options = await openCities(page);
-  await expect(options).toHaveText(['Kioto', 'Testville', 'Osaka']);
+  await expect(options).toHaveText(['Kioto', 'Testville', 'Osaka', 'Tokio']);
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
 
   await selectCity(page, 'Testville');
@@ -112,25 +112,9 @@ test('the city selector is keyboard accessible', async ({ page }) => {
   await expect(citySelect(page)).toBeFocused();
 });
 
-test('a configured but disabled city in the URL falls back to a valid city and is never downloaded', async ({ page }) => {
-  await page.route('**/data/journey.json', async (route) => {
-    const response = await route.fetch();
-    const body = await response.json();
-    body.cities.push({ id: 'hakone', name: 'Hakone', enabled: false, arrivalDate: '2026-12-10' });
-    await route.fulfill({ response, json: body });
-  });
-  const requested = [];
-  page.on('request', (request) => requested.push(request.url()));
-  await page.goto('/?city=hakone');
-  await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
-  await openCities(page);
-  await expect(page.getByRole('option', { name: 'Hakone' })).toHaveCount(0);
-  expect(requested.some((address) => /data\/cities\/hakone/.test(address))).toBe(false);
-});
 
 for (const [label, url] of [
-  ['an unknown city', '/?city=atlantis'],
-  ['a path-traversal attempt', '/?city=..%2F..%2Fetc']
+  ['an unknown city', '/?city=atlantis'] // disabled cities and path traversal are unit-tested in journey.test.js
 ]) {
   test(`${label} in the URL falls back to a valid city and reports it`, async ({ page }) => {
     const warnings = [];

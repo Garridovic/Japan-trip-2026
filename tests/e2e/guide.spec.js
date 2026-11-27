@@ -20,12 +20,12 @@ test('Kyoto loads its map, markers, tabs and full version', async ({ page }) => 
   expect(pageErrors).toEqual([]);
 });
 
-test('only enabled cities are in the city selector, in journey order: Kioto and Osaka', async ({ page }) => {
+test('only enabled cities are in the city selector, in journey order: Kioto, Osaka and Tokio', async ({ page }) => {
   await page.goto('/');
   await expect(citySelect(page)).toContainText('Kioto');
   const options = await openCities(page);
   await expect(options).toHaveCount(journey.cities.filter((city) => city.enabled).length);
-  await expect(options).toHaveText(['Kioto', 'Osaka']);
+  await expect(options).toHaveText(['Kioto', 'Osaka', 'Tokio']);
   await expect(options.first()).toHaveAttribute('aria-selected', 'true');
 });
 

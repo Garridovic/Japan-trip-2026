@@ -109,7 +109,7 @@ export function initMap({ openDetail }) {
       })
       : L.circleMarker([point.lat, point.lng], {
         radius: point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7,
-        color: '#fff', weight: 2, fillColor: color, fillOpacity: 0.95
+        color: '#fff', weight: point.type === 'hotel' ? 3 : 2, fillColor: color, fillOpacity: 0.95
       });
     marker.bindPopup(buildPopup(point));
     // In the full-screen map the place goes to the bottom card instead of a popup.
@@ -138,6 +138,7 @@ export function initMap({ openDetail }) {
     if (kind === 'restaurantes') return point.type === 'restaurant';
     if (kind === 'pendientes') return isVisitable(point) && !visited.has(cityId, point.id);
     if (kind === 'visitas') return point.type !== 'restaurant';
+    if (kind === 'sellos') return Boolean(point.stamp);
     return true;
   };
   const filteredPoints = () => points.filter((point) => visibleForFilter(point, currentFilter) && visibleForKind(point, currentKindFilter));
@@ -192,7 +193,7 @@ export function initMap({ openDetail }) {
     announce();
   }
 
-  const KIND_LABELS = { visitas: 'Solo visitas', restaurantes: 'Solo restaurantes', pendientes: 'Pendientes' };
+  const KIND_LABELS = { visitas: 'Solo visitas', restaurantes: 'Solo restaurantes', pendientes: 'Pendientes', sellos: 'Sellos' };
   const visitedSummary = byId('visited-summary');
   const activeFilters = () => [
     ...(currentFilter !== 'todos' ? [{ key: 'day', label: config?.dayFilters.find((item) => item.value === currentFilter)?.label ?? (currentFilter === 'extra' ? 'Alternativas' : currentFilter) }] : []),
@@ -252,8 +253,10 @@ export function initMap({ openDetail }) {
       ...config.dayFilters.map((day) => item(swatch({ style: `background:${day.color}` }), day.legend)),
       item(swatch({ class: 'restaurant-shape' }), 'Diamante · restaurantes y paradas gastronómicas (el color conserva la jornada)'),
       item(swatch({ class: 'visit-shape', style: 'background:#8a9699' }), 'Círculo · visitas y puntos de interés'),
-      item(swatch({ style: `background:${HOTEL_COLOR}` }), 'Hotel · alojamiento del grupo'),
+      item(swatch({ class: 'hotel-shape', style: `background:${HOTEL_COLOR}` }), 'Hotel · alojamiento del grupo'),
       ...(hasAlternatives() ? config.alternativeCategories.map((category) => item(swatch({ style: `background:${category.color}` }), category.legend)) : []),
+      item(swatch({ class: 'visited-shape' }), '✓ Atenuado · ya visitado'),
+      item(swatch({ class: 'route-shape' }), 'Número · orden de la ruta del día'),
       item(swatch({ class: 'location' }), 'Azul intenso · tu ubicación GPS'),
       item(swatch({ class: 'accuracy' }), 'Azul claro · precisión estimada del GPS')
     ];

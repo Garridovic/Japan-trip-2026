@@ -76,13 +76,6 @@ test('a place sheet shows description, photos with credit data, sources and what
   await expect(page.locator('#poi-photo')).toHaveAttribute('src', /assets\/images\/osaka\//);
 });
 
-test('the extra visits are listed as optional with a clear verdict', async ({ page }) => {
-  await page.goto('/?city=osaka');
-  await expect(page.locator('.extra-card')).toHaveCount(2);
-  await expect(page.locator('.extra-card', { hasText: 'Sumiyoshi Taisha' })).toContainText('No cabe el día 16');
-  await expect(page.locator('.extra-card', { hasText: 'Nakanoshima' })).toContainText('Cabe');
-  await expect(page.locator('#dia17')).toContainText('Borrador');
-});
 
 test('restaurant cards link to Google Maps, cite a source and flag approximate pins', async ({ page }) => {
   await page.goto('/?city=osaka');

@@ -11,27 +11,17 @@ permissions:
 
 jobs:
   prepare:
-    name: Download and optimize local images
+    name: Build offline manifest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - run: npm install --no-package-lock
-      - run: npm run prepare:images
+      # Photos and their credits are committed (npm run prepare:images, run by hand when the catalogs change),
+      # so CI no longer downloads anything. The manifest only lists files that exist and stamps the version into sw.js.
       - name: Build the offline manifest (service worker file list and version)
         run: npm run build:offline
-      - name: Upload image preparation report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: image-preparation-report
-          path: |
-            image-preparation-report.md
-            image-preparation-report.json
-          if-no-files-found: warn
-          retention-days: 30
       - uses: actions/upload-artifact@v7
         with:
           name: prepared-site
@@ -44,7 +34,7 @@ jobs:
           include-hidden-files: true
 
   unit:
-    name: Data and image integrity tests
+    name: Unit tests (data, images and logic)
     needs: prepare
     runs-on: ubuntu-latest
     steps:
@@ -56,11 +46,16 @@ jobs:
         with:
           name: prepared-site
           path: .
-      - run: node --test
+      - name: Run unit tests (node --test)
+        run: node --test
 
   browser:
-    name: Browser tests
+    name: Browser tests (part ${{ matrix.shard }} of 3)
     needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -72,8 +67,14 @@ jobs:
           name: prepared-site
           path: .
       - run: npm install --no-package-lock
+      - name: Cache Playwright browsers
+        id: pw
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('node_modules/@playwright/test/package.json') }}
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+      - run: npx playwright test --shard=${{ matrix.shard }}/3
 
   deploy:
     name: Deploy to GitHub Pages
@@ -82,11 +83,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      actions: read
       pages: write
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     steps:
       - uses: actions/download-artifact@v8
         with:
@@ -98,7 +100,24 @@ jobs:
         with:
           path: site
       - name: Wait for artifact to be visible to the Pages API
-        run: sleep 30
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 15); do
+            n=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" --jq '[.artifacts[]|select(.name=="github-pages")]|length' || echo 0)
+            [ "$n" -gt 0 ] && exit 0
+            sleep 4
+          done
+          echo "github-pages artifact still not listed; trying the deployment anyway."
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+      # The Pages API sometimes does not see the artifact yet: wait and try once more (a real failure still fails the job).
+      - name: Wait before retrying the deployment
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+      - name: Deploy to GitHub Pages (retry)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5

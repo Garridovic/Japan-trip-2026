@@ -13,8 +13,16 @@
     "id": "nishiki",
     "description": "Un mercado cubierto histórico en el centro de Kioto, conocido por sus puestos de comida, encurtidos, dulces y productos locales. Es ideal para probar pequeñas especialidades; recuerda que algunos puestos esperan que comas frente a ellos y no caminando.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Nishiki%20Market%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Nishiki%20Market%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/nishiki-1-1600.webp",
+        "srcSet": "assets/images/kyoto/nishiki-1-480.webp 480w, assets/images/kyoto/nishiki-1-960.webp 960w, assets/images/kyoto/nishiki-1-1600.webp 1600w",
+        "alt": "Mercado Nishiki — Nishiki ichiba(market) in Kyoto, Japan/年の瀬の京都・錦市場"
+      },
+      {
+        "src": "assets/images/kyoto/nishiki-2-1600.webp",
+        "srcSet": "assets/images/kyoto/nishiki-2-480.webp 480w, assets/images/kyoto/nishiki-2-960.webp 960w, assets/images/kyoto/nishiki-2-1600.webp 1600w",
+        "alt": "Mercado Nishiki — 錦市場 の そば 屋（ 京都市 中京区 錦小路 御幸町 東入ル船屋町402、蕎麦屋だが親子丼なども出す定食屋「そば處 錦小路 まるき」 [1] ）"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.00503,135.76471",
@@ -26,8 +34,16 @@
     "id": "nijo",
     "description": "Antigua residencia del shōgun Tokugawa en Kioto y uno de los grandes conjuntos históricos de la ciudad. No te pierdas el palacio Ninomaru, sus pinturas, los jardines y los famosos suelos «ruiseñor», diseñados para delatar intrusos.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Nijō%20Castle%20Kyoto.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Nijo%20Castle%20Ninomaru%20Palace%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/nijo-1-1600.webp",
+        "srcSet": "assets/images/kyoto/nijo-1-480.webp 480w, assets/images/kyoto/nijo-1-960.webp 960w, assets/images/kyoto/nijo-1-1600.webp 1600w",
+        "alt": "Castillo Nijō — Nijo Castle in Nakagyo-ku, Kyoto, Japan."
+      },
+      {
+        "src": "assets/images/kyoto/nijo-2-1600.webp",
+        "srcSet": "assets/images/kyoto/nijo-2-480.webp 480w, assets/images/kyoto/nijo-2-960.webp 960w, assets/images/kyoto/nijo-2-1600.webp 1600w",
+        "alt": "Castillo Nijō — Panoramic view of buildings containing Ninomaru reception rooms at Nijo Castle in Kyoto, Japan. Stitched from 2 images using Canon PhotoStitch 3.1."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.01397,135.74851",
@@ -46,8 +62,11 @@
     "id": "pontocho",
     "description": "Estrecho callejón tradicional junto al río Kamo, con restaurantes y casas de té en edificios de madera. Lo mejor es recorrerlo al anochecer y disfrutar del ambiente; no todas las calles laterales son de acceso público.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Pontocho%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Pontocho%20alley%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/pontocho-1-1600.webp",
+        "srcSet": "assets/images/kyoto/pontocho-1-480.webp 480w, assets/images/kyoto/pontocho-1-960.webp 960w, assets/images/kyoto/pontocho-1-1600.webp 1600w",
+        "alt": "Pontocho — 2005-03-24 Kyoto, Japan: Pontocho Alley. Pontocho Alley"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.00425,135.77121",
@@ -59,8 +78,16 @@
     "id": "fushimi",
     "description": "Uno de los santuarios sintoístas más conocidos de Japón, dedicado a Inari. Su sendero asciende por la montaña entre miles de puertas torii rojas. La zona inferior suele estar concurrida; caminar más arriba permite encontrar tramos más tranquilos.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi%20Inari-taisha%20torii.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi%20Inari%20Taisha%20Kyoto%20Japan.jpg"
+      {
+        "src": "assets/images/kyoto/fushimi-1-1600.webp",
+        "srcSet": "assets/images/kyoto/fushimi-1-480.webp 480w, assets/images/kyoto/fushimi-1-960.webp 960w, assets/images/kyoto/fushimi-1-1600.webp 1600w",
+        "alt": "Fushimi Inari Taisha — Japan Fushimi Inari jinja gates DSC00442.jpg"
+      },
+      {
+        "src": "assets/images/kyoto/fushimi-2-1600.webp",
+        "srcSet": "assets/images/kyoto/fushimi-2-480.webp 480w, assets/images/kyoto/fushimi-2-960.webp 960w, assets/images/kyoto/fushimi-2-1600.webp 1600w",
+        "alt": "Fushimi Inari Taisha — A torii gate at Fushimi Inari Shrine, Kyoto, with the incised characters waiting to be picked out with a final touch of black paint."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=34.96754,135.77944",
@@ -79,8 +106,16 @@
     "id": "kiyomizu",
     "description": "Templo budista fundado en el siglo VIII y célebre por su gran terraza de madera sostenida por pilares, con vistas sobre Kioto. Explora el salón principal, la pagoda y la cascada Otowa. El acceso a zonas concretas puede variar por obras o ceremonias.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kiyomizu-dera%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kiyomizu-dera%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/kiyomizu-1-1600.webp",
+        "srcSet": "assets/images/kyoto/kiyomizu-1-480.webp 480w, assets/images/kyoto/kiyomizu-1-960.webp 960w, assets/images/kyoto/kiyomizu-1-1600.webp 1600w",
+        "alt": "Kiyomizu-dera — Kyoto, view from Kiyomisu-dera temple, Kyoto Prefecture, Japan"
+      },
+      {
+        "src": "assets/images/kyoto/kiyomizu-2-1600.webp",
+        "srcSet": "assets/images/kyoto/kiyomizu-2-480.webp 480w, assets/images/kyoto/kiyomizu-2-960.webp 960w, assets/images/kyoto/kiyomizu-2-1600.webp 1600w",
+        "alt": "Kiyomizu-dera — In Apr/May 2009, I took 15 days to walk all the way from Tokyo to Kyoto, roughly following the 546km long, ancient highway, the Nakasendo, alone. This picture was taken during the free week I had in Japan after the walk. Read about my preparations and my time in Japan at 546km.blogspot.com ."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=34.99442,135.78448",
@@ -99,8 +134,11 @@
     "id": "sannenzaka",
     "description": "Conjunto de calles empedradas y tradicionales que conectan el entorno de Kiyomizu-dera con el barrio de Higashiyama. Tiendas, casas históricas y fachadas de madera hacen que el paseo sea tan importante como el destino.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Sannenzaka%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Ninenzaka%20Kyoto%20Japan.jpg"
+      {
+        "src": "assets/images/kyoto/sannenzaka-1-1600.webp",
+        "srcSet": "assets/images/kyoto/sannenzaka-1-480.webp 480w, assets/images/kyoto/sannenzaka-1-960.webp 960w, assets/images/kyoto/sannenzaka-1-1600.webp 1600w",
+        "alt": "Sannenzaka y Ninenzaka — Tair benywod yn mynd am dro ben bore yn ardal Higashiyama, Kyoto."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=34.9974,135.78132",
@@ -112,8 +150,11 @@
     "id": "yasaka",
     "description": "Santuario sintoísta en el límite de Gion y el parque Maruyama. Su puerta y el pabellón central iluminado son especialmente atractivos al atardecer; es un buen punto para enlazar con Gion.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Yasaka%20Shrine%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Yasaka%20Jinja%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/yasaka-1-1600.webp",
+        "srcSet": "assets/images/kyoto/yasaka-1-480.webp 480w, assets/images/kyoto/yasaka-1-960.webp 960w, assets/images/kyoto/yasaka-1-1600.webp 1600w",
+        "alt": "Santuario Yasaka — Visitors viewing cherry blossoms at the Yasaka-jinsha (Gion shrine) of Kyoto."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.00349,135.77839",
@@ -132,8 +173,11 @@
     "id": "kodaiji",
     "description": "Templo zen fundado en memoria de Toyotomi Hideyoshi. Destaca por sus jardines, estanques, arquitectura y bambusal. En determinadas temporadas ofrece iluminación nocturna; confirma horarios y entradas para la fecha de visita.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kodai-ji%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kodai-ji%20temple%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/kodaiji-1-1600.webp",
+        "srcSet": "assets/images/kyoto/kodaiji-1-480.webp 480w, assets/images/kyoto/kodaiji-1-960.webp 960w, assets/images/kyoto/kodaiji-1-1600.webp 1600w",
+        "alt": "Kōdai-ji — This photograph was taken at Kōdai-ji , a Buddhist temple in Kyoto , Japan . I took the photo and contribute my rights in the file to the public domain; individuals and organizations retain rights to images in it. Stone lantern in garden"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.00032,135.78135",
@@ -152,8 +196,16 @@
     "id": "kinkaku",
     "description": "El Pabellón Dorado es el edificio más conocido del templo Rokuon-ji. Su revestimiento dorado se refleja en el estanque Kyōko-chi, dentro de un jardín paisajístico pensado para contemplarse siguiendo el recorrido señalizado.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kinkaku-ji%20Kyoto.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kinkakuji%20Kyoto%20Japan.jpg"
+      {
+        "src": "assets/images/kyoto/kinkaku-1-1600.webp",
+        "srcSet": "assets/images/kyoto/kinkaku-1-480.webp 480w, assets/images/kyoto/kinkaku-1-960.webp 960w, assets/images/kyoto/kinkaku-1-1600.webp 1600w",
+        "alt": "Kinkaku-ji — the Kinkaku-ji or \"temple of the Golden Pavilion\" in Kyoto , en:Japan ."
+      },
+      {
+        "src": "assets/images/kyoto/kinkaku-2-1600.webp",
+        "srcSet": "assets/images/kyoto/kinkaku-2-480.webp 480w, assets/images/kyoto/kinkaku-2-960.webp 960w, assets/images/kyoto/kinkaku-2-1600.webp 1600w",
+        "alt": "Kinkaku-ji — Kinkaku-ji / Golden Temple in Kyoto"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.03959,135.72951",
@@ -172,8 +224,11 @@
     "id": "ryoanji",
     "description": "Templo zen famoso por su jardín karesansui de quince rocas sobre grava blanca. La composición cambia según el punto de observación y, tradicionalmente, no se pueden ver todas las rocas a la vez desde una posición.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Ryoanji%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Ryoan-ji%20rock%20garden%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/ryoanji-1-1600.webp",
+        "srcSet": "assets/images/kyoto/ryoanji-1-480.webp 480w, assets/images/kyoto/ryoanji-1-960.webp 960w, assets/images/kyoto/ryoanji-1-1600.webp 1600w",
+        "alt": "Ryoan-ji — Dry Garden in Ryoanji ( Kyoto , Japan )"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.03349,135.71806",
@@ -192,8 +247,11 @@
     "id": "toji",
     "description": "Templo budista asociado a la escuela Shingon, conocido por su pagoda de cinco plantas, una de las más altas de Japón. El recinto alberga importantes edificios y tesoros; las aperturas interiores y las iluminaciones son estacionales.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Toji%20Temple%20Kyoto%20pagoda.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/To-ji%20Kyoto%20Japan.jpg"
+      {
+        "src": "assets/images/kyoto/toji-1-1600.webp",
+        "srcSet": "assets/images/kyoto/toji-1-480.webp 480w, assets/images/kyoto/toji-1-960.webp 960w, assets/images/kyoto/toji-1-1600.webp 1600w",
+        "alt": "Tō-ji — Here is a five-storied pagoda which in general form is very much like the famous 7th-century one at Horyu-ji near Nara, underneath which relics of the Buddha were originally deposited. But it is a pagoda transformed, hardly a straightforward model. On each story are doors and drawers; the pagoda has turned into a cabinet. Images transform every surface into something it never was and never could be. Steel, gold, silver, and black lacquer have been combined to make vibrant pictures of a sort that might be seen on the painted sliding doors of large interior rooms. On each story there are views of such attractions as Mt. Fuji, the Itsukushima Shrine, and the Kiyomizu Temple, while the roofs bear images that suggest the skies above: butterflies, phoenixes, geese, plovers, herons, and peacocks."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=34.98119,135.74771",
@@ -212,8 +270,11 @@
     "id": "tenryuji",
     "description": "Templo zen de Arashiyama declarado Patrimonio Mundial. Su jardín Sōgenchi conserva un diseño paisajístico histórico que integra el estanque con las montañas de fondo. La visita al jardín y la entrada a los edificios pueden tener tarifas distintas.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Tenryu-ji%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Tenryuji%20garden%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/tenryuji-1-1600.webp",
+        "srcSet": "assets/images/kyoto/tenryuji-1-480.webp 480w, assets/images/kyoto/tenryuji-1-960.webp 960w, assets/images/kyoto/tenryuji-1-1600.webp 1600w",
+        "alt": "Tenryū-ji — Tenryuji garden, Kyoto, Japan."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.01617,135.67462",
@@ -232,8 +293,16 @@
     "id": "bamboo",
     "description": "Sendero público de Arashiyama que atraviesa un bosque de bambú alto y muy fotogénico. Es un paseo corto y concurrido; llegar temprano suele mejorar la experiencia. No es un recinto cerrado ni requiere entrada.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Arashiyama%20Bamboo%20Grove%20Kyoto.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Arashiyama%20bamboo%20forest%20Kyoto%20Japan.jpg"
+      {
+        "src": "assets/images/kyoto/bamboo-1-1600.webp",
+        "srcSet": "assets/images/kyoto/bamboo-1-480.webp 480w, assets/images/kyoto/bamboo-1-960.webp 960w, assets/images/kyoto/bamboo-1-1600.webp 1600w",
+        "alt": "Bosque de bambú de Arashiyama — Native bamboo forest, in Arashiyama, Japan. \"Now that's bamboo\" 24mm f/7.1 1.3sec @ ISO 100"
+      },
+      {
+        "src": "assets/images/kyoto/bamboo-2-1600.webp",
+        "srcSet": "assets/images/kyoto/bamboo-2-480.webp 480w, assets/images/kyoto/bamboo-2-960.webp 960w, assets/images/kyoto/bamboo-2-1600.webp 1600w",
+        "alt": "Bosque de bambú de Arashiyama — Bamboo forest in Sagano, Kyoto, Japan"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.01701,135.67169",
@@ -245,8 +314,11 @@
     "id": "okoichi",
     "description": "Villa y jardín paisajístico que pertenecieron al actor Ōkōchi Denjirō. El recorrido ofrece vistas de Arashiyama y una experiencia más tranquila que el bosque de bambú; la entrada suele incluir té y un dulce.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Okochi%20Sanso%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Okochi%20Sanso%20garden.jpg"
+      {
+        "src": "assets/images/kyoto/okoichi-1-1600.webp",
+        "srcSet": "assets/images/kyoto/okoichi-1-480.webp 480w, assets/images/kyoto/okoichi-1-960.webp 960w, assets/images/kyoto/okoichi-1-1600.webp 1600w",
+        "alt": "Ōkōchi Sansō — Drinking matcha (Japanese green tea) near the bamboo forest, in Ōkōchi Sansō garden, Arashiyama, Kyoto, Japan."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.01666,135.66967",
@@ -265,8 +337,11 @@
     "id": "togetsu",
     "description": "Puente emblemático sobre el río Katsura, con vistas a las montañas de Arashiyama. Es un lugar agradable para pasear por la ribera y observar el paisaje; el aspecto cambia mucho con la estación y la luz.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Togetsukyo%20Bridge%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Togetsu-kyo%20bridge%20Arashiyama.jpg"
+      {
+        "src": "assets/images/kyoto/togetsu-1-1600.webp",
+        "srcSet": "assets/images/kyoto/togetsu-1-480.webp 480w, assets/images/kyoto/togetsu-1-960.webp 960w, assets/images/kyoto/togetsu-1-1600.webp 1600w",
+        "alt": "Puente Togetsukyō — 渡月橋。 正面の山の多宝塔は十三参りで有名な法輪寺(虚空蔵さん)。 (2006/06/18 Arashiyama, Kyoto, JAPAN) Togetsu-Kyo Bridge"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.0097,135.6775",
@@ -278,8 +353,11 @@
     "id": "bishamondo",
     "description": "Templo monzeki situado en la ladera de Yamashina. En el Yamashina Gishi Matsuri es el punto de salida de la procesión de los 47 rōnin. Conviene llegar antes de las 10:00 para encontrar un lugar desde el que verla arrancar.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Bishamondo%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Bishamon-do%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/bishamondo-1-1600.webp",
+        "srcSet": "assets/images/kyoto/bishamondo-1-480.webp 480w, assets/images/kyoto/bishamondo-1-960.webp 960w, assets/images/kyoto/bishamondo-1-1600.webp 1600w",
+        "alt": "Bishamondō · salida del desfile — 修復工事終了後の毘沙門堂本堂。"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.00119,135.81892",
@@ -301,8 +379,11 @@
     "id": "oishi",
     "description": "Santuario vinculado a Ōishi Kuranosuke y a la historia de los 47 rōnin. Es el destino final anunciado para la procesión del Yamashina Gishi Matsuri; el programa general publicado indica que el festival se desarrolla de 10:00 a 15:00.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Oishi%20Shrine%20Kyoto.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Oishi%20Jinja%20Kyoto%20Japan.jpg"
+      {
+        "src": "assets/images/kyoto/oishi-1-1600.webp",
+        "srcSet": "assets/images/kyoto/oishi-1-480.webp 480w, assets/images/kyoto/oishi-1-960.webp 960w, assets/images/kyoto/oishi-1-1600.webp 1600w",
+        "alt": "Ōishi Jinja · final del desfile — the haiden of Ōishi Shrine, Yamashina, Kyōto, Japan w:ja:大石神社 拝殿（京都市山科区）"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=34.97013,135.7957",
@@ -314,8 +395,11 @@
     "id": "ninnaji",
     "description": "Gran complejo budista de la escuela Shingon y Patrimonio Mundial, con pagoda, puertas monumentales y jardines. Fue históricamente residencia de abades imperiales y ofrece una visita amplia y menos apresurada que otros templos.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Ninna-ji%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Ninnaji%20pagoda%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/ninnaji-1-1600.webp",
+        "srcSet": "assets/images/kyoto/ninnaji-1-480.webp 480w, assets/images/kyoto/ninnaji-1-960.webp 960w, assets/images/kyoto/ninnaji-1-1600.webp 1600w",
+        "alt": "Ninna-ji — Ninna-ji"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.0312,135.7138",
@@ -334,8 +418,11 @@
     "id": "ginkaku",
     "description": "El llamado Pabellón de Plata es un templo zen célebre por su jardín de musgo, el jardín seco de arena y el pabellón de madera. Aunque nunca llegó a cubrirse de plata, es una de las visitas más refinadas de Kioto.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Ginkakuji%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Ginkaku-ji%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/ginkaku-1-1600.webp",
+        "srcSet": "assets/images/kyoto/ginkaku-1-480.webp 480w, assets/images/kyoto/ginkaku-1-960.webp 960w, assets/images/kyoto/ginkaku-1-1600.webp 1600w",
+        "alt": "Ginkaku-ji · Pabellón de Plata — Ginkaku-ji temple, Kyoto, Japan - Ginkaku-ji with sand garden."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.02691,135.79843",
@@ -354,8 +441,11 @@
     "id": "philosopher",
     "description": "Paseo junto a un canal arbolado en el noreste de Kioto, entre templos y pequeños barrios. Es especialmente conocido por los cerezos en flor, pero también funciona como ruta tranquila para conectar Ginkaku-ji con Nanzen-ji.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Philosophers%20Path%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Philosopher's%20Walk%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/philosopher-1-1600.webp",
+        "srcSet": "assets/images/kyoto/philosopher-1-480.webp 480w, assets/images/kyoto/philosopher-1-960.webp 960w, assets/images/kyoto/philosopher-1-1600.webp 1600w",
+        "alt": "Philosopher’s Path — The canal, that the path follows, is part of the Lake Biwa Canal which tunnels 20 kilometers through the mountains to Lake Biwa in nearby Shiga Prefecture. The canal was built during the Meiji Period in order to revitalize the stagnating local economy and was used to power Japan's first hydroelectric power plant. A beautiful aqueduct, which is part of the canal, can be seen around Nanzenji. (Kyoto, Japan, Apr/ May 2019)"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.0236,135.7945",
@@ -367,8 +457,11 @@
     "id": "nanzenji",
     "description": "Uno de los grandes templos zen de Kioto. El complejo combina puertas monumentales, jardines y el llamativo acueducto de ladrillo rojo de la era Meiji. Reserva tiempo para recorrer sus distintos espacios.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Nanzen-ji%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Nanzenji%20aqueduct%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/nanzenji-1-1600.webp",
+        "srcSet": "assets/images/kyoto/nanzenji-1-480.webp 480w, assets/images/kyoto/nanzenji-1-960.webp 960w, assets/images/kyoto/nanzenji-1-1600.webp 1600w",
+        "alt": "Nanzen-ji — Nanzen-ji (南禅寺) is a Zen Buddhist temple in Kyoto, Japan."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.0117,135.7951",
@@ -387,8 +480,11 @@
     "id": "sanjusangen",
     "description": "Templo famoso por su sala principal de madera, donde se alinean mil estatuas de Kannon y una figura central de gran tamaño. La fotografía en el interior está restringida; la visita destaca por la escala y el detalle de las esculturas.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Sanjusangendo%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Sanjusangen-do%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/sanjusangen-1-1600.webp",
+        "srcSet": "assets/images/kyoto/sanjusangen-1-480.webp 480w, assets/images/kyoto/sanjusangen-1-960.webp 960w, assets/images/kyoto/sanjusangen-1-1600.webp 1600w",
+        "alt": "Sanjūsangen-dō — Sanjusangen-dō , a buddhist temple in Kyoto , Japan"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=34.9879,135.7718",
@@ -407,8 +503,11 @@
     "id": "heian",
     "description": "Santuario sintoísta construido para conmemorar la historia imperial de Kioto. Su gran torii y la arquitectura inspirada en el antiguo Palacio Heian lo hacen muy reconocible; el jardín Shin-en requiere entrada independiente.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Heian%20Shrine%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Heian%20Jingu%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/heian-1-1600.webp",
+        "srcSet": "assets/images/kyoto/heian-1-480.webp 480w, assets/images/kyoto/heian-1-960.webp 960w, assets/images/kyoto/heian-1-1600.webp 1600w",
+        "alt": "Heian-jingū — Heian-jingu shinen (Heian Shrine garden), Kyoto, Japan."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.01617,135.7829",
@@ -427,8 +526,11 @@
     "id": "imperial",
     "description": "El amplio parque Kyoto Gyoen rodea el Palacio Imperial y antiguas residencias aristocráticas. Es un espacio verde público; el acceso al interior del Palacio Imperial sigue un régimen y horarios propios.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Imperial%20Palace%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Gyoen%20National%20Garden.jpg"
+      {
+        "src": "assets/images/kyoto/imperial-1-1600.webp",
+        "srcSet": "assets/images/kyoto/imperial-1-480.webp 480w, assets/images/kyoto/imperial-1-960.webp 960w, assets/images/kyoto/imperial-1-1600.webp 1600w",
+        "alt": "Kyoto Gyoen · Palacio Imperial — I thought this was a very interesting tree in the grounds of the Imperial Palace in Kyoto."
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.0251,135.7621",
@@ -446,10 +548,7 @@
   {
     "id": "fushimisake",
     "description": "Barrio histórico de bodegas de sake, canales y almacenes tradicionales al sur de Kioto. Es un buen lugar para conocer la cultura cervecera local y pasear junto al agua; comprueba qué bodegas ofrecen visitas ese día.",
-    "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi%20sake%20district%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Fushimi%20canal%20Kyoto.jpg"
-    ],
+    "photos": [],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=34.9322,135.7631",
       "transit": "https://www.google.com/maps/dir/?api=1&destination=34.9322,135.7631&travelmode=transit",
@@ -466,10 +565,7 @@
   {
     "id": "kamishichiken",
     "description": "Uno de los cinco distritos tradicionales de geishas de Kioto, al norte de la ciudad. Conserva calles tranquilas, casas de té y una atmósfera histórica; respeta la privacidad de residentes y trabajadores.",
-    "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kamishichiken%20Kyoto%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kamishichiken%20Kyoto.jpg"
-    ],
+    "photos": [],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.0305,135.7444",
       "transit": "https://www.google.com/maps/dir/?api=1&destination=35.0305,135.7444&travelmode=transit",
@@ -487,8 +583,11 @@
     "id": "manga",
     "description": "Museo dedicado a la historia y cultura del manga, ubicado en una antigua escuela primaria. Su colección incluye publicaciones y exposiciones; consulta las exposiciones temporales y el día de cierre antes de ir.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20International%20Manga%20Museum.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Manga%20Museum%20Japan.jpg"
+      {
+        "src": "assets/images/kyoto/manga-1-1600.webp",
+        "srcSet": "assets/images/kyoto/manga-1-480.webp 480w, assets/images/kyoto/manga-1-960.webp 960w, assets/images/kyoto/manga-1-1600.webp 1600w",
+        "alt": "Kyoto International Manga Museum — Kyoto International Manga Museum"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.01168,135.75918",
@@ -507,8 +606,11 @@
     "id": "railway",
     "description": "Museo ferroviario con locomotoras históricas, trenes de distintas épocas y exposiciones interactivas. Es una visita especialmente interesante para aficionados al ferrocarril y familias.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Railway%20Museum%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto%20Railway%20Museum%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/railway-1-1600.webp",
+        "srcSet": "assets/images/kyoto/railway-1-480.webp 480w, assets/images/kyoto/railway-1-960.webp 960w, assets/images/kyoto/railway-1-1600.webp 1600w",
+        "alt": "Kyoto Railway Museum — 京都鉄道博物館本館内1階メインスペースの様子。"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=34.9873,135.7466",
@@ -527,8 +629,11 @@
     "id": "monkey",
     "description": "Parque natural en la ladera de Arashiyama donde viven macacos japoneses en libertad. Para llegar al mirador hay una subida a pie de unos 20 minutos; sigue las normas y no alimentes ni toques a los animales.",
     "photos": [
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Arashiyama%20Monkey%20Park%20Iwatayama%20Japan.jpg",
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Iwatayama%20Monkey%20Park%20Kyoto.jpg"
+      {
+        "src": "assets/images/kyoto/monkey-1-1600.webp",
+        "srcSet": "assets/images/kyoto/monkey-1-480.webp 480w, assets/images/kyoto/monkey-1-960.webp 960w, assets/images/kyoto/monkey-1-1600.webp 1600w",
+        "alt": "Arashiyama Monkey Park Iwatayama — Macaca fuscata in Iwatayama Monkey Park , Japan"
+      }
     ],
     "directions": {
       "search": "https://www.google.com/maps/search/?api=1&query=35.0092,135.6785",

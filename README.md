@@ -73,7 +73,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-The Node.js test suite validates the journey manifest, per-city datasets, ids and composite keys, references between datasets, global content, version consistency and (after `npm run prepare:images`) the local images. Playwright checks Kyoto's map, filters, GPS and sheets, the city tabs, city isolation, URL fallbacks and responsive layouts (narrow phone, hi-res phone, tablet, desktop). Multi-city behaviour is tested with fictional cities injected through network interception; no invented content is published.
+The Node.js test suite validates the journey manifest, per-city datasets, ids and composite keys, references between datasets, global content, version consistency and the committed local images and their credits (regenerate them by hand with `npm run prepare:images`). Playwright checks Kyoto's map, filters, GPS and sheets, the city tabs, city isolation, URL fallbacks and responsive layouts (narrow phone, hi-res phone, tablet, desktop). Multi-city behaviour is tested with fictional cities injected through network interception; no invented content is published.
 
 ## Deployment
 
@@ -127,7 +127,7 @@ Full-screen sheets (place sheet, phrase show mode, dish sheet) push a history en
 
 ## Offline mode (V11.5)
 
-`sw.js` (service worker) stores the guide after the first visit so it opens without a connection. `npm run build:offline` writes `offline-manifest.json` (what to cache) and stamps a content hash into `sw.js`; CI runs it after `prepare:images`, so every deploy ships a new worker that installs a fresh cache and deletes the old one.
+`sw.js` (service worker) stores the guide after the first visit so it opens without a connection. `npm run build:offline` writes `offline-manifest.json` (what to cache) and stamps a content hash into `sw.js`; CI runs it on every build (the photos are committed, so nothing is downloaded), so every deploy ships a new worker that installs a fresh cache and deletes the old one.
 
 * **required**: HTML, JS, CSS, data, Leaflet (now in `assets/vendor/leaflet`, no CDN), icons. If one fails, the install fails and the previous version keeps working.
 * **optional**: 480 px place and dish photos, downloaded during install. Required + optional is the "essentials" (about 3.5 MB), saved automatically on the first visit.

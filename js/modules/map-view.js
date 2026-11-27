@@ -8,6 +8,7 @@ import { openOverlay, releaseOverlay } from './overlay-history.js';
 export const SHEETS = {
   filters: 'Filtros del mapa',
   nearby: 'Cerca de mí',
+  legend: 'Leyenda del mapa',
   offline: 'Mapa sin conexión'
 };
 
@@ -31,10 +32,11 @@ export function initMapView({ map, doc = document }) {
 
   const mapElement = byId('city-map');
   const offlineBlock = byId('save-offline-map')?.closest('.map-offline') ?? null;
+  const legendDetails = doc.querySelector('.map-legend');
   const moves = [
     { home: rememberHome(mapElement), target: canvas },
     ...['map-filters', 'map-filter-status'].map((id) => ({ home: rememberHome(byId(id)), target: sections.filters })),
-    { home: rememberHome(doc.querySelector('.map-legend')), target: sections.filters },
+    { home: rememberHome(legendDetails), target: sections.legend },
     { home: rememberHome(doc.querySelector('.nearby-panel')), target: sections.nearby },
     ...(offlineBlock ? [{ home: rememberHome(offlineBlock), target: sections.offline }] : [])
   ];
@@ -44,6 +46,7 @@ export function initMapView({ map, doc = document }) {
   let openSheet = null;
   let askedLocation = false;
   let filtersWereOpen = false;
+  let legendWasOpen = false;
 
   function closeSheet({ fromHistory = false } = {}) {
     if (!openSheet) return;
@@ -59,6 +62,7 @@ export function initMapView({ map, doc = document }) {
     const wasOpen = Boolean(openSheet);
     openSheet = name;
     sheetTitle.textContent = SHEETS[name];
+    sheet.dataset.sheet = name;
     Object.entries(sections).forEach(([key, section]) => { section.hidden = key !== name; });
     buttons.forEach((button) => {
       const active = button.dataset.mapSheet === name;
@@ -117,6 +121,8 @@ export function initMapView({ map, doc = document }) {
     moves.forEach(({ home, target }) => target.appendChild(home.node));
     filtersWereOpen = filtersDetails.open;
     filtersDetails.open = true;
+    legendWasOpen = legendDetails.open;
+    legendDetails.open = true;
     cityName = doc.getElementById('hero-title')?.textContent || 'la ciudad';
     paintState();
     map.refit();
@@ -129,6 +135,7 @@ export function initMapView({ map, doc = document }) {
     inside = false;
     [...moves].reverse().forEach(({ home }) => restoreHome(home));
     filtersDetails.open = filtersWereOpen;
+    legendDetails.open = legendWasOpen;
     map.refresh();
   }
 
