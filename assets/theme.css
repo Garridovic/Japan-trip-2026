@@ -188,7 +188,7 @@ body[data-view="mapa"] { overflow: hidden; }
 .map-view-canvas { position: absolute; inset: 0; }
 .map-view #city-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 /* Controles: botón de filtros + una sola píldora arriba a la izquierda; nube, «Cerca de mí» y zoom abajo a la derecha. */
-.map-view-controls { position: absolute; z-index: 1000; top: 10px; left: 10px; right: 64px; display: flex; align-items: center; gap: 8px; pointer-events: none; }
+.map-view-controls { position: absolute; z-index: 1000; top: 10px; left: 10px; right: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; pointer-events: none; } /* «Ruta del día» drops to a second row when the pill leaves no room */
 .map-view-controls > * { pointer-events: auto; }
 .map-view-tools { position: absolute; z-index: 1000; right: 10px; bottom: 110px; display: flex; flex-direction: column; gap: 10px; }
 .map-view.has-sheet .map-view-tools, .map-view.has-sheet .leaflet-bottom { visibility: hidden; }
