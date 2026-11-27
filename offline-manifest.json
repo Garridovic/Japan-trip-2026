@@ -1,7 +1,7 @@
 {
-  "version": "a940e0e30f",
+  "version": "d198bfda29",
   "sizes": {
-    "required": 1121663,
+    "required": 1128113,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -73,7 +73,6 @@
     "data/global/dishes.json",
     "data/global/lodging.json",
     "data/global/phrases.json",
-    "data/global/progress-index.json",
     "data/global/tips.json",
     "data/journey.json",
     "data/version.json",

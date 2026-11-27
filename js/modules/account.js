@@ -166,7 +166,8 @@ export async function initAccount({ config, userData, win = window, storage = nu
           proximity?.settingNode(),
           h('h3', { class: 'account-subtitle' }, 'Datos de este dispositivo'),
           ...resetButtons(),
-          h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar'))
+          h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar')),
+        versionLine()
       );
       return;
     }
@@ -194,8 +195,15 @@ export async function initAccount({ config, userData, win = window, storage = nu
         h('h3', { class: 'account-subtitle' }, 'Restablecer mis datos'),
         ...resetButtons(),
         h('button', { type: 'button', class: 'filter is-danger', onclick: () => { view = 'logout'; render(); } }, 'Cerrar sesión'),
-        h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar'))
+        h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar')),
+      versionLine()
     );
+  }
+
+  /** "Versión de la app: V14.7.4" at the bottom of the panel (the visible version also lives in the bottom corner label). */
+  function versionLine() {
+    const version = document.querySelector('meta[name="guide-version"]')?.getAttribute('content') || document.getElementById('update-version')?.textContent || '—';
+    return h('p', { class: 'account-version', id: 'account-version' }, `Versión de la app: ${version}`);
   }
 
   function renderInvite() {

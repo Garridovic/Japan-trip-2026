@@ -14,7 +14,7 @@ async function installed(page, context) {
   await page.goto('/');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
   await page.evaluate(() => navigator.serviceWorker.ready);
-  await expect.poll(() => page.evaluate(async () => { const n = (await caches.keys()).find((k) => k.startsWith('japan-guide-')); return n ? (await (await caches.open(n)).keys()).length : 0; }), { timeout: 30_000 }).toBeGreaterThan(100);
+  await expect.poll(() => page.evaluate(async () => { const n = (await caches.keys()).find((k) => k.startsWith('japan-guide-')); return n ? (await (await caches.open(n)).keys()).length : 0; }), { timeout: 30_000 }).toBeGreaterThan(250);
   await page.reload();
   await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker.controller))).toBe(true);
   await expect(page.locator('#update-version')).toHaveText(version.version);

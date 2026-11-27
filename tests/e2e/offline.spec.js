@@ -83,9 +83,11 @@ test('the service worker is versioned: a new version installs a fresh cache and 
   await firstVisit(page, context);
   const before = (await page.evaluate(() => caches.keys())).filter((name) => name.startsWith('japan-guide-'));
   expect(before).toHaveLength(1);
+  await page.locator('body').click({ position: { x: 5, y: 5 } }); // someone is using the page, so it does not reload by itself onto the new worker
   // Publish "a new version": the worker file changes, as build:offline does on every deploy.
   await page.evaluate(() => navigator.serviceWorker.register('sw.js?v=testv2'));
-  await expect.poll(() => page.evaluate(() => caches.keys().then((keys) => keys.filter((key) => key.startsWith('japan-guide-')))), { timeout: 30_000 }).toEqual(['japan-guide-testv2']);
+  // The idle page reloads onto the new version by itself, which may interrupt a poll: just retry.
+  await expect.poll(() => page.evaluate(() => caches.keys().then((keys) => keys.filter((key) => key.startsWith('japan-guide-')))).catch(() => null), { timeout: 30_000 }).toEqual(['japan-guide-testv2']);
   // The page keeps working from the new cache.
   await context.setOffline(true);
   await page.goto('/');

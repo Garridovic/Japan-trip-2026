@@ -111,6 +111,18 @@ test.describe('optional account (Auth0, Google)', () => {
     expect(await page.evaluate(() => localStorage.getItem('visited-v1'))).toContain('fushimi');
   });
 
+  test('the account panel shows the app version, signed in and signed out', async ({ page }) => {
+    const { version } = JSON.parse((await import('node:fs')).readFileSync(new URL('../../data/version.json', import.meta.url), 'utf8'));
+    await enableAuth(page, { cloud: {} });
+    await page.goto('/');
+    await page.locator('#account-button').click();
+    await expect(page.locator('#account-version')).toHaveText(`Versión de la app: ${version}`);
+    await page.locator('#account-button').click(); // close it; signIn opens it again
+    await signIn(page);
+    await page.locator('#account-button').click();
+    await expect(page.locator('#account-version')).toHaveText(`Versión de la app: ${version}`);
+  });
+
   test('sign out keeps the data on this device; "cerrar y borrar" removes it', async ({ page }) => {
     await enableAuth(page, { cloud: {}, seed: { 'visited-v1': JSON.stringify({ kyoto: ['fushimi'] }) } });
     await page.goto('/');
