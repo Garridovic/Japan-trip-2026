@@ -66,7 +66,8 @@ test('the administrator role is read only from the roles claim in the ID token',
   assert.equal(isAdmin({ [ROLES_CLAIM]: ['administrador'] }), true);
   assert.equal(isAdmin({ [ROLES_CLAIM]: ['otro', 'administrador'] }), true);
   assert.equal(isAdmin({ [ROLES_CLAIM]: [] }), false);
-  assert.equal(isAdmin({ [ROLES_CLAIM]: ['Administrador'] }), false);
+  for (const name of ['Administrador', 'ADMINISTRADOR', ' administrador ', 'admin', 'Admin']) assert.equal(isAdmin({ [ROLES_CLAIM]: [name] }), true, name);
+  for (const name of ['administradores', 'editor', '', null, 7]) assert.equal(isAdmin({ [ROLES_CLAIM]: [name] }), false, String(name));
   assert.equal(isAdmin({ [ROLES_CLAIM]: 'administrador' }), false);
   assert.equal(isAdmin({ roles: ['administrador'] }), false);
   assert.equal(isAdmin({ user_metadata: { roles: ['administrador'] } }), false);

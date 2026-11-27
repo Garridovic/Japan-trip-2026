@@ -7,11 +7,14 @@ const SCOPE = 'openid profile email offline_access read:current_user update:curr
 /** Custom claim (an Action in Auth0 copies the user's roles into the ID token). Auth0 needs a URL-shaped name; it does not have to resolve. */
 export const ROLES_CLAIM = 'https://japan-trip-2026/roles';
 export const ADMIN_ROLE = 'administrador';
+const ADMIN_ROLE_NAMES = new Set([ADMIN_ROLE, 'admin']);
+/** Role names are typed by hand in Auth0: ignore case, accents and stray spaces («Administrador», «ADMIN»). */
+const normalizeRole = (role) => String(role ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
 
 /** Does the signed-in user carry the administrator role? UI only: anyone can edit this code in their own browser, so a real admin action must be checked on a server that verifies the token. */
 export function isAdmin(user) {
   const roles = user?.[ROLES_CLAIM];
-  return Array.isArray(roles) && roles.includes(ADMIN_ROLE);
+  return Array.isArray(roles) && roles.some((role) => ADMIN_ROLE_NAMES.has(normalizeRole(role)));
 }
 
 export const isConfigured = (config) => Boolean(config?.enabled && config.domain && config.clientId);

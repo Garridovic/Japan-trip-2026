@@ -149,7 +149,7 @@ test.describe('optional account (Auth0, Google)', () => {
 
   test('the «Administración» section appears only with the administrator role in the token', async ({ page }) => {
     await enableAuth(page);
-    await page.addInitScript(() => { if (!sessionStorage.getItem('roles-set')) { sessionStorage.setItem('roles-set', '1'); sessionStorage.setItem('fake-roles', '["administrador"]'); } });
+    await page.addInitScript(() => { if (!sessionStorage.getItem('roles-set')) { sessionStorage.setItem('roles-set', '1'); sessionStorage.setItem('fake-roles', '["Administrador"]'); } }); // the role is typed by hand in Auth0: capital letter included
     await page.goto('/');
     await expect(page.locator('#hero-title')).not.toHaveText('…');
     await page.locator('#account-button').click();
