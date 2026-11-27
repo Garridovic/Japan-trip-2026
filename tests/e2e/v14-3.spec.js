@@ -13,9 +13,9 @@ test.describe('V14.3 "Tu diario del viaje"', () => {
     await page.goto('/?city=kyoto');
     const card = page.locator('#progress-card');
     await expect(card).toHaveAttribute('data-mode', 'before');
-    await expect(card.locator('h2')).toHaveText('Preparativos');
+    await expect(card.locator('strong')).toHaveText('Preparativos');
     await expect(card).toContainText('días para salir');
-    await expect(card.locator('.progress-tile', { hasText: 'Platos' })).toHaveClass(/tier-none/);
+    await expect(card.locator('.progress-chip', { hasText: 'Platos' })).toHaveClass(/tier-none/);
     await page.locator('#hero-viewport').evaluate((node) => node.scrollTo({ left: node.scrollWidth, behavior: 'instant' }));
     await expect(page.locator('#hero-dots i.on')).toHaveCount(1);
     expect(errors).toEqual([]);
@@ -28,7 +28,7 @@ test.describe('V14.3 "Tu diario del viaje"', () => {
     await page.goto('/?city=kyoto');
     const card = page.locator('#progress-card');
     await expect(card).toHaveAttribute('data-mode', 'during');
-    await expect(card.locator('h2')).toHaveText(/^1 lugar en Kioto/);
+    await expect(card.locator('strong')).toHaveText(/^1 lugar en Kioto/);
     await expect(card.locator('.progress-ring')).toHaveClass(/tier-start/);
     await expect(card).toContainText('Día 5 de 15');
     await page.evaluate(() => {
@@ -36,7 +36,26 @@ test.describe('V14.3 "Tu diario del viaje"', () => {
       raw.kyoto.push('fushimi');
       window.japanTripUserData.storage.setItem('visited-v1', JSON.stringify(raw));
     });
-    await expect(card.locator('h2')).toHaveText(/^2 lugares en Kioto/);
+    await expect(card.locator('strong')).toHaveText(/^2 lugares en Kioto/);
+  });
+
+  test('the card opens a sheet with every indicator and closes with its button, Escape and Back', async ({ page }) => {
+    await page.clock.setFixedTime(tokyo('2026-12-12T10:00:00'));
+    await mockWeather(page);
+    await page.goto('/?city=kyoto');
+    await page.locator('#progress-card .progress-open').click();
+    const sheet = page.locator('#progress-sheet');
+    await expect(sheet).toBeVisible();
+    await expect(sheet.locator('.progress-tile')).toHaveCount(6);
+    await expect(sheet.locator('.progress-tile', { hasText: 'Sellos' })).toContainText('/18');
+    await page.locator('#progress-close').click();
+    await expect(sheet).toBeHidden();
+    await page.locator('#progress-card .progress-open').click();
+    await page.keyboard.press('Escape');
+    await expect(sheet).toBeHidden();
+    await page.locator('#progress-card .progress-open').click();
+    await page.goBack();
+    await expect(sheet).toBeHidden();
   });
 
   test('"Lo probé": mark a dish, undo it, filter by tried, and it counts in the card', async ({ page }) => {
@@ -59,22 +78,69 @@ test.describe('V14.3 "Tu diario del viaje"', () => {
   });
 });
 
+test.describe('V14.12 compact header', () => {
+  test('every control has a 44 px target, 8 px apart, and the text is at least 12 px, at 320 and 390 px', async ({ page }) => {
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.clock.setFixedTime(tokyo('2026-12-09T12:00:00'));
+      await mockWeather(page);
+      await page.goto('/?city=tokyo');
+      await expect(page.locator('#hero-stays .stay-chip')).toHaveCount(2);
+      const small = await page.evaluate(() => {
+        const bad = [];
+        for (const slide of document.querySelectorAll('.hero-slide:not([hidden])')) {
+          slide.scrollIntoView({ inline: 'start', block: 'nearest' });
+          for (const control of slide.querySelectorAll('a, button')) {
+            const box = control.getBoundingClientRect();
+            if (box.width && (box.width < 43.5 || box.height < 43.5)) bad.push(`${control.textContent.trim()}: ${Math.round(box.width)}×${Math.round(box.height)}`);
+          }
+        }
+        for (const node of document.querySelectorAll('.hero-head *, .hero-slide *')) {
+          const own = [...node.childNodes].some((child) => child.nodeType === 3 && child.textContent.trim());
+          if (own && node.getBoundingClientRect().width && parseFloat(getComputedStyle(node).fontSize) < 11.99) bad.push(`font ${getComputedStyle(node).fontSize}: ${node.textContent.trim().slice(0, 20)}`);
+        }
+        return bad;
+      });
+      expect(small, `width ${width}`).toEqual([]);
+      const gaps = await page.evaluate(() => {
+        const rows = [...document.querySelectorAll('.hero-stays, .hotel-actions, .today-actions')];
+        return rows.filter((row) => row.getBoundingClientRect().width).map((row) => {
+          const boxes = [...row.children].map((child) => child.getBoundingClientRect()).filter((box) => box.width);
+          return Math.min(...boxes.slice(1).map((box, index) => box.left - boxes[index].right), 99);
+        });
+      });
+      expect(Math.min(...gaps), `width ${width}`).toBeGreaterThanOrEqual(7.5);
+    }
+  });
+
+  test('the hotel card shows the Japanese name and the nearest plan places, and the side margin is 16 px', async ({ page }) => {
+    await page.clock.setFixedTime(tokyo('2026-11-27T10:00:00'));
+    await mockWeather(page);
+    await page.goto('/?city=kyoto');
+    const hotel = page.locator('#hero-hotel');
+    await expect(hotel.locator('.hotel-ja')).toHaveText('アゴーラ 京都烏丸');
+    await expect(hotel.locator('.hotel-near')).toContainText('Nishiki');
+    await expect(hotel.locator('.hotel-near')).toContainText(' m');
+    expect((await page.locator('.hero-head').evaluate((node) => parseFloat(getComputedStyle(node).paddingLeft)))).toBe(16);
+    await page.setViewportSize({ width: 320, height: 800 });
+    await expect(hotel.locator('.hotel-ja')).toBeHidden(); // 320 px keeps the name and the buttons; the extra lines wait for wider screens
+  });
+});
+
 test.describe('V14.3.1 fixes', () => {
-  test('the stamp goal is the same when a city is opened directly, and tile labels are never cut at 320 px', async ({ page }) => {
+  test('the stamp goal is the same when a city is opened directly, at 320 px too', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 800 });
     await page.clock.setFixedTime(tokyo('2026-12-08T12:00:00'));
     await mockWeather(page);
     const goals = [];
     for (const city of ['nara', 'hakone', 'kyoto', 'tokyo']) {
       await page.goto(`/?city=${city}`);
-      const tile = page.locator('#progress-card .progress-tile', { hasText: 'Sellos' });
+      await page.locator('#progress-card .progress-open').click();
+      const tile = page.locator('#progress-sheet .progress-tile', { hasText: 'Sellos' });
       await expect(tile).toBeVisible();
       goals.push(await tile.locator('b small').textContent());
     }
     expect(new Set(goals).size).toBe(1);
     expect(goals[0]).toBe('/18');
-    await page.waitForTimeout(300);
-    const cut = await page.locator('#progress-card .progress-tile span').evaluateAll((nodes) => nodes.filter((node) => { const probe = Object.assign(document.createElement('em'), { textContent: node.textContent }); probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;display:inline-block'; node.append(probe); const full = probe.getBoundingClientRect().width; probe.remove(); return full > node.getBoundingClientRect().width; }).map((node) => node.textContent)) // measures the whole word, since ellipsis hides the overflow from scrollWidth;
-    expect(cut).toEqual([]);
   });
 });

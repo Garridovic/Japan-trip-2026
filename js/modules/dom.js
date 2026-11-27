@@ -23,8 +23,8 @@ export function append(element, children) {
   return element;
 }
 
-export const externalLink = (href, text, className) =>
-  h('a', { href, target: '_blank', rel: 'noopener', class: className }, text);
+export const externalLink = (href, text, className, extra = {}) =>
+  h('a', { href, target: '_blank', rel: 'noopener', class: className, ...extra }, text);
 
 export const setPressed = (buttons, isPressed) =>
   buttons.forEach((button) => button.setAttribute('aria-pressed', String(isPressed(button))));

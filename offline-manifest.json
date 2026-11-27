@@ -1,7 +1,7 @@
 {
-  "version": "73e4899434",
+  "version": "3b9c1455fc",
   "sizes": {
-    "required": 1170488,
+    "required": 1178335,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -97,6 +97,7 @@
     "js/modules/filters.js",
     "js/modules/geo.js",
     "js/modules/hero-ui.js",
+    "js/modules/hotel-card.js",
     "js/modules/ids.js",
     "js/modules/journey.js",
     "js/modules/lodging-ui.js",

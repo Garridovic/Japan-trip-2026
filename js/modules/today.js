@@ -124,8 +124,8 @@ export function initToday({ win = window, doc = document } = {}) {
       h('h3', {}, day.quick.title),
       ...lines,
       h('div', { class: 'today-actions' },
-        target && externalLink(directionsTo(stopPlace(target), current.queryContext), 'Cómo llegar', 'today-button'),
-        h('a', { class: 'today-button is-secondary', href: `#dia${day.key}`, onclick: () => { doc.getElementById(`dia${day.key}`)?.setAttribute('open', ''); } }, 'Ver el día')
+        target && externalLink(directionsTo(stopPlace(target), current.queryContext), 'Ir', 'today-button', { 'aria-label': 'Cómo llegar' }),
+        h('a', { class: 'today-button is-secondary', href: `#dia${day.key}`, 'aria-label': 'Ver el día', onclick: () => { doc.getElementById(`dia${day.key}`)?.setAttribute('open', ''); } }, 'Día')
       )
     );
   }

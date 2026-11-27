@@ -4,6 +4,7 @@ import { byId, h, externalLink } from './dom.js';
 import { connectionsFrom } from './journey.js';
 import { renderFood, renderExtras } from './filters.js';
 import { tripStatus, nightsLabel, dateRange } from './trip-status.js';
+import { nearestPlaces, stayLodging } from './hotel-card.js';
 
 const setSectionVisible = (id, visible) => {
   byId(id).hidden = !visible;
@@ -30,7 +31,7 @@ export function resetHero() {
   byId('today-card').hidden = true;
 }
 
-function renderHero(journey, cityEntry, city, { stay, stays, stayIndex, onStay }) {
+function renderHero(journey, cityEntry, city, { stay, stays, stayIndex, onStay, places = [], lodging = [] }) {
   const status = tripStatus({ arrival: stay.arrival, departure: stay.departure });
   renderStays(stays, stayIndex, onStay);
   byId('hero-eyebrow').textContent = status.kind === 'during' ? `Ahora en ${cityEntry.name}` : 'Tu viaje';
@@ -46,11 +47,17 @@ function renderHero(journey, cityEntry, city, { stay, stays, stayIndex, onStay }
   byId('hero-hotel-slide').hidden = !city.hero.hotel;
   hotel.replaceChildren();
   if (city.hero.hotel) {
+    const record = stayLodging(lodging, cityEntry.id, stay.arrival);
+    const near = nearestPlaces(places, 2);
     hotel.replaceChildren(
-      h('span', { class: 'slide-kicker' }, 'Alojamiento'), h('strong', {}, city.hero.hotel.name),
+      h('span', { class: 'hotel-text' },
+        h('span', { class: 'slide-kicker' }, 'Alojamiento'),
+        h('strong', {}, city.hero.hotel.name),
+        record?.nameJa && h('span', { class: 'hotel-ja', lang: 'ja' }, record.nameJa),
+        near.length > 0 && h('span', { class: 'hotel-near' }, near.map((place) => `${place.name} ${place.text}`).join(' · '))),
       h('span', { class: 'hotel-actions' },
         taxiButton({ name: city.hero.hotel.name, city: cityEntry.name, label: 'Taxi', className: 'taxi-chip taxi-button is-primary' }),
-        externalLink(city.hero.hotel.mapUrl, 'Cómo llegar', 'taxi-chip'))
+        externalLink(city.hero.hotel.mapUrl, 'Ir', 'taxi-chip', { 'aria-label': 'Cómo llegar al hotel' }))
     );
   }
   document.querySelectorAll('[data-city-name]').forEach((node) => { node.textContent = cityEntry.name; });
@@ -137,7 +144,7 @@ function renderFooter(city) {
 }
 
 export function renderCity({ journey, cityEntry, bundle, global, stay, stays, stayIndex = 0, onStay = () => {} }) {
-  renderHero(journey, cityEntry, bundle.city, { stay, stays, stayIndex, onStay });
+  renderHero(journey, cityEntry, bundle.city, { stay, stays, stayIndex, onStay, places: bundle.places, lodging: global.lodging?.stays });
   renderItinerary(bundle.itinerary);
   renderConnections(journey, cityEntry.id);
   renderFood(bundle.food, bundle.restaurants, bundle.city.map.queryContext);

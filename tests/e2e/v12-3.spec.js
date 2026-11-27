@@ -17,7 +17,7 @@ test.describe('Hoy card', () => {
     await expect(card(page).locator('.today-line').nth(1)).toContainText('13:45 · Castillo Nijō');
     const directions = card(page).getByRole('link', { name: 'Cómo llegar' });
     expect(await directions.getAttribute('href')).toMatch(/maps\/dir\/\?api=1&destination=Castillo%20Nij%C5%8D%2C%20Kyoto/);
-    expect((await directions.boundingBox()).height).toBeGreaterThanOrEqual(48);
+    expect((await directions.boundingBox()).height).toBeGreaterThanOrEqual(44); // the minimum comfortable target (Apple 44 pt, WCAG AAA 44 px)
   });
 
   test("today's day opens with a timeline: done, now and next", async ({ page }) => {

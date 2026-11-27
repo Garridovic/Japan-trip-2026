@@ -20,7 +20,7 @@ test.describe('V14.2 every stop of the route has a page', () => {
       await expect(page.locator('#hero-range')).toHaveText(range);
       await expect(page.locator('#hero-hotel')).toContainText(hotel);
       await expect(page.locator('#hero-hotel .taxi-button')).toBeVisible();
-      await expect(page.locator('#hero-hotel a')).toHaveText('Cómo llegar');
+      await expect(page.getByRole('link', { name: 'Cómo llegar al hotel' })).toBeVisible();
       await expect(page.locator('#hero-subtitle')).toContainText(zone);
       await expect(page.locator('#city-map')).toBeVisible();
       expect(errors).toEqual([]);

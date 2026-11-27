@@ -15,11 +15,11 @@ test.describe('V14.1 header carousel and weather', () => {
     await expect(page.locator('#hero-status')).toHaveText('Faltan 14 días');
     await expect(page.locator('#hero-hotel')).toContainText('Agora Kyoto Karasuma');
     await expect(page.locator('#hero-hotel .taxi-button')).toBeVisible();
-    await expect(page.locator('#hero-hotel a')).toHaveText('Cómo llegar');
+    await expect(page.getByRole('link', { name: 'Cómo llegar al hotel' })).toBeVisible();
     await expect(page.locator('#today-card')).toBeHidden();
     await expect(page.getByRole('link', { name: 'Abrir mapa interactivo' })).toHaveCount(0);
     await expect(page.locator('#hero-dots i')).toHaveCount(3);
-    expect((await page.locator('.hero').boundingBox()).height).toBeLessThan(450); // fixed title + one row of cards
+    expect((await page.locator('.hero').boundingBox()).height).toBeLessThan(240); // compact: title, status and one row of low cards
   });
 
   test('the weather card lists the trip days and keeps working with the forecast stored when offline', async ({ page, context }) => {
@@ -133,7 +133,7 @@ test.describe('V14.1.3 equal cards', () => {
   test.use({ timezoneId: 'Asia/Tokyo', viewport: { width: 390, height: 844 }, hasTouch: true });
 
   for (const [label, iso, count] of [['before the trip', '2026-12-09T10:00:00', 3], ['during the trip', '2026-12-12T10:40:00', 4]]) {
-    test(`all header cards have the same height ${label} and the weather card has no empty gap`, async ({ page }) => {
+    test(`all header cards have the same height ${label} and the weather card is not cut`, async ({ page }) => {
       await page.clock.setFixedTime(tokyo(iso));
       await mockWeather(page);
       await page.goto('/');
@@ -141,12 +141,9 @@ test.describe('V14.1.3 equal cards', () => {
       const heights = await page.locator('.hero-slide:visible').evaluateAll((nodes) => nodes.map((node) => Math.round(node.getBoundingClientRect().height)));
       expect(heights).toHaveLength(count);
       expect(new Set(heights).size).toBe(1);
-      const gap = await page.locator('[data-slide="tiempo"]').evaluate((slide) => {
-        const note = slide.querySelector('.weather-note').getBoundingClientRect();
-        const brief = slide.querySelector('.weather-brief').getBoundingClientRect();
-        return Math.round(note.top - brief.bottom);
-      });
-      expect(gap).toBeLessThan(40);
+      // Nothing is cut: the weather card's content fits inside the shared height.
+      const overflow = await page.locator('[data-slide="tiempo"]').evaluate((slide) => slide.scrollHeight - slide.clientHeight);
+      expect(overflow).toBeLessThanOrEqual(1);
     });
   }
 

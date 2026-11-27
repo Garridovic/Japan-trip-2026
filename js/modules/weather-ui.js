@@ -93,6 +93,7 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
     else if (navigator.onLine === false) note.textContent = `Sin internet y aún sin previsión guardada${missing ? ` · ${waiting}` : ''}`;
     else if (range(trip).from > range(trip).to) note.textContent = `Open-Meteo prevé unos 15 días · ${waiting}`; // the trip is further away than the forecast reaches
     else note.textContent = `No se ha podido cargar la previsión ahora · ${waiting}`;
+    note.hidden = Boolean(stored) && missing === 0; // the compact card shows the note only when something is missing or wrong
   }
 
   /** Under the strip: today (or the first day with a forecast), its summary and one tip. Sun times live in the hourly sheet. */
