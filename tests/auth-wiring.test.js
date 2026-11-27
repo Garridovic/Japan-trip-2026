@@ -28,7 +28,7 @@ test('the service worker never touches Auth0 or Google (it only handles its own 
 
 test('the offline manifest carries the sign-in modules and the vendored SDK', () => {
   const manifest = JSON.parse(read('offline-manifest.json'));
-  for (const file of ['assets/auth-config.js', 'assets/vendor/auth0-spa-js.production.esm.js', 'js/modules/account.js', 'js/modules/auth.js', 'js/modules/cloud-sync.js', 'js/modules/sync-merge.js']) {
+  for (const file of ['assets/auth-config.js', 'assets/vendor/auth0-spa-js.production.esm.js', 'js/modules/account.js', 'js/modules/auth.js', 'js/modules/cloud-sync.js', 'js/modules/sync-merge.js', 'js/modules/notices.js']) {
     assert.ok(manifest.required.includes(file), `${file} is cached for offline use`);
   }
 });

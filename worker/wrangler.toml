@@ -1,0 +1,15 @@
+name = "japon-avisos"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+# Todo lo de aquí es público (sin secretos).
+[vars]
+AUTH0_DOMAIN = "dev-garridovic.eu.auth0.com"
+AUTH0_CLIENT_ID = "FnWreTgXGxLlaHtggoJjPt4jzxugh1Wj"
+ALLOWED_ORIGIN = "https://garridovic.github.io"
+ADMIN_ROLE = "administrador"
+ROLES_CLAIM = "https://japan-trip-2026/roles"
+
+[[kv_namespaces]]
+binding = "AVISOS"
+id = "540f333108e242e99019f13b935cfa93"

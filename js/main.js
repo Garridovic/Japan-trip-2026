@@ -264,6 +264,7 @@ async function start() {
   }
   proximity.start();
   account?.markStarted();
+  import('./modules/notices.js').then(({ initNotices }) => initNotices()).catch((error) => console.warn('[notices] disabled:', error)); // best effort: never blocks the guide
 }
 
 start().catch((error) => {

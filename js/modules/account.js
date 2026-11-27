@@ -7,6 +7,7 @@ import { SYNCED_KEYS } from './user-data.js';
 import { createCloudSync, SAVE_DELAY_MS, BACKUP_KEY, LAST_SYNC_KEY } from './cloud-sync.js';
 import { createAuth, isConfigured, isAdmin } from './auth.js';
 import { updateSection } from './update-settings.js';
+import { loadNotices, publishNotices, buildNotice, publishErrorText, MAX_TITLE, MAX_TEXT } from './notices.js';
 
 /** What the user can reset one by one. `empty` is the value stored for "nothing" (the same shape the stores write). */
 export const RESETS = Object.freeze([
@@ -73,6 +74,12 @@ export async function initAccount({ config, userData, win = window, storage = nu
   let resetItem = null;
   let versionNode = null; // the "Versión de la app" block, created once
   let started = false;
+  // administrator form state (declared up here: render() can run before the code below is reached)
+  const adminDraft = { titulo: '', texto: '', dias: '7' };
+  let adminCurrent = null; // the notice now published (null = none)
+  let adminMessage = '';
+  let adminBusy = false;
+  let adminRead = false;
   let busy = false;
   const online = () => win.navigator.onLine !== false;
 
@@ -225,11 +232,31 @@ export async function initAccount({ config, userData, win = window, storage = nu
     );
   }
 
-  /** Only for the administrator role. For now a placeholder: later it will let Victor switch on feature notices for everyone. */
+  /** Only for the administrator role: publish a notice for everyone (or withdraw it). The Worker re-checks the role from the signed ID token. */
   function adminSection() {
+    if (!adminRead) { adminRead = true; loadNotices({ storage }).then(({ notices }) => { adminCurrent = notices.at(-1) ?? null; if (!popover.hidden) render(); }); }
+    const field = (label, control) => h('label', {}, label, control);
+    const input = (key, props) => { const el = h(props.tag ?? 'input', { ...props, tag: null, value: null }); el.value = adminDraft[key]; el.addEventListener('input', () => { adminDraft[key] = el.value; }); return el; };
+    async function send(list, done) {
+      adminBusy = true; adminMessage = ''; render();
+      const result = await publishNotices(list, { getIdToken: () => auth.getIdToken() }).catch(() => ({ ok: false, reason: 'token' }));
+      adminBusy = false;
+      if (result.ok) { adminCurrent = list.at(-1) ?? null; adminMessage = done; if (list.length) { adminDraft.titulo = ''; adminDraft.texto = ''; } } else adminMessage = publishErrorText(result.reason);
+      render();
+    }
     return h('section', { class: 'account-section account-admin', dataset: { role: 'admin' } },
       h('h3', { class: 'account-subtitle' }, 'Administración'),
-      h('div', { class: 'account-group' }, h('p', {}, 'Panel de administración (en preparación). Solo lo ves tú, con el rol de administrador.')));
+      h('div', { class: 'account-group admin-form' },
+        h('strong', {}, 'Publicar un aviso para todos'),
+        h('p', { class: 'muted small' }, 'Aparece en la parte superior de la app de cada persona la próxima vez que la abra. Texto público: sin PINs ni reservas.'),
+        field('Título', input('titulo', { type: 'text', maxlength: MAX_TITLE, autocomplete: 'off' })),
+        field('Texto', input('texto', { tag: 'textarea', maxlength: MAX_TEXT })),
+        field('Caduca en', (() => { const select = h('select', {}, ...[['1', '1 día'], ['3', '3 días'], ['7', '7 días'], ['14', '14 días']].map(([v, l]) => h('option', { value: v }, l))); select.value = adminDraft.dias; select.addEventListener('change', () => { adminDraft.dias = select.value; }); return select; })()),
+        h('div', { class: 'account-actions' },
+          h('button', { type: 'button', class: 'filter', id: 'admin-publish', disabled: adminBusy || !online(), onclick: () => { if (!adminDraft.titulo.trim()) { adminMessage = 'Escribe un título.'; render(); return; } send([buildNotice(adminDraft)], 'Aviso publicado.'); } }, adminBusy ? 'Enviando…' : 'Publicar aviso'),
+          adminCurrent ? h('button', { type: 'button', class: 'filter is-danger', id: 'admin-withdraw', disabled: adminBusy || !online(), onclick: () => send([], 'Aviso retirado.') }, 'Retirar aviso') : null),
+        adminCurrent ? h('p', { class: 'admin-current' }, `Publicado: «${adminCurrent.titulo}»`) : null,
+        adminMessage ? h('p', { class: 'muted small', role: 'status' }, adminMessage) : null));
   }
 
   /** "Versión de la app": installed and published versions plus «Buscar» / «Forzar actualización». One node, moved into each render (it listens to the updater). */

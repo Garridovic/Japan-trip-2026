@@ -16,6 +16,7 @@ export class Auth0Client {
     sessionStorage.setItem('fake-app-state', JSON.stringify(appState));
     location.href = this.options.authorizationParams.redirect_uri + '?code=abc&state=xyz';
   }
+  async getIdTokenClaims() { return localStorage.getItem('fake-session') ? { __raw: 'fake-id-token' } : null; }
   async getTokenSilently() { if (!localStorage.getItem('fake-session')) throw new Error('login_required'); return 'fake-token'; }
   async logout() { localStorage.removeItem('fake-session'); location.href = this.options.authorizationParams.redirect_uri; }
 }
@@ -159,6 +160,61 @@ test.describe('optional account (Auth0, Google)', () => {
     await page.locator('#account-button').click();
     await expect(page.locator('.account-admin')).toBeVisible();
     await expect(page.locator('.account-admin')).toContainText('Administración');
+  });
+
+  test('notices: everyone sees the published notice and can close it; the administrator publishes and withdraws it', async ({ page, browser }) => {
+    const WORKER = 'https://japon-avisos.garridovic.workers.dev/avisos';
+    let stored = { avisos: [] };
+    const puts = [];
+    const handler = async (route) => {
+      const request = route.request();
+      const headers = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' };
+      if (request.method() === 'OPTIONS') return route.fulfill({ status: 204, headers });
+      if (request.method() === 'PUT') { puts.push({ auth: request.headers().authorization, body: request.postDataJSON() }); stored = request.postDataJSON(); return route.fulfill({ status: 200, headers, contentType: 'application/json', body: '{"ok":true}' }); }
+      return route.fulfill({ status: 200, headers, contentType: 'application/json', body: JSON.stringify(stored) });
+    };
+    await page.route(WORKER, handler);
+    await page.addInitScript(() => localStorage.setItem('notices-enabled', '1'));
+    await enableAuth(page);
+    await page.addInitScript(() => { if (!sessionStorage.getItem('roles-set')) { sessionStorage.setItem('roles-set', '1'); sessionStorage.setItem('fake-roles', '["Administrador"]'); } });
+    await page.goto('/');
+    await expect(page.locator('#app-notice')).toBeHidden(); // nothing published yet
+    await signIn(page);
+    await page.locator('#account-button').click();
+    await page.getByLabel('Título').fill('Novedad de prueba');
+    await page.getByLabel('Texto').fill('Ahora puedes filtrar el mapa.');
+    await page.locator('#admin-publish').click();
+    await expect(page.getByText('Aviso publicado.')).toBeVisible();
+    expect(puts).toHaveLength(1);
+    expect(puts[0].auth).toBe('Bearer fake-id-token');
+    expect(puts[0].body.avisos[0]).toMatchObject({ titulo: 'Novedad de prueba', texto: 'Ahora puedes filtrar el mapa.' });
+    expect(puts[0].body.avisos[0].caduca).toBeGreaterThan(Date.now());
+
+    // Another person, another device: no role, no session. They see it and can close it for good.
+    const other = await browser.newContext();
+    const page2 = await other.newPage();
+    await page2.route(WORKER, handler);
+    await page2.addInitScript(() => localStorage.setItem('notices-enabled', '1'));
+    await page2.goto('/');
+    await expect(page2.locator('#app-notice')).toContainText('Novedad de prueba');
+    await page2.locator('#app-notice').getByRole('button', { name: 'Entendido' }).click();
+    await expect(page2.locator('#app-notice')).toBeHidden();
+    await page2.reload();
+    await expect(page2.locator('#hero-title')).not.toHaveText('…');
+    await expect(page2.locator('#app-notice')).toBeHidden();
+    await other.close();
+
+    await page.locator('#admin-withdraw').click();
+    await expect(page.getByText('Aviso retirado.')).toBeVisible();
+    expect(puts[1].body).toEqual({ avisos: [] });
+  });
+
+  test('notices: offline the last copy is still shown', async ({ page }) => {
+    const WORKER = 'https://japon-avisos.garridovic.workers.dev/avisos';
+    await page.addInitScript(() => { if (!localStorage.getItem('notices-cache')) { localStorage.setItem('notices-enabled', '1'); localStorage.setItem('notices-cache', JSON.stringify([{ id: 'x1', tipo: 'aviso', titulo: 'Aviso guardado', texto: '', caduca: 0 }])); } });
+    await page.route(WORKER, (route) => route.abort());
+    await page.goto('/');
+    await expect(page.locator('#app-notice')).toContainText('Aviso guardado');
   });
 
   test('a signed-in user without the role, or with another role, never sees «Administración»', async ({ page }) => {

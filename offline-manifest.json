@@ -1,7 +1,7 @@
 {
-  "version": "d280228b63",
+  "version": "86a80119cb",
   "sizes": {
-    "required": 1162443,
+    "required": 1172890,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -102,6 +102,7 @@
     "js/modules/map-offline.js",
     "js/modules/map-view.js",
     "js/modules/map.js",
+    "js/modules/notices.js",
     "js/modules/offline-texts.js",
     "js/modules/offline.js",
     "js/modules/overlay-history.js",
