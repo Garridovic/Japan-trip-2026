@@ -5,7 +5,7 @@ import { loadJourney, loadGlobalContent, loadCity } from './modules/data.js';
 import { enabledCities, resolveActiveCity, staysOf, pickStayIndex, requestedCityFromSearch, CITY_QUERY_PARAM } from './modules/journey.js';
 import { indexCity } from './modules/city-index.js';
 import { initTabs } from './modules/tabs.js';
-import { renderCity } from './modules/render.js';
+import { renderCity, resetHero } from './modules/render.js';
 import { initDetails } from './modules/details.js';
 import { initMap } from './modules/map.js';
 import { initScrollSpy } from './modules/scrollspy.js';
@@ -161,6 +161,8 @@ async function start() {
     tabs.setActive(cityId);
     if (cityId === activeCityId) { showStatus(''); return; }
     showStatus('Cargando la guía…');
+    resetHero();
+    weather.clear();
     try {
       const bundle = await loadCity(cityId, cities.find((city) => city.id === cityId));
       if (token !== requestToken) return; // a newer tab selection superseded this one

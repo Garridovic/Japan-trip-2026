@@ -56,6 +56,7 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
   let current = null; // { where, trip }
   let selected = null;
   let days = [];
+  let loading = false;
 
   const range = (trip) => {
     const today = localISO(now());
@@ -86,9 +87,12 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
     renderBrief();
     strip.style.setProperty('--days', String(cells.length));
     const missing = cells.length - days.length;
-    note.textContent = stored
-      ? `Open-Meteo · ${ageText(stored.fetchedAt, now().getTime())}${missing ? ` · ${missing === 1 ? 'un día más aparecerá' : `${missing} días más aparecerán`} cuando haya previsión` : ' · toca un día para verlo por horas'}`
-      : (navigator.onLine === false ? 'Sin internet y aún sin previsión guardada.' : 'Cargando la previsión…');
+    const waiting = `${missing === 1 ? 'un día más aparecerá' : `${missing} días más aparecerán`} cuando haya previsión`;
+    if (stored) note.textContent = `Open-Meteo · ${ageText(stored.fetchedAt, now().getTime())}${missing ? ` · ${waiting}` : ' · toca un día para verlo por horas'}`;
+    else if (loading) note.textContent = 'Cargando la previsión…';
+    else if (navigator.onLine === false) note.textContent = `Sin internet y aún sin previsión guardada${missing ? ` · ${waiting}` : ''}`;
+    else if (range(trip).from > range(trip).to) note.textContent = `Open-Meteo prevé unos 15 días · ${waiting}`; // the trip is further away than the forecast reaches
+    else note.textContent = `No se ha podido cargar la previsión ahora · ${waiting}`;
   }
 
   /** One useful line under the strip: today (or the first day with a forecast), its summary, sun times and tips. */
@@ -108,8 +112,10 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
     if (!current) return;
     const { where, trip } = current;
     const { from, to } = range(trip);
-    if (from > to) { renderStrip(); return; } // the trip is further away than the forecast reaches
-    await store.refresh({ ...where, from, to }, { force });
+    if (from > to) { renderStrip(); return; } // the trip is further away than the forecast reaches: no request, and no endless "Cargando"
+    loading = !store.get(where.id);
+    if (loading) renderStrip();
+    try { await store.refresh({ ...where, from, to }, { force }); } finally { loading = false; }
     if (current?.where.id === where.id) renderStrip();
   }
 
@@ -174,9 +180,13 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
       current = { where, trip };
       if (!trip?.arrival || !trip?.departure) { current = null; strip.replaceChildren(); note.textContent = ''; return Promise.resolve(); }
       if (!sheet.hidden) closeSheet();
+      const { from, to } = range(trip);
+      loading = !store.get(where.id) && from <= to; // avoids a flash of "no se ha podido cargar" before the request starts
       renderStrip();
       return refresh();
     },
+    /** Empties the card while another city loads. */
+    clear() { current = null; days = []; loading = false; strip.replaceChildren(); byId('weather-brief').replaceChildren(); note.textContent = ''; },
     refresh
   };
 }
