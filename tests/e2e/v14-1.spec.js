@@ -206,9 +206,11 @@ test.describe('V14.2.2 fixes', () => {
     await marker.dispatchEvent('click');
     const popup = page.locator('.leaflet-popup-content-wrapper');
     await expect(popup).toBeVisible();
-    const zoom = await page.locator('.leaflet-control-zoom').boundingBox();
-    const box = await popup.boundingBox();
-    const overlaps = box.x < zoom.x + zoom.width && box.x + box.width > zoom.x && box.y < zoom.y + zoom.height && box.y + box.height > zoom.y;
-    expect(overlaps, JSON.stringify({ zoom, box })).toBe(false);
+    // The popup may still be panning into view (a marker outside the first view), so wait for it to settle.
+    await expect.poll(async () => {
+      const zoom = await page.locator('.leaflet-control-zoom').boundingBox();
+      const box = await popup.boundingBox();
+      return box.x < zoom.x + zoom.width && box.x + box.width > zoom.x && box.y < zoom.y + zoom.height && box.y + box.height > zoom.y;
+    }, { timeout: 5_000 }).toBe(false);
   });
 });

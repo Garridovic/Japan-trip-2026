@@ -19,5 +19,43 @@
     "altCategory": "extra",
     "desc": "Acuario en las plantas 5 y 6 de Tokyo Skytree Town (Solamachi). Visita extra opcional. Coordenada orientativa.",
     "query": "Sumida Aquarium Tokyo Skytree Town"
+  },
+  {
+    "id": "sensoji",
+    "name": "Sensō-ji",
+    "lat": 35.7148,
+    "lng": 139.7967,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "extra",
+    "desc": "Templo más antiguo de Tokio, a pie desde el hotel. Sello (goshuin) comprobado en su web oficial: se pide en el Yōkōdō, al oeste del recinto. Visita opcional; coordenada orientativa.",
+    "query": "Senso-ji Asakusa",
+    "proximity": {
+      "kind": "temple",
+      "radius": 120
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.senso-ji.jp/faq/"
+    }
+  },
+  {
+    "id": "asakusajinja",
+    "name": "Asakusa Jinja",
+    "lat": 35.715,
+    "lng": 139.7982,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "extra",
+    "desc": "Santuario junto al Sensō-ji. Sello (goshuin) comprobado en su web oficial, 500 ¥, en la ventanilla del santuario. Visita opcional; coordenada orientativa.",
+    "query": "Asakusa Shrine Tokyo",
+    "proximity": {
+      "kind": "temple",
+      "radius": 120
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://asakusajinja.jp/goshuin/"
+    }
   }
 ]

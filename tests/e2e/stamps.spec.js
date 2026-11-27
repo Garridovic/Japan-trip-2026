@@ -5,9 +5,9 @@ test.describe('sellos (V14)', () => {
     await page.goto('/?view=viaje');
     await expect(page.locator('#sellos h2')).toHaveText('Mis sellos');
     await expect(page.locator('#stamps-total')).toHaveText('0 sellos');
-    await expect(page.locator('#stamps-verified')).toContainText('Aquí hay sello real en 14 lugares');
+    await expect(page.locator('#stamps-verified')).toContainText('Aquí hay sello real en 18 lugares');
     const options = page.locator('#stamp-place option');
-    await expect(options).toHaveCount(15); // "Sin lugar" + 14
+    await expect(options).toHaveCount(19); // "Sin lugar" + 18
     await expect(page.locator('#stamp-place option', { hasText: 'Castillo Nijō' })).toHaveCount(0);
     await expect(page.locator('#stamp-place option', { hasText: 'Kinkaku-ji' })).toHaveText(/Aquí hay sello real/);
   });

@@ -35,5 +35,39 @@
       }
     ],
     "verificationNote": "Confirmar antes de ir: horario (entre semana 10:00–20:00; fines de semana y festivos 9:00–21:00, última entrada una hora antes; hay cierres anticipados puntuales, por ejemplo el 6 de dic a las 18:00) y precio (GO TOKYO indica 2.500 ¥ de entrada general, sin desglosar). Coordenada orientativa."
+  },
+  {
+    "id": "sensoji",
+    "description": "Templo más antiguo de Tokio, a pie desde el hotel. Sello (goshuin) comprobado en su web oficial: se pide en el Yōkōdō, al oeste del recinto. Visita opcional; coordenada orientativa.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.7148,139.7967",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.7148,139.7967&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.7148,139.7967&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Sello (goshuin) en la web oficial",
+        "url": "https://www.senso-ji.jp/faq/"
+      }
+    ],
+    "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
+  },
+  {
+    "id": "asakusajinja",
+    "description": "Santuario junto al Sensō-ji. Sello (goshuin) comprobado en su web oficial, 500 ¥, en la ventanilla del santuario. Visita opcional; coordenada orientativa.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.715,139.7982",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.715,139.7982&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.715,139.7982&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Sello (goshuin) en la web oficial",
+        "url": "https://asakusajinja.jp/goshuin/"
+      }
+    ],
+    "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
   }
 ]

@@ -10,5 +10,22 @@
     },
     "sources": [],
     "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
+  },
+  {
+    "id": "hakonejinja",
+    "description": "Santuario junto al lago Ashi con su torii en el agua. Sello (goshuin) comprobado en su web oficial: mostrador 8:15–17:00. Visita opcional; coordenada orientativa.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.2037,139.0258",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.2037,139.0258&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.2037,139.0258&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Sello (goshuin) en la web oficial",
+        "url": "https://www.hakonejinja.or.jp/hakone/amulet.html"
+      }
+    ],
+    "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
   }
 ]

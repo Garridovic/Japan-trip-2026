@@ -8,5 +8,24 @@
     "type": "hotel",
     "desc": "Alojamiento del grupo (17–18 dic).",
     "query": "Yuzan apartment Sanjo Nara"
+  },
+  {
+    "id": "todaiji",
+    "name": "Tōdai-ji",
+    "lat": 34.689,
+    "lng": 135.8398,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "templos",
+    "desc": "Templo del Gran Buda (Daibutsuden). Sellos (goshuin) comprobados en su web oficial, 300 ¥ en cada sala. Visita opcional; coordenada orientativa.",
+    "query": "Todaiji Nara",
+    "proximity": {
+      "kind": "temple",
+      "radius": 120
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.todaiji.or.jp/sutra-and-goshuin/goshuin/"
+    }
   }
 ]

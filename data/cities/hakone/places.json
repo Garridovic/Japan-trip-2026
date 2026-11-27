@@ -8,5 +8,24 @@
     "type": "hotel",
     "desc": "Alojamiento del grupo (10–11 dic).",
     "query": "Hakone Onsen Yuyado Yamanoshou Hakone"
+  },
+  {
+    "id": "hakonejinja",
+    "name": "Hakone Jinja",
+    "lat": 35.2037,
+    "lng": 139.0258,
+    "day": "extra",
+    "type": "alternative",
+    "altCategory": "templos",
+    "desc": "Santuario junto al lago Ashi con su torii en el agua. Sello (goshuin) comprobado en su web oficial: mostrador 8:15–17:00. Visita opcional; coordenada orientativa.",
+    "query": "Hakone Shrine Hakone",
+    "proximity": {
+      "kind": "temple",
+      "radius": 120
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.hakonejinja.or.jp/hakone/amulet.html"
+    }
   }
 ]

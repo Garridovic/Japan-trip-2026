@@ -62,12 +62,12 @@ test('stampPlaces keeps only places with a known stamp kind', () => {
   assert.deepEqual(stampPlaces(places).map((p) => p.id), ['a', 'd']);
 });
 
-test('only the 14 places with a sourced real stamp carry `stamp`; unconfirmed ones never do', async () => {
+test('only the 18 places with a sourced real stamp carry `stamp`; unconfirmed ones never do', async () => {
   const stamped = [];
-  for (const city of ['kyoto', 'osaka', 'tokyo']) {
+  for (const city of ['kyoto', 'osaka', 'tokyo', 'hakone', 'nara']) {
     const places = JSON.parse(await readFile(new URL(`../data/cities/${city}/places.json`, import.meta.url), 'utf8'));
     for (const place of places) if (place.stamp) { assert.match(place.stamp.source, /^https:\/\//, place.id); stamped.push(`${city}:${place.id}`); }
   }
-  assert.equal(stamped.length, 14);
+  assert.equal(stamped.length, 18);
   for (const unconfirmed of ['kyoto:ryoanji', 'kyoto:tenryuji', 'kyoto:iwaya', 'kyoto:oishi', 'kyoto:nijo', 'osaka:sumiyoshi', 'osaka:osakajo']) assert.ok(!stamped.includes(unconfirmed), unconfirmed);
 });

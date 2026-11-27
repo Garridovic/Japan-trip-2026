@@ -10,5 +10,22 @@
     },
     "sources": [],
     "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
+  },
+  {
+    "id": "todaiji",
+    "description": "Templo del Gran Buda (Daibutsuden). Sellos (goshuin) comprobados en su web oficial, 300 ¥ en cada sala. Visita opcional; coordenada orientativa.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.689,135.8398",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.689,135.8398&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.689,135.8398&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Sello (goshuin) en la web oficial",
+        "url": "https://www.todaiji.or.jp/sutra-and-goshuin/goshuin/"
+      }
+    ],
+    "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
   }
 ]

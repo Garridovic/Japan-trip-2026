@@ -24,7 +24,14 @@
     "queryContext": "Nara, Japan",
     "legendSummary": "Leyenda del mapa",
     "dayFilters": [],
-    "alternativeCategories": []
+    "alternativeCategories": [
+      {
+        "id": "templos",
+        "label": "Templos y santuarios",
+        "color": "#bd8a9d",
+        "legend": "Visitas opcionales · templos y santuarios"
+      }
+    ]
   },
   "footerLabel": "Nara · 17–18 diciembre 2026"
 }
