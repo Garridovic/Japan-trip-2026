@@ -148,7 +148,7 @@ test.describe('offline indicator in the header', () => {
     await page.evaluate(async () => {
       const name = (await caches.keys()).find((key) => key.startsWith('japan-guide-'));
       const cache = await caches.open(name);
-      for (const path of ['js/modules/phrases.js', 'assets/images/dishes/ramen-480.webp']) await cache.delete(new URL(path, location.href).href);
+      for (const path of ['js/modules/phrases.js', 'assets/images/dishes/ramen-480.webp', '__installed']) await cache.delete(new URL(path, location.href).href);
     });
     await chip(page).click(); // opening the popover re-checks the cache
     await expect.poll(() => stateOf(page)).toBe('incomplete');
@@ -158,6 +158,9 @@ test.describe('offline indicator in the header', () => {
     await expect(popover(page)).toContainText('Faltan 2 archivos');
     await popover(page).locator('#offline-retry').click();
     await expect.poll(() => stateOf(page), { timeout: 30_000 }).toBe('essentials');
+    // Even if the stamp was lost, «Copia guardada» shows the version and a date after the repair (never «V… · —»).
+    await expect(popover(page).locator('#offline-facts')).not.toContainText('—');
+    await expect(popover(page).locator('#offline-facts')).toContainText(/Copia guardada\s*V[\d.]+ · \d/);
     expect(await page.evaluate(async () => {
       const name = (await caches.keys()).find((key) => key.startsWith('japan-guide-'));
       return Boolean(await (await caches.open(name)).match(new URL('js/modules/phrases.js', location.href).href));

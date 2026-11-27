@@ -74,7 +74,7 @@ export function describe(state, report = null) {
 export function facts(state, report, appVersion) {
   const rows = [];
   if (report) {
-    rows.push(['Copia guardada', `${appVersion ?? 'Guía'} · ${formatDate(report.installedAt)}`]);
+    rows.push(['Copia guardada', report.installedAt ? `${appVersion ?? 'Guía'} · ${formatDate(report.installedAt)}` : (appVersion ?? 'Guía')]);
     const saved = (report.sizes.required + report.sizes.optional) + (report.missing.warm === 0 ? report.sizes.warm : 0);
     rows.push(['Espacio usado', `≈ ${formatMegabytes(saved)}`]);
     rows.push(['Archivos', `${report.totals.required + report.totals.optional + report.totals.warm - report.missing.required - report.missing.optional - report.missing.warm} de ${report.totals.required + report.totals.optional + report.totals.warm}`]);
@@ -102,6 +102,14 @@ export async function initOffline({ win = window, doc = document } = {}) {
 
   const worker = () => registration?.active ?? nav.serviceWorker?.controller ?? null;
   const send = (type) => worker()?.postMessage({ type });
+
+  // The download runs in the service worker, which the browser can stop while the page is idle or in the background.
+  // Whenever the page comes back (screen change, tab visible, connection back, new worker), a copy that is not complete is asked to continue.
+  // Automatic retries after a report that is still incomplete are limited, so a file that really cannot be downloaded does not loop.
+  let autoRetries = 0;
+  let retryTimer = null;
+  const needsFill = () => nav.onLine !== false && state.kind !== 'unsupported' && state.kind !== 'ready' && state.kind !== 'essentials' && state.kind !== 'none';
+  const resume = () => { if (worker() && needsFill()) send('fill'); };
 
   function render() {
     const view = chipView(state, { online: nav.onLine !== false });
@@ -150,7 +158,9 @@ export async function initOffline({ win = window, doc = document } = {}) {
     await resetOfflineData(win);
     win.location.reload();
   });
-  win.addEventListener('online', render);
+  win.addEventListener('online', () => { render(); autoRetries = 0; resume(); });
+  doc.addEventListener('visibilitychange', () => { if (doc.visibilityState === 'visible') resume(); });
+  nav.serviceWorker?.addEventListener?.('controllerchange', () => resume());
   win.addEventListener('offline', render);
 
   if (!('serviceWorker' in nav)) { state = { kind: 'unsupported' }; render(); return null; }
@@ -165,7 +175,15 @@ export async function initOffline({ win = window, doc = document } = {}) {
 
   nav.serviceWorker.addEventListener('message', ({ data }) => {
     if (data?.type === 'offline-progress') state = { kind: 'saving', done: data.done, total: data.total };
-    else if (data?.type === 'offline-report') { report = data; state = stateFromReport(data); }
+    else if (data?.type === 'offline-report') {
+      report = data; state = stateFromReport(data);
+      if (state.kind === 'incomplete' && autoRetries < 2 && nav.onLine !== false) {
+        autoRetries += 1;
+        win.clearTimeout(retryTimer);
+        retryTimer = win.setTimeout(() => send('repair'), 5000 * autoRetries);
+      } else if (state.kind !== 'incomplete') autoRetries = 0;
+    }
+    else if (data?.type === 'offline-resume') resume();
     else return;
     render();
   });

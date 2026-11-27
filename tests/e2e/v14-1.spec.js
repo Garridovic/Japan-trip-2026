@@ -209,4 +209,23 @@ test.describe('V14.2.2 fixes', () => {
       return box.x < zoom.x + zoom.width && box.x + box.width > zoom.x && box.y < zoom.y + zoom.height && box.y + box.height > zoom.y;
     }, { timeout: 5_000 }).toBe(false);
   });
+
+  test('at 320×640 the first day card of «Vista rápida» fits above the bottom bar and the diary line wraps instead of ending in «…»', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await page.clock.setFixedTime(tokyo('2026-11-27T10:00:00'));
+    await mockWeather(page);
+    await page.goto('/');
+    await expect(page.locator('#hero-title')).toHaveText('Kioto');
+    const barTop = (await page.locator('.app-bar').boundingBox()).y;
+    const card = await page.locator('#quick-grid .quick-card').first().boundingBox();
+    expect(card.y + card.height).toBeLessThanOrEqual(barTop);
+    const link = await page.locator('#quick-grid .quick-card').first().locator('.text-link').boundingBox();
+    expect(link.height).toBeGreaterThanOrEqual(44);
+    // Diary card: the sub line is whole (it may take two lines), never cut with an ellipsis.
+    const sub = page.locator('.progress-card .progress-sub');
+    await expect(sub).toContainText('Faltan');
+    expect(await sub.evaluate((el) => el.scrollHeight <= el.clientHeight + 1 && getComputedStyle(el).whiteSpace === 'normal')).toBe(true);
+    const progress = await page.locator('.progress-card').boundingBox();
+    expect(progress.height).toBeLessThanOrEqual(160);
+  });
 });
