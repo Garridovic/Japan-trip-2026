@@ -89,3 +89,16 @@ export async function selectCity(page, name) {
   await openCities(page);
   await page.getByRole('option', { name, exact: true }).click();
 }
+
+/** Open-Meteo answers with a fixed forecast (the real service is never called from tests). Days are Dec 11-15 2026. */
+export async function mockWeather(page, { fail = false } = {}) {
+  await page.route('https://api.open-meteo.com/**', (route) => {
+    if (fail) return route.abort('failed');
+    const days = ['2026-12-11', '2026-12-12', '2026-12-13', '2026-12-14', '2026-12-15'];
+    const hours = days.flatMap((day) => [6, 9, 12, 15, 18, 21].map((h) => `${day}T${String(h).padStart(2, '0')}:00`));
+    return route.fulfill({ contentType: 'application/json', body: JSON.stringify({
+      daily: { time: days, weather_code: [2, 0, 3, 61, 0], temperature_2m_max: [10.2, 11.4, 9, 8.1, 10], temperature_2m_min: [3, 2, 3, 4, 2], precipitation_probability_max: [10, 0, 20, 70, 10], precipitation_sum: [0, 0, 0.4, 5.2, 0], sunrise: days.map((d) => `${d}T06:56`), sunset: days.map((d) => `${d}T16:46`) },
+      hourly: { time: hours, weather_code: hours.map(() => 0), temperature_2m: hours.map((_, i) => 2 + (i % 6) * 2), precipitation_probability: hours.map(() => 0), wind_speed_10m: hours.map(() => 5) }
+    }) });
+  });
+}

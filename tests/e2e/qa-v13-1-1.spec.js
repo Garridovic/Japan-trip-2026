@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { journey } from './helpers.js';
+import { journey, mockWeather } from './helpers.js';
 
 const watch = (page) => {
   const problems = [];
@@ -12,6 +12,7 @@ const watch = (page) => {
 test.describe('no uncaught JS errors or 404s', () => {
   test('scrolling and section tabs raise no errors', async ({ page }) => {
     const problems = watch(page);
+    await mockWeather(page);
     await page.goto('/');
     const tabs = page.locator('.nav-inner a[href^="#"]:visible');
     await expect(tabs.first()).toBeVisible();
@@ -29,6 +30,7 @@ test.describe('no uncaught JS errors or 404s', () => {
   for (const city of journey.cities.filter((item) => item.enabled)) {
     test(`loading ${city.id} and opening Viaje requests no missing files`, async ({ page }) => {
       const problems = watch(page);
+      await mockWeather(page);
       await page.goto(`/?city=${city.id}`);
       await expect(page.locator('#hero-title')).not.toBeEmpty();
       await page.locator('[data-view-target="viaje"]').click();

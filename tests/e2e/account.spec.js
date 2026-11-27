@@ -53,7 +53,7 @@ test.describe('optional account (Auth0, Google)', () => {
 
   test('anonymous: the guide works, the account panel explains and offers Google, the invite can be dismissed', async ({ page }) => {
     await enableAuth(page);
-    await page.goto('/');
+    await page.goto('/?view=viaje'); // the invite lives at the top of Viaje
     await expect(page.locator('#account-button')).toBeVisible();
     await expect(page.locator('#account-greeting')).toBeHidden();
     await expect(page.locator('#account-invite')).toBeVisible();

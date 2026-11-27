@@ -154,9 +154,9 @@ for (const [city, name, viewport, mobile] of [['kyoto', 'phone', { width: 390, h
   }
 }
 
-test('a plain #anchor link (hero buttons) lands on its section and the scroll is not reset by the app', async ({ page }) => {
+test('a plain #anchor link (section nav) lands on its section and the scroll is not reset by the app', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Abrir mapa interactivo' }).click();
+  await page.locator('nav a[href="#mapa"]').click();
   await expectAligned(page, 'mapa');
   const y = await page.evaluate(() => Math.round(window.scrollY));
   await page.waitForTimeout(600);

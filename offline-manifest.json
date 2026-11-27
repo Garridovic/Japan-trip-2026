@@ -1,7 +1,7 @@
 {
-  "version": "b3b726c8f9",
+  "version": "acce7dd155",
   "sizes": {
-    "required": 946382,
+    "required": 975904,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -78,6 +78,7 @@
     "js/modules/feedback.js",
     "js/modules/filters.js",
     "js/modules/geo.js",
+    "js/modules/hero-ui.js",
     "js/modules/ids.js",
     "js/modules/journey.js",
     "js/modules/lodging-ui.js",
@@ -111,11 +112,14 @@
     "js/modules/tips-ui.js",
     "js/modules/tips.js",
     "js/modules/today.js",
+    "js/modules/trip-status.js",
     "js/modules/updates.js",
     "js/modules/user-data.js",
     "js/modules/version.js",
     "js/modules/views.js",
     "js/modules/visited.js",
+    "js/modules/weather-ui.js",
+    "js/modules/weather.js",
     "kyoto-points.kml",
     "manifest.webmanifest"
   ],

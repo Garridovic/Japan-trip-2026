@@ -28,6 +28,8 @@ import { initTheme } from './modules/theme.js';
 import { initMapView } from './modules/map-view.js';
 import { initUpdates } from './modules/updates.js';
 import { initToday } from './modules/today.js';
+import { initHero } from './modules/hero-ui.js';
+import { initWeather } from './modules/weather-ui.js';
 import { createProximity } from './modules/proximity-ui.js';
 import { initStamps } from './modules/stamps-ui.js';
 
@@ -115,6 +117,8 @@ async function start() {
       dish: ({ id }) => jumpToSearch('platos', 'dishes-search', global.dishes.dishes.find((d) => d.id === id)?.es ?? '')
     }
   });
+  const hero = initHero();
+  const weather = initWeather();
   const today = initToday();
   const scrollSpy = initScrollSpy();
   const tabs = initTabs(cities, (cityId) => navigate(cityId));
@@ -161,7 +165,10 @@ async function start() {
       details.setCity({ ...index, events: bundle.events });
       map.setCity(index, bundle.city.map);
       search.setCity({ places: bundle.places, restaurants: bundle.restaurants, extras: bundle.extras?.items ?? [] });
+      const entry = cities.find((city) => city.id === cityId);
+      weather.show({ id: cityId, name: entry.name, lat: bundle.city.map.center[0], lng: bundle.city.map.center[1] }, { arrival: entry.arrivalDate, departure: entry.departureDate });
       today.show({ days: bundle.itinerary.days, cityName: cities.find((city) => city.id === cityId).name, queryContext: bundle.city.map.queryContext });
+      hero.reset(); // opens on "Ahora" during the trip, otherwise on "Tu viaje"
       activeCityId = cityId;
       scrollSpy.refresh();
       showStatus('');

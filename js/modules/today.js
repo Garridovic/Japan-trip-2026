@@ -100,7 +100,7 @@ export function initToday({ win = window, doc = document } = {}) {
     const moment = tripMoment(current.days, new Date());
     doc.querySelectorAll('.day-detail[data-today]').forEach((node) => node.removeAttribute('data-today'));
     markTimeline(moment);
-    card.hidden = moment.kind === 'none' || moment.kind === 'after';
+    card.hidden = moment.kind !== 'today'; // before the trip the header's "Tu viaje" card already shows the countdown
     card.dataset.moment = moment.kind;
     if (card.hidden) { card.replaceChildren(); return; }
     if (moment.kind === 'before') {

@@ -57,19 +57,42 @@
   <div class="app-view" id="city-view" data-view="guia" role="tabpanel" tabindex="-1">
     <header class="hero">
       <div class="hero-inner">
-        <p class="account-greeting" id="account-greeting" hidden></p>
-        <div class="eyebrow" id="hero-eyebrow">Japón · guía compartida</div>
-        <h1><span id="hero-title">…</span><span class="hero-dot">.</span></h1>
-        <p class="subtitle" id="hero-subtitle"></p>
-        <div class="hero-meta" id="hero-meta"></div>
-        <p class="hotel" id="hero-hotel" hidden></p>
-        <aside class="account-invite" id="account-invite" hidden></aside>
-        <div class="hero-actions">
-          <a class="button primary" href="#mapa">Abrir mapa interactivo</a>
-          <a class="button" href="#resumen">Ver recorrido</a>
+        <div class="hero-viewport" id="hero-viewport" tabindex="0" role="group" aria-roledescription="carrusel" aria-label="Resumen del viaje: desliza para ver más fichas">
+          <div class="hero-track" id="hero-track">
+            <article class="today-card hero-slide" id="today-card" data-slide="ahora" aria-live="polite" hidden></article>
+            <section class="hero-slide" data-slide="viaje" aria-label="Tu viaje">
+              <p class="account-greeting" id="account-greeting" hidden></p>
+              <div class="eyebrow" id="hero-eyebrow">Tu viaje</div>
+              <h1><span id="hero-title">…</span><span class="hero-dot">.</span></h1>
+              <p class="hero-when"><span id="hero-range"></span><span class="hero-status" id="hero-status"></span></p>
+              <p class="hotel" id="hero-hotel" hidden></p>
+              <p class="subtitle" id="hero-subtitle" hidden></p>
+              <div class="hero-meta" id="hero-meta" hidden></div>
+            </section>
+            <section class="hero-slide" data-slide="tiempo" aria-label="El tiempo">
+              <div class="eyebrow">El tiempo en <span data-city-name>…</span></div>
+              <div class="weather-strip" id="weather-strip"></div>
+              <p class="weather-note" id="weather-note" role="status"></p>
+            </section>
+          </div>
         </div>
+        <div class="hero-dots" id="hero-dots" aria-hidden="true"></div>
       </div>
     </header>
+
+    <div class="weather-scrim" id="weather-scrim" hidden></div>
+    <section class="weather-sheet" id="weather-sheet" role="dialog" aria-labelledby="weather-sheet-title" hidden>
+      <div class="weather-grab" aria-hidden="true"></div>
+      <div class="weather-sheet-head">
+        <h2 id="weather-sheet-title"></h2>
+        <button type="button" class="weather-close" id="weather-close" aria-label="Cerrar el tiempo por horas">✕</button>
+      </div>
+      <p class="muted small" id="weather-sheet-summary"></p>
+      <div class="weather-days" id="weather-days"></div>
+      <div class="weather-hours" id="weather-hours"></div>
+      <div class="weather-facts" id="weather-facts"></div>
+      <p class="muted small" id="weather-sheet-note"></p>
+    </section>
 
     <nav aria-label="Navegación principal">
       <div class="nav-inner">
@@ -92,7 +115,6 @@
           <div><div class="kicker">Primero, el vistazo general</div><h2>El recorrido en orden</h2></div>
           <p class="muted small">Pulsa «Ver detalle» para horarios, consejos y desplazamientos.</p>
         </div>
-        <article class="today-card" id="today-card" aria-live="polite" hidden></article>
         <div class="quick-grid" id="quick-grid"></div>
         <p class="muted small summary-note" id="quick-note" hidden></p>
       </section>
@@ -193,6 +215,8 @@
 
   <div class="app-view" id="view-viaje" data-view="viaje" hidden>
     <main>
+      <aside class="account-invite" id="account-invite" hidden></aside>
+
       <section id="sellos" class="stamps" hidden>
         <div class="section-head"><div><div class="kicker">Tu libro de sellos</div><h2>Mis sellos</h2></div><p class="muted small">Apunta cada sello que consigas: goshuin en templos y santuarios, gojōin en castillos. Ponle un nombre o una nota si quieres.</p></div>
         <div class="stamps-summary"><strong class="stamps-total" id="stamps-total" aria-live="polite"></strong><div class="stamps-cities" id="stamps-cities"></div></div>

@@ -3,6 +3,7 @@ import { taxiButton } from './taxi-ui.js';
 import { byId, h, externalLink } from './dom.js';
 import { connectionsFrom } from './journey.js';
 import { renderFood, renderExtras } from './filters.js';
+import { tripStatus, nightsLabel } from './trip-status.js';
 
 const setSectionVisible = (id, visible) => {
   byId(id).hidden = !visible;
@@ -10,18 +11,25 @@ const setSectionVisible = (id, visible) => {
 };
 
 function renderHero(journey, cityEntry, city) {
-  byId('hero-eyebrow').textContent = journey.eyebrow ?? journey.title;
+  const status = tripStatus({ arrival: cityEntry.arrivalDate, departure: cityEntry.departureDate });
+  byId('hero-eyebrow').textContent = status.kind === 'during' ? `Ahora en ${cityEntry.name}` : 'Tu viaje';
   byId('hero-title').textContent = cityEntry.name;
   byId('hero-subtitle').textContent = city.hero.subtitle;
   byId('hero-meta').replaceChildren(...city.hero.meta.map((text) => h('span', {}, text)));
+  // Dates and nights come from journey.json; test cities without dates fall back to the text written in the city data.
+  byId('hero-range').textContent = status.range ? `${status.range} · ${nightsLabel(status.nights)}` : (city.hero.meta ?? []).slice(0, 2).join(' · ');
+  const badge = byId('hero-status');
+  badge.textContent = status.label;
+  badge.hidden = !status.label;
   const hotel = byId('hero-hotel');
   hotel.hidden = !city.hero.hotel;
   hotel.replaceChildren();
   if (city.hero.hotel) {
     hotel.replaceChildren(
-      'Alojamiento: ', h('strong', {}, city.hero.hotel.name), ' · ',
-      externalLink(city.hero.hotel.mapUrl, 'Ver hotel en Google Maps ↗'), ' ',
-      taxiButton({ name: city.hero.hotel.name, city: cityEntry.name, label: '🚕 Taxi', className: 'taxi-chip taxi-button' })
+      h('span', { class: 'hotel-label' }, 'Alojamiento'), h('strong', {}, city.hero.hotel.name),
+      h('span', { class: 'hotel-actions' },
+        taxiButton({ name: city.hero.hotel.name, city: cityEntry.name, label: '🚕 Taxi', className: 'taxi-chip taxi-button' }),
+        externalLink(city.hero.hotel.mapUrl, 'Cómo llegar', 'taxi-chip'))
     );
   }
   document.querySelectorAll('[data-city-name]').forEach((node) => { node.textContent = cityEntry.name; });

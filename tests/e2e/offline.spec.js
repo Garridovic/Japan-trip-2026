@@ -73,7 +73,7 @@ test('deep links and other views also load offline', async ({ page, context }) =
 test('Leaflet is served from the site, not from a CDN', async ({ page, context }) => {
   const external = [];
   await mockTiles(context);
-  page.on('request', (request) => { const url = new URL(request.url()); if (!['127.0.0.1', 'tile.openstreetmap.org'].includes(url.hostname)) external.push(url.hostname); });
+  page.on('request', (request) => { const url = new URL(request.url()); if (!['127.0.0.1', 'tile.openstreetmap.org', 'api.open-meteo.com'].includes(url.hostname)) external.push(url.hostname); });
   await page.goto('/');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
   expect(external).toEqual([]);
