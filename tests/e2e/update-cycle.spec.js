@@ -114,3 +114,14 @@ test('the settings block shows installed and published versions and can force th
   await page.locator('#settings-update-force').click();
   await expect(page.locator('#update-version')).toHaveText(NEW_VERSION, { timeout: 60_000 });
 });
+
+test('a page that cannot answer the worker (an older, possibly stuck version) is reloaded by the new worker itself', async ({ page, context }) => {
+  test.setTimeout(120_000);
+  await context.addCookies([{ name: 'fake-legacy', value: '1', url: `http://127.0.0.1:${process.env.E2E_PORT ?? 4173}` }]);
+  await installed(page, context);
+  await page.locator('body').click({ position: { x: 5, y: 5 } }); // touched: this page would only show the banner
+  await deploy(context, 0);
+  await checkNow(page);
+  // Nobody presses anything: the worker takes over and reloads the page that never answered.
+  await expect(page.locator('#update-version')).toHaveText(NEW_VERSION, { timeout: 30_000 });
+});

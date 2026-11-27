@@ -28,6 +28,8 @@ createServer(async (request, response) => {
     if (pathname === '/sw.js' && fakeVersion) body = Buffer.from(body.toString().replace(/const VERSION = '[^']*';/, `const VERSION = '${fakeVersion}';`));
     // Test-only: a context with the cookie `fake-deploy=<version>~<image delay ms>[~broken]` sees "the next deployment" (new version.json,
     // new worker stamp, slow photos) while every other test keeps seeing the files as they are (see update-cycle.spec.js).
+    // Test-only: with the cookie `fake-legacy=1` the updater is served without its 'sw-activated' answer, like an older version of the page.
+    if (pathname === '/js/modules/updates.js' && /(?:^|;\s*)fake-legacy=1/.test(request.headers.cookie ?? '')) body = Buffer.from(body.toString().replace(/.*'sw-activated'.*\n/, ''));
     const deploy = /(?:^|;\s*)fake-deploy=([^;]+)/.exec(request.headers.cookie ?? '')?.[1];
     if (deploy) {
       const [deployVersion, delay, flag] = decodeURIComponent(deploy).split('~');

@@ -245,6 +245,9 @@ export function initUpdates({ win = window, doc = document, fetchFn = (...args) 
   laterButton?.addEventListener('click', () => { dismissed = true; if (banner) banner.hidden = true; });
   checkButton?.addEventListener('click', () => { dismissed = false; checkNow({ manual: true }); });
 
+  // The worker asks every open page "can you handle the update yourself?"; answering keeps it from reloading this one.
+  win.navigator.serviceWorker?.addEventListener('message', (event) => { if (event.data?.type === 'sw-activated') event.ports?.[0]?.postMessage('ok'); });
+
   // A new worker took control while this page was open: the files behind it changed.
   win.navigator.serviceWorker?.addEventListener('controllerchange', () => {
     const replaced = hadController; // the first claim of a first visit is not an update

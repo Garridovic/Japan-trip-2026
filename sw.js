@@ -1,6 +1,6 @@
 // Service worker: makes the guide work without a connection after the first visit.
 // VERSION is stamped by scripts/build-offline.js; a new version installs a fresh cache and removes the old one.
-const VERSION = 'f53fa16577';
+const VERSION = '89802c3642';
 const APP_CACHE = `japan-guide-${VERSION}`;
 const TILE_CACHE = 'japan-tiles-v1';
 const MAX_TILES = 700;
@@ -29,7 +29,28 @@ async function inBatches(items, size, task) {
   for (let i = 0; i < items.length; i += size) await Promise.allSettled(items.slice(i, i + size).map(task));
 }
 
+let replacedAnother = false; // this worker is taking over from an older one (not a first visit)
+
+/**
+ * Pages of this version answer 'sw-activated' on the channel they receive. A page that does not (an older version whose
+ * update button may be stuck) is reloaded by the worker itself, so it ends up on the files that are now in the cache.
+ */
+function answered(client) {
+  return new Promise((resolve) => {
+    const channel = new MessageChannel();
+    const timer = setTimeout(() => resolve(false), 2500);
+    channel.port1.onmessage = () => { clearTimeout(timer); resolve(true); };
+    try { client.postMessage({ type: 'sw-activated' }, [channel.port2]); } catch { clearTimeout(timer); resolve(true); }
+  });
+}
+async function reloadPagesThatCannotUpdate() {
+  for (const client of await self.clients.matchAll({ type: 'window' })) {
+    if (!(await answered(client))) await client.navigate?.(client.url).catch(() => {});
+  }
+}
+
 self.addEventListener('install', (event) => {
+  replacedAnother = Boolean(self.registration.active);
   event.waitUntil((async () => {
     const manifest = await loadManifest();
     const cache = await caches.open(APP_CACHE);
@@ -54,6 +75,7 @@ self.addEventListener('activate', (event) => {
     await self.clients.claim();
     // Not awaited on purpose (activation must finish quickly); the page also asks for it ('fill') if the worker is stopped first.
     fillInBackground();
+    if (replacedAnother) reloadPagesThatCannotUpdate();
   })());
 });
 
