@@ -77,6 +77,10 @@
         "note": "Salida a Kioto por la tarde"
       },
       "detail": {
+        "highlight": {
+          "label": "Alternativa · trail del antiguo Tokaido:",
+          "text": "en lugar del parque Onshi, de Moto-Hakone a Hatajuku (75–100 min según Japan Guide, ≈ 2 h con paradas) con el Amasake Chaya a mitad de camino. Salida hacia las 12:00 desde Moto-Hakone; llegada hacia las 14:30 y bus de vuelta, lo que retrasa la salida a Kioto. Los tres puntos están en el mapa como «Trail antiguo Tokaido»."
+        },
         "dayOfWeek": "vie",
         "title": "Lago Ashi, santuario Hakone y salida a Kioto",
         "summary": "Barco por el lago, el torii en el agua y un parque con vistas, antes de seguir a Kioto.",

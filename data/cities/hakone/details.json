@@ -209,5 +209,68 @@
       }
     ],
     "verificationNote": "Horario y precio de Japan Guide; coordenada contrastada con OpenStreetMap."
+  },
+  {
+    "id": "trail-inicio",
+    "description": "Salida del trail del antiguo Tokaido hacia Hatajuku, junto a la avenida de cedros de Moto-Hakone. Japan Guide da 75–100 minutos solo de ida hasta Hatajuku por el tramo mejor conservado; una reseña de Japan Travel cuenta unas 2,5 horas con paradas, siempre en bajada. Es la alternativa al parque Onshi del día 11.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.19891,139.02982",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.19891,139.02982&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.19891,139.02982&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Old Tokaido and Hakone Checkpoint",
+        "url": "https://www.japan-guide.com/e/e5205.html"
+      },
+      {
+        "label": "Japan Travel · Hiking the Old Hakone Highway",
+        "url": "https://en.japantravel.com/kanagawa/hiking-the-old-hakone-highway/44573"
+      }
+    ],
+    "verificationNote": "El punto de salida exacto no está señalizado en mis fuentes: pin de la avenida de cedros de OpenStreetMap, a unos minutos de Moto-Hakone. No he verificado el estado del camino en diciembre ni la frecuencia del autobús de vuelta."
+  },
+  {
+    "id": "trail-adoquines",
+    "description": "Tramo del trail con los adoquines de piedra originales de la antigua carretera, el mejor conservado entre Moto-Hakone y Hatajuku según Japan Guide. Justo antes de la casa de té Amasake Chaya.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.204,139.05386",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.204,139.05386&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.204,139.05386&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Old Tokaido and Hakone Checkpoint",
+        "url": "https://www.japan-guide.com/e/e5205.html"
+      },
+      {
+        "label": "Japan Travel · Hiking the Old Hakone Highway",
+        "url": "https://en.japantravel.com/kanagawa/hiking-the-old-hakone-highway/44573"
+      }
+    ],
+    "verificationNote": "Pin del paseo de adoquines según OpenStreetMap; no he comprobado cómo está el camino en diciembre."
+  },
+  {
+    "id": "trail-fin",
+    "description": "Final del trail del antiguo Tokaido. Hatajuku es famoso por el yosegi (mosaico de madera). Desde aquí se vuelve en autobús; el tramo siguiente hacia Hakone-Yumoto va por carretera con coches y sin acera, sin interés según Japan Guide.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.21218,139.06283",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.21218,139.06283&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.21218,139.06283&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Old Tokaido and Hakone Checkpoint",
+        "url": "https://www.japan-guide.com/e/e5205.html"
+      },
+      {
+        "label": "Japan Travel · Hiking the Old Hakone Highway",
+        "url": "https://en.japantravel.com/kanagawa/hiking-the-old-hakone-highway/44573"
+      }
+    ],
+    "verificationNote": "No he verificado la parada ni la frecuencia del autobús de vuelta, ni su precio."
   }
 ]

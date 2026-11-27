@@ -132,5 +132,38 @@
     "desc": "Parque de estilo francés con invernadero tropical y casa de té, sobre la estación de Gora.",
     "query": "Gora Park Hakone",
     "altCategory": "extra"
+  },
+  {
+    "id": "trail-inicio",
+    "name": "Trail Tokaido · inicio en Moto-Hakone (alternativa)",
+    "lat": 35.19891,
+    "lng": 139.02982,
+    "day": "extra",
+    "type": "alternative",
+    "desc": "Avenida de cedros de la antigua carretera: punto de salida del trail de 2 h hacia Hatajuku.",
+    "query": "Hakone Old Tokaido Cedar Avenue",
+    "altCategory": "trail"
+  },
+  {
+    "id": "trail-adoquines",
+    "name": "Trail Tokaido · tramo de adoquines (alternativa)",
+    "lat": 35.204,
+    "lng": 139.05386,
+    "day": "extra",
+    "type": "alternative",
+    "desc": "Tramo con los adoquines originales del Edo, el mejor conservado según Japan Guide.",
+    "query": "Hakone Old Tokaido stone pavement Hatajuku",
+    "altCategory": "trail"
+  },
+  {
+    "id": "trail-fin",
+    "name": "Trail Tokaido · final en Hatajuku (alternativa)",
+    "lat": 35.21218,
+    "lng": 139.06283,
+    "day": "extra",
+    "type": "alternative",
+    "desc": "Pueblo de artesanía yosegi donde acaba el trail y se coge el autobús.",
+    "query": "Hatajuku Hakone",
+    "altCategory": "trail"
   }
 ]
