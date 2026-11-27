@@ -20,7 +20,8 @@ test.describe('full-screen map view', () => {
     expect(box.width).toBeGreaterThanOrEqual(viewport.width - 2);
     expect(box.height).toBeGreaterThan(viewport.height * 0.6);
     await expect(inView(page, '#city-map')).toHaveCount(1);
-    await expect(page.locator('#map-view-title')).toHaveText(/Mapa de Kioto/);
+    await expect(page.locator('#map-filters-button')).toHaveAccessibleName('Filtros');
+    await expect(page.locator('#map-shown-pill')).toBeHidden(); // nothing filtered: only the round button
     await page.goBack();
     await expect(page.locator('#city-view')).toBeVisible();
     await expect(page.locator('#view-mapa')).toBeHidden();
@@ -52,7 +53,7 @@ test.describe('full-screen map view', () => {
     await expect(sheet).toBeVisible();
     await expect(sheet.locator('#map-filters')).toHaveCount(1);
     await sheet.locator('[data-map-kind="restaurantes"]').click();
-    await expect(page.locator('#map-filter-status')).toContainText('restaurantes');
+    await expect(page.locator('#map-filter-status')).toContainText('Comida');
     await page.goBack();
     await expect(sheet).toBeHidden();
     await expect(page.locator('#view-mapa')).toBeVisible(); // still on the map
@@ -78,7 +79,8 @@ test.describe('full-screen map view', () => {
   test('the offline chip, theme button and "Guardar mapa" are reachable from the full-screen map', async ({ page }) => {
     await openMap(page);
     await expect(page.locator('#theme-button')).toBeVisible();
-    await page.getByRole('button', { name: 'Sin conexión' }).click();
+    await expect(page.locator('#map-offline-button')).toHaveAccessibleName('Mapa sin guardar');
+    await page.locator('#map-offline-button').click();
     await expect(page.locator('#map-sheet #save-offline-map')).toBeVisible();
     await expect(page.locator('#map-sheet-title')).toHaveText('Mapa sin conexión');
   });
@@ -97,13 +99,16 @@ test.describe('full-screen map view', () => {
     await expect(page.locator('#view-mapa')).toBeVisible();
   });
 
-  test('Leyenda explains every marker colour and shape from the city data, and goes back to the guide on leaving', async ({ page }) => {
+  test('the legend lives folded under the filters, each day chip shows its colour, and it goes back to the guide on leaving', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 640 });
     await openMap(page);
-    await page.getByRole('button', { name: 'Leyenda', exact: true }).click();
+    await page.getByRole('button', { name: 'Filtros', exact: true }).click();
     const sheet = page.locator('#map-sheet');
     await expect(sheet).toBeVisible();
-    await expect(page.locator('#map-sheet-title')).toHaveText('Leyenda del mapa');
+    await expect(page.locator('#map-sheet-title')).toHaveText('Filtros');
+    await expect(sheet.locator('#map-day-filters .map-filter-dot')).toHaveCount(kyoto.city.map.dayFilters.length + 1); // + Alternativas
+    await expect(sheet.locator('#map-legend')).toBeHidden();
+    await sheet.locator('#map-legend-summary').click();
     const entries = sheet.locator('#map-legend > span');
     for (const day of kyoto.city.map.dayFilters) await expect(entries.filter({ hasText: day.legend })).toHaveCount(1);
     for (const text of ['Diamante', 'Círculo', 'Hotel', 'ya visitado', 'ruta del día', 'ubicación GPS']) {
@@ -130,7 +135,13 @@ test.describe('full-screen map view', () => {
     const [bar, canvas] = await Promise.all([page.locator('#app-bar').boundingBox(), page.locator('#city-map').boundingBox()]);
     expect(canvas.y + canvas.height).toBeLessThanOrEqual(bar.y + bar.height);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
-    for (const button of await page.locator('.map-view-button:visible').all()) {
+    await page.getByRole('button', { name: 'Filtros', exact: true }).click();
+    await page.locator('#map-sheet .map-filter').nth(1).click();
+    await page.locator('#map-sheet [data-map-kind="restaurantes"]').click();
+    await page.locator('#map-sheet [data-map-only="pendientes"]').click();
+    await page.locator('#map-sheet-apply').click();
+    await expect(page.locator('#map-shown-pill')).toBeVisible();
+    for (const button of await page.locator('#view-mapa .map-fab:visible, #view-mapa .map-view-pill:visible, #view-mapa .leaflet-control-zoom a').all()) {
       const b = await button.boundingBox();
       expect(b.x + b.width).toBeLessThanOrEqual(320);
       expect(b.height).toBeGreaterThanOrEqual(44);
@@ -140,7 +151,7 @@ test.describe('full-screen map view', () => {
 
 for (const width of [390, 320]) {
   for (const scheme of ['light', 'dark']) {
-    test(`the zoom buttons are reachable under the title and chips at ${width} px (${scheme})`, async ({ page }) => {
+    test(`the zoom buttons are reachable, bottom right and clear of the filter controls, at ${width} px (${scheme})`, async ({ page }) => {
       await page.setViewportSize({ width, height: 700 });
       await page.emulateMedia({ colorScheme: scheme });
       await openMap(page);
@@ -159,10 +170,16 @@ for (const width of [390, 320]) {
         expect(topIsButton, `${selector} is covered`).toBe(true);
       }
       // A real click zooms the map: the tiles move to the next zoom level.
-      const level = () => page.locator('#city-map .leaflet-tile-container').first().evaluate((el) => el.querySelector('img')?.src.match(/\/tile\.openstreetmap\.org\/(\d+)\//)?.[1] ?? null).catch(() => null);
-      const chips = page.locator('#view-mapa .map-view-controls');
-      const [zoom, bar] = await Promise.all([page.locator('#view-mapa .leaflet-control-zoom').boundingBox(), chips.boundingBox()]);
-      expect(zoom.y).toBeGreaterThanOrEqual(bar.y + bar.height - 1);
+      // Highest tile level on the map: the old level's tiles can linger while the new ones load.
+      const level = () => page.locator('#city-map .leaflet-tile-container').evaluateAll((containers) => {
+        const levels = containers.map((el) => Number(el.querySelector('img')?.src.match(/\/tile\.openstreetmap\.org\/(\d+)\//)?.[1])).filter(Number.isFinite);
+        return levels.length ? Math.max(...levels) : null;
+      }).catch(() => null);
+      // Zoom sits bottom right, under the cloud and «Cerca de mí», clear of the Filtros button and the pill.
+      const [zoom, tools, filters] = await Promise.all([page.locator('#view-mapa .leaflet-control-zoom').boundingBox(), page.locator('#view-mapa .map-view-tools').boundingBox(), page.locator('#map-filters-button').boundingBox()]);
+      expect(zoom.y).toBeGreaterThanOrEqual(tools.y + tools.height - 1);
+      expect(zoom.y).toBeGreaterThan(filters.y + filters.height);
+      expect(zoom.x + zoom.width).toBeLessThanOrEqual(width);
       const before = await level();
       await page.locator('#view-mapa .leaflet-control-zoom-in').click();
       if (before) await expect.poll(level).not.toBe(before);
@@ -176,7 +193,7 @@ test('"Guardar mapa" works from the full-screen map and keeps working after leav
   await context.route('**/tile.openstreetmap.org/**', (route) => route.fulfill({ status: 200, contentType: 'image/png', body: PNG, headers: { 'access-control-allow-origin': '*' } }));
   await page.goto('/?view=mapa');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-  await page.getByRole('button', { name: 'Sin conexión' }).click();
+  await page.locator('#map-offline-button').click();
   const save = page.locator('#map-sheet #save-offline-map');
   await expect(save).toBeVisible();
   await expect(save).toBeEnabled();

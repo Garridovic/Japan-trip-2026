@@ -74,7 +74,7 @@ test('switching city resets the map filters', async ({ page }) => {
   await addTestCities(page, ['testville']);
   await page.goto('/');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
-  await page.getByRole('button', { name: 'Solo restaurantes' }).click();
+  await page.getByRole('button', { name: 'Comida', exact: true }).click();
   await expect(page.locator(SVG_MARKERS)).toHaveCount(0);
   await selectCity(page, 'Testville');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(2);

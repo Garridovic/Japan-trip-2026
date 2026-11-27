@@ -73,13 +73,16 @@ test('map filters by day and by kind keep the right markers', async ({ page }) =
   await page.getByRole('button', { name: '14 dic · eventos' }).click();
   await expect(page.locator(SVG_MARKERS)).toHaveCount(countFor(kyoto.places, '14'));
   await expect(page.locator(RESTAURANT_MARKERS)).toHaveCount(countFor(kyoto.restaurants, '14'));
-  await expect(page.locator('#map-filter-status')).toContainText('filtro 14 dic');
+  await expect(page.locator('#map-filter-status')).toContainText('14 dic');
 
+  // Days add up: 14 dic + Alternativas shows both; tapping 14 dic again leaves only the alternatives.
   await page.getByRole('button', { name: 'Alternativas', exact: true }).first().click();
+  await expect(page.locator(SVG_MARKERS)).toHaveCount(countFor(kyoto.places, '14') + countFor(kyoto.places, 'extra'));
+  await page.getByRole('button', { name: '14 dic · eventos' }).click();
   await expect(page.locator(SVG_MARKERS)).toHaveCount(countFor(kyoto.places, 'extra'));
 
   await page.getByRole('button', { name: 'Todos los días' }).first().click();
-  await page.getByRole('button', { name: 'Solo restaurantes' }).click();
+  await page.getByRole('button', { name: 'Comida', exact: true }).click();
   await expect(page.locator(SVG_MARKERS)).toHaveCount(0);
   await expect(page.locator(RESTAURANT_MARKERS)).toHaveCount(restaurantCount);
 });

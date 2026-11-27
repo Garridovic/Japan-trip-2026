@@ -33,10 +33,10 @@ test.describe('visited places', () => {
     await page.locator('.popup-visit-button').click();
     const opacities = await page.locator(SVG_MARKERS).evaluateAll((paths) => paths.map((path) => Number(getComputedStyle(path).fillOpacity)));
     expect(opacities.filter((value) => value < 0.5)).toHaveLength(1);
-    await page.locator('[data-map-kind="pendientes"]').click();
-    await expect(page.locator('#map-filter-status')).toContainText('pendientes de visitar');
+    await page.locator('[data-map-only="pendientes"]').click();
+    await expect(page.locator('#map-filter-status')).toContainText('Pendientes');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(circles.length - 1);
-    await page.locator('[data-map-kind="todos"]').click();
+    await page.locator('[data-map-only="pendientes"]').click(); // a switch: the second tap turns it off
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length);
   });
 
@@ -57,32 +57,49 @@ test.describe('visited places', () => {
 
 
 
-  test('the full-screen map shows the counter in its title', async ({ page }) => {
+  test('the full-screen filters sheet shows the visited counter under its title', async ({ page }) => {
     await page.goto('/?view=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
-    await expect(page.locator('#map-view-title')).toHaveText(`Mapa de Kioto · 0/${visitable.length}`);
+    await page.locator('#map-filters-button').click();
+    await expect(page.locator('#map-sheet-sub')).toHaveText(`${kyoto.places.length + kyoto.restaurants.length} lugares · 0/${visitable.length} visitados`);
   });
 });
 
 test.describe('grouped filters on the full-screen map', () => {
-  test('active filters appear as chips, the button counts them and a chip removes its filter', async ({ page }) => {
+  test('several filters at once only change the badge and one fixed pill; Restablecer clears them all', async ({ page }) => {
     await page.goto('/?view=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
+    const total = kyoto.places.length + kyoto.restaurants.length;
     const button = page.locator('#map-filters-button');
-    await expect(button).toHaveText('Filtros');
+    const badge = page.locator('#map-filters-count');
+    const pill = page.locator('#map-shown-pill');
+    await expect(button).toHaveAccessibleName('Filtros');
+    await expect(badge).toBeHidden();
     await button.click();
-    await page.locator('#map-day-filters .map-filter').nth(1).click();
+    const days = page.locator('#map-day-filters .map-filter');
+    await days.nth(1).click();
+    await days.nth(2).click();
+    await expect(days.nth(1)).toHaveAttribute('aria-pressed', 'true'); // several days stay chosen together
+    await expect(days.nth(2)).toHaveAttribute('aria-pressed', 'true');
+    await expect(days.first()).toHaveAttribute('aria-pressed', 'false');
+    await page.locator('[data-map-kind="visitas"]').click();
     await page.locator('[data-map-kind="restaurantes"]').click();
-    await expect(button).toHaveText('Filtros (2)');
-    const chips = page.locator('#map-active-filters .map-chip');
-    await expect(chips).toHaveCount(2);
-    await expect(chips.nth(1)).toContainText('Solo restaurantes');
-    await chips.nth(1).click();
-    await expect(chips).toHaveCount(1);
-    await expect(button).toHaveText('Filtros (1)');
-    await chips.first().click();
-    await expect(chips).toHaveCount(0);
-    await expect(button).toHaveText('Filtros');
+    await page.locator('[data-map-only="sellos"]').click();
+    await expect(button).toHaveAccessibleName('Filtros, 5 activos');
+    await expect(badge).toHaveText('5');
+    await expect(button).toHaveClass(/is-filtered/);
+    await expect(pill).toHaveText(new RegExp(`^\\d+ de ${total} lugares$`));
+    const pillBox = await pill.boundingBox();
+    expect(pillBox.height).toBeLessThanOrEqual(48); // one line, however many filters
+    await expect(page.locator('#map-sheet-reset')).toBeVisible();
+    await page.locator('#map-sheet-reset').click();
+    await expect(button).toHaveAccessibleName('Filtros');
+    await expect(pill).toBeHidden();
+    await expect(days.first()).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length);
+    await expect(page.locator('#map-sheet-apply')).toHaveText(`Ver ${total} lugares`);
+    await page.locator('#map-sheet-apply').click();
+    await expect(page.locator('#map-sheet')).toBeHidden();
   });
 
   test('each filter group collapses on its own', async ({ page }) => {

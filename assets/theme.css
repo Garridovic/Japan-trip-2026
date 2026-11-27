@@ -187,27 +187,64 @@ a:hover { color: var(--accent); }
 body[data-view="mapa"] { overflow: hidden; }
 .map-view-canvas { position: absolute; inset: 0; }
 .map-view #city-map { position: absolute; inset: 0; width: 100%; height: 100%; }
-.map-view-controls { position: absolute; z-index: 1000; top: 10px; left: 10px; right: 10px; display: flex; flex-wrap: wrap; gap: 8px; pointer-events: none; }
+/* Controles: botón de filtros + una sola píldora arriba a la izquierda; nube, «Cerca de mí» y zoom abajo a la derecha. */
+.map-view-controls { position: absolute; z-index: 1000; top: 10px; left: 10px; right: 64px; display: flex; align-items: center; gap: 8px; pointer-events: none; }
 .map-view-controls > * { pointer-events: auto; }
-/* The zoom buttons live below the title/filter chips (their height is measured in map-view.js), never underneath them. */
-.map-view .leaflet-top.leaflet-left { top: calc(var(--map-controls-bottom, 64px) + 4px); z-index: 900; }
-.map-view .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 44px; font-size: 22px; }
-.map-view-title { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 999px; background: var(--ink); color: var(--bg); font-size: .86rem; font-weight: 850; box-shadow: var(--shadow); }
-.map-view-button { min-height: 44px; padding: 0 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); font: inherit; font-size: .86rem; font-weight: 800; box-shadow: var(--shadow); cursor: pointer; }
-.map-view-button.is-active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.map-view-tools { position: absolute; z-index: 1000; right: 10px; bottom: 110px; display: flex; flex-direction: column; gap: 10px; }
+.map-view.has-sheet .map-view-tools, .map-view.has-sheet .leaflet-bottom { visibility: hidden; }
+.map-fab { position: relative; flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); cursor: pointer; }
+.map-fab svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.map-fab:focus-visible, .map-view-pill:focus-visible { outline: 3px solid var(--net); outline-offset: 2px; }
+.map-filters-fab.is-filtered { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.map-fab-badge { position: absolute; top: -5px; right: -5px; min-width: 20px; height: 20px; padding: 0 5px; box-sizing: border-box; border: 2px solid var(--bg); border-radius: 10px; background: var(--ink); color: var(--bg); font-size: .72rem; font-weight: 850; line-height: 16px; text-align: center; }
+.map-fab-badge[hidden] { display: none; }
+.map-view-pill { flex: none; min-height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); font: inherit; font-size: .8rem; font-weight: 800; white-space: nowrap; box-shadow: var(--shadow); cursor: pointer; }
+.map-view-pill[hidden] { display: none; }
+.map-offline-fab[data-state="complete"] { color: var(--ok); }
+.map-offline-fab[data-state="saving"], .map-offline-fab[data-state="partial"] { color: var(--warn); }
+.map-offline-fab[data-state="error"] { color: var(--err); }
+.map-offline-fab[data-state="none"] { color: var(--idle); }
+.map-offline-fab .map-offline-down { display: none; }
+.map-offline-fab:not([data-state="complete"]) .map-offline-check { display: none; }
+.map-offline-fab:not([data-state="complete"]) .map-offline-down { display: inline; }
+.map-view .leaflet-bottom.leaflet-right { left: auto; right: 0; }
+.map-view .leaflet-bottom.leaflet-right .leaflet-control-zoom { margin: 0 10px 10px 0; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); }
+.map-view .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 44px; font-size: 22px; background: var(--surface); color: var(--ink); border-color: var(--line); }
 .map-sheet { position: absolute; z-index: 1100; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; max-height: 64%; background: var(--surface); color: var(--ink); border-radius: 24px 24px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,.28); animation: sheet-up .28s cubic-bezier(.2,.9,.3,1); }
 .map-sheet[hidden] { display: none; }
 @keyframes sheet-up { from { transform: translateY(40px); opacity: 0; } }
 .map-sheet-grab { width: 40px; height: 5px; margin: 10px auto 2px; border-radius: 3px; background: var(--line); flex: none; }
-.map-sheet-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 16px 8px; flex: none; }
-.map-sheet-header h2 { margin: 0; font-size: 1.1rem; }
+.map-sheet-header { display: flex; align-items: center; gap: 6px; padding: 6px 16px 8px; flex: none; }
+.map-sheet-heading { flex: 1; min-width: 0; }
+.map-sheet-header h2 { margin: 0; font-size: 1.15rem; }
+.map-sheet-sub { margin: 2px 0 0; color: var(--muted); font-size: .82rem; }
+.map-sheet-sub[hidden] { display: none; }
+.map-sheet-reset { flex: none; min-height: 44px; padding: 0 10px; border: 0; background: transparent; color: var(--accent-text); font: inherit; font-size: .86rem; font-weight: 850; cursor: pointer; }
+.map-sheet-reset[hidden] { display: none; }
+.map-sheet-close { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: var(--surface-2); color: var(--ink); cursor: pointer; }
+.map-sheet-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.map-sheet-footer { flex: none; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
+.map-sheet-footer[hidden] { display: none; }
+.map-sheet-apply { display: block; width: 100%; min-height: 48px; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: inherit; font-size: .95rem; font-weight: 850; cursor: pointer; }
+/* Dentro de la hoja: sin el título duplicado «Filtros del mapa», chips táctiles y la leyenda plegada al final. */
+.map-sheet #map-filters { border: 0; padding: 0; background: transparent; }
+.map-sheet #map-filters > summary { display: none; }
+.map-sheet .map-filter-group:first-of-type { border-top: 0; }
+.map-sheet .map-toolbar .filter { min-height: 44px; padding: 0 14px; font-size: .86rem; }
+.map-sheet .map-only-toolbar { flex-direction: column; align-items: stretch; gap: 0; margin-top: 6px; }
+.map-sheet .map-only-filter { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 52px; padding: 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--ink); font-size: .92rem; font-weight: 650; text-align: left; }
+.map-sheet .map-only-filter::after { content: ""; flex: none; width: 46px; height: 28px; border-radius: 14px; background: var(--surface-2) radial-gradient(circle at 14px 50%, #fff 10px, transparent 11px); box-shadow: inset 0 0 0 1px var(--line); transition: background-position .15s; }
+.map-sheet .map-only-filter[aria-pressed="true"] { background: transparent; color: var(--ink); }
+.map-sheet .map-only-filter[aria-pressed="true"]::after { background: var(--accent) radial-gradient(circle at 32px 50%, #fff 10px, transparent 11px); box-shadow: none; }
+.map-sheet .map-filter-status { margin: 12px 0 4px; }
 .map-sheet-body { overflow: auto; overscroll-behavior: contain; padding: 0 16px calc(16px + env(safe-area-inset-bottom)); }
 .map-sheet .nearby-panel { border: 0; box-shadow: none; background: transparent; padding: 0; }
 .map-sheet .map-legend, .map-sheet .collapsible-filters { box-shadow: none; }
 .map-sheet .map-legend { border: 0; padding: 0; background: transparent; }
-.map-sheet .map-legend > summary { display: none; }
+.map-sheet .map-legend { border-top: 1px solid var(--line); margin-top: 8px; }
+.map-sheet .map-legend > summary { display: flex; align-items: center; min-height: 44px; font-size: .86rem; font-weight: 800; color: var(--muted); cursor: pointer; }
 .map-sheet .legend { grid-template-columns: 1fr; margin-top: 0; font-size: .86rem; gap: 9px; color: var(--ink); }
-.map-sheet[data-sheet="legend"] { max-height: 84%; }
+.map-sheet[data-sheet="filters"] { max-height: 86%; }
 .legend i.hotel-shape { border: 2px solid #fff; box-shadow: 0 0 0 1px #aab4b8; }
 .legend i.visited-shape { border: 2px solid #fff; box-shadow: 0 0 0 1px #aab4b8; background: #64748b; opacity: .35; }
 .legend i.route-shape { background: var(--accent); border: 2px solid #fff; box-shadow: 0 0 0 1px #aab4b8; }
@@ -215,6 +252,7 @@ body[data-view="mapa"] { overflow: hidden; }
 @media (min-width: 900px) {
   .map-view { bottom: 0; }
   .map-sheet { left: 12px; right: auto; width: 420px; bottom: 100px; border-radius: 24px; max-height: calc(100% - 250px); }
+  .map-sheet[data-sheet] { top: 66px; bottom: auto; max-height: calc(100% - 180px); } /* always below the Filtros button */
 }
 /* Fichas del mapa como bottom sheet */
 body[data-view="mapa"] .poi-modal-backdrop { background: rgba(5, 12, 16, .35); backdrop-filter: none; }
@@ -237,9 +275,12 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 .map-filter-group > summary.map-filter-label::after { content: "▾"; color: var(--muted); transition: transform .2s; }
 .map-filter-group:not([open]) > summary.map-filter-label::after { transform: rotate(-90deg); }
 .map-filter-group { border-top: 1px solid var(--line); }
-.map-active-filters { display: flex; flex-wrap: wrap; gap: 6px; flex-basis: 100%; }
-.map-active-filters:empty { display: none; }
-.map-chip { min-height: 36px; padding: 0 12px; border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: inherit; font-size: .8rem; font-weight: 800; box-shadow: var(--shadow); cursor: pointer; }
+/* Punto de color del día (el mismo que en el mapa) y forma del tipo de lugar, dentro de los chips de filtro. */
+.map-filter-dot { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 50%; background: var(--day-color); box-shadow: 0 0 0 2px var(--surface); vertical-align: -1px; }
+.map-kind-shape { display: inline-block; width: 10px; height: 10px; margin-right: 6px; background: currentColor; vertical-align: -1px; }
+.map-kind-shape.is-visit { border-radius: 50%; }
+.map-kind-shape.is-food { width: 9px; height: 9px; border-radius: 2px; transform: rotate(45deg); }
+.map-only-toolbar { margin-top: 8px; }
 
 /* ====== Selector de ciudad desplegable ====== */
 .city-tabs { overflow: visible; position: relative; }

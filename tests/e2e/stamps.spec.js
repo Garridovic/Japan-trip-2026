@@ -30,7 +30,8 @@ test.describe('sellos (V14)', () => {
   test('"Ver dónde hay sellos en el mapa" opens the map filtered to «Sellos»', async ({ page }) => {
     await page.goto('/?view=viaje');
     await page.locator('#stamps-map').click();
-    await expect(page.locator('[data-map-kind="sellos"]')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('[data-map-only="sellos"]')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('#map-filters-button')).toHaveAccessibleName('Filtros, 1 activo');
   });
 
   test('works in dark mode on a phone without horizontal scroll', async ({ page }) => {

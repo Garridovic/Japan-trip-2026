@@ -7,6 +7,7 @@ import { TILE_URL, planCityTiles } from './tiles.js';
 import { initMapOffline } from './map-offline.js';
 import { visitedStore, isVisitable, countVisited } from './visited.js';
 import { distanceKm, formatDistance, formatFarDistance, distanceIfFarFromCity } from './geo.js';
+import { emptyFilters, toggleValue, matchesFilters, singleRouteDay, activeFilterList, describeFilters } from './map-filters.js';
 
 const HOTEL_COLOR = '#273d70';
 const FALLBACK_COLOR = '#64748b';
@@ -31,8 +32,7 @@ export function initMap({ openDetail }) {
   let config = null;
   let points = [];
   let markerByKey = new Map();
-  let currentFilter = 'todos';
-  let currentKindFilter = 'todos';
+  let filters = emptyFilters(); // several days, kinds and "solo" switches at once (see map-filters.js)
 
   // GPS state (the user's position belongs to the device, not to a city)
   let userLatLng = null;
@@ -46,11 +46,10 @@ export function initMap({ openDetail }) {
   const followButton = byId('follow-me');
   const mapFilterStatus = byId('map-filter-status');
   const kindButtons = [...document.querySelectorAll('.map-kind-filter')];
+  const onlyButtons = [...document.querySelectorAll('.map-only-filter')];
 
   const hasAlternatives = () => points.some((point) => point.day === 'extra');
-  const filterShortLabel = (filter) => filter === 'extra'
-    ? 'alternativas'
-    : config.dayFilters.find((item) => item.value === filter)?.short ?? filter;
+  const dayLabel = (value) => (value === 'extra' ? 'Alternativas' : config?.dayFilters.find((item) => item.value === value)?.label ?? value);
 
   function markerColorForPoint(point) {
     if (point.type === 'hotel') return HOTEL_COLOR;
@@ -130,24 +129,15 @@ export function initMap({ openDetail }) {
   }
   const paintAllMarkers = () => points.forEach(paintMarker);
 
-  const visibleForFilter = (point, filter) => {
-    if (filter === 'todos') return true;
-    if (filter === 'extra') return point.day === 'extra';
-    return point.day === filter || point.day.split(',').includes(filter);
-  };
-  const visibleForKind = (point, kind) => {
-    if (kind === 'restaurantes') return point.type === 'restaurant';
-    if (kind === 'pendientes') return isVisitable(point) && !visited.has(cityId, point.id);
-    if (kind === 'visitas') return point.type !== 'restaurant';
-    if (kind === 'sellos') return Boolean(point.stamp);
-    return true;
-  };
-  const filteredPoints = () => points.filter((point) => visibleForFilter(point, currentFilter) && visibleForKind(point, currentKindFilter));
+  const isPending = (point) => isVisitable(point) && !visited.has(cityId, point.id);
+  const isShown = (point) => matchesFilters(point, filters, isPending);
+  const filteredPoints = () => points.filter(isShown);
 
-  /** Day route: the day's stops joined in order (only when a single day is filtered). */
-  const routeStops = () => (/^\d+$/.test(currentFilter)
-    ? points.filter((point) => visibleForFilter(point, currentFilter) && point.type !== 'restaurant' && point.type !== 'hotel')
-    : []);
+  /** Day route: the day's stops joined in order (only when exactly one day is filtered). */
+  const routeStops = () => {
+    const day = singleRouteDay(filters);
+    return day ? points.filter((point) => String(point.day).split(',').includes(day) && point.type !== 'restaurant' && point.type !== 'hotel') : [];
+  };
   function paintRoute() {
     routeLayer.clearLayers();
     const stops = routeStops();
@@ -173,14 +163,7 @@ export function initMap({ openDetail }) {
     const visiblePoints = filteredPoints();
     markerLayer.clearLayers();
     visiblePoints.forEach((point) => markerLayer.addLayer(markerByKey.get(cityKey(cityId, point.id))));
-    const suffix = currentFilter === 'todos' ? '' : ` · filtro ${filterShortLabel(currentFilter)}`;
-    mapFilterStatus.textContent = currentKindFilter === 'pendientes'
-      ? `Mostrando ${visiblePoints.length} puntos pendientes de visitar${suffix}.`
-      : currentKindFilter === 'restaurantes'
-      ? `Mostrando ${visiblePoints.length} restaurantes${suffix}.`
-      : currentKindFilter === 'visitas'
-        ? `Mostrando ${visiblePoints.length} visitas y otros puntos${suffix}.`
-        : `Mostrando ${visiblePoints.length} puntos, incluidos restaurantes${suffix}.`;
+    mapFilterStatus.textContent = describeFilters(filters, visiblePoints.length, points.length, dayLabel);
     if (visiblePoints.length) {
       const bounds = markerLayer.getBounds();
       if (userLatLng) {
@@ -194,12 +177,7 @@ export function initMap({ openDetail }) {
     announce();
   }
 
-  const KIND_LABELS = { visitas: 'Solo visitas', restaurantes: 'Solo restaurantes', pendientes: 'Pendientes', sellos: 'Sellos' };
   const visitedSummary = byId('visited-summary');
-  const activeFilters = () => [
-    ...(currentFilter !== 'todos' ? [{ key: 'day', label: config?.dayFilters.find((item) => item.value === currentFilter)?.label ?? (currentFilter === 'extra' ? 'Alternativas' : currentFilter) }] : []),
-    ...(currentKindFilter !== 'todos' ? [{ key: 'kind', label: KIND_LABELS[currentKindFilter] ?? currentKindFilter }] : [])
-  ];
   /** Tells the rest of the page (full-screen map chips, counters) what the map is showing. */
   function announce() {
     const count = cityId ? countVisited(visited, cityId, points) : { done: 0, total: 0 };
@@ -207,7 +185,13 @@ export function initMap({ openDetail }) {
       visitedSummary.textContent = count.total ? `${count.done} de ${count.total} lugares visitados` : '';
       visitedSummary.dataset.done = String(count.done);
     }
-    document.dispatchEvent(new CustomEvent('map:state', { detail: { visited: count, filters: activeFilters(), route: { available: routeStops().length >= 2, on: routeOn } } }));
+    document.dispatchEvent(new CustomEvent('map:state', { detail: {
+      visited: count,
+      filters: activeFilterList(filters, dayLabel),
+      shown: filteredPoints().length,
+      total: points.length,
+      route: { available: routeStops().length >= 2, on: routeOn }
+    } }));
   }
   visited.subscribe(({ id }) => {
     const point = points.find((item) => item.id === id);
@@ -215,35 +199,42 @@ export function initMap({ openDetail }) {
     paintMarker(point);
     const button = visitButtons.get(id);
     if (button) paintVisitButton(button, point);
-    if (currentKindFilter === 'pendientes') refreshMapPoints(); else announce();
+    if (filters.only.includes('pendientes')) refreshMapPoints(); else announce();
   });
 
-  function applyMapFilter(filter) {
-    currentFilter = filter;
-    setPressed([...document.querySelectorAll('.map-filter')], (button) => button.dataset.mapFilter === filter);
+  /** Every filter button shows its own state; "Todos los días" / "Todos los puntos" are on when nothing of theirs is chosen. */
+  function paintFilterButtons() {
+    setPressed([...document.querySelectorAll('.map-filter')], (button) => (button.dataset.mapFilter === 'todos' ? !filters.days.length : filters.days.includes(button.dataset.mapFilter)));
+    setPressed(kindButtons, (button) => (button.dataset.mapKind === 'todos' ? !filters.kinds.length : filters.kinds.includes(button.dataset.mapKind)));
+    setPressed(onlyButtons, (button) => filters.only.includes(button.dataset.mapOnly));
+  }
+  function applyFilters(next) {
+    filters = { days: [...next.days], kinds: [...next.kinds], only: [...next.only] };
+    paintFilterButtons();
     refreshMapPoints();
   }
-  function applyMapKindFilter(kind) {
-    currentKindFilter = kind;
-    setPressed(kindButtons, (button) => button.dataset.mapKind === kind);
-    refreshMapPoints();
-  }
-  kindButtons.forEach((button) => button.addEventListener('click', () => applyMapKindFilter(button.dataset.mapKind)));
+  const toggleDay = (value) => applyFilters({ ...filters, days: value === 'todos' ? [] : toggleValue(filters.days, value) });
+  kindButtons.forEach((button) => button.addEventListener('click', () => {
+    const kind = button.dataset.mapKind;
+    applyFilters({ ...filters, kinds: kind === 'todos' ? [] : toggleValue(filters.kinds, kind) });
+  }));
+  onlyButtons.forEach((button) => button.addEventListener('click', () => applyFilters({ ...filters, only: toggleValue(filters.only, button.dataset.mapOnly) })));
 
   function renderDayFilters() {
-    const filters = [
+    const days = [
       { value: 'todos', label: 'Todos los días' },
       ...config.dayFilters,
-      ...(hasAlternatives() ? [{ value: 'extra', label: 'Alternativas' }] : [])
+      ...(hasAlternatives() ? [{ value: 'extra', label: 'Alternativas', color: config.alternativeCategories?.[0]?.color }] : [])
     ];
-    byId('map-day-filters').replaceChildren(...filters.map(({ value, label }) =>
+    // The coloured dot is the day's colour on the map, so the day list is also the colour legend.
+    byId('map-day-filters').replaceChildren(...days.map(({ value, label, color }) =>
       h('button', {
         class: 'filter map-filter',
         type: 'button',
         'aria-pressed': String(value === 'todos'),
         dataset: { mapFilter: value },
-        onclick: () => applyMapFilter(value)
-      }, label)
+        onclick: () => toggleDay(value)
+      }, color && h('span', { class: 'map-filter-dot', style: `--day-color:${color}`, 'aria-hidden': 'true' }), label)
     ));
   }
 
@@ -274,10 +265,7 @@ export function initMap({ openDetail }) {
       .slice(0, 7);
     nearbyList.replaceChildren(...ordered.map(({ point, distance }) => {
       const button = h('button', { type: 'button', onclick: () => {
-        if (!markerLayer.hasLayer(markerByKey.get(cityKey(cityId, point.id)))) {
-          if (!visibleForFilter(point, currentFilter)) applyMapFilter('todos');
-          if (!visibleForKind(point, currentKindFilter)) applyMapKindFilter('todos');
-        }
+        if (!markerLayer.hasLayer(markerByKey.get(cityKey(cityId, point.id)))) applyFilters(emptyFilters());
         map.setView([point.lat, point.lng], 16);
         openDetail(point.id);
       } }, point.name, h('small', {}, point.desc));
@@ -380,12 +368,11 @@ export function initMap({ openDetail }) {
       markerLayer.clearLayers();
       visitButtons.clear();
       markerByKey = new Map(points.map((point) => [cityKey(cityId, point.id), buildMarker(point)]));
-      currentFilter = 'todos';
-      currentKindFilter = 'todos';
+      filters = emptyFilters();
       routeOn = false;
       routeLayer.clearLayers();
-      setPressed(kindButtons, (button) => button.dataset.mapKind === 'todos');
       renderDayFilters();
+      paintFilterButtons();
       renderLegend();
       map.setView(config.center, config.zoom);
       map.invalidateSize();
@@ -397,12 +384,24 @@ export function initMap({ openDetail }) {
     refresh() { map.invalidateSize(); },
     /** After the map moves into the full-screen view: re-measure and fit the visible points again. */
     refit() { map.invalidateSize(); refreshMapPoints(); },
-    /** Removes one active filter ('day' or 'kind'), used by the chips over the full-screen map. */
     /** Shows or hides the day route; returns whether it is on. */
     setRoute(on) { routeOn = Boolean(on); paintRoute(); announce(); return routeOn; },
     /** Opens the card of a place (used by the carousel). */
     select(id) { const point = points.find((item) => item.id === id); if (!point) return; map.panTo([point.lat, point.lng]); selectPoint(point); },
-    clearFilter(key) { if (key === 'day') applyMapFilter('todos'); else if (key === 'kind') applyMapKindFilter('todos'); },
+    /** Removes one active filter: key 'day' | 'kind' | 'only' and its value (without a value, the whole group). */
+    clearFilter(key, value) {
+      const group = { day: 'days', kind: 'kinds', only: 'only' }[key];
+      if (!group) return;
+      applyFilters({ ...filters, [group]: value === undefined ? [] : filters[group].filter((item) => item !== value) });
+    },
+    clearFilters() { applyFilters(emptyFilters()); },
+    /** Replaces every filter at once, e.g. { only: ['sellos'] } from the stamp book. */
+    setFilters(next) { applyFilters({ ...emptyFilters(), ...next }); },
+    /** Full-screen map: zoom bottom right (under «Cerca de mí»), attribution bottom left; back to Leaflet's corners in the guide. */
+    placeControls(fullScreen) {
+      map.zoomControl.setPosition(fullScreen ? 'bottomright' : 'topleft');
+      map.attributionControl.setPosition(fullScreen ? 'bottomleft' : 'bottomright');
+    },
     announce
   };
 }

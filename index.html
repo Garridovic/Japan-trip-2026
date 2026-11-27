@@ -127,17 +127,19 @@
         <details class="collapsible-filters map-filters" id="map-filters" data-open-on-wide>
           <summary>Filtros del mapa</summary>
         <details class="map-filter-group" open>
-          <summary class="map-filter-label">Filtrar por jornada</summary>
+          <summary class="map-filter-label">Días · puedes elegir varios</summary>
           <div class="map-toolbar" id="map-day-filters" role="group" aria-label="Filtrar puntos del mapa por jornada"></div>
         </details>
         <details class="map-filter-group" open>
-          <summary class="map-filter-label">Qué quieres ver</summary>
+          <summary class="map-filter-label">Qué ver</summary>
           <div class="map-toolbar" role="group" aria-label="Filtrar puntos del mapa por tipo">
             <button class="filter map-kind-filter" data-map-kind="todos" aria-pressed="true">Todos los puntos</button>
-            <button class="filter map-kind-filter" data-map-kind="visitas" aria-pressed="false">Solo visitas</button>
-            <button class="filter map-kind-filter" data-map-kind="restaurantes" aria-pressed="false">Solo restaurantes</button>
-            <button class="filter map-kind-filter" data-map-kind="pendientes" aria-pressed="false">Pendientes</button>
-            <button class="filter map-kind-filter" data-map-kind="sellos" aria-pressed="false">Sellos</button>
+            <button class="filter map-kind-filter" data-map-kind="visitas" aria-pressed="false"><span class="map-kind-shape is-visit" aria-hidden="true"></span>Visitas</button>
+            <button class="filter map-kind-filter" data-map-kind="restaurantes" aria-pressed="false"><span class="map-kind-shape is-food" aria-hidden="true"></span>Comida</button>
+          </div>
+          <div class="map-toolbar map-only-toolbar" role="group" aria-label="Mostrar solo">
+            <button class="filter map-only-filter" data-map-only="pendientes" aria-pressed="false">Solo pendientes de visitar</button>
+            <button class="filter map-only-filter" data-map-only="sellos" aria-pressed="false">Solo con sello</button>
           </div>
         </details>
         </details>
@@ -342,13 +344,13 @@
   <div class="app-view map-view" id="view-mapa" data-view="mapa" hidden>
     <div class="map-view-canvas" id="map-view-canvas"></div>
     <div class="map-view-controls">
-      <span class="map-view-title" id="map-view-title">Mapa</span>
-      <button type="button" class="map-view-button" data-map-sheet="filters" aria-expanded="false" id="map-filters-button">Filtros</button>
-      <button type="button" class="map-view-button" data-map-sheet="nearby" aria-expanded="false">Cerca de mí</button>
-      <button type="button" class="map-view-button" data-map-sheet="legend" aria-expanded="false">Leyenda</button>
-      <button type="button" class="map-view-button" data-map-sheet="offline" aria-expanded="false">Sin conexión</button>
-      <button type="button" class="map-view-button" id="map-route-button" aria-pressed="false" hidden>Ruta del día</button>
-      <div class="map-active-filters" id="map-active-filters" role="group" aria-label="Filtros activos"></div>
+      <button type="button" class="map-fab map-filters-fab" data-map-sheet="filters" aria-expanded="false" id="map-filters-button" aria-label="Filtros"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span class="map-fab-badge" id="map-filters-count" aria-hidden="true" hidden></span></button>
+      <button type="button" class="map-view-pill" data-map-sheet="filters" aria-expanded="false" id="map-shown-pill" hidden></button>
+      <button type="button" class="map-view-pill" id="map-route-button" aria-pressed="false" hidden>Ruta del día</button>
+    </div>
+    <div class="map-view-tools">
+      <button type="button" class="map-fab map-offline-fab" data-map-sheet="offline" aria-expanded="false" id="map-offline-button" data-state="none" aria-label="Mapa sin guardar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.5 4.25 4.25 0 0 0 7 18Z"/><path class="map-offline-check" d="m9.5 13.5 2 2 3.5-3.5"/><path class="map-offline-down" d="M12 10.5v5m-2.2-2.2L12 15.5l2.2-2.2"/></svg></button>
+      <button type="button" class="map-fab" data-map-sheet="nearby" aria-expanded="false" id="map-nearby-button" aria-label="Cerca de mí"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
     </div>
     <section class="map-card" id="map-card" aria-label="Lugar seleccionado" hidden>
       <button type="button" class="map-card-close" id="map-card-close" aria-label="Cerrar">✕</button>
@@ -357,13 +359,17 @@
     </section>
     <section class="map-sheet" id="map-sheet" role="dialog" aria-labelledby="map-sheet-title" hidden>
       <div class="map-sheet-grab" aria-hidden="true"></div>
-      <header class="map-sheet-header"><h2 id="map-sheet-title">Filtros del mapa</h2><button type="button" class="filter" id="map-sheet-close">Cerrar</button></header>
+      <header class="map-sheet-header">
+        <div class="map-sheet-heading"><h2 id="map-sheet-title">Filtros</h2><p class="map-sheet-sub" id="map-sheet-sub"></p></div>
+        <button type="button" class="map-sheet-reset" id="map-sheet-reset" hidden>Restablecer</button>
+        <button type="button" class="map-sheet-close" id="map-sheet-close" aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </header>
       <div class="map-sheet-body">
         <div data-sheet-section="filters" hidden></div>
         <div data-sheet-section="nearby" hidden></div>
-        <div data-sheet-section="legend" hidden></div>
         <div data-sheet-section="offline" hidden></div>
       </div>
+      <div class="map-sheet-footer" id="map-sheet-footer" hidden><button type="button" class="map-sheet-apply" id="map-sheet-apply">Ver lugares</button></div>
     </section>
   </div>
 
