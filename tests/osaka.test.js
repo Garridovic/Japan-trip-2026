@@ -15,7 +15,8 @@ test('Osaka is enabled in the journey, between Kioto and the connection note', (
   const entry = journey.cities.find(({ id }) => id === 'osaka');
   assert.equal(entry.enabled, true);
   assert.deepEqual([entry.arrivalDate, entry.departureDate], ['2026-12-15', '2026-12-17']);
-  assert.deepEqual(journey.cities.map(({ id }) => id).slice(0, 2), ['kyoto', 'osaka']);
+  const order = journey.cities.map(({ id }) => id);
+  assert.equal(order.indexOf('osaka'), order.indexOf('kyoto') + 1);
   const connection = journey.connections.find(({ from, to }) => from === 'kyoto' && to === 'osaka');
   assert.match(connection.note, /Shinsaibashi/);
   assert.match(connection.note, /JR Special Rapid/);

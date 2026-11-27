@@ -1,5 +1,17 @@
 [
   {
+    "id": "hotel",
+    "description": "Alojamiento del grupo (8–10 y 18–22 dic). Dirección: 6-35-8 Asakusa, Taito Ward, Taito 111-0032.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.71817,139.80169",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.71817,139.80169&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.71817,139.80169&travelmode=walking"
+    },
+    "sources": [],
+    "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
+  },
+  {
     "id": "sumida",
     "description": "Visita extra opcional. Acuario en las plantas 5 y 6 de Tokyo Solamachi, el centro comercial al pie de la Tokyo Skytree. Destaca el gran estanque abierto de pingüinos y la zona de anguilas de jardín, además de medusas y un tanque con peces de las islas Ogasawara. Está junto a la estación Tokyo Skytree (línea Tobu Skytree) y a unos 5 minutos andando de Oshiage (Skytree-mae). La web oficial recomienda comprar la entrada online con antelación, aunque para visitas individuales no es obligatorio.",
     "photos": [],

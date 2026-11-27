@@ -2,7 +2,7 @@
 import './modules/version.js';
 import { byId } from './modules/dom.js';
 import { loadJourney, loadGlobalContent, loadCity } from './modules/data.js';
-import { enabledCities, resolveActiveCity, requestedCityFromSearch, CITY_QUERY_PARAM } from './modules/journey.js';
+import { enabledCities, resolveActiveCity, staysOf, pickStayIndex, requestedCityFromSearch, CITY_QUERY_PARAM } from './modules/journey.js';
 import { indexCity } from './modules/city-index.js';
 import { initTabs } from './modules/tabs.js';
 import { renderCity } from './modules/render.js';
@@ -31,6 +31,7 @@ import { initToday } from './modules/today.js';
 import { initHero } from './modules/hero-ui.js';
 import { initWeather } from './modules/weather-ui.js';
 import { createProximity } from './modules/proximity-ui.js';
+import { localISO } from './modules/trip-status.js';
 import { initStamps } from './modules/stamps-ui.js';
 
 const status = byId('app-status');
@@ -129,6 +130,7 @@ async function start() {
   }
   const scrollByView = new Map();
   const views = initViews((view) => navigateView(view));
+  const stayByCity = new Map(); // the stay chosen by hand for a city visited twice (Tokio)
   let activeCityId = null;
   let requestToken = 0;
 
@@ -161,12 +163,20 @@ async function start() {
       const bundle = await loadCity(cityId, cities.find((city) => city.id === cityId));
       if (token !== requestToken) return; // a newer tab selection superseded this one
       const index = indexCity(cityId, bundle);
-      renderCity({ journey, cityEntry: cities.find((city) => city.id === cityId), bundle, global });
+      const entry = cities.find((city) => city.id === cityId);
+      const stays = staysOf(entry);
+      const stayIndex = stayByCity.get(cityId) ?? pickStayIndex(stays, localISO(new Date()));
+      const whereOf = () => ({ id: cityId, name: entry.name, lat: bundle.city.map.center[0], lng: bundle.city.map.center[1] });
+      const onStay = (next) => {
+        stayByCity.set(cityId, next);
+        renderCity({ journey, cityEntry: entry, bundle, global, stay: stays[next], stays, stayIndex: next, onStay });
+        weather.show(whereOf(), stays[next]);
+      };
+      renderCity({ journey, cityEntry: entry, bundle, global, stay: stays[stayIndex], stays, stayIndex, onStay });
       details.setCity({ ...index, events: bundle.events });
       map.setCity(index, bundle.city.map);
       search.setCity({ places: bundle.places, restaurants: bundle.restaurants, extras: bundle.extras?.items ?? [] });
-      const entry = cities.find((city) => city.id === cityId);
-      weather.show({ id: cityId, name: entry.name, lat: bundle.city.map.center[0], lng: bundle.city.map.center[1] }, { arrival: entry.arrivalDate, departure: entry.departureDate });
+      weather.show(whereOf(), stays[stayIndex]);
       today.show({ days: bundle.itinerary.days, cityName: cities.find((city) => city.id === cityId).name, queryContext: bundle.city.map.queryContext });
       hero.reset(); // opens on "Ahora" during the trip, otherwise on "Tu viaje"
       activeCityId = cityId;

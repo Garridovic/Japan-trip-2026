@@ -4,16 +4,20 @@
   "pageTitle": "Tokio · 8–10 y 18–22 diciembre 2026",
   "description": "Guía compartida de Tokio (8–10 y 18–22 de diciembre de 2026). Todavía sin itinerario: de momento solo visitas extra.",
   "hero": {
-    "subtitle": "Tokio aún no tiene itinerario en esta guía. Por ahora solo incluye visitas extra opcionales.",
+    "subtitle": "Aún sin guía de Tokio: de momento solo están el alojamiento, el mapa, la previsión del tiempo y alguna visita extra.",
     "meta": [
       "8–10 y 18–22 diciembre 2026",
       "Contenido en preparación"
-    ]
+    ],
+    "hotel": {
+      "name": "HOTEL AMANEK Asakusa Sakurabashi",
+      "mapUrl": "https://maps.app.goo.gl/v2Qf3UwKc9pgaaoK9"
+    }
   },
   "map": {
     "center": [
-      35.6895,
-      139.75
+      35.7125,
+      139.79
     ],
     "zoom": 11,
     "queryContext": "Tokyo, Japan",

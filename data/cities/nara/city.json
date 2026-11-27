@@ -1,0 +1,30 @@
+{
+  "id": "nara",
+  "timezone": "Asia/Tokyo",
+  "pageTitle": "Nara · 17–18 diciembre 2026",
+  "description": "Ficha de Nara (17–18 diciembre 2026): alojamiento, mapa y previsión del tiempo. Todavía sin guía.",
+  "hero": {
+    "subtitle": "Aún sin guía de Nara: de momento solo están el alojamiento, el mapa y la previsión del tiempo.",
+    "meta": [
+      "17–18 diciembre 2026",
+      "1 noche",
+      "Contenido en preparación"
+    ],
+    "hotel": {
+      "name": "Yuzan apartment Sanjo",
+      "mapUrl": "https://maps.app.goo.gl/yrsz5D9qNysvfW4D9"
+    }
+  },
+  "map": {
+    "center": [
+      34.68114,
+      135.82197
+    ],
+    "zoom": 14,
+    "queryContext": "Nara, Japan",
+    "legendSummary": "Leyenda del mapa",
+    "dayFilters": [],
+    "alternativeCategories": []
+  },
+  "footerLabel": "Nara · 17–18 diciembre 2026"
+}

@@ -13,7 +13,7 @@ test('city tabs switch the whole context and Kyoto is restored intact', async ({
   await page.goto('/');
 
   const options = await openCities(page);
-  await expect(options).toHaveText(['Kioto', 'Testville', 'Osaka', 'Tokio']);
+  await expect(options).toHaveText(['Tokio', 'Testville', 'Hakone', 'Kioto', 'Osaka', 'Nara']);
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
 
   await selectCity(page, 'Testville');
@@ -101,7 +101,8 @@ test('the city selector is keyboard accessible', async ({ page }) => {
   await citySelect(page).focus();
   await page.keyboard.press('ArrowDown'); // opens the list on the current city
   await expect(page.getByRole('option', { name: 'Kioto' })).toBeFocused();
-  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('ArrowUp');
+  await page.keyboard.press('ArrowUp'); // Kioto → Hakone → Testville
   await expect(page.getByRole('option', { name: 'Testville' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'testville');

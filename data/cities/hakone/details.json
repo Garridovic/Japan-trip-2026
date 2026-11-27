@@ -1,0 +1,14 @@
+[
+  {
+    "id": "hotel",
+    "description": "Alojamiento del grupo (10–11 dic). Dirección: Kanagawa, Hakone, Sengokuhara 817-211.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.26652,139.00905",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.26652,139.00905&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.26652,139.00905&travelmode=walking"
+    },
+    "sources": [],
+    "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
+  }
+]

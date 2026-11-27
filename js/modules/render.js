@@ -3,21 +3,29 @@ import { taxiButton } from './taxi-ui.js';
 import { byId, h, externalLink } from './dom.js';
 import { connectionsFrom } from './journey.js';
 import { renderFood, renderExtras } from './filters.js';
-import { tripStatus, nightsLabel } from './trip-status.js';
+import { tripStatus, nightsLabel, dateRange } from './trip-status.js';
 
 const setSectionVisible = (id, visible) => {
   byId(id).hidden = !visible;
   document.querySelector(`[data-nav-section="${id}"]`)?.toggleAttribute('hidden', !visible);
 };
 
-function renderHero(journey, cityEntry, city) {
-  const status = tripStatus({ arrival: cityEntry.arrivalDate, departure: cityEntry.departureDate });
+function renderStays(stays, activeIndex, onStay) {
+  const box = byId('hero-stays');
+  box.hidden = stays.length < 2;
+  box.replaceChildren(...(stays.length < 2 ? [] : stays.map((stay, index) =>
+    h('button', { type: 'button', class: `stay-chip${index === activeIndex ? ' is-active' : ''}`, 'aria-pressed': String(index === activeIndex), onclick: () => onStay(index) }, dateRange(stay.arrival, stay.departure)))));
+}
+
+function renderHero(journey, cityEntry, city, { stay, stays, stayIndex, onStay }) {
+  const status = tripStatus({ arrival: stay.arrival, departure: stay.departure });
+  renderStays(stays, stayIndex, onStay);
   byId('hero-eyebrow').textContent = status.kind === 'during' ? `Ahora en ${cityEntry.name}` : 'Tu viaje';
   byId('hero-title').textContent = cityEntry.name;
   byId('hero-subtitle').textContent = city.hero.subtitle;
   byId('hero-meta').replaceChildren(...city.hero.meta.map((text) => h('span', {}, text)));
   // Dates and nights come from journey.json; test cities without dates fall back to the text written in the city data.
-  byId('hero-range').textContent = status.range ? `${status.range} · ${nightsLabel(status.nights)}` : (city.hero.meta ?? []).slice(0, 2).join(' · ');
+  byId('hero-range').textContent = stays.length > 1 && status.range ? `Estancia ${stayIndex + 1} de ${stays.length} · ${status.range} · ${nightsLabel(status.nights)}` : status.range ? `${status.range} · ${nightsLabel(status.nights)}` : (city.hero.meta ?? []).slice(0, 2).join(' · ');
   const badge = byId('hero-status');
   badge.textContent = status.label;
   badge.hidden = !status.label;
@@ -115,8 +123,8 @@ function renderFooter(city) {
   if (city.kml) byId('footer-kml-link').setAttribute('href', city.kml);
 }
 
-export function renderCity({ journey, cityEntry, bundle, global }) {
-  renderHero(journey, cityEntry, bundle.city);
+export function renderCity({ journey, cityEntry, bundle, global, stay, stays, stayIndex = 0, onStay = () => {} }) {
+  renderHero(journey, cityEntry, bundle.city, { stay, stays, stayIndex, onStay });
   renderItinerary(bundle.itinerary);
   renderConnections(journey, cityEntry.id);
   renderFood(bundle.food, bundle.restaurants, bundle.city.map.queryContext);
