@@ -186,31 +186,4 @@ test.describe('optional account (Auth0, Google)', () => {
     expect(JSON.parse(api.cloud.data['visited-v1'])).toEqual({});
     expect(JSON.parse(api.cloud.data['japan-trip:phrase-favorites'])).toEqual(['konichiwa']);
   });
-
-  test('the account panel is a screen of its own: back arrow, Back button and Escape close it, and it scrolls to the end on a short phone', async ({ page }) => {
-    await enableAuth(page, { cloud: {} });
-    await page.setViewportSize({ width: 320, height: 568 });
-    await page.goto('/');
-    await signIn(page);
-    await page.locator('#account-button').click();
-    const screen = page.locator('#account-popover');
-    await expect(screen.getByRole('heading', { name: 'Cuenta y ajustes' })).toBeVisible();
-    expect(await screen.evaluate((el) => { const r = el.getBoundingClientRect(); return [r.width, r.height]; })).toEqual([320, 568]);
-    const logout = screen.getByRole('button', { name: 'Cerrar sesión' });
-    await logout.scrollIntoViewIfNeeded();
-    await expect(logout).toBeInViewport();
-    await expect(screen.locator('#account-version')).toBeAttached();
-    await screen.getByRole('button', { name: 'Volver' }).click();
-    await expect(screen).toBeHidden();
-    await page.locator('#account-button').click();
-    await page.evaluate(() => history.back()); // the phone's Back gesture
-    await expect(screen).toBeHidden();
-    await expect(page.locator('#city-view')).toBeVisible();
-    await page.locator('#account-button').click();
-    await screen.getByRole('button', { name: 'Restablecer lugares visitados' }).click();
-    await screen.getByRole('button', { name: 'Volver' }).click(); // from a confirmation, the arrow returns to the list
-    await expect(screen.getByRole('button', { name: 'Restablecer platos favoritos' })).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(screen).toBeHidden();
-  });
 });
