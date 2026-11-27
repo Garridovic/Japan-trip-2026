@@ -12,7 +12,9 @@
       "address": "6-35-8 Asakusa, Taito Ward, Taito 111-0032",
       "mapsUrl": "https://maps.app.goo.gl/v2Qf3UwKc9pgaaoK9",
       "checkIn": "2026-12-08",
-      "checkOut": "2026-12-10"
+      "checkOut": "2026-12-10",
+      "nameJa": "ホテルアマネク浅草桜橋",
+      "addressJa": "東京都台東区浅草6-35-8"
     },
     {
       "id": "hakone",
@@ -22,7 +24,10 @@
       "address": "Kanagawa, Hakone, Sengokuhara 817-211",
       "mapsUrl": "https://maps.app.goo.gl/tdQMHdNZLnpgAAoD8",
       "checkIn": "2026-12-10",
-      "checkOut": "2026-12-11"
+      "checkOut": "2026-12-11",
+      "nameJa": "箱根温泉 湯宿 山の省",
+      "addressJa": "神奈川県足柄下郡箱根町仙石原817-211",
+      "phone": "+81 460-83-9555"
     },
     {
       "id": "kyoto",
@@ -33,7 +38,9 @@
       "mapsUrl": "https://maps.app.goo.gl/vGFBKz2eG2h4FQJs5",
       "checkIn": "2026-12-11",
       "checkOut": "2026-12-15",
-      "reminder": "Pago el 7 de diciembre."
+      "reminder": "Pago el 7 de diciembre.",
+      "nameJa": "アゴーラ 京都烏丸",
+      "addressJa": "京都府京都市下京区西洞院通四条下る妙伝寺町701-1"
     },
     {
       "id": "osaka",
@@ -45,7 +52,9 @@
       "checkIn": "2026-12-15",
       "checkOut": "2026-12-17",
       "freeCancellationUntil": "2026-12-08",
-      "checkInHint": "Check-in orientativo 12:00–14:00 (por confirmar)"
+      "checkInHint": "Check-in orientativo 12:00–14:00 (por confirmar)",
+      "nameJa": "ブリッジホテル心斎橋",
+      "addressJa": "大阪府大阪市中央区西心斎橋1-10-24"
     },
     {
       "id": "nara",
@@ -66,7 +75,9 @@
       "address": "6-35-8 Asakusa, Taito Ward, Taito 111-0032",
       "mapsUrl": "https://maps.app.goo.gl/v2Qf3UwKc9pgaaoK9",
       "checkIn": "2026-12-18",
-      "checkOut": "2026-12-22"
+      "checkOut": "2026-12-22",
+      "nameJa": "ホテルアマネク浅草桜橋",
+      "addressJa": "東京都台東区浅草6-35-8"
     }
   ]
 }
