@@ -23,7 +23,7 @@ export function resetHero() {
   byId('hero-eyebrow').textContent = 'Tu viaje';
   byId('hero-range').textContent = '';
   byId('hero-status').hidden = true;
-  byId('hero-hotel').hidden = true;
+  byId('hero-hotel-slide').hidden = true;
   byId('hero-hotel').replaceChildren();
   byId('hero-stays').hidden = true;
   byId('hero-stays').replaceChildren();
@@ -43,13 +43,13 @@ function renderHero(journey, cityEntry, city, { stay, stays, stayIndex, onStay }
   badge.textContent = status.label;
   badge.hidden = !status.label;
   const hotel = byId('hero-hotel');
-  hotel.hidden = !city.hero.hotel;
+  byId('hero-hotel-slide').hidden = !city.hero.hotel;
   hotel.replaceChildren();
   if (city.hero.hotel) {
     hotel.replaceChildren(
-      h('span', { class: 'hotel-label' }, 'Alojamiento'), h('strong', {}, city.hero.hotel.name),
+      h('span', { class: 'slide-kicker' }, 'Alojamiento'), h('strong', {}, city.hero.hotel.name),
       h('span', { class: 'hotel-actions' },
-        taxiButton({ name: city.hero.hotel.name, city: cityEntry.name, label: '🚕 Taxi', className: 'taxi-chip taxi-button' }),
+        taxiButton({ name: city.hero.hotel.name, city: cityEntry.name, label: 'Taxi', className: 'taxi-chip taxi-button is-primary' }),
         externalLink(city.hero.hotel.mapUrl, 'Cómo llegar', 'taxi-chip'))
     );
   }

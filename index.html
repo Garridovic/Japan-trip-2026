@@ -57,21 +57,23 @@
   <div class="app-view" id="city-view" data-view="guia" role="tabpanel" tabindex="-1">
     <header class="hero">
       <div class="hero-inner">
+        <div class="hero-head">
+          <p class="account-greeting" id="account-greeting" hidden></p>
+          <div class="eyebrow" id="hero-eyebrow">Tu viaje</div>
+          <h1><span id="hero-title">…</span><span class="hero-dot">.</span></h1>
+          <p class="hero-when"><span id="hero-range"></span><span class="hero-status" id="hero-status"></span></p>
+          <div class="hero-stays" id="hero-stays" hidden></div>
+          <p class="subtitle" id="hero-subtitle" hidden></p>
+          <div class="hero-meta" id="hero-meta" hidden></div>
+        </div>
         <div class="hero-viewport" id="hero-viewport" tabindex="0" role="group" aria-roledescription="carrusel" aria-label="Resumen del viaje: desliza para ver más fichas">
           <div class="hero-track" id="hero-track">
             <article class="today-card hero-slide" id="today-card" data-slide="ahora" aria-live="polite" hidden></article>
-            <section class="hero-slide" data-slide="viaje" aria-label="Tu viaje">
-              <p class="account-greeting" id="account-greeting" hidden></p>
-              <div class="eyebrow" id="hero-eyebrow">Tu viaje</div>
-              <h1><span id="hero-title">…</span><span class="hero-dot">.</span></h1>
-              <p class="hero-when"><span id="hero-range"></span><span class="hero-status" id="hero-status"></span></p>
-              <div class="hero-stays" id="hero-stays" hidden></div>
-              <p class="hotel" id="hero-hotel" hidden></p>
-              <p class="subtitle" id="hero-subtitle" hidden></p>
-              <div class="hero-meta" id="hero-meta" hidden></div>
+            <section class="hero-slide" id="hero-hotel-slide" data-slide="hotel" aria-label="Alojamiento" hidden>
+              <p class="hotel" id="hero-hotel"></p>
             </section>
             <section class="hero-slide" data-slide="tiempo" aria-label="El tiempo">
-              <div class="eyebrow">El tiempo en <span data-city-name>…</span></div>
+              <div class="slide-kicker">El tiempo en <span data-city-name>…</span></div>
               <div class="weather-strip" id="weather-strip"></div>
               <div class="weather-brief" id="weather-brief"></div>
               <p class="weather-note" id="weather-note" role="status"></p>

@@ -19,7 +19,7 @@ test.describe('V14.1 header carousel and weather', () => {
     await expect(page.locator('#today-card')).toBeHidden();
     await expect(page.getByRole('link', { name: 'Abrir mapa interactivo' })).toHaveCount(0);
     await expect(page.locator('#hero-dots i')).toHaveCount(3);
-    expect((await page.locator('.hero').boundingBox()).height).toBeLessThan(360);
+    expect((await page.locator('.hero').boundingBox()).height).toBeLessThan(450); // fixed title + one row of cards
   });
 
   test('the weather card lists the trip days and keeps working with the forecast stored when offline', async ({ page, context }) => {
@@ -150,14 +150,13 @@ test.describe('V14.1.3 equal cards', () => {
     });
   }
 
-  test('the weather card says the day, its summary, sun times and a tip with the figure it comes from', async ({ page }) => {
+  test('the weather card says the day, its summary and a tip with the figure it comes from', async ({ page }) => {
     await page.clock.setFixedTime(tokyo('2026-12-12T10:40:00'));
     await mockWeather(page);
     await page.goto('/');
     const brief = page.locator('#weather-brief');
     await expect(brief).toContainText('Hoy:');
     await expect(brief).toContainText('máx 11° · mín 2°');
-    await expect(brief).toContainText('Amanece 06:56 · anochece 16:46');
     await expect(brief).toContainText('Frío por la mañana (2°): lleva abrigo');
   });
 });

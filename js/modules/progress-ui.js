@@ -64,7 +64,6 @@ export function initProgress({ cities, global, storage = userStorage(), load = f
     const tierText = (tier) => (tier.label ? `, ${tier.label.toLowerCase()}` : '');
     slide.dataset.mode = data.mode;
     slide.replaceChildren(
-      h('div', { class: 'eyebrow' }, 'Tu diario del viaje'),
       h('div', { class: 'progress-top' },
         h('div', { class: `progress-ring tier-${ring.tier.id}`, role: 'img', 'aria-label': `${ring.done} ${ring.total ? `de ${ring.total}` : ''}${tierText(ring.tier)}` },
           ringSvg(ring),
@@ -76,7 +75,7 @@ export function initProgress({ cities, global, storage = userStorage(), load = f
         h('div', { class: `progress-tile tier-${tile.tier.id}`, role: 'group', 'aria-label': `${tile.full}: ${tile.done}${tile.total ? ` de ${tile.total}` : ''}${tierText(tile.tier)}` },
           h('div', { class: 'progress-tile-top' }, h('b', {}, String(tile.done), tile.total ? h('small', {}, `/${tile.total}`) : null), tile.tier.icon ? h('i', { 'aria-hidden': 'true' }, tile.tier.icon) : null),
           h('span', {}, tile.label),
-          tile.total ? h('div', { class: 'progress-bar', 'aria-hidden': 'true' }, h('i', { style: `width:${Math.min(100, Math.round((100 * tile.done) / tile.total))}%` })) : null
+          tile.total !== null ? h('div', { class: 'progress-bar', 'aria-hidden': 'true' }, h('i', { style: `width:${tile.total ? Math.min(100, Math.round((100 * tile.done) / tile.total)) : 0}%` })) : null
         )))
     );
   }

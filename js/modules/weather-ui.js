@@ -88,14 +88,14 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
     strip.style.setProperty('--days', String(cells.length));
     const missing = cells.length - days.length;
     const waiting = `${missing === 1 ? 'un día más aparecerá' : `${missing} días más aparecerán`} cuando haya previsión`;
-    if (stored) note.textContent = `Open-Meteo · ${ageText(stored.fetchedAt, now().getTime())}${missing ? ` · ${waiting}` : ' · toca un día para verlo por horas'}`;
+    if (stored) note.textContent = `Open-Meteo · ${ageText(stored.fetchedAt, now().getTime())}${missing ? ` · ${waiting}` : ''}`;
     else if (loading) note.textContent = 'Cargando la previsión…';
     else if (navigator.onLine === false) note.textContent = `Sin internet y aún sin previsión guardada${missing ? ` · ${waiting}` : ''}`;
     else if (range(trip).from > range(trip).to) note.textContent = `Open-Meteo prevé unos 15 días · ${waiting}`; // the trip is further away than the forecast reaches
     else note.textContent = `No se ha podido cargar la previsión ahora · ${waiting}`;
   }
 
-  /** One useful line under the strip: today (or the first day with a forecast), its summary, sun times and tips. */
+  /** Under the strip: today (or the first day with a forecast), its summary and one tip. Sun times live in the hourly sheet. */
   function renderBrief() {
     const box = byId('weather-brief');
     if (!days.length) { box.replaceChildren(); return; }
@@ -104,8 +104,7 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
     const label = day.date === today ? 'Hoy' : dayLong(day.date);
     box.replaceChildren(
       h('p', { class: 'weather-brief-title' }, h('b', {}, `${label}: `), daySummary(day)),
-      ...(day.sunrise && day.sunset ? [h('p', {}, `Amanece ${day.sunrise} · anochece ${day.sunset}`)] : []),
-      ...dayAdvice(day).map((tip) => h('p', { class: 'weather-tip' }, tip)));
+      ...dayAdvice(day).slice(0, 1).map((tip) => h('p', { class: 'weather-tip' }, tip)));
   }
 
   async function refresh({ force = false } = {}) {

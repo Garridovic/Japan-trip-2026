@@ -622,51 +622,59 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 @keyframes stamp-press { 0% { transform: rotate(var(--tilt, 0deg)) scale(1.9); opacity: 0; } 60% { transform: rotate(var(--tilt, 0deg)) scale(.92); opacity: 1; } 100% { transform: rotate(var(--tilt, 0deg)) scale(1); opacity: .92; } }
 @media (prefers-reduced-motion: reduce) { .stamp.is-new .stamp-art { animation: none; } }
 
-/* ---------- V14.1: header carousel (Ahora · Tu viaje · El tiempo) ---------- */
-.hero { padding: 18px 0 14px; }
+/* ---------- Cabecera de la ciudad: título fijo + carrusel de fichas (Hoy · Alojamiento · El tiempo · Diario), con los tokens de la app ---------- */
+.hero { padding: var(--s-4) 0 var(--s-3); background: var(--bg); color: var(--ink); overflow: visible; }
 .hero-inner { padding: 0; }
-.hero-viewport { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding: 0 16px; scroll-padding: 0 16px; }
-.hero-viewport::-webkit-scrollbar { display: none; }
-.hero-viewport:focus-visible { outline: 3px solid #e2b46e; outline-offset: -3px; border-radius: 18px; }
-.hero-track { display: flex; gap: 10px; }
-.hero-slide { flex: 0 0 min(calc(100% - 28px), 420px); scroll-snap-align: start; box-sizing: border-box; min-height: 176px; padding: 14px 14px 12px; border-radius: 18px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); color: #fffaf1; }
-.hero-slide[hidden] { display: none; }
-.hero-slide h1 { margin: 4px 0 6px; font-size: clamp(1.9rem, 8vw, 2.4rem); }
-.hero-when { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 12px; color: #e7e1d6; font-size: .95rem; }
-.hero-status { border-radius: 999px; padding: 3px 10px; background: #e2b46e; color: #24333a; font-size: .78rem; font-weight: 850; }
+.hero-head { padding: 0 var(--s-4) var(--s-2); }
+.hero .eyebrow, .slide-kicker { color: var(--accent-text); font-size: .7rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.hero h1 { margin: 2px 0 4px; font-size: clamp(1.9rem, 8vw, 2.4rem); color: var(--ink); }
+.hero-dot { color: var(--accent); }
+.hero-when { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 var(--s-3); color: var(--muted); font-size: .9rem; }
+.hero-status { border-radius: var(--r-pill); padding: 3px 10px; background: var(--accent-soft); color: var(--accent-text); font-size: .75rem; font-weight: 850; }
 .hero-status[hidden] { display: none; }
-.hero-slide .hotel { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0; font-size: .9rem; color: #e7e1d6; }
-.hero-slide .hotel-label { width: 100%; font-size: .66rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; color: #e5c58d; }
-.hero-slide .hotel strong { color: #fffaf1; margin-right: auto; }
-.hotel-actions { display: flex; gap: 6px; flex-wrap: wrap; width: 100%; margin-top: 6px; }
-.hero-slide .taxi-chip { display: inline-flex; align-items: center; margin: 0; min-height: 44px; padding: 0 14px; color: #fffaf1; border-color: rgba(255,255,255,.4); text-decoration: none; }
-.hero-slide .account-greeting { margin: 0 0 4px; color: #e5c58d; font-size: .8rem; font-weight: 750; }
-.hero-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px; }
+.hero .subtitle { color: var(--muted); }
+.hero-meta span { border-color: var(--line); background: var(--surface); color: var(--muted); }
+.hero a { color: var(--accent-text); }
+.hero-viewport { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding: 2px var(--s-4) 6px; scroll-padding: 0 var(--s-4); }
+.hero-viewport::-webkit-scrollbar { display: none; }
+.hero-viewport:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: var(--r-m); }
+.hero-track { display: flex; gap: 10px; }
+.hero-slide { flex: 0 0 min(calc(100% - 30px), 420px); scroll-snap-align: start; box-sizing: border-box; min-height: 236px; margin: 0; padding: 13px 14px; display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-2); border-radius: var(--r-m); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); color: var(--ink); }
+.hero-slide[hidden] { display: none; }
+.hero-slide .hotel { display: flex; flex-direction: column; justify-content: flex-start; flex: 1; gap: var(--s-2); margin: 0; font-size: .95rem; color: var(--ink); }
+.hero-slide .hotel strong { font-size: 1rem; line-height: 1.25; }
+.hotel-actions { display: flex; gap: 7px; width: 100%; margin-top: auto; }
+.hotel-actions .taxi-chip, .hotel-actions a.taxi-chip { flex: 1; justify-content: center; }
+.hero-slide .taxi-chip { display: inline-flex; align-items: center; margin: 0; min-height: 44px; padding: 0 14px; color: var(--ink); border: 1px solid var(--line); background: var(--surface); text-decoration: none; font-weight: 800; }
+.hero-slide .taxi-chip.is-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.hero-slide .account-greeting, .hero-head .account-greeting { margin: 0 0 4px; color: var(--accent-text); font-size: .8rem; font-weight: 750; }
+.hero-dots { display: flex; justify-content: center; gap: 6px; margin-top: 8px; }
 .hero-dots[hidden] { display: none; }
-.hero-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.35); transition: width .2s; }
-.hero-dots i.on { width: 18px; border-radius: 3px; background: #e2b46e; }
-/* "Ahora" slide: the former Hoy card, now inside the header */
-.hero-slide.today-card { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); margin: 0; }
+.hero-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); transition: width .2s; }
+.hero-dots i.on { width: 18px; border-radius: 3px; background: var(--accent); }
+/* Ficha «Hoy» */
+.hero-slide.today-card { background: var(--surface); border-color: var(--line); margin: 0; padding: 13px 14px; }
 .hero-slide.today-card[hidden] { display: none; }
-.hero-slide.today-card .today-eyebrow { color: #e5c58d; }
-.hero-slide.today-card h3 { color: #fffaf1; font-size: 1.1rem; }
-.hero-slide.today-card .today-line { color: #fffaf1; }
-.hero-slide.today-card .today-line > span { color: #d2d8d7; }
-.hero-slide.today-card .today-line.is-now > span { color: #8fe0b2; }
-.hero-slide.today-card .today-button { min-height: 48px; padding: 0 16px; background: #f2e5c9; color: #24333a; }
-.hero-slide.today-card .today-button.is-secondary { background: transparent; color: #fffaf1; border: 1px solid rgba(255,255,255,.4); }
+.hero-slide.today-card .today-eyebrow { color: var(--accent-text); }
+.hero-slide.today-card h3 { color: var(--ink); font-size: 1.05rem; margin: 2px 0 4px; }
+.hero-slide.today-card .today-line { color: var(--ink); }
+.hero-slide.today-card .today-line > span { color: var(--muted); }
+.hero-slide.today-card .today-line.is-now > span { color: var(--ok); }
+.hero-slide.today-card .today-actions { flex-wrap: nowrap; margin-top: auto; }
+.hero-slide.today-card .today-button { flex: 1; min-height: 48px; padding: 0 12px; white-space: nowrap; background: var(--accent); color: var(--accent-ink); }
+.hero-slide.today-card .today-button.is-secondary { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
 /* El tiempo */
-.weather-strip { display: grid; grid-template-columns: repeat(var(--days, 5), minmax(0, 1fr)); gap: 4px; margin-top: 8px; }
-.wd { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 1px; border-radius: 10px; border: 0; background: rgba(255,255,255,.07); color: #fffaf1; font: inherit; font-size: .7rem; min-height: 44px; cursor: pointer; min-width: 0; }
-.wd.is-today { background: rgba(226,180,110,.28); outline: 1px solid #e2b46e; }
+.weather-strip { display: grid; grid-template-columns: repeat(var(--days, 5), minmax(0, 1fr)); gap: 4px; margin-top: 4px; }
+.wd { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 1px; border-radius: var(--r-s); border: 0; background: var(--surface-2); color: var(--ink); font: inherit; font-size: .7rem; min-height: 44px; cursor: pointer; min-width: 0; }
+.wd.is-today { background: var(--accent-soft); outline: 1px solid var(--accent); }
 .wd.is-empty { opacity: .6; cursor: default; }
-.wd:focus-visible { outline: 3px solid #e2b46e; }
+.wd:focus-visible { outline: 3px solid var(--accent); }
 .wday { font-weight: 700; white-space: nowrap; }
 .wt b { font-size: .8rem; }
-.wp { color: #9cc8f0; font-weight: 700; }
+.wp { color: var(--net); font-weight: 700; }
 .wi { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.wi-sun circle, .wi-part circle { fill: #e2b46e; stroke: #e2b46e; }
-.weather-note { margin: 8px 0 0; font-size: .7rem; color: #d2d8d7; }
+.wi-sun circle, .wi-part circle { fill: var(--gold); stroke: var(--gold); }
+.weather-note { margin: 8px 0 0; font-size: .7rem; color: var(--muted); }
 /* Hourly sheet */
 .weather-scrim { position: fixed; inset: 0; z-index: 1900; background: rgba(0,0,0,.45); }
 .weather-scrim[hidden], .weather-sheet[hidden] { display: none; }
@@ -694,50 +702,48 @@ body.has-weather-sheet { overflow: hidden; }
 
 .top-bar-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 
-/* V14.1.3: every carousel card has the same height (the tallest) and the weather card uses its space */
-.hero-slide { min-height: 236px; margin: 0; display: flex; flex-direction: column; }
-.hero-slide > .weather-note { margin-top: auto; padding-top: 8px; }
-.weather-brief { margin: auto 0; padding-top: 10px; font-size: .84rem; line-height: 1.35; color: #e7e1d6; }
+/* Todas las fichas del carrusel miden lo mismo (la más alta) y la del tiempo reparte su contenido */
+.hero-slide > .weather-note { margin-top: auto; padding-top: 4px; }
+.weather-brief { margin: auto 0; padding-top: 6px; font-size: .84rem; line-height: 1.35; color: var(--muted); }
 .weather-brief p { margin: 2px 0; }
-.weather-brief-title b { color: #fffaf1; }
-.weather-tip { color: #f0d7a7; font-weight: 700; }
+.weather-brief-title b { color: var(--ink); }
+.weather-tip { color: var(--accent-text); font-weight: 700; }
 .weather-tip::before { content: '• '; }
-/* Cities visited twice (Tokio): one chip per stay under the dates */
-.hero-stays { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
-.stay-chip { min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.4); background: transparent; color: #fffaf1; font: inherit; font-size: .9rem; font-weight: 750; cursor: pointer; }
-.stay-chip.is-active { background: #fffaf1; color: #2a2118; border-color: #fffaf1; }
+/* Ciudades con dos estancias (Tokio): selector bajo las fechas; la elegida va en rojo, como los chips del mapa */
+.hero-stays { display: flex; gap: 7px; margin: 0 0 var(--s-1); }
+.stay-chip { flex: 1; min-height: 44px; padding: 0 12px; border-radius: var(--r-pill); border: 1px solid var(--line); background: var(--surface); color: var(--muted); font: inherit; font-size: .88rem; font-weight: 800; cursor: pointer; }
+.stay-chip.is-active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 
-/* "Tu diario del viaje" (header card): a colour tier per indicator. Never red: grey invites, amber and gold encourage, green rewards. */
-.progress-card { --pr-none: #9aa7ad; --pr-start: #e8a24a; --pr-half: #e5c58d; --pr-almost: #8ccf9f; --pr-done: #4fd18b; --pr-neutral: #d2d8d7; }
-.progress-card { display: flex; flex-direction: column; }
-.progress-card .eyebrow { margin-bottom: 8px; }
-.progress-top { display: flex; align-items: center; gap: 14px; }
-.progress-ring { position: relative; flex: none; width: 72px; height: 72px; }
+/* «Tu diario del viaje»: un color por tramo con los estados de la app. Gris = sin empezar, ámbar = en curso, verde = casi o completo. Nunca rojo: el rojo es lo que se pulsa o está elegido. */
+.progress-card { --pr-none: var(--idle); --pr-start: var(--warn); --pr-half: var(--warn); --pr-almost: var(--ok); --pr-done: var(--ok); --pr-neutral: var(--muted); gap: var(--s-2); }
+.progress-top { display: flex; align-items: center; gap: 12px; }
+.progress-ring { position: relative; flex: none; width: 58px; height: 58px; }
 .progress-ring-svg { width: 100%; height: 100%; }
-.progress-ring-track { fill: none; stroke: rgba(255,255,255,.18); stroke-width: 3.5; }
-.progress-ring-arc { fill: none; stroke: var(--pr-neutral); stroke-width: 3.5; stroke-linecap: round; }
+.progress-ring-track { fill: none; stroke: var(--line); stroke-width: 4; }
+.progress-ring-arc { fill: none; stroke: var(--pr-neutral); stroke-width: 4; stroke-linecap: round; }
 .progress-ring-arc.tier-start { stroke: var(--pr-start); } .progress-ring-arc.tier-half { stroke: var(--pr-half); }
 .progress-ring-arc.tier-almost { stroke: var(--pr-almost); } .progress-ring-arc.tier-done { stroke: var(--pr-done); } .progress-ring-arc.tier-none { stroke: var(--pr-none); }
-.progress-ring > b { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.2rem; line-height: 1; }
-.progress-ring > b small { font-size: .62rem; font-weight: 650; color: #d2d8d7; margin-top: 3px; }
-.progress-text h2 { margin: 0 0 3px; font-size: 1.1rem; line-height: 1.2; color: #fffaf1; }
-.progress-text p { margin: 0; font-size: .8rem; color: #d2d8d7; }
-.progress-card:has(.progress-ring.tier-done) .progress-text h2 { color: var(--pr-done); }
-.progress-tiles { flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 9px; }
-.progress-tile { --c: var(--pr-neutral); padding: 5px 8px 6px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1.5px solid color-mix(in srgb, var(--c) 70%, transparent); min-width: 0; }
+.progress-ring > b { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.1rem; line-height: 1; color: var(--ink); }
+.progress-ring > b small { font-size: .56rem; font-weight: 650; color: var(--muted); margin-top: 2px; }
+.progress-text { min-width: 0; }
+.progress-text h2 { margin: 0 0 2px; font-size: 1rem; line-height: 1.2; color: var(--ink); }
+.progress-text p { margin: 0; font-size: .78rem; color: var(--muted); }
+.progress-card:has(.progress-ring.tier-done) .progress-text h2 { color: var(--ok); }
+.progress-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.progress-tile { --c: var(--pr-neutral); padding: 4px 7px 5px; border-radius: var(--r-s); background: var(--surface-2); border: 1.5px solid color-mix(in srgb, var(--c) 65%, transparent); min-width: 0; }
 .progress-tile.tier-none { --c: var(--pr-none); } .progress-tile.tier-start { --c: var(--pr-start); } .progress-tile.tier-half { --c: var(--pr-half); }
-.progress-tile.tier-almost { --c: var(--pr-almost); } .progress-tile.tier-done { --c: var(--pr-done); } .progress-tile.tier-neutral { border-color: rgba(255,255,255,.14); }
-.progress-tile-top { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
-.progress-tile b { font-size: 1.05rem; line-height: 1.2; }
-.progress-tile b small { font-size: .7rem; font-weight: 650; color: #d2d8d7; }
-.progress-tile i { font-style: normal; font-weight: 900; font-size: .95rem; color: var(--c); }
-.progress-tile span { display: block; margin: 0 0 3px; font-size: .66rem; line-height: 1.2; color: #d2d8d7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.progress-bar { height: 5px; border-radius: 9px; background: rgba(255,255,255,.18); overflow: hidden; }
+.progress-tile.tier-almost { --c: var(--pr-almost); } .progress-tile.tier-done { --c: var(--pr-done); background: var(--ok-soft); } .progress-tile.tier-neutral { border-color: var(--line); }
+.progress-tile-top { display: flex; align-items: center; justify-content: space-between; gap: 3px; }
+.progress-tile b { font-size: .95rem; line-height: 1.2; color: var(--ink); }
+.progress-tile b small { font-size: .64rem; font-weight: 650; color: var(--muted); }
+.progress-tile i { font-style: normal; font-weight: 900; font-size: .85rem; color: var(--c); }
+.progress-tile span { display: block; margin: 0 0 2px; font-size: .62rem; line-height: 1.2; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.progress-bar { height: 4px; border-radius: 9px; background: var(--line); overflow: hidden; }
 .progress-bar i { display: block; height: 100%; background: var(--c); border-radius: 9px; }
-.progress-text .progress-nudge { margin: 3px 0 0; font-size: .72rem; line-height: 1.25; color: #fffaf1; }
+.progress-text .progress-nudge { margin: 2px 0 0; font-size: .7rem; line-height: 1.25; color: var(--ink); }
+@media (max-width: 360px) { .progress-tile { padding: 4px 6px 5px; } .progress-tile span { font-size: .6rem; } .progress-tile b { font-size: .9rem; } .progress-tile i { display: none; } }
 .dish-shortcuts { display: flex; flex-wrap: wrap; gap: 8px; }
 .dish-tried { min-height: 34px; padding: 0 11px; font-size: .74rem; margin-left: auto; }
 .dish-tried[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
 .dish-meta .dish-tried + .dish-fav { margin-left: 0; }
 @media (prefers-reduced-motion: no-preference) { .progress-bar i { transition: width .4s ease; } .progress-ring-arc { transition: stroke-dasharray .4s ease; } }
-@media (max-width: 360px) { .progress-tile { padding: 5px 6px 6px; } .progress-tile span { font-size: .6rem; } .progress-tile b { font-size: 1rem; } }

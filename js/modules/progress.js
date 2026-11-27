@@ -97,5 +97,6 @@ export function computeProgress({ now = new Date(), cities, cityId, totals = {},
   }
   const saved = dishes.favorites + phrasesFavorites;
   tiles.push({ id: 'guardados', label: 'Guardados', full: 'Guardados', done: saved, total: null, tier: TIERS.neutral });
-  return { mode, ring, headline, sub, tiles: tiles.filter((item) => item.total !== 0 || item.id === 'guardados'), nudge };
+  // «Sellos» stays while its goal loads (data/global/progress-index.json), so the card never changes height after the first paint.
+  return { mode, ring, headline, sub, tiles: tiles.filter((item) => item.total !== 0 || item.id === 'guardados' || item.id === 'sellos'), nudge };
 }
