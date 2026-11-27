@@ -1,7 +1,7 @@
 {
-  "version": "a940e0e30f",
+  "version": "bc29ca62af",
   "sizes": {
-    "required": 1121663,
+    "required": 1134340,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -101,6 +101,7 @@
     "js/modules/journey.js",
     "js/modules/lodging-ui.js",
     "js/modules/lodging.js",
+    "js/modules/map-filters.js",
     "js/modules/map-offline.js",
     "js/modules/map-view.js",
     "js/modules/map.js",

@@ -44,7 +44,8 @@ test.describe('map legend sheet', () => {
   test('on a 320 px phone the whole legend is reachable and the hotel dot has an outline', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 640 });
     await page.goto('/?view=mapa');
-    await page.getByRole('button', { name: 'Leyenda', exact: true }).click();
+    await page.getByRole('button', { name: 'Filtros', exact: true }).click();
+    await page.locator('#map-legend-summary').click();
     const last = page.locator('#map-sheet #map-legend > span').last();
     await last.scrollIntoViewIfNeeded();
     const [box, sheet] = [await last.boundingBox(), await page.locator('#map-sheet').boundingBox()];
