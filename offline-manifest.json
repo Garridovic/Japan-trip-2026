@@ -1,7 +1,7 @@
 {
-  "version": "68011d4cfd",
+  "version": "b3b726c8f9",
   "sizes": {
-    "required": 927242,
+    "required": 946382,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -99,6 +99,8 @@
     "js/modules/search-ui.js",
     "js/modules/search.js",
     "js/modules/speech.js",
+    "js/modules/stamps-ui.js",
+    "js/modules/stamps.js",
     "js/modules/swipe.js",
     "js/modules/sync-merge.js",
     "js/modules/tabs.js",

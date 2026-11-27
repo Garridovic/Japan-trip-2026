@@ -60,11 +60,25 @@ function mergeChecklist(baseValue, localValue, remoteValue) {
   return JSON.stringify({ checked: [...checked].sort(), custom, removed: [...removed].sort() });
 }
 
+// ---- stamp book: { entries: [{ id, label, place?, date, updatedAt }] } ----
+function mergeStamps(baseValue, localValue, remoteValue) {
+  const byId = (value) => new Map((Array.isArray(value?.entries) ? value.entries : []).filter((e) => e && typeof e.id === 'string').map((e) => [e.id, e]));
+  const [base, local, remote] = [byId(baseValue), byId(localValue), byId(remoteValue)];
+  const ids = mergeSets(new Set(base.keys()), new Set(local.keys()), new Set(remote.keys()));
+  const entries = [...ids].map((id) => {
+    const a = local.get(id);
+    const b = remote.get(id);
+    return a && b ? ((Number(b.updatedAt) || 0) > (Number(a.updatedAt) || 0) ? b : a) : (a ?? b ?? base.get(id));
+  }).sort((x, y) => x.id.localeCompare(y.id));
+  return JSON.stringify({ entries });
+}
+
 const CODECS = {
   'visited-v1': { merge: (b, l, r) => unflattenVisited(mergeSets(flattenVisited(b), flattenVisited(l), flattenVisited(r))) },
   'japan-trip:phrase-favorites': { merge: (b, l, r) => serializeFavourites(mergeSets(favouritesValue(b), favouritesValue(l), favouritesValue(r))) },
   'japan-trip:dish-favorites': { merge: (b, l, r) => serializeFavourites(mergeSets(favouritesValue(b), favouritesValue(l), favouritesValue(r))) },
-  'checklist-v1': { merge: mergeChecklist }
+  'checklist-v1': { merge: mergeChecklist },
+  'stamps-v1': { merge: mergeStamps }
 };
 
 /** Merges one key. Returns the raw string to store, or `undefined` to leave the key out. */

@@ -138,6 +138,7 @@ export function initMap({ openDetail }) {
     if (kind === 'restaurantes') return point.type === 'restaurant';
     if (kind === 'pendientes') return isVisitable(point) && !visited.has(cityId, point.id);
     if (kind === 'visitas') return point.type !== 'restaurant';
+    if (kind === 'sellos') return Boolean(point.stamp);
     return true;
   };
   const filteredPoints = () => points.filter((point) => visibleForFilter(point, currentFilter) && visibleForKind(point, currentKindFilter));
@@ -192,7 +193,7 @@ export function initMap({ openDetail }) {
     announce();
   }
 
-  const KIND_LABELS = { visitas: 'Solo visitas', restaurantes: 'Solo restaurantes', pendientes: 'Pendientes' };
+  const KIND_LABELS = { visitas: 'Solo visitas', restaurantes: 'Solo restaurantes', pendientes: 'Pendientes', sellos: 'Sellos' };
   const visitedSummary = byId('visited-summary');
   const activeFilters = () => [
     ...(currentFilter !== 'todos' ? [{ key: 'day', label: config?.dayFilters.find((item) => item.value === currentFilter)?.label ?? (currentFilter === 'extra' ? 'Alternativas' : currentFilter) }] : []),

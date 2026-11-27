@@ -55,6 +55,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 400
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
     }
   },
   {
@@ -69,6 +73,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 150
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
     }
   },
   {
@@ -93,6 +101,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 120
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
     }
   },
   {
@@ -107,6 +119,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 100
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.enjoy-osaka-kyoto-kobe.com/ja/article/a/kyoto-goshuin/"
     }
   },
   {
@@ -121,6 +137,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 150
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.shokoku-ji.jp/kinkakuji/"
     }
   },
   {
@@ -149,6 +169,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 200
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
     }
   },
   {
@@ -215,7 +239,11 @@
     "day": "14",
     "type": "event",
     "desc": "Punto de salida del Yamashina Gishi Matsuri a las 10:00.",
-    "query": "Bishamondo Kyoto"
+    "query": "Bishamondo Kyoto",
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.gltjp.com/ja/directory/item/15404/"
+    }
   },
   {
     "id": "tobu",
@@ -260,6 +288,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 200
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.enjoy-osaka-kyoto-kobe.com/ja/article/a/kyoto-goshuin/"
     }
   },
   {
@@ -275,6 +307,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 120
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.shokoku-ji.jp/ginkakuji/"
     }
   },
   {
@@ -301,6 +337,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 200
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
     }
   },
   {
@@ -316,6 +356,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 100
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
     }
   },
   {
@@ -331,6 +375,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 200
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://www.princehotels.co.jp/nippon/article/050.html"
     }
   },
   {

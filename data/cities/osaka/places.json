@@ -27,7 +27,11 @@
     "day": "15",
     "type": "itinerary",
     "desc": "Callejón empedrado con faroles junto al templo Hozenji y su estatua cubierta de musgo.",
-    "query": "Hozenji Yokocho Osaka"
+    "query": "Hozenji Yokocho Osaka",
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://metronine.osaka/article_tour/goshuin-stamps-tour"
+    }
   },
   {
     "id": "shinsaibashisuji",
@@ -65,6 +69,10 @@
     "proximity": {
       "kind": "temple",
       "radius": 100
+    },
+    "stamp": {
+      "kind": "goshuin",
+      "source": "https://metronine.osaka/article_tour/goshuin-stamps-tour"
     }
   },
   {

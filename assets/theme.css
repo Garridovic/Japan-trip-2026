@@ -549,3 +549,30 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 .proximity-note { margin: 6px 0 0; font-size: .82rem; color: var(--muted); }
 @media (min-width: 900px) { .proximity-card { bottom: calc(var(--bar-height) + 34px); } .proximity-consent { align-items: center; } }
 @media print { .proximity-card, .proximity-consent { display: none; } }
+/* ---------- V14: sellos (libro de sellos manual) ---------- */
+.stamps { margin: 0 0 var(--s-5); }
+.stamps-summary { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); margin: 0 0 var(--s-3); }
+.stamps-total { color: var(--muted); font-size: var(--t-s); font-weight: 750; }
+.stamps-cities { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.stamps-city-chip { border-radius: var(--r-pill); padding: 3px 10px; background: var(--accent-soft); color: var(--accent-text); font-size: var(--t-xs); font-weight: 800; }
+.stamp-form { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-2); margin: 0 0 var(--s-3); }
+.stamp-form input, .stamp-form select { box-sizing: border-box; width: 100%; max-width: 100%; min-width: 0; min-height: 44px; padding: 0 var(--s-3); border: 1px solid var(--line); border-radius: var(--r-s, 10px); background: var(--surface); color: inherit; font: inherit; text-overflow: ellipsis; }
+.stamp-form .filter { justify-content: center; min-height: 44px; }
+@media (min-width: 700px) { .stamp-form { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; } }
+.stamps-map { margin: 0 0 var(--s-3); }
+.stamps-empty { margin: 0; }
+.stamps-grid { list-style: none; margin: 0; padding: var(--s-2) 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: var(--s-4) var(--s-3); }
+.stamp { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; min-width: 0; padding: var(--s-2); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); }
+.stamp-art { width: 72px; height: 72px; color: var(--accent-text); transform: rotate(var(--tilt, 0deg)); opacity: .92; }
+.stamp-line { fill: none; stroke: currentColor; stroke-width: 2.6; }
+.stamp-line.thin { stroke-width: 1.2; }
+.stamp-line.dashed { stroke-width: 1.4; stroke-dasharray: 3 3; }
+.stamp-fill-line { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.stamp-solid { fill: currentColor; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.stamp-name { font-size: var(--t-xs); line-height: 1.25; font-weight: 700; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.stamp-meta { color: var(--muted); font-size: var(--t-xs); overflow-wrap: anywhere; }
+.stamp-remove { position: absolute; top: 2px; right: 2px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: transparent; color: var(--muted); font: inherit; cursor: pointer; border-radius: 50%; }
+.stamp-remove:focus-visible { outline: 3px solid var(--accent); }
+.stamp.is-new .stamp-art { animation: stamp-press .7s cubic-bezier(.2, .9, .3, 1.2); }
+@keyframes stamp-press { 0% { transform: rotate(var(--tilt, 0deg)) scale(1.9); opacity: 0; } 60% { transform: rotate(var(--tilt, 0deg)) scale(.92); opacity: 1; } 100% { transform: rotate(var(--tilt, 0deg)) scale(1); opacity: .92; } }
+@media (prefers-reduced-motion: reduce) { .stamp.is-new .stamp-art { animation: none; } }
