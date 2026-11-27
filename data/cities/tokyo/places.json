@@ -25,9 +25,8 @@
     "name": "Sensō-ji",
     "lat": 35.7148,
     "lng": 139.7967,
-    "day": "extra",
-    "type": "alternative",
-    "altCategory": "extra",
+    "day": "8,18",
+    "type": "itinerary",
     "desc": "Templo más antiguo de Tokio, a pie desde el hotel. Sello (goshuin) comprobado en su web oficial: se pide en el Yōkōdō, al oeste del recinto. Visita opcional; coordenada orientativa.",
     "query": "Senso-ji Asakusa",
     "proximity": {
@@ -37,16 +36,16 @@
     "stamp": {
       "kind": "goshuin",
       "source": "https://www.senso-ji.jp/faq/"
-    }
+    },
+    "pinApproximate": true
   },
   {
     "id": "asakusajinja",
     "name": "Asakusa Jinja",
     "lat": 35.715,
     "lng": 139.7982,
-    "day": "extra",
-    "type": "alternative",
-    "altCategory": "extra",
+    "day": "8,18",
+    "type": "itinerary",
     "desc": "Santuario junto al Sensō-ji. Sello (goshuin) comprobado en su web oficial, 500 ¥, en la ventanilla del santuario. Visita opcional; coordenada orientativa.",
     "query": "Asakusa Shrine Tokyo",
     "proximity": {
@@ -56,6 +55,128 @@
     "stamp": {
       "kind": "goshuin",
       "source": "https://asakusajinja.jp/goshuin/"
-    }
+    },
+    "pinApproximate": true
+  },
+  {
+    "id": "kaminarimon",
+    "name": "Kaminarimon y calle Nakamise",
+    "lat": 35.7112,
+    "lng": 139.7966,
+    "day": "8,18",
+    "type": "itinerary",
+    "desc": "Puerta del Trueno con su gran farol rojo y calle comercial de unos 250 m hasta el Sensō-ji.",
+    "query": "Kaminarimon Asakusa",
+    "pinApproximate": true
+  },
+  {
+    "id": "ueno-toshogu",
+    "name": "Parque de Ueno y Santuario Toshogu",
+    "lat": 35.716,
+    "lng": 139.7737,
+    "day": "9",
+    "type": "itinerary",
+    "desc": "Gran parque con el santuario Toshogu, el templo Kaneiji y varios museos.",
+    "query": "Ueno Toshogu Shrine Tokyo",
+    "pinApproximate": true
+  },
+  {
+    "id": "ameyoko",
+    "name": "Ameyoko",
+    "lat": 35.7102,
+    "lng": 139.7745,
+    "day": "9",
+    "type": "itinerary",
+    "desc": "Calle-mercado bajo y junto a las vías, con puestos de comida, ropa y frutos secos.",
+    "query": "Ameyoko Ueno",
+    "pinApproximate": true
+  },
+  {
+    "id": "akihabara",
+    "name": "Akihabara",
+    "lat": 35.6984,
+    "lng": 139.7731,
+    "day": "9",
+    "type": "itinerary",
+    "desc": "Barrio de electrónica, anime, manga y videojuegos.",
+    "query": "Akihabara Electric Town Tokyo",
+    "pinApproximate": true
+  },
+  {
+    "id": "meiji",
+    "name": "Meiji Jingu",
+    "lat": 35.6764,
+    "lng": 139.6993,
+    "day": "19",
+    "type": "itinerary",
+    "desc": "Gran santuario en un bosque en pleno Tokio, con camino de arena y torii de madera.",
+    "query": "Meiji Jingu Shibuya",
+    "pinApproximate": true
+  },
+  {
+    "id": "shibuya",
+    "name": "Cruce de Shibuya",
+    "lat": 35.6595,
+    "lng": 139.7005,
+    "day": "19",
+    "type": "itinerary",
+    "desc": "El famoso cruce peatonal desde el suelo, junto a la estación de Shibuya.",
+    "query": "Shibuya Crossing",
+    "pinApproximate": true
+  },
+  {
+    "id": "shibuyasky",
+    "name": "Shibuya Sky",
+    "lat": 35.6585,
+    "lng": 139.7022,
+    "day": "19",
+    "type": "itinerary",
+    "desc": "Mirador en la azotea del Shibuya Scramble Square, con vistas al atardecer y la noche.",
+    "query": "Shibuya Sky Scramble Square",
+    "pinApproximate": true
+  },
+  {
+    "id": "hamarikyu",
+    "name": "Jardines Hamarikyu",
+    "lat": 35.6597,
+    "lng": 139.7634,
+    "day": "20",
+    "type": "itinerary",
+    "desc": "Jardín de paseo con estanque de marea y casa de té, junto a Ginza y la bahía.",
+    "query": "Hamarikyu Gardens",
+    "pinApproximate": true
+  },
+  {
+    "id": "ginza",
+    "name": "Ginza",
+    "lat": 35.6717,
+    "lng": 139.765,
+    "day": "20",
+    "type": "itinerary",
+    "desc": "Barrio de grandes almacenes y tiendas de lujo; los fines de semana, calle peatonal.",
+    "query": "Ginza Chuo Dori Tokyo",
+    "pinApproximate": true
+  },
+  {
+    "id": "tsukiji",
+    "name": "Mercado exterior de Tsukiji",
+    "lat": 35.6655,
+    "lng": 139.7707,
+    "day": "21",
+    "type": "itinerary",
+    "desc": "Calles de puestos de marisco, tamagoyaki y comida callejera; se visita mejor de 9:00 a 13:00.",
+    "query": "Tsukiji Outer Market",
+    "pinApproximate": true
+  },
+  {
+    "id": "skytree",
+    "name": "Tokyo Skytree",
+    "lat": 35.7101,
+    "lng": 139.8107,
+    "day": "21",
+    "type": "itinerary",
+    "desc": "Torre de 634 m con miradores y el centro comercial Solamachi a sus pies; el Acuario de Sumida está en su base.",
+    "query": "Tokyo Skytree",
+    "pinApproximate": true
   }
 ]

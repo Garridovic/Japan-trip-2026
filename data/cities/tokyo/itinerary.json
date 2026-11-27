@@ -2,7 +2,366 @@
   "trip": "Tokio",
   "year": 2026,
   "dates": "8–10 y 18–22 diciembre",
-  "hotel": "",
-  "summaryNote": "Tokio todavía no tiene itinerario en esta guía.",
-  "days": []
+  "hotel": "HOTEL AMANEK Asakusa Sakurabashi",
+  "summaryNote": "Primera versión: itinerario sugerido por mí a partir de Japan Guide, GO TOKYO y las webs oficiales de cada lugar. Las horas de llegada (8 dic) y de salida (22 dic) no las conozco, así que esos días son un borrador flexible. Los horarios son de fuentes y pueden variar: confirmad antes de ir.",
+  "days": [
+    {
+      "key": "8",
+      "date": "2026-12-08",
+      "label": "8 diciembre",
+      "route": "Llegada · Asakusa",
+      "focus": "Llegada, hotel y paseo corto por Asakusa",
+      "quick": {
+        "date": "Mar · 8 dic",
+        "zone": "Asakusa",
+        "title": "Llegada y primer paseo",
+        "route": [
+          "Hotel",
+          "Kaminarimon",
+          "Nakamise",
+          "Sensō-ji",
+          "Asakusa Jinja"
+        ],
+        "note": "Plan flexible: depende de la hora de llegada"
+      },
+      "detail": {
+        "dayOfWeek": "mar",
+        "title": "Llegada y paseo corto por Asakusa",
+        "summary": "Un primer día suave por el jet lag, todo a pie desde el hotel.",
+        "lead": "Borrador mío: no sé a qué hora aterrizáis. Si llegáis tarde, dejad todo esto para la noche del 18 o para mañana. El sol se pone hacia las 16:30 y la sala principal del Sensō-ji cierra a las 17:00 (los terrenos siguen abiertos).",
+        "stops": [
+          {
+            "time": "Llegada",
+            "title": "Aeropuerto → hotel y descanso",
+            "text": "Hora de llegada y trayecto sin verificar. El hotel está en 6-35-8 Asakusa.",
+            "suggestion": "Si llegáis cansados, ducha, cena cerca y a dormir: mañana es el día largo."
+          },
+          {
+            "time": "Tarde",
+            "title": "1. Kaminarimon y Nakamise",
+            "text": "La puerta del farol rojo y la calle de tiendas hasta el templo; está a unos 600–700 m en línea recta del hotel (calculado con las coordenadas)."
+          },
+          {
+            "time": "Tarde",
+            "title": "2. Sensō-ji y Asakusa Jinja",
+            "text": "Los terrenos están siempre abiertos y son gratuitos. Cada uno tiene su ficha de sello (goshuin) en el mapa.",
+            "suggestion": "Si queréis el sello, pedidlo en el Yōkōdō (Sensō-ji) y en la ventanilla del santuario (Asakusa Jinja, 500 ¥); comprobad el horario del mostrador."
+          },
+          {
+            "time": "Noche",
+            "title": "Cena por Asakusa",
+            "text": "Opciones en «Comer en Tokio»; tempura/tendon es lo más típico de la zona."
+          }
+        ],
+        "transport": "A pie desde el hotel.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Kaminarimon+Asakusa&travelmode=transit"
+      }
+    },
+    {
+      "key": "9",
+      "date": "2026-12-09",
+      "label": "9 diciembre",
+      "route": "Ueno → Akihabara",
+      "focus": "Parque de Ueno, Ameyoko y Akihabara",
+      "quick": {
+        "date": "Mié · 9 dic",
+        "zone": "Ueno · Akihabara",
+        "title": "Ueno y Akihabara",
+        "route": [
+          "Ueno Toshogu",
+          "Museo Nacional",
+          "Ameyoko",
+          "Akihabara"
+        ],
+        "note": "Tsukiji cierra los miércoles: no va hoy"
+      },
+      "detail": {
+        "dayOfWeek": "mié",
+        "title": "Ueno, Ameyoko y Akihabara",
+        "summary": "Un día de transporte corto: dos barrios de Tokio muy distintos, a pocas paradas entre sí.",
+        "lead": "Borrador mío con horas orientativas. Pensado para un segundo día con jet lag: poca prisa y un solo cambio de zona. El miércoles el mercado de Tsukiji está cerrado, por eso no se incluye.",
+        "stops": [
+          {
+            "time": "09:30–11:30",
+            "title": "1. Parque de Ueno y Toshogu",
+            "text": "El santuario Toshogu abre de 9:00 a 17:30 (16:30 de octubre a febrero, Japan Guide); entrada gratuita al recinto y 700 ¥ al santuario interior.",
+            "suggestion": "Si os apetece un museo, el Museo Nacional abre de 9:30 a 17:00 y cierra los lunes (1.000 ¥ según Japan Guide); hoy es miércoles."
+          },
+          {
+            "time": "12:00–13:30",
+            "title": "2. Ameyoko y comida",
+            "text": "Calle-mercado junto a las vías para comer de pie. Ver «Comer en Tokio»."
+          },
+          {
+            "time": "14:00–17:00",
+            "title": "3. Akihabara",
+            "text": "Tiendas de electrónica, anime y videojuegos. Horarios de ejemplo de Japan Guide: Yodobashi 9:30–22:00, Super Potato 11:00–20:00.",
+            "suggestion": "Si estáis cansados, quedaos más en Ueno y dejad Akihabara para la noche del 18."
+          },
+          {
+            "time": "Noche",
+            "title": "Vuelta al hotel y cena",
+            "text": "Asakusa queda a unas paradas de metro de Ueno (tiempo sin verificar)."
+          }
+        ],
+        "transport": "Metro de Tokio entre Asakusa, Ueno y Akihabara; tarjeta IC.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Ueno+Toshogu+Shrine&travelmode=transit"
+      }
+    },
+    {
+      "key": "10",
+      "date": "2026-12-10",
+      "label": "10 diciembre",
+      "route": "Tokio → Hakone",
+      "focus": "Mañana libre y salida hacia Hakone",
+      "quick": {
+        "date": "Jue · 10 dic",
+        "zone": "Asakusa",
+        "title": "Mañana tranquila y salida",
+        "route": [
+          "Hotel",
+          "Asakusa (opcional)",
+          "Salida a Hakone"
+        ],
+        "note": "La hora de salida la marca la guía de Hakone"
+      },
+      "detail": {
+        "dayOfWeek": "jue",
+        "title": "Mañana libre y salida a Hakone",
+        "summary": "Poco que hacer: recoger y salir; Asakusa a primera hora si hay tiempo.",
+        "lead": "Borrador mío. Hoy salís hacia Hakone (ver su guía para el trayecto). Los terrenos del Sensō-ji están siempre abiertos y suelen estar más tranquilos temprano.",
+        "stops": [
+          {
+            "time": "Mañana",
+            "title": "Paseo temprano por Asakusa (opcional)",
+            "text": "Sensō-ji: sala principal desde las 6:30 en esta época (Japan Guide); terrenos siempre abiertos.",
+            "suggestion": "Solo si salís tarde hacia Hakone; si no, ignoradlo."
+          },
+          {
+            "time": "Antes de salir",
+            "title": "Check-out y equipaje",
+            "text": "Las noches del 8 al 10 y del 18 al 22 son en este mismo hotel: preguntad en recepción si podéis dejar una maleta para el regreso (no verificado)."
+          }
+        ],
+        "transport": "Según la guía de Hakone.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Hakone+Tozan+Line%2C+Hakone-Yumoto&travelmode=transit"
+      }
+    },
+    {
+      "key": "18",
+      "date": "2026-12-18",
+      "label": "18 diciembre",
+      "route": "Nara → Tokio",
+      "focus": "Regreso a Tokio y noche tranquila en Asakusa",
+      "quick": {
+        "date": "Vie · 18 dic",
+        "zone": "Asakusa",
+        "title": "Regreso desde Nara",
+        "route": [
+          "Llegada a Tokio",
+          "Hotel",
+          "Asakusa de noche"
+        ],
+        "note": "Poco plan: depende de la hora de llegada"
+      },
+      "detail": {
+        "dayOfWeek": "vie",
+        "title": "Regreso a Tokio y noche en Asakusa",
+        "summary": "Un día de viaje: instalarse y, si hay ganas, repetir Asakusa de noche.",
+        "lead": "Borrador mío: la hora de llegada depende del tren desde Nara y no está confirmada. Si ya cubristeis Asakusa el 8, hoy basta con cenar bien y descansar. Si el 8 llegasteis tarde, aprovechad hoy para Kaminarimon, Nakamise y el sello de Sensō-ji.",
+        "stops": [
+          {
+            "time": "Mañana–tarde",
+            "title": "Tren de Nara a Tokio",
+            "text": "El trayecto y los horarios no están verificados en esta guía. Mirad la guía de Nara para la salida."
+          },
+          {
+            "time": "Tarde",
+            "title": "Hotel y descanso",
+            "text": "Mismo hotel que en la primera estancia."
+          },
+          {
+            "time": "Noche",
+            "title": "Asakusa de noche o cena en la zona",
+            "text": "Kaminarimon y Sensō-ji, a unos 600–700 m del hotel (calculado con las coordenadas). La sala principal ya habrá cerrado (17:00)."
+          }
+        ],
+        "transport": "Tren y metro (sin verificar).",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Kaminarimon+Asakusa&travelmode=transit"
+      }
+    },
+    {
+      "key": "19",
+      "date": "2026-12-19",
+      "label": "19 diciembre",
+      "route": "Meiji Jingu → Shibuya",
+      "focus": "Santuario en el bosque y mirador al atardecer",
+      "quick": {
+        "date": "Sáb · 19 dic",
+        "zone": "Meiji · Shibuya",
+        "title": "Meiji Jingu y Shibuya Sky",
+        "route": [
+          "Meiji Jingu",
+          "Cruce de Shibuya",
+          "Shibuya Sky"
+        ],
+        "note": "Comprad Shibuya Sky con hora"
+      },
+      "detail": {
+        "dayOfWeek": "sáb",
+        "title": "Meiji Jingu, Shibuya y Shibuya Sky",
+        "summary": "Un día de santuario por la mañana y mirador de atardecer.",
+        "lead": "Borrador mío con horas orientativas. En diciembre anochece hacia las 16:30 (dato orientativo, sin fuente específica), así que el Meiji Jingu va por la mañana y Shibuya Sky para la puesta de sol y la noche.",
+        "stops": [
+          {
+            "time": "09:00–11:30",
+            "title": "1. Meiji Jingu",
+            "text": "Abierto todos los días; los terrenos cierran al atardecer y la entrada es gratuita (web oficial). En noviembre abren de 6:10 a 16:10; el horario de diciembre hay que mirarlo en la web."
+          },
+          {
+            "time": "12:00–14:00",
+            "title": "Comida en Shibuya o Harajuku",
+            "text": "Zona con muchas opciones; ved Google Maps. No he citado un local concreto."
+          },
+          {
+            "time": "14:30–15:30",
+            "title": "2. Cruce de Shibuya",
+            "text": "El cruce peatonal más famoso, gratis y sin horario."
+          },
+          {
+            "time": "Hasta 15:00 o desde 15:30",
+            "title": "3. Shibuya Sky",
+            "text": "Abre de 10:00 a 22:30, última admisión 21:20. Entrada online adulto: 2.700 ¥ antes de las 15:00 y 3.400 ¥ desde las 15:00 (GO TOKYO).",
+            "suggestion": "Para ver el atardecer (hacia las 16:30) tendríais la entrada de las 15:00 en adelante, a 3.400 ¥; comprad con hora y mirad el estado de la azotea ese día."
+          }
+        ],
+        "transport": "Metro/JR hasta Harajuku y Shibuya (tiempos sin verificar).",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Meiji+Jingu&travelmode=transit"
+      }
+    },
+    {
+      "key": "20",
+      "date": "2026-12-20",
+      "label": "20 diciembre",
+      "route": "Hamarikyu → Ginza",
+      "focus": "Jardín por la mañana y compras en Ginza",
+      "quick": {
+        "date": "Dom · 20 dic",
+        "zone": "Hamarikyu · Ginza",
+        "title": "Hamarikyu y Ginza",
+        "route": [
+          "Hamarikyu",
+          "Ginza"
+        ],
+        "note": "Domingo: Tsukiji cierra; Chuo Dori peatonal"
+      },
+      "detail": {
+        "dayOfWeek": "dom",
+        "title": "Jardines Hamarikyu y compras en Ginza",
+        "summary": "Un día tranquilo de jardín y tiendas, con la avenida principal peatonal por la tarde.",
+        "lead": "Borrador mío con horas orientativas. Los domingos Tsukiji está cerrado (por eso va mañana lunes), y la avenida Chuo Dori de Ginza se corta al tráfico de 12:00 a 17:00 en esta época (Japan Guide).",
+        "stops": [
+          {
+            "time": "09:00–11:00",
+            "title": "1. Jardines Hamarikyu",
+            "text": "Abren de 9:00 a 17:00, entrada hasta las 16:30, 300 ¥ (web oficial). Cierran del 29 de diciembre al 1 de enero, no hoy."
+          },
+          {
+            "time": "11:30–13:00",
+            "title": "Comida en Ginza",
+            "text": "Los restaurantes de Ginza Six abren de 11:00 a 23:00 (Japan Guide)."
+          },
+          {
+            "time": "13:00–17:30",
+            "title": "2. Ginza · compras",
+            "text": "Ginza Six 10:30–20:30, Mitsukoshi y Matsuya 10:00–20:00 (Matsuya cierra a las 19:30 los domingos), Itoya 10:00–20:00 (19:00 los domingos). Horarios de Japan Guide, sin cotejar."
+          }
+        ],
+        "transport": "Metro (tiempos sin verificar).",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Hamarikyu+Gardens&travelmode=transit"
+      }
+    },
+    {
+      "key": "21",
+      "date": "2026-12-21",
+      "label": "21 diciembre",
+      "route": "Tsukiji → Skytree",
+      "focus": "Mercado por la mañana y Skytree/Sumida por la tarde",
+      "quick": {
+        "date": "Lun · 21 dic",
+        "zone": "Tsukiji · Oshiage",
+        "title": "Tsukiji y Skytree",
+        "route": [
+          "Tsukiji",
+          "Skytree",
+          "Acuario de Sumida (opcional)"
+        ],
+        "note": "Lunes: Tsukiji abre"
+      },
+      "detail": {
+        "dayOfWeek": "lun",
+        "title": "Tsukiji y Tokyo Skytree",
+        "summary": "Desayuno de marisco en el mercado y la torre al caer la tarde, con el acuario como extra.",
+        "lead": "Borrador mío con horas orientativas. Hoy sí abre Tsukiji (cierra miércoles, domingos y festivos) y conviene ir entre las 9:00 y las 13:00. Por la tarde, Skytree y, si queréis, el Acuario de Sumida que ya está en Visitas extra.",
+        "stops": [
+          {
+            "time": "09:00–11:30",
+            "title": "1. Mercado exterior de Tsukiji",
+            "text": "Lo mejor es entre las 9:00 y las 13:00; cada tienda decide su horario (GO TOKYO)."
+          },
+          {
+            "time": "13:30–15:00",
+            "title": "Traslado y comida cerca de Skytree",
+            "text": "Tiempo de viaje sin verificar."
+          },
+          {
+            "time": "15:30–18:00",
+            "title": "2. Tokyo Skytree",
+            "text": "Tembo Deck desde 1.800 ¥ y combinada con la Galería desde 3.000 ¥ (online, web oficial); horario de diciembre sin confirmar. Atardecer hacia las 16:30 (orientativo).",
+            "suggestion": "Si queréis el acuario, el horario está en su ficha de Visitas extra."
+          }
+        ],
+        "transport": "Metro (tiempos sin verificar).",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Tsukiji+Outer+Market&travelmode=transit"
+      }
+    },
+    {
+      "key": "22",
+      "date": "2026-12-22",
+      "label": "22 diciembre",
+      "route": "Despedida de Tokio",
+      "focus": "Últimas compras y salida",
+      "quick": {
+        "date": "Mar · 22 dic",
+        "zone": "Asakusa",
+        "title": "Última mañana",
+        "route": [
+          "Hotel",
+          "Compras de última hora",
+          "Salida"
+        ],
+        "note": "La hora de salida depende del vuelo"
+      },
+      "detail": {
+        "dayOfWeek": "mar",
+        "title": "Última mañana y salida",
+        "summary": "Sin visitas fijas: el día lo manda la hora del vuelo.",
+        "lead": "Borrador mío: no sé la hora del vuelo. El 22 es el check-out del hotel; planificad el trayecto al aeropuerto según el vuelo, con margen.",
+        "stops": [
+          {
+            "time": "Mañana",
+            "title": "Compras de última hora o paseo por Asakusa",
+            "text": "Nakamise, Ginza o Akihabara (ver horarios arriba) si hay tiempo."
+          },
+          {
+            "time": "Según vuelo",
+            "title": "Check-out y salida al aeropuerto",
+            "text": "Trayecto y horas sin verificar."
+          }
+        ],
+        "transport": "Según el aeropuerto y la hora del vuelo.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Tokyo+Station&travelmode=transit"
+      }
+    }
+  ]
 }

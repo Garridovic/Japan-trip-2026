@@ -1,0 +1,69 @@
+{
+  "kicker": "4 paradas junto al recorrido",
+  "title": "Comer en Tokio",
+  "lead": "Mercados, calles de bocados y restaurantes de grandes almacenes, cerca de lo que ya vais a visitar.",
+  "intro": "Primera selección corta, pensada por zonas y no por locales concretos: así no depende de que un restaurante abra o tenga mesa. Cada ficha lleva su fuente y avisa de lo que falta por confirmar. Son ideas para elegir sobre la marcha, no reservas.",
+  "highlightsLabel": "Platos típicos para probar en Tokio",
+  "highlights": [
+    {
+      "title": "Tempura y tendon",
+      "text": "Tempura frita sobre arroz con salsa dulce. Muy típico de Asakusa (plato muy extendido; no he citado un local concreto)."
+    },
+    {
+      "title": "Sushi y marisco",
+      "text": "En el mercado exterior de Tsukiji se come de pie o en barras pequeñas; mejor por la mañana."
+    },
+    {
+      "title": "Tamagoyaki",
+      "text": "Tortilla japonesa dulce en palo, muy común en los puestos de Tsukiji."
+    },
+    {
+      "title": "Ramen",
+      "text": "Se encuentra por todo Tokio, también cerca de las estaciones; mirad la valoración en Google Maps antes de ir."
+    }
+  ],
+  "dayFilters": [
+    {
+      "value": "todos",
+      "label": "Todos los días"
+    },
+    {
+      "value": "8",
+      "label": "8 dic · Asakusa"
+    },
+    {
+      "value": "9",
+      "label": "9 dic · Ueno"
+    },
+    {
+      "value": "20",
+      "label": "20 dic · Ginza"
+    },
+    {
+      "value": "21",
+      "label": "21 dic · Tsukiji"
+    }
+  ],
+  "typeFilters": [
+    {
+      "value": "todos",
+      "label": "Todos"
+    },
+    {
+      "value": "callejero",
+      "label": "Callejero"
+    },
+    {
+      "value": "mercado",
+      "label": "Mercado"
+    },
+    {
+      "value": "varios",
+      "label": "Variado"
+    }
+  ],
+  "note": {
+    "label": "Importante:",
+    "text": "Primera versión. No he confirmado horarios en las webs de cada local y los marcadores son aproximados: comprobad en Google Maps antes de ir."
+  }
+}

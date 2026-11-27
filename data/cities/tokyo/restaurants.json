@@ -1,1 +1,90 @@
-[]
+[
+  {
+    "id": "food-01",
+    "name": "Nakamise · bocados de la calle",
+    "lat": 35.7126,
+    "lng": 139.7966,
+    "day": "8",
+    "type": "restaurant",
+    "foodCategory": "callejero",
+    "desc": "Tiendas con dulces y aperitivos tradicionales en la calle que lleva al Sensō-ji, para picar andando.",
+    "query": "Nakamise Dori Asakusa",
+    "pinApproximate": true,
+    "foodTypeLabel": "Callejero · Nakamise",
+    "dayLabel": "8 dic · tarde",
+    "note": "Cada tienda decide horario y precios; la página de GO TOKYO no da horario común. Marcador aproximado.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nakamise+Dori+Asakusa%2C+Tokyo",
+    "links": [
+      {
+        "label": "GO TOKYO · Nakamise ↗",
+        "url": "https://www.gotokyo.org/en/spot/73/"
+      }
+    ]
+  },
+  {
+    "id": "food-02",
+    "name": "Ameyoko · comida callejera",
+    "lat": 35.7102,
+    "lng": 139.7745,
+    "day": "9",
+    "type": "restaurant",
+    "foodCategory": "mercado",
+    "desc": "Calle-mercado de Ueno con puestos de pescado, brochetas y comida para llevar; bueno para una comida rápida de pie.",
+    "query": "Ameyoko Ueno",
+    "pinApproximate": true,
+    "foodTypeLabel": "Mercado · Ueno",
+    "dayLabel": "9 dic · comida",
+    "note": "Las fuentes consultadas no dan horario ni precios; cada puesto decide. Marcador aproximado.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ameyoko+Ueno%2C+Tokyo",
+    "links": [
+      {
+        "label": "Japan Guide · Ueno ↗",
+        "url": "https://www.japan-guide.com/e/e3019.html"
+      }
+    ]
+  },
+  {
+    "id": "food-03",
+    "name": "Restaurantes de Ginza Six",
+    "lat": 35.6702,
+    "lng": 139.7637,
+    "day": "20",
+    "type": "restaurant",
+    "foodCategory": "varios",
+    "desc": "Planta de restaurantes del centro comercial Ginza Six, con muchas opciones bajo el mismo techo y abierta hasta tarde.",
+    "query": "Ginza Six Tokyo restaurants",
+    "pinApproximate": true,
+    "foodTypeLabel": "Variado · Ginza",
+    "dayLabel": "20 dic · comida o cena",
+    "note": "Según Japan Guide, los restaurantes de Ginza Six abren de 11:00 a 23:00 (las tiendas, de 10:30 a 20:30). Cada local decide su carta y su horario; marcador aproximado.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ginza+Six+Tokyo+restaurants%2C+Tokyo",
+    "links": [
+      {
+        "label": "Japan Guide · Ginza ↗",
+        "url": "https://www.japan-guide.com/e/e3005.html"
+      }
+    ]
+  },
+  {
+    "id": "food-04",
+    "name": "Mercado exterior de Tsukiji · desayuno de marisco",
+    "lat": 35.6655,
+    "lng": 139.7707,
+    "day": "21",
+    "type": "restaurant",
+    "foodCategory": "mercado",
+    "desc": "Puestos de marisco, tamagoyaki y brochetas. Lo mejor es ir entre las 9:00 y las 13:00; los puestos se comen allí mismo.",
+    "query": "Tsukiji Outer Market",
+    "pinApproximate": true,
+    "foodTypeLabel": "Mercado · marisco",
+    "dayLabel": "21 dic · desayuno temprano",
+    "note": "Cierra miércoles, domingos y festivos; por eso va el lunes 21 (GO TOKYO). Cada tienda fija su horario. Marcador aproximado.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tsukiji+Outer+Market%2C+Tokyo",
+    "links": [
+      {
+        "label": "GO TOKYO · Tsukiji ↗",
+        "url": "https://www.gotokyo.org/en/story/guide/tsukijioutermarket/"
+      }
+    ]
+  }
+]

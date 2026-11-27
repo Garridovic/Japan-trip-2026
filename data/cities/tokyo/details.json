@@ -69,5 +69,200 @@
       }
     ],
     "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
+  },
+  {
+    "id": "kaminarimon",
+    "description": "La entrada clásica al Sensō-ji: la puerta Kaminarimon con su gran farol rojo y, después, la calle Nakamise, llena de tiendas de recuerdos y bocados tradicionales que lleva hasta el templo. Está a unos 600–700 m en línea recta del hotel (calculado con las coordenadas), así que se hace a pie. Los terrenos del Sensō-ji están siempre abiertos y la entrada es gratuita; cada tienda de Nakamise pone su propio horario.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.7112,139.7966",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.7112,139.7966&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.7112,139.7966&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "GO TOKYO · Nakamise",
+        "url": "https://www.gotokyo.org/en/spot/73/"
+      },
+      {
+        "label": "Japan Guide · Sensō-ji",
+        "url": "https://www.japan-guide.com/e/e3001.html"
+      }
+    ],
+    "verificationNote": "Los horarios de las tiendas de Nakamise varían (la página de GO TOKYO no da una hora común). Coordenada orientativa."
+  },
+  {
+    "id": "ueno-toshogu",
+    "description": "Ueno es un gran parque con santuarios, templos y museos. Según Japan Guide, el santuario Toshogu abre de 9:00 a 17:30 (hasta las 16:30 de octubre a febrero), con entrada gratuita al recinto y 700 ¥ para el santuario interior; el templo Kaneiji abre de 9:00 a 17:00 y es gratuito. Si os apetece un museo, el Museo Nacional de Tokio abre de 9:30 a 17:00 (última entrada 30 min antes, según su web oficial) y, según Japan Guide, cierra los lunes y cuesta 1.000 ¥.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.716,139.7737",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.716,139.7737&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.716,139.7737&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Ueno",
+        "url": "https://www.japan-guide.com/e/e3019.html"
+      }
+    ],
+    "verificationNote": "El parque en sí no tiene horario propio en las fuentes. Horarios de Japan Guide y del Museo Nacional (web oficial); confirmad antes de ir. Hay avisos de cierres parciales de salas en el Museo Nacional. Coordenada orientativa."
+  },
+  {
+    "id": "ameyoko",
+    "description": "Ameyoko es el mercado callejero que corre junto a las vías entre Ueno y Okachimachi, con puestos de pescado, comida callejera, ropa y tiendas. Es un buen cierre de la mañana en Ueno para comer algo de pie.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.7102,139.7745",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.7102,139.7745&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.7102,139.7745&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Ueno",
+        "url": "https://www.japan-guide.com/e/e3019.html"
+      }
+    ],
+    "verificationNote": "Las fuentes consultadas no dan horario, precios ni cierres de la calle; cada puesto decide el suyo. Coordenada orientativa. Descripción general, sin fuente que cite cifras."
+  },
+  {
+    "id": "akihabara",
+    "description": "El barrio de la electrónica, el anime y los videojuegos. Según Japan Guide, el domingo la avenida Chuo Dori se cierra al tráfico de 13:00 a 17:00 en invierno (octubre a marzo). Ejemplos de horarios de tiendas citados por Japan Guide: Yodobashi Camera 9:30–22:00, Super Potato 11:00–20:00, Radio Kaikan 10:00–20:00; Don Quijote abre las 24 horas.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.6984,139.7731",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6984,139.7731&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6984,139.7731&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Akihabara",
+        "url": "https://www.japan-guide.com/e/e3003.html"
+      }
+    ],
+    "verificationNote": "Horarios de tiendas de Japan Guide, que pueden cambiar. Coordenada orientativa (estación de Akihabara)."
+  },
+  {
+    "id": "meiji",
+    "description": "Un gran santuario rodeado de bosque junto a Harajuku. Según su web oficial, está abierto todos los días del año; los terrenos abren al amanecer y cierran al atardecer, con una tabla mensual (en noviembre 6:10–16:10; la de diciembre hay que mirarla en la web). Algunas instalaciones interiores abren sobre todo de 9:00 a 16:00. La entrada es gratuita. Con el sol poniéndose hacia las 16:30, conviene llegar por la mañana.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.6764,139.6993",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6764,139.6993&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6764,139.6993&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Meiji Jingu (web oficial) · cómo visitar",
+        "url": "https://www.meijijingu.or.jp/en/visit/"
+      }
+    ],
+    "verificationNote": "Horario de noviembre en la web oficial; el de diciembre no se ha podido leer, comprobadlo. Coordenada orientativa."
+  },
+  {
+    "id": "shibuya",
+    "description": "El cruce peatonal más famoso de Tokio, justo frente a la estación de Shibuya. Es gratis y se ve mejor de noche o desde arriba (Shibuya Sky). Sin horario: es una calle.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.6595,139.7005",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6595,139.7005&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6595,139.7005&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "GO TOKYO · Shibuya Sky",
+        "url": "https://www.gotokyo.org/en/spot/1749/index.html"
+      }
+    ],
+    "verificationNote": "Descripción general; sin horarios porque es un cruce público. Coordenada orientativa."
+  },
+  {
+    "id": "shibuyasky",
+    "description": "El mirador de la azotea del Shibuya Scramble Square. Según GO TOKYO (página actualizada en abril de 2026) abre de 10:00 a 22:30, con última admisión a las 21:20. Entradas online de adulto: 2.700 ¥ antes de las 15:00 y 3.400 ¥ desde las 15:00; en taquilla, 3.000 y 3.700 ¥. El cierre es irregular y puede cerrar por mal tiempo o reducir horario, y cierra el 1 de enero. El atardecer será hacia las 16:30 (dato orientativo; no hay una fuente para diciembre), así que comprad con hora un poco antes.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.6585,139.7022",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6585,139.7022&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6585,139.7022&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "GO TOKYO · Shibuya Sky",
+        "url": "https://www.gotokyo.org/en/spot/1749/index.html"
+      }
+    ],
+    "verificationNote": "Precios y horario de GO TOKYO; confirmad en la web oficial al comprar y mirad el estado de la azotea el mismo día. Coordenada orientativa."
+  },
+  {
+    "id": "hamarikyu",
+    "description": "Un jardín de paseo junto a la bahía, rodeado de rascacielos. Según la web oficial de los parques de Tokio: abre de 9:00 a 17:00 con entrada hasta las 16:30, cuesta 300 ¥ (150 ¥ para mayores de 65) y cierra del 29 de diciembre al 1 de enero. Con la puesta de sol hacia las 16:30, id por la mañana.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.6597,139.7634",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6597,139.7634&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6597,139.7634&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Parques de Tokio · Hamarikyu (web oficial)",
+        "url": "https://www.tokyo-park.or.jp/teien/en/hama-rikyu/outline.html"
+      }
+    ],
+    "verificationNote": "Horario y precio de la web oficial. Coordenada orientativa."
+  },
+  {
+    "id": "ginza",
+    "description": "El gran barrio de compras de Tokio. Según Japan Guide, los fines de semana la avenida Chuo Dori se cierra al tráfico (de 12:00 a 17:00 de octubre a marzo). Horarios citados por Japan Guide: Ginza Six 10:30–20:30 (restaurantes 11:00–23:00), Mitsukoshi y Matsuya 10:00–20:00 (Matsuya cierra a las 19:30 los domingos), Itoya 10:00–20:00 (19:00 domingos y festivos), Marronnier Gate 11:00–21:00. El Seiko Museum Ginza abre de 10:30 a 18:00, cierra los lunes, es gratuito y exige reserva previa.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.6717,139.765",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6717,139.765&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6717,139.765&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Ginza",
+        "url": "https://www.japan-guide.com/e/e3005.html"
+      }
+    ],
+    "verificationNote": "Horarios de Japan Guide sin cotejar con cada tienda; pueden variar en diciembre. Coordenada orientativa."
+  },
+  {
+    "id": "tsukiji",
+    "description": "El mercado exterior de Tsukiji: calles de puestos de marisco, tamagoyaki, brochetas y restaurantes. Según GO TOKYO, lo mejor es ir entre las 9:00 y las 13:00 y la mayoría de las tiendas cierra antes del anochecer; cierra los miércoles, los domingos y los festivos nacionales (cada tienda decide el suyo). Por eso va el lunes 21 y no el miércoles 9 ni el domingo 20.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.6655,139.7707",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.6655,139.7707&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.6655,139.7707&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "GO TOKYO · Mercado exterior de Tsukiji",
+        "url": "https://www.gotokyo.org/en/story/guide/tsukijioutermarket/"
+      }
+    ],
+    "verificationNote": "Días de cierre y franja de visita de GO TOKYO (actualizada en agosto de 2026); cada tienda pone su horario. Coordenada orientativa."
+  },
+  {
+    "id": "skytree",
+    "description": "La torre más alta de Japón, a unos 1,6–2 km al este del hotel en línea recta (calculado con las coordenadas), con el centro comercial Tokyo Solamachi a sus pies. Según su web oficial, la entrada al Tembo Deck (350 m) cuesta desde 1.800 ¥ y la combinada con la Galería (450 m), desde 3.000 ¥ (adulto, comprando online; en taquilla hay un recargo de 500 ¥). La web muestra «10:00–22:00, última entrada 21:00» como horario del día, pero no el de diciembre: confirmadlo.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.7101,139.8107",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.7101,139.8107&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.7101,139.8107&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Tokyo Skytree (web oficial) · entradas",
+        "url": "https://en.tokyo-skytree.jp/ticket/"
+      },
+      {
+        "label": "Tokyo Skytree (web oficial) · horario",
+        "url": "https://en.tokyo-skytree.jp/open-hours/"
+      }
+    ],
+    "verificationNote": "Precios de la web oficial («desde»); el horario de la web depende del día y el de diciembre no está confirmado. Coordenada orientativa."
   }
 ]

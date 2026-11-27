@@ -1,7 +1,7 @@
 {
-  "version": "9932dc6e80",
+  "version": "fcfdc03d17",
   "sizes": {
-    "required": 1080050,
+    "required": 1120174,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -63,6 +63,7 @@
     "data/cities/tokyo/city.json",
     "data/cities/tokyo/details.json",
     "data/cities/tokyo/extras.json",
+    "data/cities/tokyo/food.json",
     "data/cities/tokyo/itinerary.json",
     "data/cities/tokyo/places.json",
     "data/cities/tokyo/restaurants.json",

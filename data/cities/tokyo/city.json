@@ -2,12 +2,13 @@
   "id": "tokyo",
   "timezone": "Asia/Tokyo",
   "pageTitle": "Tokio · 8–10 y 18–22 diciembre 2026",
-  "description": "Guía compartida de Tokio (8–10 y 18–22 de diciembre de 2026). Todavía sin itinerario: de momento solo visitas extra.",
+  "description": "Guía de Tokio (8–10 y 18–22 de diciembre de 2026): Asakusa, Ueno, Akihabara, Meiji Jingu, Shibuya, Ginza, Tsukiji y Skytree, con itinerario por días y comida. Primera versión.",
   "hero": {
-    "subtitle": "Aún sin guía de Tokio: de momento solo están el alojamiento, el mapa, la previsión del tiempo y alguna visita extra.",
+    "subtitle": "Dos estancias con base en Asakusa: una tranquila para recuperaros del viaje y otra para compras, miradores y despedida. Primera versión: revisad los horarios antes de ir.",
     "meta": [
       "8–10 y 18–22 diciembre 2026",
-      "Contenido en preparación"
+      "2 + 4 noches",
+      "Base: Asakusa"
     ],
     "hotel": {
       "name": "HOTEL AMANEK Asakusa Sakurabashi",
@@ -16,13 +17,70 @@
   },
   "map": {
     "center": [
-      35.7125,
-      139.79
+      35.69,
+      139.77
     ],
     "zoom": 11,
     "queryContext": "Tokyo, Japan",
     "legendSummary": "Leyenda del mapa",
-    "dayFilters": [],
+    "dayFilters": [
+      {
+        "value": "8",
+        "label": "8 dic",
+        "short": "8 dic",
+        "color": "#c45a4a",
+        "legend": "8 dic · llegada y Asakusa"
+      },
+      {
+        "value": "9",
+        "label": "9 dic",
+        "short": "9 dic",
+        "color": "#3f70a5",
+        "legend": "9 dic · Ueno y Akihabara"
+      },
+      {
+        "value": "10",
+        "label": "10 dic",
+        "short": "10 dic",
+        "color": "#268577",
+        "legend": "10 dic · mañana libre y salida a Hakone"
+      },
+      {
+        "value": "18",
+        "label": "18 dic",
+        "short": "18 dic",
+        "color": "#c9892b",
+        "legend": "18 dic · regreso a Tokio y Asakusa"
+      },
+      {
+        "value": "19",
+        "label": "19 dic",
+        "short": "19 dic",
+        "color": "#7a6bb0",
+        "legend": "19 dic · Meiji Jingu y Shibuya"
+      },
+      {
+        "value": "20",
+        "label": "20 dic",
+        "short": "20 dic",
+        "color": "#b05a8a",
+        "legend": "20 dic · Hamarikyu y Ginza"
+      },
+      {
+        "value": "21",
+        "label": "21 dic",
+        "short": "21 dic",
+        "color": "#4f7f3f",
+        "legend": "21 dic · Tsukiji y Skytree"
+      },
+      {
+        "value": "22",
+        "label": "22 dic",
+        "short": "22 dic",
+        "color": "#6b7280",
+        "legend": "22 dic · despedida"
+      }
+    ],
     "alternativeCategories": [
       {
         "id": "extra",
