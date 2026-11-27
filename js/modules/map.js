@@ -7,9 +7,11 @@ import { TILE_URL, planCityTiles } from './tiles.js';
 import { initMapOffline } from './map-offline.js';
 import { visitedStore, isVisitable, countVisited } from './visited.js';
 import { distanceKm, formatDistance, formatFarDistance, distanceIfFarFromCity } from './geo.js';
+import { buildMapIndex, searchPoints } from './map-search.js';
 import { emptyFilters, toggleValue, matchesFilters, singleRouteDay, activeFilterList, describeFilters } from './map-filters.js';
 
 const HOTEL_COLOR = '#273d70';
+const SEARCH_COLOR = '#B03020'; // the app's red: chosen / tappable
 const FALLBACK_COLOR = '#64748b';
 const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
 
@@ -32,6 +34,9 @@ export function initMap({ openDetail }) {
   let config = null;
   let points = [];
   let markerByKey = new Map();
+  // Map search: matches stay bright, the rest of the visible points fade (see map-search.js)
+  let searchHits = null; // Set of point ids, or null when no search is active
+  let searchIndex = null;
   let filters = emptyFilters(); // several days, kinds and "solo" switches at once (see map-filters.js)
 
   // GPS state (the user's position belongs to the device, not to a city)
@@ -126,6 +131,38 @@ export function initMap({ openDetail }) {
     if (point.type === 'restaurant') marker.setIcon(restaurantIcon(markerColorForPoint(point), done));
     else if (point.type !== 'hotel') marker.setStyle({ fillOpacity: done ? 0.3 : 0.95 });
     marker.setTooltipContent(done ? `✓ ${point.name}` : point.name);
+    paintSearchMarker(point);
+  }
+
+  /** Search state of a point: 'hit' (matches), 'dim' (visible but does not match) or null (no search). */
+  const searchState = (point) => (searchHits ? (searchHits.has(point.id) ? 'hit' : 'dim') : null);
+  function paintSearchMarker(point) {
+    const marker = markerByKey.get(cityKey(cityId, point.id));
+    if (!marker) return;
+    const state = searchState(point);
+    if (point.type === 'restaurant') {
+      const element = marker.getElement?.();
+      element?.classList.toggle('is-search-hit', state === 'hit');
+      element?.classList.toggle('is-search-dim', state === 'dim');
+      marker.setZIndexOffset(state === 'hit' ? 900 : 250);
+      return;
+    }
+    const base = point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7;
+    const done = visited.has(cityId, point.id);
+    const fillOpacity = state === 'dim' ? 0.18 : point.type === 'hotel' ? 0.95 : done ? 0.3 : 0.95;
+    marker.setStyle(state === 'hit'
+      ? { radius: base + 4, color: SEARCH_COLOR, weight: 4, opacity: 1, fillOpacity: 0.95 }
+      : { radius: state === 'dim' ? 4 : base, color: '#fff', weight: state === 'dim' ? 1 : point.type === 'hotel' ? 3 : 2, opacity: state === 'dim' ? 0.35 : 1, fillOpacity });
+    if (state === 'hit') marker.bringToFront?.();
+  }
+  const paintSearch = () => points.forEach(paintSearchMarker);
+
+  /** Results for a query among the points the filters show now (no side effects). hidden = matches the filters leave out. */
+  function computeSearch(query) {
+    const found = searchIndex ? searchPoints(searchIndex, query) : null;
+    if (!found) return { active: false, results: [], shown: filteredPoints().length, hidden: 0 };
+    const results = found.filter(isShown);
+    return { active: true, results, shown: filteredPoints().length, hidden: found.length - results.length };
   }
   const paintAllMarkers = () => points.forEach(paintMarker);
 
@@ -164,13 +201,19 @@ export function initMap({ openDetail }) {
     markerLayer.clearLayers();
     visiblePoints.forEach((point) => markerLayer.addLayer(markerByKey.get(cityKey(cityId, point.id))));
     mapFilterStatus.textContent = describeFilters(filters, visiblePoints.length, points.length, dayLabel);
+    if (searchHits) {
+      const hit = visiblePoints.filter((point) => searchHits.has(point.id));
+      if (!hit.length) searchHits = null; // the filters left no match: back to the normal look
+    }
+    paintSearch();
+    const fitPoints = searchHits ? visiblePoints.filter((point) => searchHits.has(point.id)) : visiblePoints;
     if (visiblePoints.length) {
-      const bounds = markerLayer.getBounds();
+      const bounds = searchHits ? L.latLngBounds(fitPoints.map((point) => [point.lat, point.lng])) : markerLayer.getBounds();
       if (userLatLng) {
-        const nearest = Math.min(...visiblePoints.map((point) => distanceKm(userLatLng, point)));
+        const nearest = Math.min(...fitPoints.map((point) => distanceKm(userLatLng, point)));
         if (nearest < 15) bounds.extend([userLatLng.lat, userLatLng.lng]);
       }
-      map.fitBounds(bounds.pad(0.12));
+      map.fitBounds(bounds.pad(0.12), searchHits ? { maxZoom: 16 } : {});
     }
     if (userLatLng) renderNearby();
     paintRoute();
@@ -190,6 +233,7 @@ export function initMap({ openDetail }) {
       filters: activeFilterList(filters, dayLabel),
       shown: filteredPoints().length,
       total: points.length,
+      search: searchHits ? filteredPoints().filter((point) => searchHits.has(point.id)).length : null,
       route: { available: routeStops().length >= 2, on: routeOn }
     } }));
   }
@@ -369,6 +413,8 @@ export function initMap({ openDetail }) {
       visitButtons.clear();
       markerByKey = new Map(points.map((point) => [cityKey(cityId, point.id), buildMarker(point)]));
       filters = emptyFilters();
+      searchHits = null;
+      searchIndex = buildMapIndex(points);
       routeOn = false;
       routeLayer.clearLayers();
       renderDayFilters();
@@ -379,6 +425,7 @@ export function initMap({ openDetail }) {
       refreshMapPoints();
       paintAllMarkers();
       mapOffline.setPlan(planCityTiles({ center: config.center, points }), document.querySelector('[data-city-name]')?.textContent);
+      document.dispatchEvent(new CustomEvent('map:city')); // the search field starts empty in every city
     },
     /** Call when the guide view becomes visible again: Leaflet cannot measure a hidden container. */
     refresh() { map.invalidateSize(); },
@@ -395,6 +442,16 @@ export function initMap({ openDetail }) {
       applyFilters({ ...filters, [group]: value === undefined ? [] : filters[group].filter((item) => item !== value) });
     },
     clearFilters() { applyFilters(emptyFilters()); },
+    /** Results of a query among the points shown (for the list under the search field). Changes nothing on the map. */
+    previewSearch(query) { return computeSearch(query); },
+    /** Highlights the matches and fades the rest; an empty or too short query clears it. Returns the same as previewSearch. */
+    setSearch(query) {
+      const outcome = computeSearch(query);
+      searchHits = outcome.active && outcome.results.length ? new Set(outcome.results.map((point) => point.id)) : null;
+      refreshMapPoints();
+      return outcome;
+    },
+    searchActive: () => Boolean(searchHits),
     /** Replaces every filter at once, e.g. { only: ['sellos'] } from the stamp book. */
     setFilters(next) { applyFilters({ ...emptyFilters(), ...next }); },
     /** Full-screen map: zoom bottom right (under «Cerca de mí»), attribution bottom left; back to Leaflet's corners in the guide. */

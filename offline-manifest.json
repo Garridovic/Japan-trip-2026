@@ -1,7 +1,7 @@
 {
-  "version": "e92412a698",
+  "version": "ff944a5669",
   "sizes": {
-    "required": 1184289,
+    "required": 1212563,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -23,6 +23,8 @@
     "assets/vendor/leaflet/images/marker-shadow.png",
     "assets/vendor/leaflet/leaflet.css",
     "assets/vendor/leaflet/leaflet.js",
+    "assets/vendor/ufuzzy/LICENSE",
+    "assets/vendor/ufuzzy/uFuzzy.esm.js",
     "data/cities/hakone/city.json",
     "data/cities/hakone/details.json",
     "data/cities/hakone/extras.json",
@@ -100,6 +102,8 @@
     "js/modules/lodging.js",
     "js/modules/map-filters.js",
     "js/modules/map-offline.js",
+    "js/modules/map-search-ui.js",
+    "js/modules/map-search.js",
     "js/modules/map-view.js",
     "js/modules/map.js",
     "js/modules/notices.js",

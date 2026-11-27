@@ -26,6 +26,7 @@ import { initDayLinks, openDay, setBeforeOpenDay } from './modules/anchors.js';
 import { initDishes } from './modules/dishes-ui.js';
 import { initTheme } from './modules/theme.js';
 import { initMapView } from './modules/map-view.js';
+import { initMapSearch } from './modules/map-search-ui.js';
 import { initUpdates } from './modules/updates.js';
 import { initToday } from './modules/today.js';
 import { initHero } from './modules/hero-ui.js';
@@ -87,6 +88,7 @@ async function start() {
   initDishes(global.dishes, global.dishCredits);
   initPhrases(global.phrases); // global content: rendered once, shared by every city
   const mapView = initMapView({ map });
+  initMapSearch({ map });
   let navigateViewRef = async () => {};
   const jumpToSearch = async (view, inputId, text) => {
     await navigateViewRef(view);

@@ -184,6 +184,7 @@ export function initMapView({ map, doc = document }) {
     if (!inside) return;
     closeSheet();
     hideCard();
+    doc.dispatchEvent(new CustomEvent('map:leave')); // the search is cleared: the guide's map must not stay faded
     inside = false;
     [...moves].reverse().forEach(({ home }) => restoreHome(home));
     map.placeControls?.(false);
