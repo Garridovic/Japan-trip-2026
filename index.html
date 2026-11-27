@@ -112,7 +112,6 @@
             <button class="filter map-kind-filter" data-map-kind="visitas" aria-pressed="false">Solo visitas</button>
             <button class="filter map-kind-filter" data-map-kind="restaurantes" aria-pressed="false">Solo restaurantes</button>
             <button class="filter map-kind-filter" data-map-kind="pendientes" aria-pressed="false">Pendientes</button>
-            <button class="filter map-kind-filter" data-map-kind="sellos" aria-pressed="false">Con sello</button>
           </div>
         </details>
         </details>
@@ -193,21 +192,6 @@
 
   <div class="app-view" id="view-viaje" data-view="viaje" hidden>
     <main>
-      <section id="sellos" class="stamps" hidden>
-        <div class="section-head"><div><div class="kicker">Tu libro de sellos</div><h2>Mis sellos</h2></div><p class="muted small">Apunta cada sello que consigas: goshuin en templos y santuarios, gojōin en castillos. Ponle un nombre o una nota si quieres.</p></div>
-        <div class="stamps-summary"><strong class="stamps-total" id="stamps-total" aria-live="polite"></strong><div class="stamps-cities" id="stamps-cities"></div></div>
-        <form class="stamp-form" id="stamp-form">
-          <label class="visually-hidden" for="stamp-label">Nombre o nota del sello</label>
-          <input type="text" id="stamp-label" maxlength="60" placeholder="Nombre o nota (opcional)" autocomplete="off" enterkeyhint="done">
-          <label class="visually-hidden" for="stamp-place">Dónde lo conseguiste</label>
-          <select id="stamp-place"><option value="">Sin lugar</option></select>
-          <button type="submit" class="filter is-primary">Añadir sello</button>
-        </form>
-        <button type="button" class="filter stamps-map" id="stamps-map" hidden>Ver dónde hay sellos en el mapa</button>
-        <p class="muted small stamps-empty" id="stamps-empty">Aún no has apuntado ningún sello.</p>
-        <ul class="stamps-grid" id="stamps-list"></ul>
-      </section>
-
       <section id="checklist" class="checklist" hidden>
         <div class="section-head"><div><div class="kicker" id="checklist-kicker"></div><h2 id="checklist-title"></h2></div><p class="muted small" id="checklist-lead"></p></div>
         <div class="checklist-summary"><strong id="checklist-count" aria-live="polite"></strong><div class="checklist-bar" id="checklist-bar" role="progressbar" aria-label="Progreso de la checklist" aria-valuemin="0"></div></div>

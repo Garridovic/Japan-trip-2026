@@ -28,7 +28,6 @@ import { initTheme } from './modules/theme.js';
 import { initMapView } from './modules/map-view.js';
 import { initUpdates } from './modules/updates.js';
 import { initToday } from './modules/today.js';
-import { initStamps } from './modules/stamps-ui.js';
 
 const status = byId('app-status');
 const skeleton = byId('app-skeleton');
@@ -70,9 +69,6 @@ async function start() {
   });
   const details = initDetails();
   const map = initMap({ openDetail: (localId) => details.open(localId) });
-  const stamps = initStamps(cities, { // stamp book; "Ver en el mapa" opens the map with only the places that have a real stamp
-    openMap: async () => { await navigateViewRef('mapa'); document.querySelector('[data-map-kind="sellos"]')?.click(); }
-  });
   initChecklist(global.checklist);
   initTaxi(global.lodging?.stays); // the taxi screen opens from any button with data-taxi
   initLodging(global.lodging);
@@ -131,7 +127,7 @@ async function start() {
     activeView = view;
     views.setActive(view);
     mapView.sync(view);
-    if (view === 'viaje') { tips.show(); stamps.show(); }
+    if (view === 'viaje') tips.show();
     if (view === 'guia') { map.refresh(); scrollSpy.refresh(); }
     window.scrollTo({ top: scrollByView.get(view) ?? 0, behavior: 'instant' });
   }
@@ -197,7 +193,7 @@ async function start() {
   views.setActive(activeView);
   await showCity(cityFromLocation());
   mapView.sync(activeView); // opened directly on ?view=mapa
-  if (activeView === 'viaje') { tips.show(); stamps.show(); }
+  if (activeView === 'viaje') tips.show();
   // Honour an in-page anchor (for example #mapa) once the content exists.
   if (activeView === 'guia' && window.location.hash) {
     const target = document.getElementById(window.location.hash.slice(1));

@@ -12,7 +12,7 @@
 // Keys are literal on purpose (visited.js imports this module, so importing it back would be a cycle);
 // tests/user-data.test.js checks they match the stores' own constants.
 export const CHECKLIST_KEY = 'checklist-v1';
-export const SYNCED_KEYS = Object.freeze(['visited-v1', 'japan-trip:phrase-favorites', 'japan-trip:dish-favorites', CHECKLIST_KEY, 'stamps-v1']);
+export const SYNCED_KEYS = Object.freeze(['visited-v1', 'japan-trip:phrase-favorites', 'japan-trip:dish-favorites', CHECKLIST_KEY]);
 const UPDATED_KEY = 'user-data-updated-at';
 const BASE_KEY = 'user-data-synced-base';
 const SAVE_DELAY_MS = 800;
