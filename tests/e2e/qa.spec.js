@@ -138,6 +138,50 @@ test('on wide screens the guide filters start open, while Frases and Platos filt
   await expect(page.locator('#dishes-filters')).not.toHaveAttribute('open', '');
 });
 
+test('the filter sheets of Frases and Platos end with Restablecer and "Ver N", like the map', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?view=platos');
+  await page.locator('#dishes-filters > summary').click();
+  const apply = page.locator('#dishes-filters .sheet-apply');
+  const reset = page.locator('#dishes-filters .sheet-reset');
+  await expect(reset).toBeHidden(); // nothing filtered yet
+  const all = Number((await apply.textContent()).match(/\d+/)[0]);
+  await page.getByRole('button', { name: 'Fideos', exact: true }).click();
+  await expect(reset).toBeVisible();
+  const some = Number((await apply.textContent()).match(/\d+/)[0]);
+  expect(some).toBeLessThan(all);
+  await expect(page.locator('#dishes-count')).toHaveText(new RegExp(`^${some} plato`));
+  await reset.click();
+  await expect(apply).toHaveText(`Ver ${all} platos`);
+  await expect(reset).toBeHidden();
+  await page.getByRole('button', { name: 'Fideos', exact: true }).click();
+  await apply.click();
+  await expect(page.locator('#dishes-filters')).not.toHaveAttribute('open', '');
+
+  await page.goto('/?view=frases');
+  await page.locator('#phrases-filters > summary').click();
+  await page.getByRole('button', { name: 'Comida', exact: true }).click();
+  await expect(page.locator('#phrases-filters .sheet-apply')).toHaveText(/^Ver \d+ frases$/);
+  await page.locator('#phrases-filters .sheet-reset').click();
+  await expect(page.locator('#phrases-filters-summary')).toHaveAttribute('aria-label', 'Filtros');
+});
+
+test('a place without photos shows a slim band instead of an empty half screen', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.route('**/data/cities/kyoto/details.json', async (route) => {
+    const response = await route.fetch();
+    const details = await response.json();
+    details.find(({ id }) => id === kyoto.places[0].id).photos = [];
+    await route.fulfill({ response, json: details });
+  });
+  await page.goto('/');
+  await expect(page.locator(SVG_MARKERS).first()).toBeVisible({ timeout: 20_000 });
+  await page.locator(SVG_MARKERS).first().dispatchEvent('click');
+  await page.locator('.popup-detail-button').first().click();
+  await expect(page.locator('#poi-photo-count')).toHaveText('Foto no disponible');
+  expect((await page.locator('#poi-gallery').boundingBox()).height).toBeLessThan(100);
+});
+
 test('favourites shortcut in Frases and Platos jumps to the starred items and back', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/?view=frases');

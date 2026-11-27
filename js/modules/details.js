@@ -35,6 +35,7 @@ export function initDetails() {
     const photo = photos[photoIndex];
     const source = typeof photo === 'string' ? { src: photo } : photo;
     photoElement.classList.remove('is-fallback');
+    byId('poi-gallery').classList.toggle('is-empty', !photos.length); // no photo: a slim band, not half the screen
     photoElement.src = source?.src || '';
     photoElement.srcset = source?.srcSet || '';
     photoElement.sizes = '(max-width: 720px) 100vw, 760px';

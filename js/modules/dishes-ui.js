@@ -1,5 +1,5 @@
 // "Platos" section: identify a dish by photo or by name (search), favourites and a full-screen "show" sheet.
-import { setFilterSummary } from './collapsible.js';
+import { setFilterSummary, setSheetFooter } from './collapsible.js';
 import { haptic, toast } from './feedback.js';
 import { allergenTag, allergenRow } from './allergen-icons.js';
 import { userStorage } from './user-data.js';
@@ -187,6 +187,7 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
     grid.className = `dish-grid is-${state.view}`;
     grid.replaceChildren(...visible.map(renderCard));
     count.textContent = `${visible.length} ${visible.length === 1 ? 'plato' : 'platos'}`;
+    setSheetFooter(byId('dishes-filters'), { shown: visible.length, singular: 'plato', plural: 'platos', active: state.category !== ALL || state.protein !== ALL, onReset: () => { state.category = ALL; state.protein = ALL; render(); } });
     empty.hidden = visible.length > 0;
     empty.textContent = state.category === FAVORITES && !state.query && state.protein === ALL
       ? 'Aún no tienes favoritos. Pulsa la estrella ★ de un plato para guardarlo aquí.'

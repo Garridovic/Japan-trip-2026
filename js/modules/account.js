@@ -1,6 +1,7 @@
 // Optional account: sign in with Google (Auth0) to keep visited places, favourites and the checklist in the cloud.
 // The guide is complete without it. Everything here is best effort: any failure leaves the app exactly as anonymous.
 import { byId, h } from './dom.js';
+import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { toast } from './feedback.js';
 import { SYNCED_KEYS } from './user-data.js';
 import { createCloudSync, SAVE_DELAY_MS, BACKUP_KEY, LAST_SYNC_KEY } from './cloud-sync.js';
@@ -142,60 +143,77 @@ export async function initAccount({ config, userData, win = window, storage = nu
     } finally { win.location.reload(); }
   }
 
+  function chevron() {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('class', 'account-chevron');
+    const path = document.createElementNS(ns, 'path'); path.setAttribute('d', 'm9 6 6 6-6 6'); svg.append(path);
+    return svg;
+  }
+  function backIcon() {
+    const svg = chevron(); svg.setAttribute('class', 'account-back-icon');
+    svg.firstChild.setAttribute('d', 'm15 6-6 6 6 6');
+    return svg;
+  }
+  /** A titled card, like the sections of a settings screen. */
+  function section(title, ...nodes) { return h('section', { class: 'account-section' }, h('h3', { class: 'account-subtitle' }, title), h('div', { class: 'account-group' }, ...nodes)); }
+  function resetRows() { return RESETS.map((item) => h('button', { type: 'button', class: 'account-row', onclick: () => { resetItem = item; view = 'reset'; render(); } }, h('span', {}, item.button), chevron())); }
+  /** The whole panel is a screen of its own: a bar with the back arrow, then the scrolling sections. */
+  function screen(...body) {
+    popover.append(
+      h('div', { class: 'account-bar' },
+        h('button', { type: 'button', class: 'account-back', 'aria-label': 'Volver', onclick: () => { if (view === 'main') setOpen(false); else { view = 'main'; resetItem = null; render(); } } }, backIcon()),
+        h('h2', {}, 'Cuenta y ajustes')),
+      h('div', { class: 'account-body' }, ...body));
+  }
+
   function renderPopover() {
     popover.replaceChildren();
     if (view === 'reset' && resetItem) {
-      popover.append(
-        h('h2', {}, resetItem.title),
+      screen(section(resetItem.title,
         h('p', {}, user ? 'Se borrarán en este dispositivo y también en tu cuenta, y dejarán de aparecer en tus otros dispositivos. No se puede deshacer.' : 'Se borrarán en este dispositivo. No se puede deshacer.'),
         h('div', { class: 'account-actions' },
           h('button', { type: 'button', class: 'filter is-danger', onclick: () => resetData(resetItem), disabled: busy }, 'Restablecer'),
-          h('button', { type: 'button', class: 'filter', onclick: () => { view = 'main'; resetItem = null; render(); } }, 'Cancelar'))
-      );
+          h('button', { type: 'button', class: 'filter', onclick: () => { view = 'main'; resetItem = null; render(); } }, 'Cancelar'))));
       return;
     }
     if (!user) {
-      popover.append(
-        h('h2', {}, 'Tu cuenta'),
-        h('p', {}, 'Estás usando la guía sin sesión y funciona entera. Si entras con Google, tus visitados, favoritos y checklist se guardan en la nube y los ves en todos tus dispositivos.'),
-        privacy(),
-        h('div', { class: 'account-actions' },
-          signInButton(),
-          !online() ? h('p', {}, 'Para entrar hace falta internet. La guía sigue funcionando sin él.') : null,
-          !auth ? h('p', {}, 'No se ha podido cargar el inicio de sesión ahora mismo.') : null,
-          proximity?.settingNode(),
-          h('h3', { class: 'account-subtitle' }, 'Datos de este dispositivo'),
-          ...resetButtons(),
-          h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar')),
+      screen(
+        section('Tu cuenta',
+          h('p', {}, 'Estás usando la guía sin sesión y funciona entera. Si entras con Google, tus visitados, favoritos y checklist se guardan en la nube y los ves en todos tus dispositivos.'),
+          privacy(),
+          h('div', { class: 'account-actions' },
+            signInButton(),
+            !online() ? h('p', {}, 'Para entrar hace falta internet. La guía sigue funcionando sin él.') : null,
+            !auth ? h('p', {}, 'No se ha podido cargar el inicio de sesión ahora mismo.') : null)),
+        proximity ? section('Lugares cercanos', proximity.settingNode()) : null,
+        section('Datos de este dispositivo', ...resetRows()),
         versionLine()
       );
       return;
     }
     if (view === 'logout') {
-      popover.append(
-        h('h2', {}, '¿Cerrar sesión?'),
+      screen(section('¿Cerrar sesión?',
         h('p', {}, 'Tus datos siguen guardados en tu cuenta. En este dispositivo se mantienen visitados, favoritos y checklist, y seguirás usando la guía sin sesión.'),
         h('div', { class: 'account-actions' },
           h('button', { type: 'button', class: 'filter is-danger', onclick: () => signOut(false), disabled: busy }, 'Cerrar sesión'),
           h('button', { type: 'button', class: 'filter', onclick: () => signOut(true), disabled: busy }, 'Cerrar y borrar los datos de este dispositivo'),
-          h('button', { type: 'button', class: 'filter', onclick: () => { view = 'main'; render(); } }, 'Cancelar'))
-      );
+          h('button', { type: 'button', class: 'filter', onclick: () => { view = 'main'; render(); } }, 'Cancelar'))));
       return;
     }
     const who = h('div', { class: 'account-who' },
       user.picture ? h('img', { class: 'account-avatar', src: user.picture, alt: '', referrerpolicy: 'no-referrer' }) : h('span', { class: 'account-avatar' }, (greetingName(user)[0] || '?').toUpperCase()),
       h('div', {}, h('strong', {}, user.name || greetingName(user)), h('span', {}, user.email || '')));
-    popover.append(
-      who,
-      h('div', { class: 'account-status', dataset: { sync: status.state }, role: 'status' }, statusText(status.state, { online: online(), lastSyncAt: status.lastSyncAt })),
-      privacy(),
-      h('div', { class: 'account-actions' },
-        status.state === 'signed-out' ? signInButton() : h('button', { type: 'button', class: 'filter', onclick: () => sync.reconcile(), disabled: busy || !online() }, 'Sincronizar ahora'),
-        proximity?.settingNode(),
-        h('h3', { class: 'account-subtitle' }, 'Restablecer mis datos'),
-        ...resetButtons(),
-        h('button', { type: 'button', class: 'filter is-danger', onclick: () => { view = 'logout'; render(); } }, 'Cerrar sesión'),
-        h('button', { type: 'button', class: 'filter', onclick: () => setOpen(false) }, 'Cerrar')),
+    screen(
+      section('Cuenta y sincronización',
+        who,
+        h('div', { class: 'account-status', dataset: { sync: status.state }, role: 'status' }, statusText(status.state, { online: online(), lastSyncAt: status.lastSyncAt })),
+        privacy(),
+        h('div', { class: 'account-actions' },
+          status.state === 'signed-out' ? signInButton() : h('button', { type: 'button', class: 'filter', onclick: () => sync.reconcile(), disabled: busy || !online() }, 'Sincronizar ahora'))),
+      proximity ? section('Lugares cercanos', proximity.settingNode()) : null,
+      section('Restablecer mis datos', ...resetRows()),
+      h('div', { class: 'account-actions account-logout' }, h('button', { type: 'button', class: 'filter is-danger', onclick: () => { view = 'logout'; render(); } }, 'Cerrar sesión')),
       versionLine()
     );
   }
@@ -226,18 +244,25 @@ export async function initAccount({ config, userData, win = window, storage = nu
   function render() { renderButton(); renderGreeting(); renderPopover(); renderInvite(); }
   proximity?.onChange(() => { if (!popover.hidden && view === 'main') renderPopover(); });
 
+  const OVERLAY = 'account';
+  const hide = () => { popover.hidden = true; button.setAttribute('aria-expanded', 'false'); win.document.body.classList.remove('account-open'); };
   function setOpen(open) {
-    if (open) { view = 'main'; resetItem = null; renderPopover(); }
-    popover.hidden = !open;
-    button.setAttribute('aria-expanded', String(open));
-    if (open) popover.querySelector('button')?.focus(); else button.focus();
+    if (open === !popover.hidden) return;
+    if (open) {
+      view = 'main'; resetItem = null; renderPopover();
+      popover.hidden = false;
+      button.setAttribute('aria-expanded', 'true');
+      win.document.body.classList.add('account-open');
+      openOverlay(OVERLAY, hide, win); // the Back button / swipe closes the screen instead of leaving the guide
+      popover.querySelector('.account-back')?.focus();
+    } else {
+      hide();
+      releaseOverlay(OVERLAY, win);
+      button.focus();
+    }
   }
   button.addEventListener('click', () => setOpen(popover.hidden));
   win.document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !popover.hidden) setOpen(false); });
-  win.document.addEventListener('click', (event) => {
-    const path = event.composedPath(); // not contains(): a button the panel just re-rendered is already detached
-    if (!popover.hidden && !path.includes(popover) && !path.includes(button)) { popover.hidden = true; button.setAttribute('aria-expanded', 'false'); }
-  });
   win.addEventListener('online', render);
   win.addEventListener('offline', render);
 

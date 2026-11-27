@@ -1,5 +1,5 @@
 // "Frases" section: search, category chips, favourites, audio and the full-screen show mode.
-import { setFilterSummary } from './collapsible.js';
+import { setFilterSummary, setSheetFooter } from './collapsible.js';
 import { haptic } from './feedback.js';
 import { userStorage } from './user-data.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
@@ -187,6 +187,7 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
     audioButtons.clear();
     grid.replaceChildren(...visible.map(renderCard));
     count.textContent = `${visible.length} ${visible.length === 1 ? 'frase' : 'frases'}`;
+    setSheetFooter(byId('phrases-filters'), { shown: visible.length, singular: 'frase', plural: 'frases', active: state.category !== ALL_CATEGORY, onReset: () => { state.category = ALL_CATEGORY; render(); } });
     empty.hidden = visible.length > 0;
     empty.textContent = state.category === FAVORITES_CATEGORY && !state.query
       ? 'Aún no tienes favoritas. Pulsa la estrella ★ de una frase para guardarla aquí.'

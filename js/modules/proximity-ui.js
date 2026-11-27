@@ -117,16 +117,13 @@ export function createProximity({ journey, visited = visitedStore(), win = windo
     sheet.querySelector('button')?.focus();
   }
 
-  /** Switch shown in the account panel (a fresh node each time it is rendered). */
+  /** Switch row shown in the "Cuenta y ajustes" screen (a fresh node each time it is rendered). */
   function settingNode() {
     const on = enabled;
-    const toggle = h('button', { type: 'button', class: 'filter proximity-toggle', role: 'switch', 'aria-checked': String(on), onclick: () => { if (enabled) setEnabled(false); else askConsent(); } },
-      on ? 'Avisos de lugares cercanos: activados' : 'Avisos de lugares cercanos: desactivados');
+    const toggle = h('button', { type: 'button', class: 'account-row proximity-toggle', role: 'switch', 'aria-checked': String(on), 'aria-label': on ? 'Avisos de lugares cercanos: activados' : 'Avisos de lugares cercanos: desactivados', onclick: () => { if (enabled) setEnabled(false); else askConsent(); } },
+      h('span', {}, 'Avisos de lugares cercanos'), h('span', { class: 'switch', 'aria-hidden': 'true' }));
     const note = state === 'denied' && on ? DENIED_NOTE : state === 'unsupported' && on ? 'Este navegador no ofrece geolocalización.' : IPHONE_NOTE;
-    return h('div', { class: 'proximity-setting' },
-      h('h3', { class: 'account-subtitle' }, 'Lugares cercanos'),
-      toggle,
-      h('p', { class: 'proximity-note' }, note));
+    return h('div', { class: 'proximity-setting' }, toggle, h('p', { class: 'proximity-note' }, note));
   }
 
   return {

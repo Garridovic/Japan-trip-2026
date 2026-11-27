@@ -20,6 +20,26 @@ export function setFilterSummary(summary, count) {
   summary.append(badge);
 }
 
+/**
+ * Bottom of a filter sheet, like the map's: "Restablecer" (only while something is filtered) and "Ver N platos",
+ * which closes the sheet. Created on the first call, then only its texts change.
+ */
+export function setSheetFooter(details, { shown, singular, plural, active, onReset }) {
+  const doc = details.ownerDocument;
+  let footer = details.querySelector(':scope > .sheet-footer');
+  if (!footer) {
+    footer = doc.createElement('div');
+    footer.className = 'sheet-footer';
+    footer.innerHTML = '<button type="button" class="sheet-reset">Restablecer</button><button type="button" class="map-sheet-apply sheet-apply"></button>';
+    footer.querySelector('.sheet-apply').addEventListener('click', () => { details.open = false; details.querySelector('summary')?.focus(); });
+    details.append(footer);
+  }
+  const reset = footer.querySelector('.sheet-reset');
+  reset.onclick = onReset;
+  reset.hidden = !active;
+  footer.querySelector('.sheet-apply').textContent = `Ver ${shown} ${shown === 1 ? singular : plural}`;
+}
+
 /** Filter panels of Frases and Platos: a round-ish "Filtros" button that opens a bottom sheet, like the map. */
 export function initFilterSheets(doc = document) {
   doc.querySelectorAll('details.is-sheet').forEach((details) => {
