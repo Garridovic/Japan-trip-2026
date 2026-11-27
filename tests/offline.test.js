@@ -183,4 +183,6 @@ test('the popover facts show the copy date, the space used and a real file count
   assert.equal(formatDate(null), '—');
   assert.match(formatDate(Date.UTC(2026, 10, 26, 13, 4)), /26/);
   assert.equal(formatMegabytes(1), '1 MB');
+  // A copy without a «saved on» stamp shows just the version, never «V14.15.0 · —».
+  assert.equal(Object.fromEntries(facts({ kind: 'ready' }, report({}, { installedAt: null }), 'V14.15.0'))['Copia guardada'], 'V14.15.0');
 });

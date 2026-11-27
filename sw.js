@@ -1,6 +1,6 @@
 // Service worker: makes the guide work without a connection after the first visit.
 // VERSION is stamped by scripts/build-offline.js; a new version installs a fresh cache and removes the old one.
-const VERSION = 'dcf7aed7f4';
+const VERSION = '0118f4fd7e';
 const APP_CACHE = `japan-guide-${VERSION}`;
 const TILE_CACHE = 'japan-tiles-v1';
 const MAX_TILES = 700;
@@ -75,6 +75,9 @@ self.addEventListener('activate', (event) => {
     await self.clients.claim();
     // Not awaited on purpose (activation must finish quickly); the page also asks for it ('fill') if the worker is stopped first.
     fillInBackground();
+    // The page asks again with a message (which keeps the worker alive until the photos are in): activation itself must finish quickly,
+    // so a download started here alone can be cut short when the browser stops the idle worker.
+    broadcast({ type: 'offline-resume' });
     if (replacedAnother) reloadPagesThatCannotUpdate();
   })());
 });
@@ -162,6 +165,10 @@ async function buildReport() {
   const manifest = await cachedManifest(cache);
   const have = new Set((await cache.keys()).map((request) => request.url));
   const missing = (list) => list.filter((path) => !have.has(abs(path)));
+  // A copy that is complete but has no «saved on» stamp (an interrupted install, an older version) gets one now, so the date is never «—».
+  if (!have.has(abs(INSTALLED_KEY)) && missing(manifest.required).length === 0) {
+    await cache.put(abs(INSTALLED_KEY), new Response(JSON.stringify({ at: Date.now(), version: VERSION }), { headers: { 'content-type': 'application/json' } }));
+  }
   const installed = await cache.match(abs(INSTALLED_KEY));
   const tiles = (await (await caches.open(TILE_CACHE)).keys()).length;
   return {
