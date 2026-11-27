@@ -907,3 +907,28 @@ a.secondary, a.map-link, .poi-action-links a, .text-link { display: inline-flex;
 .phrase-fav, .dish-meta .dish-fav, .poi-gallery-nav { width: 44px; height: 44px; }
 .phrase-btn { min-height: 44px; min-width: 44px; box-sizing: border-box; }
 .phrase-examples summary, .map-legend summary, .collapsible > summary, details > summary.map-filter-label { min-height: 44px; display: flex; align-items: center; box-sizing: border-box; }
+
+/* Aviso del administrador: franja bajo la cabecera, con «Entendido» */
+.app-notice { box-sizing: border-box; margin: 8px 16px 0; max-width: 520px; padding: 12px 14px; border: 1px solid var(--line); border-left: 4px solid var(--accent, #b3261e); border-radius: 14px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.app-notice[hidden] { display: none; }
+.app-notice strong { display: block; font-size: .95rem; }
+.app-notice p { margin: 4px 0 8px; color: var(--muted); font-size: .875rem; line-height: 1.4; }
+.app-notice .filter { min-height: 44px; }
+.admin-form { display: grid; gap: 8px; }
+.admin-form label { display: grid; gap: 4px; font-size: .875rem; color: var(--muted); }
+.admin-form input, .admin-form textarea, .admin-form select { box-sizing: border-box; width: 100%; min-height: 44px; padding: 8px 10px; font: inherit; font-size: 1rem; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.admin-form textarea { min-height: 88px; }
+.admin-current { margin: 0; padding: 8px 10px; border-radius: 10px; background: var(--surface-2, rgba(0,0,0,.05)); font-size: .875rem; }
+
+/* Ayudas de primer uso (coach marks) */
+.onb-tip { position: fixed; z-index: 1500; left: 12px; right: 12px; max-width: 360px; margin: 0 auto; box-sizing: border-box; padding: 14px; border-radius: 16px; background: #1f2a30; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.35); font-size: .9375rem; line-height: 1.4; }
+.onb-tip strong { display: block; font-size: 1rem; }
+.onb-tip p { margin: 6px 0 10px; color: #e8eef1; }
+.onb-tip::before { content: ""; position: absolute; left: var(--onb-arrow, 24px); width: 14px; height: 14px; background: #1f2a30; transform: rotate(45deg); }
+.onb-tip[data-side="below"]::before { top: -7px; }
+.onb-tip[data-side="above"]::before { bottom: -7px; }
+.onb-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.onb-actions .filter { min-height: 44px; }
+.onb-highlight { outline: 3px solid #ffd54f; outline-offset: 3px; border-radius: 10px; }
+.account-how { display: grid; gap: 8px; }
+.account-how .filter { min-height: 44px; justify-content: flex-start; text-align: left; }

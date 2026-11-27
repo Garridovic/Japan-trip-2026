@@ -77,6 +77,8 @@ export async function createAuth(config, { loadSdk = () => import(SDK_URL), win 
     logout: () => client.logout({ logoutParams: { returnTo: redirectUri } }),
     /** A Management API access token for the signed-in user. Rejects when offline or when the session is gone. */
     getToken: () => client.getTokenSilently({ authorizationParams: { audience, scope: SCOPE } }),
+    /** The ID token (a signed JWT with the roles claim). The notices Worker verifies it; the Management API token is for another audience. */
+    getIdToken: async () => { await client.getTokenSilently({ authorizationParams: { audience, scope: SCOPE } }); return (await client.getIdTokenClaims())?.__raw ?? null; },
     audience
   };
 }
