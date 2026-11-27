@@ -1,0 +1,14 @@
+[
+  {
+    "id": "hotel",
+    "description": "Alojamiento del grupo (17–18 dic). Dirección: 532-2 Sanjocho, Nara 630-8244.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.68114,135.82197",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68114,135.82197&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68114,135.82197&travelmode=walking"
+    },
+    "sources": [],
+    "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
+  }
+]

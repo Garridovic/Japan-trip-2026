@@ -1,7 +1,7 @@
 {
-  "version": "9114fbc062",
+  "version": "45ce38389a",
   "sizes": {
-    "required": 977926,
+    "required": 986056,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -23,6 +23,11 @@
     "assets/vendor/leaflet/images/marker-shadow.png",
     "assets/vendor/leaflet/leaflet.css",
     "assets/vendor/leaflet/leaflet.js",
+    "data/cities/hakone/city.json",
+    "data/cities/hakone/details.json",
+    "data/cities/hakone/itinerary.json",
+    "data/cities/hakone/places.json",
+    "data/cities/hakone/restaurants.json",
     "data/cities/kyoto/city.json",
     "data/cities/kyoto/details.json",
     "data/cities/kyoto/events.json",
@@ -34,6 +39,11 @@
     "data/cities/kyoto/restaurants.json",
     "data/cities/kyoto/sources.json",
     "data/cities/kyoto/tips.json",
+    "data/cities/nara/city.json",
+    "data/cities/nara/details.json",
+    "data/cities/nara/itinerary.json",
+    "data/cities/nara/places.json",
+    "data/cities/nara/restaurants.json",
     "data/cities/osaka/city.json",
     "data/cities/osaka/details.json",
     "data/cities/osaka/extras.json",

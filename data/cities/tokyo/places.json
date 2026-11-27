@@ -1,5 +1,15 @@
 [
   {
+    "id": "hotel",
+    "name": "HOTEL AMANEK Asakusa Sakurabashi",
+    "lat": 35.71817,
+    "lng": 139.80169,
+    "day": "base",
+    "type": "hotel",
+    "desc": "Alojamiento del grupo (8–10 y 18–22 dic).",
+    "query": "HOTEL AMANEK Asakusa Sakurabashi Tokyo"
+  },
+  {
     "id": "sumida",
     "name": "Acuario de Sumida (visita extra)",
     "lat": 35.71,

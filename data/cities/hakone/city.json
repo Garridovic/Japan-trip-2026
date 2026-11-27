@@ -1,0 +1,30 @@
+{
+  "id": "hakone",
+  "timezone": "Asia/Tokyo",
+  "pageTitle": "Hakone · 10–11 diciembre 2026",
+  "description": "Ficha de Hakone (10–11 diciembre 2026): alojamiento, mapa y previsión del tiempo. Todavía sin guía.",
+  "hero": {
+    "subtitle": "Aún sin guía de Hakone: de momento solo están el alojamiento, el mapa y la previsión del tiempo.",
+    "meta": [
+      "10–11 diciembre 2026",
+      "1 noche",
+      "Contenido en preparación"
+    ],
+    "hotel": {
+      "name": "Hakone Onsen Yuyado Yamanoshou",
+      "mapUrl": "https://maps.app.goo.gl/tdQMHdNZLnpgAAoD8"
+    }
+  },
+  "map": {
+    "center": [
+      35.26652,
+      139.00905
+    ],
+    "zoom": 14,
+    "queryContext": "Hakone, Japan",
+    "legendSummary": "Leyenda del mapa",
+    "dayFilters": [],
+    "alternativeCategories": []
+  },
+  "footerLabel": "Hakone · 10–11 diciembre 2026"
+}

@@ -4,6 +4,35 @@
   "eyebrow": "Japón · guía compartida",
   "cities": [
     {
+      "id": "tokyo",
+      "name": "Tokio",
+      "enabled": true,
+      "arrivalDate": "2026-12-08",
+      "departureDate": "2026-12-22",
+      "optionalData": [
+        "extras",
+        "sources"
+      ],
+      "stays": [
+        {
+          "arrivalDate": "2026-12-08",
+          "departureDate": "2026-12-10"
+        },
+        {
+          "arrivalDate": "2026-12-18",
+          "departureDate": "2026-12-22"
+        }
+      ]
+    },
+    {
+      "id": "hakone",
+      "name": "Hakone",
+      "enabled": true,
+      "arrivalDate": "2026-12-10",
+      "departureDate": "2026-12-11",
+      "optionalData": []
+    },
+    {
       "id": "kyoto",
       "name": "Kioto",
       "enabled": true,
@@ -31,15 +60,12 @@
       ]
     },
     {
-      "id": "tokyo",
-      "name": "Tokio",
+      "id": "nara",
+      "name": "Nara",
       "enabled": true,
-      "arrivalDate": "2026-12-08",
-      "departureDate": "2026-12-22",
-      "optionalData": [
-        "extras",
-        "sources"
-      ]
+      "arrivalDate": "2026-12-17",
+      "departureDate": "2026-12-18",
+      "optionalData": []
     }
   ],
   "connections": [
@@ -50,5 +76,6 @@
       "title": "Mar 15 dic · Kioto → Osaka",
       "note": "Salida de Kioto tras el desayuno o el check-out, sin visitas. Opciones según fuentes: tren JR Special Rapid de Kioto a Osaka (unos 27–30 min, ≈580 ¥) o Hankyu de Karasuma a Osaka-Umeda (unos 40–45 min, ≈410 ¥). Después, la línea Midosuji del metro de Umeda a Shinsaibashi. El hotel de Osaka, The Bridge Hotel Shinsaibashi, queda a unos 3–5 min andando de Shinsaibashi (salidas 7 y 8). Comprobad horarios y tarifas el día antes."
     }
-  ]
+  ],
+  "defaultCity": "kyoto"
 }

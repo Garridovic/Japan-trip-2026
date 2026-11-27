@@ -26,7 +26,7 @@ for (const { name, viewport, deviceScaleFactor, isMobile, hasTouch } of devices)
       const select = citySelect(page);
       expect((await select.boundingBox()).height).toBeGreaterThanOrEqual(40);
       const options = await openCities(page);
-      await expect(options).toHaveCount(9); // Kioto, Osaka, Tokio and the six fictional test cities: the header stays the same size
+      await expect(options).toHaveCount(11); // Tokio, Hakone, Kioto, Osaka, Nara and the six fictional test cities: the header stays the same size
       const menu = await page.locator('#city-menu').boundingBox();
       expect(menu.x).toBeGreaterThanOrEqual(0);
       expect(menu.x + menu.width).toBeLessThanOrEqual(viewport.width);

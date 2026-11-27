@@ -648,3 +648,8 @@ body.has-weather-sheet { overflow: hidden; }
 .hero-meta[hidden], .hero-slide .subtitle[hidden] { display: none; }
 
 .top-bar-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+/* Cities visited twice (Tokio): one chip per stay under the dates */
+.hero-stays { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.stay-chip { min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.4); background: transparent; color: #fffaf1; font: inherit; font-size: .9rem; font-weight: 750; cursor: pointer; }
+.stay-chip.is-active { background: #fffaf1; color: #2a2118; border-color: #fffaf1; }

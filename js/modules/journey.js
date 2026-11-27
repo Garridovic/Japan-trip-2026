@@ -42,12 +42,27 @@ export function validateJourney(journey) {
 export function resolveActiveCity(journey, requestedId) {
   const cities = enabledCities(journey);
   if (cities.length === 0) throw new Error('The journey has no enabled cities.');
-  if (!requestedId) return { cityId: cities[0].id };
+  const fallback = cities.find((city) => city.id === journey.defaultCity) ?? cities[0];
+  if (!requestedId) return { cityId: fallback.id };
   if (cities.some((city) => city.id === requestedId)) return { cityId: requestedId };
   return {
-    cityId: cities[0].id,
-    problem: `City "${requestedId}" is unknown or not enabled; showing "${cities[0].id}" instead.`
+    cityId: fallback.id,
+    problem: `City "${requestedId}" is unknown or not enabled; showing "${fallback.id}" instead.`
   };
 }
 
 export const requestedCityFromSearch = (search) => new URLSearchParams(search).get(CITY_QUERY_PARAM);
+
+/** The stays of a city as [{ arrival, departure }]. A city visited twice (Tokio) lists them in `stays`; otherwise it is one stay. */
+export function staysOf(cityEntry) {
+  const list = Array.isArray(cityEntry?.stays) && cityEntry.stays.length ? cityEntry.stays : [cityEntry ?? {}];
+  return list.map((stay) => ({ arrival: stay.arrivalDate, departure: stay.departureDate }));
+}
+
+/** Index of the stay to show on `today` (ISO): the one in progress, else the next one, else the last. */
+export function pickStayIndex(stays, today) {
+  const during = stays.findIndex((stay) => stay.arrival && stay.departure && today >= stay.arrival && today <= stay.departure);
+  if (during >= 0) return during;
+  const next = stays.findIndex((stay) => stay.arrival && today < stay.arrival);
+  return next >= 0 ? next : Math.max(0, stays.length - 1);
+}
