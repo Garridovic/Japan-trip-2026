@@ -6,11 +6,11 @@ const tokyo = (iso) => new Date(`${iso}+09:00`);
 test.describe('V14.2 every stop of the route has a page', () => {
   test.use({ timezoneId: 'Asia/Tokyo', viewport: { width: 390, height: 844 }, hasTouch: true });
 
-  for (const [id, title, range, hotel] of [
-    ['hakone', 'Hakone', '10–11 dic · 1 noche', 'Hakone Onsen Yuyado Yamanoshou'],
-    ['nara', 'Nara', '17–18 dic · 1 noche', 'Yuzan apartment Sanjo']
+  for (const [id, title, range, hotel, zone] of [
+    ['hakone', 'Hakone', '10–11 dic · 1 noche', 'Hakone Onsen Yuyado Yamanoshou', 'Sengokuhara'],
+    ['nara', 'Nara', '17–18 dic · 1 noche', 'Yuzan apartment Sanjo', 'Sanjo-dori']
   ]) {
-    test(`${title} shows dates, hotel, taxi, map and weather without inventing a guide`, async ({ page }) => {
+    test(`${title} shows dates, hotel, taxi, map and its first-version guide`, async ({ page }) => {
       const errors = [];
       page.on('pageerror', (error) => errors.push(error.message));
       await page.clock.setFixedTime(tokyo('2026-11-27T10:00:00'));
@@ -21,7 +21,7 @@ test.describe('V14.2 every stop of the route has a page', () => {
       await expect(page.locator('#hero-hotel')).toContainText(hotel);
       await expect(page.locator('#hero-hotel .taxi-button')).toBeVisible();
       await expect(page.locator('#hero-hotel a')).toHaveText('Cómo llegar');
-      await expect(page.locator('#hero-subtitle')).toContainText(`Aún sin guía de ${title}`);
+      await expect(page.locator('#hero-subtitle')).toContainText(zone);
       await expect(page.locator('#city-map')).toBeVisible();
       expect(errors).toEqual([]);
     });
