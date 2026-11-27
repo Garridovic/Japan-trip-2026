@@ -115,9 +115,16 @@ export function initMapView({ map, doc = document }) {
     card.scrollTop = 0;
   });
 
+  // Leaflet's zoom buttons sit in the map's top-left corner, exactly where the title and chips are. Keep them just
+  // below the chips, wherever those wrap to (1-3 rows depending on the width and the active filters).
+  const controls = view.querySelector('.map-view-controls');
+  const placeZoom = () => view.style.setProperty('--map-controls-bottom', `${Math.ceil(controls.offsetTop + controls.offsetHeight)}px`);
+  if (controls && typeof ResizeObserver !== 'undefined') new ResizeObserver(placeZoom).observe(controls);
+
   function enter() {
     if (inside) return;
     inside = true;
+    placeZoom();
     moves.forEach(({ home, target }) => target.appendChild(home.node));
     filtersWereOpen = filtersDetails.open;
     filtersDetails.open = true;

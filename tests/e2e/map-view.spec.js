@@ -138,6 +138,38 @@ test.describe('full-screen map view', () => {
   });
 });
 
+for (const width of [390, 320]) {
+  for (const scheme of ['light', 'dark']) {
+    test(`the zoom buttons are reachable under the title and chips at ${width} px (${scheme})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 700 });
+      await page.emulateMedia({ colorScheme: scheme });
+      await openMap(page);
+      for (const selector of ['.leaflet-control-zoom-in', '.leaflet-control-zoom-out']) {
+        const button = page.locator(`#view-mapa ${selector}`);
+        await expect(button).toBeVisible();
+        const box = await button.boundingBox();
+        expect(box.width).toBeGreaterThanOrEqual(40);
+        expect(box.height).toBeGreaterThanOrEqual(40);
+        // The element on top at the button's centre is the button itself, not a chip or the title.
+        const topIsButton = await button.evaluate((el) => {
+          const r = el.getBoundingClientRect();
+          const top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+          return el === top || el.contains(top);
+        });
+        expect(topIsButton, `${selector} is covered`).toBe(true);
+      }
+      // A real click zooms the map: the tiles move to the next zoom level.
+      const level = () => page.locator('#city-map .leaflet-tile-container').first().evaluate((el) => el.querySelector('img')?.src.match(/\/tile\.openstreetmap\.org\/(\d+)\//)?.[1] ?? null).catch(() => null);
+      const chips = page.locator('#view-mapa .map-view-controls');
+      const [zoom, bar] = await Promise.all([page.locator('#view-mapa .leaflet-control-zoom').boundingBox(), chips.boundingBox()]);
+      expect(zoom.y).toBeGreaterThanOrEqual(bar.y + bar.height - 1);
+      const before = await level();
+      await page.locator('#view-mapa .leaflet-control-zoom-in').click();
+      if (before) await expect.poll(level).not.toBe(before);
+    });
+  }
+}
+
 test('"Guardar mapa" works from the full-screen map and keeps working after leaving it', async ({ page, context }) => {
   test.setTimeout(90_000);
   const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');

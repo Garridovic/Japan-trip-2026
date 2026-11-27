@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const PORT = process.env.E2E_PORT ?? '4173';
+
 export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: true,
@@ -9,7 +11,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: 'list',
   use: {
-    baseURL: 'http://127.0.0.1:4173',
+    baseURL: `http://127.0.0.1:${PORT}`,
     trace: 'retain-on-failure',
     // Tests mock network requests with page.route(), which cannot see requests answered by a service worker.
     // Only tests/e2e/offline.spec.js turns service workers on.
@@ -18,7 +20,8 @@ export default defineConfig({
   },
   webServer: {
     command: 'node tests/server.js',
-    url: 'http://127.0.0.1:4173',
+    env: { E2E_PORT: PORT },
+    url: `http://127.0.0.1:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 30_000
   }

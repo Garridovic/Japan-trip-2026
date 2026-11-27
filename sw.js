@@ -10,13 +10,19 @@ const INSTALLED_KEY = '__installed';
 const abs = (path) => new URL(path, self.registration.scope).href;
 const loadManifest = async () => (await fetch(abs('offline-manifest.json'), { cache: 'reload' })).json();
 
-async function fetchInto(cache, path, { retry = true } = {}) {
-  const response = await fetch(abs(path), { cache: 'reload' });
-  if (!response.ok) {
-    if (retry) return fetchInto(cache, path, { retry: false });
-    throw new Error(`${path}: HTTP ${response.status}`);
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Downloads one file into the cache; a flaky connection gets three tries before the file counts as missing. */
+async function fetchInto(cache, path, { tries = 3 } = {}) {
+  try {
+    const response = await fetch(abs(path), { cache: 'reload' });
+    if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+    await cache.put(abs(path), response);
+  } catch (error) {
+    if (tries <= 1) throw error;
+    await wait(400);
+    return fetchInto(cache, path, { tries: tries - 1 });
   }
-  await cache.put(abs(path), response);
 }
 
 async function inBatches(items, size, task) {
@@ -33,7 +39,9 @@ self.addEventListener('install', (event) => {
     if (missing.length) throw new Error(`Offline install incomplete: ${missing.join(', ')}`);
     await cache.put(abs(INSTALLED_KEY), new Response(JSON.stringify({ at: Date.now(), version: VERSION }), { headers: { 'content-type': 'application/json' } }));
     await cache.put(abs('offline-manifest.json'), new Response(JSON.stringify(manifest), { headers: { 'content-type': 'application/json' } }));
-    await inBatches(manifest.optional, 8, (path) => fetchInto(cache, path).catch(() => {}));
+    // The new version takes over as soon as the app itself is saved. The small photos (optional) are NOT downloaded
+    // here: an install that waits for them can take longer than the page waits, and the update then looks like it did nothing.
+    // They are fetched in the background once the worker is active (see `fillInBackground`).
     await self.skipWaiting();
   })());
 });
@@ -44,6 +52,8 @@ self.addEventListener('activate', (event) => {
       if (name.startsWith('japan-guide-') && name !== APP_CACHE) await caches.delete(name);
     }
     await self.clients.claim();
+    // Not awaited on purpose (activation must finish quickly); the page also asks for it ('fill') if the worker is stopped first.
+    fillInBackground();
   })());
 });
 
@@ -156,6 +166,13 @@ async function fetchMissing(lists) {
   });
 }
 
+let filling = null;
+/** Downloads the optional photos of the active version; safe to call several times at once. */
+function fillInBackground() {
+  if (!filling) filling = fetchMissing(['optional']).catch(() => {}).finally(() => { filling = null; });
+  return filling;
+}
+
 async function reply(source) {
   const report = await buildReport();
   if (source) source.postMessage(report);
@@ -164,7 +181,9 @@ async function reply(source) {
 
 self.addEventListener('message', (event) => {
   const type = event.data?.type;
-  if (type === 'warm') event.waitUntil(fetchMissing(['required', 'optional', 'warm']).then(() => reply(null)));
+  if (type === 'skip-waiting') self.skipWaiting();
+  else if (type === 'warm') event.waitUntil(fetchMissing(['required', 'optional', 'warm']).then(() => reply(null)));
+  else if (type === 'fill') event.waitUntil(fillInBackground().then(() => reply(null)));
   else if (type === 'repair') event.waitUntil(fetchMissing(['required', 'optional']).then(() => reply(null)));
   else if (type === 'verify' || type === 'status') event.waitUntil(reply(event.source));
 });

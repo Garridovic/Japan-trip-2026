@@ -175,7 +175,7 @@ export async function initOffline({ win = window, doc = document } = {}) {
     await nav.serviceWorker.register('sw.js');
     registration = await nav.serviceWorker.ready;
     appVersion = await win.fetch('data/version.json').then((response) => response.json()).then(({ version }) => version).catch(() => null);
-    send('verify'); // a real check of the cache, not just "the worker is active"
+    send('fill'); // downloads the small photos of this version (the install itself only saves the app) and then reports what is really in the cache
     if (canAutoDownloadAll(nav)) win.setTimeout(() => send('warm'), 3000);
     return registration;
   } catch (error) {
