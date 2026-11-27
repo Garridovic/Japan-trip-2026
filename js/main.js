@@ -87,7 +87,8 @@ async function start() {
   const tips = initTips(global.tips?.practical, cities); // city tips.json files are fetched the first time Viaje opens
   initDishes(global.dishes, global.dishCredits);
   initPhrases(global.phrases); // global content: rendered once, shared by every city
-  const mapView = initMapView({ map });
+  let navigateCityRef = () => {};
+  const mapView = initMapView({ map, cities, onCity: (cityId) => navigateCityRef(cityId, { keepView: true }) });
   initMapSearch({ map });
   let navigateViewRef = async () => {};
   const jumpToSearch = async (view, inputId, text) => {
@@ -174,10 +175,12 @@ async function start() {
     applyView(view);
   }
 
-  async function showCity(cityId) {
+  async function showCity(cityId, { fly = false } = {}) {
     const token = ++requestToken;
     tabs.setActive(cityId);
-    if (cityId === activeCityId) { showStatus(''); return; }
+    mapView.setCity(cityId);
+    if (cityId === activeCityId) { mapView.setBusy(false); showStatus(''); return; }
+    mapView.setBusy(true);
     showStatus('Cargando la guía…');
     resetHero();
     weather.clear();
@@ -197,7 +200,7 @@ async function start() {
       renderCity({ journey, cityEntry: entry, bundle, global, stay: stays[stayIndex], stays, stayIndex, onStay });
       details.setCity({ ...index, events: bundle.events });
       guideTabs.resetCity();
-      map.setCity(index, bundle.city.map);
+      map.setCity(index, bundle.city.map, { fly });
       mapNeedsFit = guideTabs.active() !== 'mapa';
       search.setCity({ places: bundle.places, restaurants: bundle.restaurants, extras: bundle.extras?.items ?? [] });
       weather.show(whereOf(), stays[stayIndex]);
@@ -206,25 +209,37 @@ async function start() {
       hero.reset(); // opens on "Ahora" during the trip, otherwise on "Tu viaje"
       activeCityId = cityId;
       guideTabs.refresh();
+      mapView.setBusy(false);
+      mapView.setCity(cityId, { announce: fly });
       showStatus('');
     } catch (error) {
       if (token !== requestToken) return;
+      mapView.setBusy(false);
+      if (activeView === 'mapa' && activeCityId) { // the map keeps the city it had; the chip and the URL go back to it
+        mapView.setCity(activeCityId);
+        tabs.setActive(activeCityId);
+        history.replaceState(history.state, '', (() => { const url = new URL(window.location.href); url.searchParams.set(CITY_QUERY_PARAM, activeCityId); return url; })());
+        toast(`No se ha podido abrir ${cities.find((city) => city.id === cityId)?.name ?? 'la ciudad'}. Comprueba la conexión.`);
+        return;
+      }
       console.error(`Failed to show city "${cityId}":`, error);
       showStatus('No se han podido cargar los datos de esta ciudad. Comprueba la conexión y vuelve a cargar la página.', true);
     }
   }
 
-  async function navigate(cityId) {
+  // keepView: the full-screen map's city chip changes the city without leaving the map (the view stays in the URL).
+  async function navigate(cityId, { keepView = false } = {}) {
     await whenOverlaySettled();
     if (cityId === resolveActiveCity(journey, requestedCityFromSearch(window.location.search)).cityId) return;
     const url = new URL(window.location.href);
     url.searchParams.set(CITY_QUERY_PARAM, cityId);
-    url.searchParams.delete(VIEW_QUERY_PARAM); // city tabs live in the guide
+    if (!keepView) url.searchParams.delete(VIEW_QUERY_PARAM); // city tabs live in the guide
     url.hash = '';
     history.pushState({ cityId }, '', url);
-    applyView('guia');
-    showCity(cityId).then(() => window.scrollTo({ top: 0 }));
+    if (!keepView) applyView('guia');
+    showCity(cityId, { fly: keepView }).then(() => { if (!keepView) window.scrollTo({ top: 0 }); });
   }
+  navigateCityRef = navigate;
 
   function cityFromLocation() {
     const { cityId, problem } = resolveActiveCity(journey, requestedCityFromSearch(window.location.search));
@@ -248,7 +263,8 @@ async function start() {
     const tabInUrl = tabFromSearch(window.location.search);
     if (tabInUrl) guideTabs.select(tabInUrl, { source: 'history' });
     if (viewFromSearch(window.location.search) === activeView && cityFromLocation() === activeCityId) return;
-    applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation());
+    const stayedOnMap = activeView === 'mapa' && viewFromSearch(window.location.search) === 'mapa'; // Back between two cities of the map: fly there
+    applyView(viewFromSearch(window.location.search)); showCity(cityFromLocation(), { fly: stayedOnMap });
   });
   views.setActive(activeView);
   // First tab: ?tab= in the URL, else an old #anchor (#comer, #dia12), else the last one used on this device.

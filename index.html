@@ -359,6 +359,8 @@
         </div>
         <button type="button" class="map-fab map-filters-fab" data-map-sheet="filters" aria-expanded="false" id="map-filters-button" aria-label="Filtros"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span class="map-fab-badge" id="map-filters-count" aria-hidden="true" hidden></span></button>
       </div>
+      <button type="button" class="map-view-pill map-city-chip" data-map-sheet="city" aria-expanded="false" aria-haspopup="dialog" id="map-city-button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.2"/></svg><span id="map-city-name"></span><svg class="map-city-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+      <span class="visually-hidden" id="map-city-live" role="status" aria-live="polite"></span>
       <button type="button" class="map-view-pill" id="map-search-count" hidden></button>
       <div class="map-search-drop" id="map-search-drop" role="listbox" aria-label="Resultados en el mapa" hidden></div>
       <button type="button" class="map-view-pill" data-map-sheet="filters" aria-expanded="false" id="map-shown-pill" hidden></button>
@@ -384,6 +386,7 @@
         <div data-sheet-section="filters" hidden></div>
         <div data-sheet-section="nearby" hidden></div>
         <div data-sheet-section="offline" hidden></div>
+        <div data-sheet-section="city" hidden></div>
       </div>
       <div class="map-sheet-footer" id="map-sheet-footer" hidden><button type="button" class="map-sheet-apply" id="map-sheet-apply">Ver lugares</button></div>
     </section>

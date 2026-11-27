@@ -2,17 +2,32 @@
 // There is only one Leaflet map. Entering the view MOVES the map element and its panels (filters, nearby places,
 // offline button) into this view; leaving puts every node back exactly where it was in the guide, so the map in the
 // guide section keeps working as before. Filters (with the legend), "Cerca de mí" and "Guardar mapa" live in one bottom sheet.
+// City: a red chip under the search field opens the «Ciudad» sheet.
 // Layout: one round Filtros button (top left) with the number of active filters and, beside it, a single fixed-size
 // "N de M lugares" pill; the saved-map cloud, «Cerca de mí» and the zoom stack bottom right.
 import { byId, h } from './dom.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { shownLabel } from './map-filters.js';
+import { staysOf } from './journey.js';
+import { dateRange, daysBetween, nightsLabel } from './trip-status.js';
 
 export const SHEETS = {
   filters: 'Filtros',
   nearby: 'Cerca de mí',
-  offline: 'Mapa sin conexión'
+  offline: 'Mapa sin conexión',
+  city: 'Ciudad'
 };
+
+/** Second line of a city card: dates and nights ("11–15 dic · 4 noches"); a city visited twice lists both stays. */
+export function cityCardInfo(entry) {
+  const stays = staysOf(entry).filter((stay) => stay.arrival && stay.departure);
+  if (!stays.length) return '';
+  if (stays.length === 1) return `${dateRange(stays[0].arrival, stays[0].departure)} · ${nightsLabel(Math.max(0, daysBetween(stays[0].arrival, stays[0].departure)))}`;
+  return `${stays.map((stay) => dateRange(stay.arrival, stay.departure)).join(' · ')} · ${stays.length} estancias`;
+}
+
+/** Accessible name of the city chip. */
+export const cityChipLabel = (name) => `Ciudad: ${name}. Cambiar`;
 
 /** Accessible name of the cloud button for each state of the saved map (map-offline.js sets data-state on «Guardar mapa»). */
 export const OFFLINE_LABELS = {
@@ -35,9 +50,9 @@ export function restoreHome({ node, parent, next }) {
   else parent.appendChild(node);
 }
 
-export function initMapView({ map, doc = document }) {
+export function initMapView({ map, doc = document, cities = [], onCity = () => {} }) {
   const view = doc.getElementById('view-mapa');
-  if (!view) return { sync() {}, isOpen: () => false };
+  if (!view) return { sync() {}, isOpen: () => false, hideCard() {}, setCity() {}, setBusy() {} };
   const canvas = byId('map-view-canvas');
   const sheet = byId('map-sheet');
   const sheetTitle = byId('map-sheet-title');
@@ -110,7 +125,7 @@ export function initMapView({ map, doc = document }) {
     const onFilters = openSheet === 'filters';
     sheetSub.textContent = onFilters
       ? `${shownLabel(shown, total, filters.length)}${visited.total ? ` · ${visited.done}/${visited.total} visitados` : ''}`
-      : '';
+      : openSheet === 'city' ? 'Cambia la ciudad del mapa y de la guía' : '';
     sheetSub.hidden = !sheetSub.textContent;
     resetButton.hidden = !(onFilters && filters.length);
     footer.hidden = !onFilters;
@@ -149,12 +164,36 @@ export function initMapView({ map, doc = document }) {
   routeButton.addEventListener('click', () => map.setRoute(routeButton.getAttribute('aria-pressed') !== 'true'));
   doc.addEventListener('map:state', (event) => { lastState = event.detail; paintState(); paintRouteButton(); });
 
+  // City switcher: a red chip with the active city opens the «Ciudad» sheet (one card per city). Choosing one changes the
+  // active city of the whole app (guide included) without leaving the map; the map flies to it (see main.js).
+  const cityChip = byId('map-city-button');
+  const cityName = byId('map-city-name');
+  const cityLive = byId('map-city-live');
+  const cityList = sections.city;
+  const searchInput = byId('map-search-input');
+  let activeCity = null;
+  const nameOf = (id) => cities.find((city) => city.id === id)?.name ?? '';
+  function paintCityCards() {
+    cityList.replaceChildren(...cities.map((city) => {
+      const on = city.id === activeCity;
+      return h('button', { type: 'button', class: `map-city-card${on ? ' is-active' : ''}`, 'aria-pressed': String(on), dataset: { city: city.id }, onclick: () => pickCity(city.id) },
+        h('span', { class: 'map-city-card-text' }, h('strong', {}, city.name), h('small', {}, cityCardInfo(city))),
+        on ? h('span', { class: 'map-city-tick', 'aria-hidden': 'true' }, '✓') : null);
+    }));
+  }
+  function pickCity(id) {
+    closeSheet();
+    if (id !== activeCity) onCity(id);
+  }
+  cityChip.hidden = cities.length < 2; // a single city needs no switcher
+
   // Bottom card for the selected place, with the nearest places as a carousel.
   const card = byId('map-card');
   const cardBody = byId('map-card-body');
   const cardNearby = byId('map-card-nearby');
   const hideCard = () => { card.hidden = true; cardBody.replaceChildren(); cardNearby.replaceChildren(); };
   byId('map-card-close').addEventListener('click', hideCard);
+  doc.addEventListener('map:city', hideCard); // a card of the previous city must not stay open
   doc.addEventListener('map:select', (event) => {
     if (!inside) return;
     const { point, content, nearby } = event.detail;
@@ -196,6 +235,18 @@ export function initMapView({ map, doc = document }) {
   return {
     /** Called whenever the active view changes (and once at start). */
     hideCard() { hideCard(); },
+    /** Shows `cityId` on the chip and in the sheet; `announce` also tells screen readers ("Mapa de Kioto"). */
+    setCity(cityId, { announce = false } = {}) {
+      activeCity = cityId;
+      const name = nameOf(cityId);
+      cityName.textContent = name;
+      cityChip.setAttribute('aria-label', cityChipLabel(name));
+      if (searchInput) searchInput.placeholder = name ? `Buscar en ${name}…` : 'Buscar en el mapa…';
+      paintCityCards();
+      if (announce && name) cityLive.textContent = `Mapa de ${name}`;
+    },
+    /** While another city loads, the chip shows it is busy. */
+    setBusy(busy) { cityChip.classList.toggle('is-loading', Boolean(busy)); cityChip.setAttribute('aria-busy', String(Boolean(busy))); },
     sync(activeView) { if (activeView === 'mapa') enter(); else leave(); },
     isOpen: () => inside
   };

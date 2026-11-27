@@ -196,6 +196,9 @@ export function initMap({ openDetail }) {
     document.dispatchEvent(new CustomEvent('map:select', { detail: { point, content: buildPopup(point), nearby: nearest } }));
   }
 
+  let flyNext = false; // set by setCity({ fly }) for the one refresh that moves the map to the new city
+  const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function refreshMapPoints() {
     const visiblePoints = filteredPoints();
     markerLayer.clearLayers();
@@ -213,7 +216,8 @@ export function initMap({ openDetail }) {
         const nearest = Math.min(...fitPoints.map((point) => distanceKm(userLatLng, point)));
         if (nearest < 15) bounds.extend([userLatLng.lat, userLatLng.lng]);
       }
-      map.fitBounds(bounds.pad(0.12), searchHits ? { maxZoom: 16 } : {});
+      if (flyNext) map.flyToBounds(bounds.pad(0.12), { duration: 0.7 });
+      else map.fitBounds(bounds.pad(0.12), searchHits ? { maxZoom: 16 } : {});
     }
     if (userLatLng) renderNearby();
     paintRoute();
@@ -404,7 +408,8 @@ export function initMap({ openDetail }) {
 
   return {
     /** Replaces markers, filters and legend with the data of the given city. */
-    setCity(index, cityConfig) {
+    setCity(index, cityConfig, { fly = false } = {}) {
+      flyNext = fly && !reducedMotion();
       cityId = index.cityId;
       config = cityConfig;
       points = index.points;
@@ -420,9 +425,10 @@ export function initMap({ openDetail }) {
       renderDayFilters();
       paintFilterButtons();
       renderLegend();
-      map.setView(config.center, config.zoom);
+      if (!flyNext) map.setView(config.center, config.zoom); // flying: the view stays where it is and refreshMapPoints() flies to the new city
       map.invalidateSize();
       refreshMapPoints();
+      flyNext = false;
       paintAllMarkers();
       mapOffline.setPlan(planCityTiles({ center: config.center, points }), document.querySelector('[data-city-name]')?.textContent);
       document.dispatchEvent(new CustomEvent('map:city')); // the search field starts empty in every city
