@@ -89,3 +89,12 @@ test('the forecast is device-only: it never goes through the synced user data', 
   const { SYNCED_KEYS } = await import('../js/modules/user-data.js');
   assert.equal(SYNCED_KEYS.some((key) => key.startsWith('weather')), false);
 });
+
+test('the icon of a day matches the daytime hours, not a foggy dawn', async () => {
+  const { dayCondition } = await import('../js/modules/weather.js');
+  const hours = (codes) => [6, 9, 12, 15, 18, 21].map((h, i) => ({ h, code: codes[i], t: 5, pop: 0, wind: 3 }));
+  assert.equal(dayCondition({ code: 45, hours: hours([45, 3, 3, 2, 3, 3]) }).kind, 'cloud', 'fog at 6:00 does not make the day foggy');
+  assert.equal(dayCondition({ code: 3, hours: hours([3, 3, 61, 3, 3, 3]) }).kind, 'rain', 'rain in the daytime wins');
+  assert.equal(dayCondition({ code: 45, hours: [] }).kind, 'fog', 'without hours the daily code is used');
+  assert.equal(dayCondition({ code: 0, hours: hours([0, 0, 0, 2, 0, 0]) }).kind, 'sun');
+});

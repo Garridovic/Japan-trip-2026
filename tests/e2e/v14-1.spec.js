@@ -97,3 +97,34 @@ test.describe('V14.1 header carousel and weather', () => {
     await expect(page.locator('#hero .account-invite, .hero .account-invite')).toHaveCount(0);
   });
 });
+
+test.describe('V14.1.1 fixes', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
+
+  test('taxi screen without Japanese data keeps latin words whole at 390 px', async ({ page }) => {
+    await page.goto('/?view=viaje');
+    await page.locator('.lodging-card[data-stay-id="kyoto"] .taxi-button').click();
+    const words = await page.locator('#taxi-show .taxi-name, #taxi-show .taxi-address').evaluateAll((nodes) => nodes.map((node) => {
+      // a word is split when a line ends in the middle of it: compare each word's rects
+      const range = document.createRange();
+      const split = [];
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+      for (let text = walker.nextNode(); text; text = walker.nextNode()) {
+        for (const match of text.data.matchAll(/[A-Za-z0-9ōŌ]+/g)) {
+          range.setStart(text, match.index); range.setEnd(text, match.index + match[0].length);
+          const tops = new Set([...range.getClientRects()].map((rect) => Math.round(rect.top)));
+          if (tops.size > 1) split.push(match[0]);
+        }
+      }
+      return split;
+    }));
+    expect(words.flat()).toEqual([]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+
+  test('the top bar title never wraps onto two lines in Viaje', async ({ page }) => {
+    await page.goto('/?view=viaje');
+    const box = await page.locator('#top-bar-title').boundingBox();
+    expect(box.height).toBeLessThan(30);
+  });
+});

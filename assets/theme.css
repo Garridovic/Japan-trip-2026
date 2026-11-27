@@ -351,8 +351,8 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 .taxi-body { align-items: stretch; text-align: left; justify-content: center; gap: 14px; }
 .taxi-main { display: grid; gap: 1.2vh; }
 .taxi-ask { margin: 0; color: #e5c58d; font-size: clamp(.9rem, 4vh, 1.4rem); font-weight: 750; }
-.taxi-name { margin: 0; font-size: clamp(2rem, 17vh, 6rem); font-weight: 850; line-height: 1.12; overflow-wrap: anywhere; }
-.taxi-address { margin: 0; font-size: clamp(1.4rem, 11vh, 3.6rem); font-weight: 750; line-height: 1.25; overflow-wrap: anywhere; }
+.taxi-name { margin: 0; font-size: clamp(1.7rem, min(17vh, 10vw), 6rem); font-weight: 850; line-height: 1.12; overflow-wrap: break-word; word-break: normal; hyphens: manual; }
+.taxi-address { margin: 0; font-size: clamp(1.25rem, min(11vh, 6.4vw), 3.6rem); font-weight: 750; line-height: 1.25; overflow-wrap: break-word; word-break: normal; hyphens: manual; }
 .taxi-missing { margin: 0; color: #f0c25a; font-size: .95rem; }
 .taxi-side { display: grid; gap: 6px; }
 .taxi-es { margin: 0; color: #d2d8d7; font-size: clamp(1rem, 6vh, 1.6rem); font-weight: 800; }
@@ -646,3 +646,5 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 body.has-weather-sheet { overflow: hidden; }
 .account-invite { margin: 0 0 var(--s-4); }
 .hero-meta[hidden], .hero-slide .subtitle[hidden] { display: none; }
+
+.top-bar-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }

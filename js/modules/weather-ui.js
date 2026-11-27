@@ -1,6 +1,6 @@
 // "El tiempo" card of the header carousel and the hourly sheet that opens when a day is tapped.
 import { byId, h } from './dom.js';
-import { condition, createWeatherStore, daySummary, ageText, HOURS_SHOWN } from './weather.js';
+import { condition, dayCondition, createWeatherStore, daySummary, ageText, HOURS_SHOWN } from './weather.js';
 import { addDays, localISO, weekdayShort, dateShort } from './trip-status.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { swipeDirection } from './swipe.js';
@@ -18,8 +18,8 @@ const ICON_PATHS = {
   fog: ['M7 13h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.5A3.3 3.3 0 0 0 7 13Z', 'M5 17h14M8 20.5h8'],
   storm: ['M7 14h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.5A3.3 3.3 0 0 0 7 14Z', 'M12.5 14l-2.5 4h3l-2 4']
 };
-export function weatherIcon(code) {
-  const kind = condition(code).kind;
+export function weatherIcon(code, kindOverride = null) {
+  const kind = kindOverride ?? condition(code).kind;
   const svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('viewBox', '0 0 24 24');
   svg.setAttribute('class', `wi wi-${kind}`);
@@ -43,7 +43,7 @@ const WEEKDAY_LONG = { Dom: 'Domingo', Lun: 'Lunes', Mar: 'Martes', Mié: 'Miér
 const dayLabel = (iso) => `${weekdayShort(iso)} ${iso.slice(8)}`;
 const dayLong = (iso) => `${weekdayShort(iso)} ${dateShort(iso)}`;
 const popText = (pop) => (pop === null ? '' : `${pop} %`);
-const dayAria = (day) => `${dayLong(day.date)}: ${condition(day.code).label}, máxima ${day.max} grados, mínima ${day.min}, lluvia ${day.pop ?? 0} %. Ver por horas`;
+const dayAria = (day) => `${dayLong(day.date)}: ${dayCondition(day).label}, máxima ${day.max} grados, mínima ${day.min}, lluvia ${day.pop ?? 0} %. Ver por horas`;
 
 /** `trip` is { arrival, departure } of the active city; `where` is { id, name, lat, lng }. Returns controls for main.js. */
 export function initWeather({ storage = userStorage(), fetcher, now = () => new Date() } = {}) {
@@ -76,7 +76,7 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
       const day = byDate.get(date);
       const cell = day
         ? h('button', { type: 'button', class: `wd${date === today ? ' is-today' : ''}`, dataset: { date }, 'aria-label': dayAria(day), onclick: () => openSheet(date) },
-          h('span', { class: 'wday' }, dayLabel(date)), weatherIcon(day.code),
+          h('span', { class: 'wday' }, dayLabel(date)), weatherIcon(day.code, dayCondition(day).kind),
           h('span', { class: 'wt' }, h('b', {}, `${day.max}°`), ` ${day.min}°`), h('span', { class: 'wp' }, popText(day.pop)))
         : h('div', { class: 'wd is-empty', dataset: { date }, 'aria-label': `${dayLong(date)}: sin previsión todavía` },
           h('span', { class: 'wday' }, dayLabel(date)), h('span', { class: 'wt' }, '—'), h('span', { class: 'wp' }, 'aún no'));

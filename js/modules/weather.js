@@ -18,6 +18,23 @@ export function condition(code) {
   return { kind: 'cloud', label: 'Variable' };
 }
 
+const SEVERE = ['storm', 'snow', 'rain'];
+/**
+ * The condition that stands for a whole day. The daily WMO code is the worst of the 24 hours (a foggy dawn makes the whole
+ * day "fog"), which disagrees with the daytime hours the sheet shows. So: rain, snow or storm in the daytime wins;
+ * otherwise the most frequent daytime condition; without hours, the daily code.
+ */
+export function dayCondition(day) {
+  const daytime = (day.hours ?? []).filter((hour) => hour.h >= 9 && hour.h <= 18 && hour.code !== null).map((hour) => condition(hour.code));
+  if (!daytime.length) return condition(day.code);
+  const severe = SEVERE.find((kind) => daytime.some((item) => item.kind === kind));
+  if (severe) return daytime.find((item) => item.kind === severe);
+  const counts = new Map();
+  for (const item of daytime) counts.set(item.kind, (counts.get(item.kind) ?? 0) + 1);
+  const [kind] = [...counts].sort((a, b) => b[1] - a[1])[0];
+  return daytime.find((item) => item.kind === kind);
+}
+
 export function forecastUrl({ lat, lng }, { from, to }) {
   const q = new URLSearchParams({
     latitude: String(lat),
@@ -63,7 +80,7 @@ export function parseForecast(json) {
 
 /** Short sentence for the top of the hourly sheet. */
 export function daySummary(day) {
-  const first = condition(day.code).label;
+  const first = dayCondition(day).label;
   const morning = day.hours.find((hour) => hour.h === 9);
   const afternoon = day.hours.find((hour) => hour.h === 15);
   const text = morning && afternoon && condition(morning.code).kind !== condition(afternoon.code).kind
