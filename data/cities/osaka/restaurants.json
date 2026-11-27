@@ -148,5 +148,93 @@
         "url": "https://osaka-info.jp/en/spot/takimi-koji/"
       }
     ]
+  },
+  {
+    "id": "food-08",
+    "name": "Kushikatsu Daruma · Namba (casa principal)",
+    "lat": 34.667866,
+    "lng": 135.502197,
+    "day": "15",
+    "type": "restaurant",
+    "foodCategory": "kushikatsu",
+    "desc": "Brochetas empanadas y fritas de la cadena más famosa de Osaka, en su local principal de Namba, a pocos minutos andando de Dotonbori. Cada brocheta es para el que la pide.",
+    "query": "Kushikatsu Daruma Namba Main Shop Osaka",
+    "pinApproximate": true,
+    "foodTypeLabel": "Kushikatsu · Namba",
+    "dayLabel": "15 dic · cena",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Tabelog: abre todos los días de 11:30 a 22:30 (fines de semana y festivos desde 10:30), último pedido 22:00; unos 1.000–3.000 ¥. Admite reserva. Rebozado con trigo y huevo, frito en aceite que puede mezclar otros ingredientes: no hay lista de alérgenos verificada, preguntad en el local. Norma de la casa: no mojéis la brocheta dos veces en la salsa común; usad la col cruda para echar más salsa.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kushikatsu+Daruma+Namba+Main+Shop+Osaka",
+    "links": [
+      {
+        "label": "Tabelog · Daruma Namba ↗",
+        "url": "https://tabelog.com/en/osaka/A2701/A270202/27012813/"
+      }
+    ]
+  },
+  {
+    "id": "food-09",
+    "name": "Shinsekai Kushikatsu Gifuya · Namba",
+    "lat": 34.665356,
+    "lng": 135.503082,
+    "day": "15",
+    "type": "restaurant",
+    "foodCategory": "kushikatsu",
+    "desc": "Kushikatsu de estilo Shinsekai en Namba, abierto las 24 horas: sirve de plan B si otros locales tienen cola o si cenáis tarde.",
+    "query": "Shinsekai Kushikatsu Gifuya Namba",
+    "pinApproximate": true,
+    "foodTypeLabel": "Kushikatsu · Namba (24 h)",
+    "dayLabel": "15 dic · cena tardía",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Tabelog: abierto 24 horas, todos los días, unos 1.000–3.000 ¥; cobra una pequeña tarifa por servicio de mesa (unos 396 ¥). Admite reserva. Rebozado con trigo y huevo, frito en aceite que puede mezclar otros ingredientes: no hay lista de alérgenos verificada, preguntad en el local. Norma de la casa: no mojéis la brocheta dos veces en la salsa común; usad la col cruda para echar más salsa.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Shinsekai+Kushikatsu+Gifuya+Namba",
+    "links": [
+      {
+        "label": "Tabelog · Gifuya Namba ↗",
+        "url": "https://tabelog.com/en/osaka/A2701/A270202/27142569/"
+      }
+    ]
+  },
+  {
+    "id": "food-10",
+    "name": "Oishii Kushikatsu Agetenka! Honten · Shinsaibashi",
+    "lat": 34.674229,
+    "lng": 135.504288,
+    "day": "15",
+    "type": "restaurant",
+    "foodCategory": "kushikatsu",
+    "desc": "Kushikatsu en Higashi-Shinsaibashi, a poca distancia del hotel y con horario nocturno largo. Ambiente de izakaya, más caro que las cadenas clásicas.",
+    "query": "Agetenka Kushikatsu Honten Shinsaibashi Osaka",
+    "pinApproximate": true,
+    "foodTypeLabel": "Kushikatsu · Shinsaibashi",
+    "dayLabel": "15 dic · noche",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Tabelog: de 17:00 a 02:00 (último pedido 01:00), unos 4.000–5.000 ¥; se paga una entrada de unos 385 ¥ y se puede fumar. Admite reserva y, si está lleno, puede derivar a un local hermano. Rebozado con trigo y huevo, frito en aceite que puede mezclar otros ingredientes: no hay lista de alérgenos verificada, preguntad en el local. Norma de la casa: no mojéis la brocheta dos veces en la salsa común; usad la col cruda para echar más salsa.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Agetenka+Kushikatsu+Honten+Shinsaibashi+Osaka",
+    "links": [
+      {
+        "label": "Tabelog · Agetenka Honten ↗",
+        "url": "https://tabelog.com/en/osaka/A2701/A270201/27118430/"
+      }
+    ]
+  },
+  {
+    "id": "food-11",
+    "name": "Kushikatsu Yokozuna · Shinsekai (casa principal)",
+    "lat": 34.65115,
+    "lng": 135.50592,
+    "day": "16",
+    "type": "restaurant",
+    "foodCategory": "kushikatsu",
+    "desc": "Kushikatsu en el corazón de Shinsekai, a los pies de la torre Tsutenkaku: el sitio para probar el ambiente más popular del barrio.",
+    "query": "Japan Ichi no Kushikatsu Yokozuna Shinsekai Honkan",
+    "pinApproximate": true,
+    "foodTypeLabel": "Kushikatsu · Shinsekai",
+    "dayLabel": "16 dic · Shinsekai",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Tabelog: unos 2.000–3.000 ¥; horario no verificado: consultad Google Maps. Rebozado con trigo y huevo, frito en aceite que puede mezclar otros ingredientes: no hay lista de alérgenos verificada, preguntad en el local. Norma de la casa: no mojéis la brocheta dos veces en la salsa común; usad la col cruda para echar más salsa.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Japan+Ichi+no+Kushikatsu+Yokozuna+Shinsekai+Honkan",
+    "links": [
+      {
+        "label": "Tabelog · Yokozuna Shinsekai ↗",
+        "url": "https://tabelog.com/en/osaka/A2701/A270206/27008417/"
+      }
+    ]
   }
 ]

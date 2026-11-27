@@ -360,5 +360,159 @@
     "dayLabel": "14 dic · Yamashina",
     "note": "Está en el entorno de la estación de Yamashina. Confirmad el horario y la disponibilidad antes de ir.",
     "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Yakitori+Kanazawa+Honkan+Yamashina+Kyoto"
+  },
+  {
+    "id": "food-21",
+    "name": "Katsukura · Sanjo (casa principal)",
+    "lat": 35.008972,
+    "lng": 135.768173,
+    "day": "11",
+    "type": "restaurant",
+    "foodCategory": "carne",
+    "desc": "Tonkatsu (cerdo empanado) con arroz y col a voluntad, en una calle comercial junto a Teramachi y Sanjo. Rebozado con trigo y huevo.",
+    "query": "Katsukura Sanjo Honten Kyoto",
+    "pinApproximate": true,
+    "foodTypeLabel": "Tonkatsu · comida",
+    "dayLabel": "11 dic · centro",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Datos de Tabelog; alérgenos no verificados: preguntad en el local. Abre todos los días de 11:00 a 21:00 (último pedido 20:30); unos 1.000–3.000 ¥. No admite reserva.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Katsukura+Sanjo+Honten+Kyoto",
+    "links": [
+      {
+        "label": "Tabelog · Katsukura Sanjo ↗",
+        "url": "https://tabelog.com/en/kyoto/A2601/A260201/26001918/"
+      }
+    ]
+  },
+  {
+    "id": "food-22",
+    "name": "Menya Takakura Nijo",
+    "lat": 35.013523,
+    "lng": 135.762772,
+    "day": "11",
+    "type": "restaurant",
+    "foodCategory": "fideos",
+    "desc": "Ramen muy valorado en Nakagyo (Tabelog 100). Buena opción para una comida rápida entre visitas del centro.",
+    "query": "Menya Takakura Nijo Kyoto",
+    "pinApproximate": true,
+    "foodTypeLabel": "Ramen · centro",
+    "dayLabel": "11 dic · centro",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Datos de Tabelog; alérgenos no verificados: preguntad en el local. Todos los días 11:30–15:00 y 18:00–21:00 (último pedido 14:50 y 20:50); unos 1.000–2.000 ¥. Sin reserva. Acepta tarjeta y pago móvil.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Menya+Takakura+Nijo+Kyoto",
+    "links": [
+      {
+        "label": "Tabelog · Menya Takakura Nijo ↗",
+        "url": "https://tabelog.com/en/kyoto/A2601/A260202/26003182/"
+      }
+    ]
+  },
+  {
+    "id": "food-23",
+    "name": "Ginjo Ramen Kubota",
+    "lat": 34.992844,
+    "lng": 135.755585,
+    "day": "11",
+    "type": "restaurant",
+    "foodCategory": "fideos",
+    "desc": "Ramen de caldo ligero «ginjo» cerca de Gojo, muy bien valorado en Tabelog. Un poco más al sur del centro.",
+    "query": "Ginjo Ramen Kubota Kyoto",
+    "pinApproximate": true,
+    "foodTypeLabel": "Ramen · Gojo",
+    "dayLabel": "11 dic · Gojo",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Datos de Tabelog; alérgenos no verificados: preguntad en el local. 11:00–15:00 y 18:00–22:30 (último pedido antes del cierre de cada turno); unos 1.000–2.000 ¥. Sin reserva. Solo efectivo.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ginjo+Ramen+Kubota+Kyoto",
+    "links": [
+      {
+        "label": "Tabelog · Ginjo Kubota ↗",
+        "url": "https://tabelog.com/en/kyoto/A2601/A260101/26004660/"
+      }
+    ]
+  },
+  {
+    "id": "food-24",
+    "name": "Honke Daiichi Asahi · Honten",
+    "lat": 34.985992,
+    "lng": 135.761459,
+    "day": "11",
+    "type": "restaurant",
+    "foodCategory": "fideos",
+    "desc": "Ramen de Kioto de toda la vida, delante de la estación de Kioto: práctico al llegar o al irse. Es uno de los ramen más populares de la ciudad.",
+    "query": "Honke Daiichi Asahi Honten Kyoto",
+    "pinApproximate": true,
+    "foodTypeLabel": "Ramen · estación de Kioto",
+    "dayLabel": "11 dic · estación",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Datos de Tabelog; alérgenos no verificados: preguntad en el local. Según Tabelog, abierto desde muy temprano hasta la 1:00 y cerrado los jueves (la propia página da dos horarios de apertura: confirmadlo). Unos 1.000–2.000 ¥. Sin reserva. Acepta tarjeta y pago móvil.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Honke+Daiichi+Asahi+Honten+Kyoto",
+    "links": [
+      {
+        "label": "Tabelog · Honke Daiichi Asahi ↗",
+        "url": "https://tabelog.com/en/kyoto/A2601/A260101/26000873/"
+      }
+    ]
+  },
+  {
+    "id": "food-25",
+    "name": "Kyoto Gion Okaru",
+    "lat": 35.004295,
+    "lng": 135.773697,
+    "day": "12",
+    "type": "restaurant",
+    "foodCategory": "fideos",
+    "desc": "Udon en Gion, famoso por sus raciones calientes y su ambiente local. Muy bien valorado (3,59 con más de 1.400 opiniones en Tabelog).",
+    "query": "Kyoto Gion Okaru udon",
+    "pinApproximate": true,
+    "foodTypeLabel": "Udon · Gion",
+    "dayLabel": "12 dic · Gion",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Datos de Tabelog; alérgenos no verificados: preguntad en el local. Lunes a jueves 11:00–15:00 y 17:00–02:00; sábado hasta las 03:00; domingo solo de 11:00 a 15:00 (sin servicio de noche). Unos 1.000–2.000 ¥. Solo efectivo. Sin reserva.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kyoto+Gion+Okaru+udon",
+    "links": [
+      {
+        "label": "Tabelog · Okaru ↗",
+        "url": "https://tabelog.com/en/kyoto/A2601/A260301/26001282/"
+      }
+    ]
+  },
+  {
+    "id": "food-26",
+    "name": "Honkaku Teuchi-Udon Taiga",
+    "lat": 34.958202,
+    "lng": 135.764099,
+    "day": "12",
+    "type": "restaurant",
+    "foodCategory": "fideos",
+    "desc": "Udon hecho a mano, entre los 100 mejores de Tabelog. Está en Fukakusa, al sur de Fushimi Inari: solo merece la pena si os pilla de paso.",
+    "query": "Honkaku Teuchi Udon Taiga Kyoto Fushimi",
+    "pinApproximate": true,
+    "foodTypeLabel": "Udon · Fukakusa",
+    "dayLabel": "12 dic · cerca de Fushimi",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Datos de Tabelog; alérgenos no verificados: preguntad en el local. Solo comida: 11:00–14:00, cerrado los martes; unos 1.000–2.000 ¥. Sin reserva. Solo efectivo. Es posible que se agote antes de cerrar.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Honkaku+Teuchi+Udon+Taiga+Kyoto+Fushimi",
+    "links": [
+      {
+        "label": "Tabelog · Taiga ↗",
+        "url": "https://tabelog.com/en/kyoto/A2601/A260601/26020260/"
+      }
+    ]
+  },
+  {
+    "id": "food-27",
+    "name": "Yamamoto Menzou",
+    "lat": 35.014393,
+    "lng": 135.785355,
+    "day": "12",
+    "type": "restaurant",
+    "foodCategory": "fideos",
+    "desc": "Udon artesano de Okazaki, uno de los más premiados de Kioto (Tabelog 100). Queda en Sakyo, fuera de la ruta del día 12: es una escapada para comer.",
+    "query": "Yamamoto Menzou udon Kyoto Okazaki",
+    "pinApproximate": true,
+    "foodTypeLabel": "Udon · Okazaki",
+    "dayLabel": "12 dic · Okazaki",
+    "note": "Ubicación aproximada (punto de la dirección según el geocodificador oficial GSI de Japón, no la puerta): confirmadla en Google Maps. Datos de Tabelog; alérgenos no verificados: preguntad en el local. Desde las 11:00 hasta que se agota; cerrado los jueves y el cuarto miércoles de cada mes; unos 1.000–2.000 ¥. Solo efectivo. Admite reserva por teléfono el mismo día desde las 9:00.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Yamamoto+Menzou+udon+Kyoto+Okazaki",
+    "links": [
+      {
+        "label": "Tabelog · Yamamoto Menzou ↗",
+        "url": "https://tabelog.com/en/kyoto/A2601/A260301/26002504/"
+      }
+    ]
   }
 ]

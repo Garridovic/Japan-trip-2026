@@ -98,7 +98,7 @@ test('restaurants never invent hours or addresses and mark approximate pins', ()
     assert.ok(restaurant.note, restaurant.id);
   });
   const approximate = restaurants.filter(({ pinApproximate }) => pinApproximate).map(({ id }) => id);
-  assert.deepEqual(approximate.sort(), ['food-02', 'food-05', 'food-06']);
+  assert.deepEqual(approximate.sort(), ['food-02', 'food-05', 'food-06', 'food-08', 'food-09', 'food-10', 'food-11']);
   assert.deepEqual([...new Set(restaurants.map(({ foodCategory }) => foodCategory))].sort(), ['dulces', 'kushikatsu', 'mercado', 'oden', 'okonomiyaki', 'takoyaki', 'varios']);
 });
 
