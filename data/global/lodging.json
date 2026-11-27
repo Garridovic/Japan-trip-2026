@@ -54,7 +54,8 @@
       "freeCancellationUntil": "2026-12-08",
       "checkInHint": "Check-in orientativo 12:00–14:00 (por confirmar)",
       "nameJa": "ブリッジホテル心斎橋",
-      "addressJa": "大阪府大阪市中央区西心斎橋1-10-24"
+      "addressJa": "大阪府大阪市中央区西心斎橋1-10-24",
+      "phone": "+81 6-4963-6501"
     },
     {
       "id": "nara",
@@ -65,7 +66,9 @@
       "mapsUrl": "https://maps.app.goo.gl/yrsz5D9qNysvfW4D9",
       "checkIn": "2026-12-17",
       "checkOut": "2026-12-18",
-      "freeCancellationUntil": "2026-12-10"
+      "freeCancellationUntil": "2026-12-10",
+      "nameJa": "ゆざんアパートメント三条",
+      "addressJa": "奈良県奈良市三条町532-2"
     },
     {
       "id": "tokyo-2",
