@@ -128,3 +128,36 @@ test.describe('V14.1.1 fixes', () => {
     expect(box.height).toBeLessThan(30);
   });
 });
+
+test.describe('V14.1.3 equal cards', () => {
+  test.use({ timezoneId: 'Asia/Tokyo', viewport: { width: 390, height: 844 }, hasTouch: true });
+
+  for (const [label, iso, count] of [['before the trip', '2026-12-09T10:00:00', 2], ['during the trip', '2026-12-12T10:40:00', 3]]) {
+    test(`all header cards have the same height ${label} and the weather card has no empty gap`, async ({ page }) => {
+      await page.clock.setFixedTime(tokyo(iso));
+      await mockWeather(page);
+      await page.goto('/');
+      await expect(page.locator('#weather-brief p').first()).toBeVisible();
+      const heights = await page.locator('.hero-slide:visible').evaluateAll((nodes) => nodes.map((node) => Math.round(node.getBoundingClientRect().height)));
+      expect(heights).toHaveLength(count);
+      expect(new Set(heights).size).toBe(1);
+      const gap = await page.locator('[data-slide="tiempo"]').evaluate((slide) => {
+        const note = slide.querySelector('.weather-note').getBoundingClientRect();
+        const brief = slide.querySelector('.weather-brief').getBoundingClientRect();
+        return Math.round(note.top - brief.bottom);
+      });
+      expect(gap).toBeLessThan(40);
+    });
+  }
+
+  test('the weather card says the day, its summary, sun times and a tip with the figure it comes from', async ({ page }) => {
+    await page.clock.setFixedTime(tokyo('2026-12-12T10:40:00'));
+    await mockWeather(page);
+    await page.goto('/');
+    const brief = page.locator('#weather-brief');
+    await expect(brief).toContainText('Hoy:');
+    await expect(brief).toContainText('máx 11° · mín 2°');
+    await expect(brief).toContainText('Amanece 06:56 · anochece 16:46');
+    await expect(brief).toContainText('Frío por la mañana (2°): lleva abrigo');
+  });
+});

@@ -89,6 +89,18 @@ export function daySummary(day) {
   return `${text} · máx ${day.max}° · mín ${day.min}°`;
 }
 
+/** Practical tips from the day's own numbers (nothing is invented: every tip names the figure it comes from). */
+export function dayAdvice(day) {
+  const tips = [];
+  const cold = day.hours.find((hour) => hour.h <= 9 && hour.t !== null)?.t ?? day.min;
+  if (Math.min(cold, day.min) <= 5) tips.push(`Frío por la mañana (${Math.min(cold, day.min)}°): lleva abrigo`);
+  else if (day.max <= 12) tips.push(`Día fresco (máx ${day.max}°): lleva una capa de abrigo`);
+  if (day.max >= 24) tips.push(`Calor (máx ${day.max}°): lleva agua`);
+  if (day.pop !== null && day.pop >= 50) tips.push(`Lluvia probable (${day.pop} %): lleva paraguas`);
+  else if (day.pop !== null && day.pop >= 30) tips.push(`Algo de lluvia posible (${day.pop} %)`);
+  return tips;
+}
+
 export function ageText(fetchedAt, now = Date.now()) {
   const minutes = Math.max(0, Math.round((now - fetchedAt) / 60_000));
   if (minutes < 2) return 'actualizado ahora';

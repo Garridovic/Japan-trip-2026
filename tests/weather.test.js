@@ -98,3 +98,13 @@ test('the icon of a day matches the daytime hours, not a foggy dawn', async () =
   assert.equal(dayCondition({ code: 45, hours: [] }).kind, 'fog', 'without hours the daily code is used');
   assert.equal(dayCondition({ code: 0, hours: hours([0, 0, 0, 2, 0, 0]) }).kind, 'sun');
 });
+
+test('tips come from the day figures and say which figure', async () => {
+  const { dayAdvice } = await import('../js/modules/weather.js');
+  const day = (over) => ({ code: 0, max: 11, min: 2, pop: 0, hours: [{ h: 6, code: 0, t: 2, pop: 0, wind: 3 }], ...over });
+  assert.deepEqual(dayAdvice(day({})), ['Frío por la mañana (2°): lleva abrigo']);
+  assert.deepEqual(dayAdvice(day({ min: 9, max: 18, hours: [{ h: 6, code: 0, t: 9, pop: 0, wind: 3 }], pop: 70 })), ['Lluvia probable (70 %): lleva paraguas']);
+  assert.deepEqual(dayAdvice(day({ min: 9, max: 18, hours: [], pop: 35 })), ['Algo de lluvia posible (35 %)']);
+  assert.deepEqual(dayAdvice(day({ min: 12, max: 26, hours: [], pop: 0 })), ['Calor (máx 26°): lleva agua']);
+  assert.deepEqual(dayAdvice(day({ min: 8, max: 17, hours: [], pop: 0 })), []);
+});

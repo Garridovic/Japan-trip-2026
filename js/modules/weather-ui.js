@@ -1,6 +1,6 @@
 // "El tiempo" card of the header carousel and the hourly sheet that opens when a day is tapped.
 import { byId, h } from './dom.js';
-import { condition, dayCondition, createWeatherStore, daySummary, ageText, HOURS_SHOWN } from './weather.js';
+import { condition, dayCondition, createWeatherStore, daySummary, dayAdvice, ageText, HOURS_SHOWN } from './weather.js';
 import { addDays, localISO, weekdayShort, dateShort } from './trip-status.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { swipeDirection } from './swipe.js';
@@ -83,11 +83,25 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
       cells.push(cell);
     }
     strip.replaceChildren(...cells);
+    renderBrief();
     strip.style.setProperty('--days', String(cells.length));
     const missing = cells.length - days.length;
     note.textContent = stored
       ? `Open-Meteo · ${ageText(stored.fetchedAt, now().getTime())}${missing ? ` · ${missing === 1 ? 'un día más aparecerá' : `${missing} días más aparecerán`} cuando haya previsión` : ' · toca un día para verlo por horas'}`
       : (navigator.onLine === false ? 'Sin internet y aún sin previsión guardada.' : 'Cargando la previsión…');
+  }
+
+  /** One useful line under the strip: today (or the first day with a forecast), its summary, sun times and tips. */
+  function renderBrief() {
+    const box = byId('weather-brief');
+    if (!days.length) { box.replaceChildren(); return; }
+    const today = localISO(now());
+    const day = days.find((item) => item.date === today) ?? days[0];
+    const label = day.date === today ? 'Hoy' : dayLong(day.date);
+    box.replaceChildren(
+      h('p', { class: 'weather-brief-title' }, h('b', {}, `${label}: `), daySummary(day)),
+      ...(day.sunrise && day.sunset ? [h('p', {}, `Amanece ${day.sunrise} · anochece ${day.sunset}`)] : []),
+      ...dayAdvice(day).map((tip) => h('p', { class: 'weather-tip' }, tip)));
   }
 
   async function refresh({ force = false } = {}) {
