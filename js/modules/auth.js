@@ -69,6 +69,8 @@ export async function createAuth(config, { loadSdk = () => import(SDK_URL), win 
     get callbackError() { return callbackError; },
     isAuthenticated: () => Boolean(user),
     login: (returnTo = `${win.location.pathname}${win.location.search}`) => client.loginWithRedirect({ authorizationParams: { connection: 'google-oauth2' }, appState: { returnTo } }),
+    /** Without `connection`: Auth0's own login page shows every connection enabled for this client (user and password, Google...). */
+    loginWithPrompt: (returnTo = `${win.location.pathname}${win.location.search}`) => client.loginWithRedirect({ appState: { returnTo } }),
     logout: () => client.logout({ logoutParams: { returnTo: redirectUri } }),
     /** A Management API access token for the signed-in user. Rejects when offline or when the session is gone. */
     getToken: () => client.getTokenSilently({ authorizationParams: { audience, scope: SCOPE } }),

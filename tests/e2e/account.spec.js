@@ -9,7 +9,8 @@ export class Auth0Client {
   async handleRedirectCallback() { return { appState: JSON.parse(sessionStorage.getItem('fake-app-state') || '{}') }; }
   async isAuthenticated() { return Boolean(localStorage.getItem('fake-session')); }
   async getUser() { return JSON.parse(localStorage.getItem('fake-session') || 'null'); }
-  async loginWithRedirect({ appState }) {
+  async loginWithRedirect({ appState, authorizationParams }) {
+    sessionStorage.setItem('fake-login-params', JSON.stringify(authorizationParams ?? null));
     const roles = JSON.parse(sessionStorage.getItem('fake-roles') || 'null'); // what the Auth0 Action would put in the ID token
     localStorage.setItem('fake-session', JSON.stringify({ sub: 'google-oauth2|123', name: 'Alex García', given_name: 'Alex', email: 'alex@example.com', ...(roles ? { 'https://japan-trip-2026/roles': roles } : {}) }));
     sessionStorage.setItem('fake-app-state', JSON.stringify(appState));
@@ -66,6 +67,28 @@ test.describe('optional account (Auth0, Google)', () => {
     await expect(page.locator('#account-invite')).toBeHidden();
     await page.reload();
     await expect(page.locator('#account-invite')).toBeHidden();
+  });
+
+  test('«Entrar con Google» goes straight to Google; «Entrar» asks Auth0 for its normal login page (no connection)', async ({ page }) => {
+    await enableAuth(page);
+    await page.goto('/');
+    await expect(page.locator('#hero-title')).not.toHaveText('…');
+    await page.locator('#account-button').click();
+    const buttons = page.locator('#account-popover .account-actions button');
+    await expect(buttons.filter({ hasText: 'Entrar con Google' })).toHaveCount(1);
+    await expect(page.getByRole('button', { name: 'Entrar', exact: true })).toBeVisible();
+    expect((await page.getByRole('button', { name: 'Entrar', exact: true }).boundingBox()).height).toBeGreaterThanOrEqual(44);
+    await page.getByRole('button', { name: 'Entrar', exact: true }).click();
+    await expect(page.locator('#account-greeting')).toHaveText('Hola, Alex');
+    expect(await page.evaluate(() => sessionStorage.getItem('fake-login-params'))).toBe('null'); // no `connection` was sent
+    await page.locator('#account-button').click();
+    await page.getByRole('button', { name: 'Cerrar sesión' }).first().click();
+    await page.getByRole('button', { name: 'Cerrar sesión' }).first().click();
+    await expect(page.locator('#account-greeting')).toBeHidden();
+    await page.locator('#account-button').click();
+    await page.getByRole('button', { name: 'Entrar con Google' }).first().click();
+    await expect(page.locator('#account-greeting')).toHaveText('Hola, Alex');
+    expect(JSON.parse(await page.evaluate(() => sessionStorage.getItem('fake-login-params')))).toEqual({ connection: 'google-oauth2' });
   });
 
   test('first login unions this device with the account, greets by name and never uploads private notes', async ({ page }) => {

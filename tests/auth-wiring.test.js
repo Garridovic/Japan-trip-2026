@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { AUTH_CONFIG } from '../assets/auth-config.js';
-import { isConfigured, isRedirectCallback, safeReturnTo, managementAudience, isAdmin, ROLES_CLAIM, ADMIN_ROLE } from '../js/modules/auth.js';
+import { createAuth, isConfigured, isRedirectCallback, safeReturnTo, managementAudience, isAdmin, ROLES_CLAIM, ADMIN_ROLE } from '../js/modules/auth.js';
 import { greetingName, statusText, RESETS } from '../js/modules/account.js';
 import { SYNCED_KEYS } from '../js/modules/user-data.js';
 import { VISITED_KEY } from '../js/modules/visited.js';
@@ -72,4 +72,16 @@ test('the administrator role is read only from the roles claim in the ID token',
   assert.equal(isAdmin({ user_metadata: { roles: ['administrador'] } }), false);
   assert.equal(isAdmin({}), false);
   assert.equal(isAdmin(null), false);
+});
+
+test('«Entrar con Google» sends the Google connection; «Entrar» sends none, so Auth0 shows its normal login page', async () => {
+  const calls = [];
+  class Auth0Client { async loginWithRedirect(options) { calls.push(options); } }
+  const win = { document: { baseURI: 'https://garridovic.github.io/Japan-trip-2026/' }, location: { pathname: '/Japan-trip-2026/', search: '?view=mapa' } };
+  const auth = await createAuth({ enabled: true, domain: 't.eu.auth0.com', clientId: 'x' }, { loadSdk: async () => ({ Auth0Client }), win });
+  await auth.login();
+  await auth.loginWithPrompt();
+  assert.deepEqual(calls[0].authorizationParams, { connection: 'google-oauth2' });
+  assert.equal(calls[1].authorizationParams, undefined);
+  assert.deepEqual(calls[1].appState, { returnTo: '/Japan-trip-2026/?view=mapa' });
 });

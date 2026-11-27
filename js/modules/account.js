@@ -129,7 +129,10 @@ export async function initAccount({ config, userData, win = window, storage = nu
   }
 
   function privacy() { return h('p', {}, '🔒 Los PINs y las reservas del alojamiento nunca salen de este dispositivo.'); }
-  function signInButton() { return h('button', { type: 'button', class: 'filter account-google', onclick: () => signIn(), disabled: !online() || !auth }, googleLogo(), 'Entrar con Google'); }
+  function signInButton() { return h('button', { type: 'button', class: 'filter account-google', onclick: () => signIn(false), disabled: !online() || !auth }, googleLogo(), 'Entrar con Google'); }
+
+  /** «Entrar»: Auth0's normal login page (no connection forced), so every enabled way of signing in is offered. */
+  function signInPromptButton() { return h('button', { type: 'button', class: 'filter account-enter', onclick: () => signIn(true), disabled: !online() || !auth }, 'Entrar'); }
 
   function resetButtons() {
     return RESETS.map((item) => h('button', { type: 'button', class: 'filter', onclick: () => { resetItem = item; view = 'reset'; render(); } }, item.button));
@@ -186,6 +189,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
           privacy(),
           h('div', { class: 'account-actions' },
             signInButton(),
+            signInPromptButton(),
             !online() ? h('p', {}, 'Para entrar hace falta internet. La guía sigue funcionando sin él.') : null,
             !auth ? h('p', {}, 'No se ha podido cargar el inicio de sesión ahora mismo.') : null)),
         proximity ? section('Lugares cercanos', proximity.settingNode()) : null,
@@ -273,10 +277,10 @@ export async function initAccount({ config, userData, win = window, storage = nu
   win.addEventListener('online', render);
   win.addEventListener('offline', render);
 
-  async function signIn() {
+  async function signIn(withPrompt = false) {
     if (!auth || !online()) return;
     try { await userData.flush(); } catch { /* ignore */ }
-    try { await auth.login(); } catch (error) { console.warn('[account] login failed', error); toast('No se ha podido abrir el inicio de sesión.'); }
+    try { await (withPrompt ? auth.loginWithPrompt() : auth.login()); } catch (error) { console.warn('[account] login failed', error); toast('No se ha podido abrir el inicio de sesión.'); }
   }
 
   async function signOut(wipe) {
