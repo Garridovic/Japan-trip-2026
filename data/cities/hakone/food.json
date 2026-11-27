@@ -1,0 +1,45 @@
+{
+  "kicker": "Una parada y un plato típico",
+  "title": "Comer en Hakone",
+  "lead": "Casi todo lo vais a comer en el ryokan; aquí va una parada de camino y los platos típicos.",
+  "intro": "Hakone tiene pocas direcciones que haya podido verificar: la noche del 10 probablemente cenáis en el ryokan (confirmad si la cena está incluida) y el 11 comeréis en Moto-Hakone sin local concreto. Solo he añadido la casa de té que cita Japan Guide.",
+  "highlightsLabel": "Para probar en Hakone",
+  "highlights": [
+    {
+      "title": "Cena del ryokan",
+      "text": "Cena de varios platos de temporada, servida en el propio alojamiento. No sé qué incluye vuestra reserva."
+    },
+    {
+      "title": "Amazake",
+      "text": "Bebida caliente y dulce de arroz fermentado, con poco o nada de alcohol: muy de invierno. La sirve una casa de té de la antigua carretera."
+    },
+    {
+      "title": "Huevos negros (kuro-tamago)",
+      "text": "Huevos cocidos en las aguas volcánicas de Owakudani. Con el teleférico cerrado en diciembre, quizá no los encontréis: no lo he verificado."
+    }
+  ],
+  "dayFilters": [
+    {
+      "value": "todos",
+      "label": "Todos los días"
+    },
+    {
+      "value": "11",
+      "label": "11 dic"
+    }
+  ],
+  "typeFilters": [
+    {
+      "value": "todos",
+      "label": "Todos"
+    },
+    {
+      "value": "amazake",
+      "label": "Amazake y dulces"
+    }
+  ],
+  "note": {
+    "label": "Importante:",
+    "text": "Primera versión. Horarios sin verificar en la web del local; confirmad en Google Maps antes de ir."
+  }
+}

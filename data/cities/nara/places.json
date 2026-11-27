@@ -10,22 +10,73 @@
     "query": "Yuzan apartment Sanjo Nara"
   },
   {
+    "id": "kofukuji",
+    "name": "Kofuku-ji",
+    "lat": 34.68297,
+    "lng": 135.83187,
+    "day": "17",
+    "type": "itinerary",
+    "desc": "Templo con pagoda de cinco pisos al borde del parque de Nara; los terrenos son de paso libre.",
+    "query": "Kofukuji Temple Nara"
+  },
+  {
+    "id": "nara-park",
+    "name": "Parque de Nara y ciervos",
+    "lat": 34.6829,
+    "lng": 135.8546,
+    "day": "17",
+    "type": "itinerary",
+    "desc": "Gran parque con más de mil ciervos sueltos y las galletas shika senbei (≈ 200 ¥).",
+    "query": "Nara Park deer",
+    "pinApproximate": true
+  },
+  {
     "id": "todaiji",
-    "name": "Tōdai-ji",
-    "lat": 34.689,
-    "lng": 135.8398,
-    "day": "extra",
-    "type": "alternative",
-    "altCategory": "templos",
-    "desc": "Templo del Gran Buda (Daibutsuden). Sellos (goshuin) comprobados en su web oficial, 300 ¥ en cada sala. Visita opcional; coordenada orientativa.",
-    "query": "Todaiji Nara",
-    "proximity": {
-      "kind": "temple",
-      "radius": 120
-    },
+    "name": "Tōdai-ji y Gran Buda",
+    "lat": 34.68824,
+    "lng": 135.8397,
+    "day": "17",
+    "type": "itinerary",
+    "desc": "Templo del Gran Buda de bronce en el Daibutsuden, uno de los mayores edificios de madera del mundo.",
+    "query": "Todaiji Temple Nara",
     "stamp": {
       "kind": "goshuin",
       "source": "https://www.todaiji.or.jp/sutra-and-goshuin/goshuin/"
+    },
+    "proximity": {
+      "kind": "temple",
+      "radius": 120
     }
+  },
+  {
+    "id": "naramachi",
+    "name": "Naramachi",
+    "lat": 34.6776,
+    "lng": 135.8313,
+    "day": "17",
+    "type": "itinerary",
+    "desc": "Antiguo barrio de comerciantes con casas machiya, tiendas y cafeterías, junto a Gangoji.",
+    "query": "Naramachi Nara"
+  },
+  {
+    "id": "kasuga",
+    "name": "Kasuga Taisha",
+    "lat": 34.68223,
+    "lng": 135.8459,
+    "day": "18",
+    "type": "itinerary",
+    "desc": "Gran santuario entre cedros con miles de farolillos de piedra y bronce.",
+    "query": "Kasuga Taisha Nara"
+  },
+  {
+    "id": "toshodaiji",
+    "name": "Tōshōdai-ji (extra)",
+    "lat": 34.67574,
+    "lng": 135.78535,
+    "day": "extra",
+    "type": "alternative",
+    "desc": "Templo del año 759 con el salón principal restaurado, en el oeste de Nara.",
+    "query": "Toshodaiji Temple Nara",
+    "altCategory": "extra"
   }
 ]

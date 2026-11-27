@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "food-01",
+    "name": "Amasake Chaya (Hatajuku)",
+    "lat": 35.20203,
+    "lng": 139.04871,
+    "day": "11",
+    "type": "restaurant",
+    "foodCategory": "amazake",
+    "desc": "Casa de té en la antigua carretera Tokaido que sirve amazake caliente y dulces japoneses, junto a un pequeño museo gratuito de la ruta.",
+    "query": "Amazake Chaya Hakone Hatajuku",
+    "foodTypeLabel": "Casa de té · amazake",
+    "dayLabel": "11 dic · de camino a Odawara (opcional)",
+    "note": "Japan Guide la cita en el tramo Moto-Hakone–Hatajuku del Tokaido. Está fuera del recorrido del lago: no he verificado si el autobús a Odawara para allí, ni el horario ni los precios. Coordenada de OpenStreetMap.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Amazake+Chaya+Hakone+Hatajuku",
+    "links": [
+      {
+        "label": "Japan Guide · Old Tokaido ↗",
+        "url": "https://www.japan-guide.com/e/e5205.html"
+      }
+    ]
+  }
+]

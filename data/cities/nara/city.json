@@ -2,13 +2,13 @@
   "id": "nara",
   "timezone": "Asia/Tokyo",
   "pageTitle": "Nara · 17–18 diciembre 2026",
-  "description": "Ficha de Nara (17–18 diciembre 2026): alojamiento, mapa y previsión del tiempo. Todavía sin guía.",
+  "description": "Guía de Nara (17–18 diciembre 2026): Kofuku-ji, ciervos, Tōdai-ji y Kasuga Taisha, con comida típica. Primera versión.",
   "hero": {
-    "subtitle": "Aún sin guía de Nara: de momento solo están el alojamiento, el mapa y la previsión del tiempo.",
+    "subtitle": "Una noche junto a Sanjo-dori: templos, ciervos y dulces de mochi, y Kasuga Taisha por la mañana antes de seguir a Tokio. Primera versión: revisad horarios antes de ir.",
     "meta": [
       "17–18 diciembre 2026",
       "1 noche",
-      "Contenido en preparación"
+      "Base: Sanjo-dori"
     ],
     "hotel": {
       "name": "Yuzan apartment Sanjo",
@@ -22,9 +22,30 @@
     ],
     "zoom": 14,
     "queryContext": "Nara, Japan",
-    "legendSummary": "Leyenda del mapa",
-    "dayFilters": [],
+    "legendSummary": "Leyenda del mapa · color por jornada",
+    "dayFilters": [
+      {
+        "value": "17",
+        "label": "17 dic",
+        "short": "17 dic",
+        "color": "#c45a4a",
+        "legend": "17 dic · Kofuku-ji, ciervos y Tōdai-ji"
+      },
+      {
+        "value": "18",
+        "label": "18 dic",
+        "short": "18 dic",
+        "color": "#3f70a5",
+        "legend": "18 dic · Kasuga Taisha"
+      }
+    ],
     "alternativeCategories": [
+      {
+        "id": "extra",
+        "label": "Visitas extra",
+        "color": "#8554a4",
+        "legend": "Visitas extra opcionales"
+      },
       {
         "id": "templos",
         "label": "Templos y santuarios",

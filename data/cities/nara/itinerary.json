@@ -3,6 +3,120 @@
   "year": 2026,
   "dates": "17–18 diciembre",
   "hotel": "Yuzan apartment Sanjo",
-  "summaryNote": "Nara todavía no tiene itinerario en esta guía.",
-  "days": []
+  "summaryNote": "Primera versión: horas orientativas propuestas por mí a partir de Japan Guide y la guía de turismo de Nara. Supongo llegar hacia las 11:00 (según el borrador de Osaka) y salir hacia Tokio el 18 por la mañana o a mediodía; sin verificar.",
+  "days": [
+    {
+      "key": "17",
+      "date": "2026-12-17",
+      "label": "17 diciembre",
+      "route": "Osaka → Nara · Kofuku-ji, ciervos, Tōdai-ji",
+      "focus": "Llegada, grandes templos del parque y cena en Naramachi",
+      "quick": {
+        "date": "Jue · 17 dic",
+        "zone": "Parque de Nara · Naramachi",
+        "title": "Templos, ciervos y mochi",
+        "route": [
+          "Apartamento",
+          "Nakatanidou",
+          "Kofuku-ji",
+          "Ciervos",
+          "Tōdai-ji",
+          "Naramachi"
+        ],
+        "note": "Todo a pie desde Sanjo-dori"
+      },
+      "detail": {
+        "dayOfWeek": "jue",
+        "title": "Kofuku-ji, ciervos, Tōdai-ji y Naramachi",
+        "summary": "Un día de paseo corto y compacto: casi todo se hace a pie.",
+        "lead": "Borrador mío con horas orientativas. Las horas de llegada dependen de cómo salgáis de Osaka. La puesta de sol será hacia las 16:50 (dato de Osaka; no verificado para Nara), y Tōdai-ji cierra a las 17:00 en invierno: dejadlo para la tarde pero sin pasaros.",
+        "stops": [
+          {
+            "time": "11:00–11:45",
+            "title": "Llegada a Nara y apartamento",
+            "text": "El alojamiento está en Sanjocho; calculado con las coordenadas, queda a ≈ 0,7 km de la estación Kintetsu Nara (unos 10 minutos a pie, sin verificar).",
+            "suggestion": "No sé la hora de check-in: dejad las maletas o preguntad al anfitrión."
+          },
+          {
+            "time": "11:45–12:30",
+            "title": "Yomogi mochi en Nakatanidou y comida en Sanjo-dori",
+            "text": "Nakatanidou, citada por la guía oficial de turismo de Nara por su mochi de artemisa machacado a toda velocidad, queda en Sanjo-dori, a unos pasos del apartamento. Para comer, kakinoha-zushi en Hompo Tanaka (Higashimuki)."
+          },
+          {
+            "time": "12:45–14:00",
+            "title": "Kofuku-ji",
+            "text": "Terrenos abiertos todo el día; edificios y museo de 9:00 a 17:00. Pagoda de cinco pisos y Salón Dorado Central (500 ¥)."
+          },
+          {
+            "time": "14:00–15:00",
+            "title": "Parque de Nara y ciervos",
+            "text": "Galletas shika senbei a ≈ 200 ¥. Mansos pero insistentes: guardad la comida en la mochila hasta que decidáis."
+          },
+          {
+            "time": "15:00–16:45",
+            "title": "Tōdai-ji",
+            "text": "Daibutsuden de 8:00 a 17:00 en invierno, 800 ¥. Gran puerta Nandaimon, guardianes Nio y pilar con agujero.",
+            "suggestion": "Desde Kofuku-ji hay unos 20 minutos andando (estimación mía, sin verificar). Llegando a las 15:00 hay tiempo hasta el cierre."
+          },
+          {
+            "time": "17:00–19:30",
+            "title": "Naramachi y cena",
+            "text": "El barrio se pasea de tarde-noche; los templos ya habrán cerrado. No he verificado restaurantes concretos de cena: elegid en Naramachi o Sanjo-dori."
+          }
+        ],
+        "transport": "Casi todo a pie. Autobuses Nara Kotsu por el parque; los pases de 1 día cuestan 600 ¥ (según Japan Guide).",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Yuzan+apartment+Sanjo+Nara&destination=Todaiji+Temple&waypoints=Nakatanidou+Nara%7CKofukuji+Temple&travelmode=walking"
+      }
+    },
+    {
+      "key": "18",
+      "date": "2026-12-18",
+      "label": "18 diciembre",
+      "route": "Kasuga Taisha → salida hacia Tokio",
+      "focus": "Santuario al amanecer y salida",
+      "quick": {
+        "date": "Vie · 18 dic",
+        "zone": "Kasuga Taisha",
+        "title": "Kasuga Taisha y salida",
+        "route": [
+          "Apartamento",
+          "Kasuga Taisha",
+          "Estación"
+        ],
+        "note": "Después, viaje a Tokio"
+      },
+      "detail": {
+        "dayOfWeek": "vie",
+        "title": "Kasuga Taisha y salida hacia Tokio",
+        "summary": "Una mañana tranquila en el santuario antes del trayecto largo.",
+        "lead": "Borrador mío. No he verificado los trenes de Nara a Tokio ni las horas: comprobad el trayecto y los billetes antes.",
+        "stops": [
+          {
+            "time": "08:00–08:30",
+            "title": "Desayuno y camino a Kasuga Taisha",
+            "text": "Son unos 30 minutos andando desde Kintetsu Nara según Japan Guide, o autobús (≈ 250 ¥, parada Kasuga Taisha Honden)."
+          },
+          {
+            "time": "08:30–10:15",
+            "title": "Kasuga Taisha",
+            "text": "Abre a las 7:00 en invierno (hasta las 17:00); la zona interior abre a las 9:00 (700 ¥), así que llegando a las 8:30 podéis pasear antes por los senderos de farolillos.",
+            "suggestion": "Entrad al interior nada más abrir: a veces está cerrado."
+          },
+          {
+            "time": "10:15–11:00",
+            "title": "Vuelta y check-out",
+            "text": "Regreso a pie o en autobús al apartamento y recogida de maletas."
+          },
+          {
+            "time": "11:00–",
+            "title": "Salida hacia Tokio",
+            "text": "No he verificado el trayecto. Opciones habituales: tren a Kioto y Shinkansen desde allí. Comprobad horarios y reservas.",
+            "suggestion": "Si salís tarde, Tōshōdai-ji (extra) cabe por la mañana."
+          }
+        ],
+        "transport": "A pie o autobús; luego tren hacia Kioto/Tokio (sin verificar).",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Yuzan+apartment+Sanjo+Nara&destination=Kasuga+Taisha&travelmode=walking"
+      }
+    }
+  ]
 }

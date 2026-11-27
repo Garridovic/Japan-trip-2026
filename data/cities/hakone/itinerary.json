@@ -3,6 +3,123 @@
   "year": 2026,
   "dates": "10–11 diciembre",
   "hotel": "Hakone Onsen Yuyado Yamanoshou",
-  "summaryNote": "Hakone todavía no tiene itinerario en esta guía.",
-  "days": []
+  "summaryNote": "Primera versión: horas orientativas propuestas por mí a partir de las fuentes (Japan Guide). No sé a qué hora llegáis ni el horario de check-in, ni los horarios invernales de autobuses y barcos: confirmad antes de ir.",
+  "days": [
+    {
+      "key": "10",
+      "date": "2026-12-10",
+      "label": "10 diciembre",
+      "route": "Tokio → Hakone · Sengokuhara",
+      "focus": "Llegada, arte y pampas en la zona del ryokan",
+      "quick": {
+        "date": "Jue · 10 dic",
+        "zone": "Sengokuhara",
+        "title": "Llegada, arte y onsen",
+        "route": [
+          "Ryokan",
+          "Museo POLA",
+          "Campo de pampas",
+          "Onsen y cena"
+        ],
+        "note": "Todo cerca del ryokan"
+      },
+      "detail": {
+        "dayOfWeek": "jue",
+        "title": "Llegada a Hakone y tarde en Sengokuhara",
+        "summary": "Llegada desde Tokio, un museo, un paseo por la pampa y la noche de onsen.",
+        "lead": "Borrador mío. No sé a qué hora salís de Tokio, así que he supuesto llegar a Sengokuhara hacia las 13:30. Si llegáis más tarde, quitad el campo de pampas y dejad el museo.",
+        "stops": [
+          {
+            "time": "13:30–14:15",
+            "title": "Llegada a Sengokuhara y dejar equipaje",
+            "text": "Desde Tokio, el Shinkansen llega a Odawara en unos 30–35 minutos (Kodama y algunos Hikari, ≈ 3.500 ¥ según Japan Guide); desde Odawara hay autobuses a la zona. También hay autobús directo de Odakyu desde Shinjuku a Togendai (≈ 140 min, ≈ 2.200 ¥).",
+            "suggestion": "No he verificado la hora de check-in del ryokan. Si es posterior, preguntad si podéis dejar las maletas."
+          },
+          {
+            "time": "14:30–15:45",
+            "title": "Museo POLA",
+            "text": "Abre de 9:00 a 17:00 (última entrada 16:30); entrada 2.200 ¥. La visita lleva 45–60 minutos, así que sobra tiempo.",
+            "suggestion": "Mirad el calendario oficial: hay cierres sueltos por cambio de exposición."
+          },
+          {
+            "time": "16:00–16:45",
+            "title": "Campo de pampas de Sengokuhara",
+            "text": "Camino único hasta un mirador, a pocos pasos de la parada Sengoku Kogen. En invierno la hierba está seca y marrón.",
+            "suggestion": "Tras el museo hay unos 2 km en línea recta hasta el campo (calculado con las coordenadas, no verificado a pie): autobús o taxi si ya es de noche. La puesta de sol será hacia las 16:30–16:50; no lo he verificado para Hakone."
+          },
+          {
+            "time": "17:00–19:00",
+            "title": "Onsen del ryokan y cena",
+            "text": "Bañera termal del propio ryokan. No sé si la cena está incluida en vuestra reserva ni la hora de servicio: confirmadlo con el ryokan."
+          }
+        ],
+        "transport": "Autobús (Hakone Tozan Bus, línea T por Sengokuhara) y andando. El Hakone Free Pass cubre buses, tren, teleférico y barco turístico, pero compensa solo si encadenáis varios medios.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Hakone+Onsen+Yuyado+Yamanoshou&destination=Pola+Museum+of+Art+Hakone&travelmode=transit"
+      }
+    },
+    {
+      "key": "11",
+      "date": "2026-12-11",
+      "label": "11 diciembre",
+      "route": "Sengokuhara → Togendai → lago Ashi → Moto-Hakone → Kioto",
+      "focus": "Lago Ashi, santuario y salida hacia Kioto",
+      "quick": {
+        "date": "Vie · 11 dic",
+        "zone": "Lago Ashi",
+        "title": "Crucero, santuario y Kioto",
+        "route": [
+          "Togendai",
+          "Crucero",
+          "Moto-Hakone",
+          "Hakone Jinja",
+          "Parque Onshi"
+        ],
+        "note": "Salida a Kioto por la tarde"
+      },
+      "detail": {
+        "dayOfWeek": "vie",
+        "title": "Lago Ashi, santuario Hakone y salida a Kioto",
+        "summary": "Barco por el lago, el torii en el agua y un parque con vistas, antes de seguir a Kioto.",
+        "lead": "Borrador mío con horas orientativas. Atención: el teleférico Sounzan–Owakudani está cerrado del 7 al 24 de diciembre, así que este plan no pasa por Owakudani.",
+        "stops": [
+          {
+            "time": "09:30–10:15",
+            "title": "Check-out y bus a Togendai",
+            "text": "Unos 5 minutos de autobús desde la parada Sengoku Kogen (390 ¥ según Japan Guide); no sé a cuánto queda la parada de vuestro ryokan.",
+            "suggestion": "Preguntad al ryokan por la salida con maletas (algunos envían el equipaje; no está verificado)."
+          },
+          {
+            "time": "10:30–11:15",
+            "title": "Crucero por el lago Ashi: Togendai → Moto-Hakone",
+            "text": "25–40 minutos, ≈ 1.700 ¥ solo ida. El Hakone Free Pass cubre los barcos Hakone Sightseeing Boats, no los Hakone Pleasure Cruises.",
+            "suggestion": "No he verificado el horario invernal. Si no hay salida a esa hora, id en autobús (línea H, ≈ 35 minutos desde Hakone-Yumoto)."
+          },
+          {
+            "time": "11:30–12:30",
+            "title": "Santuario Hakone y torii del lago",
+            "text": "Siempre abierto, entrada gratuita, unos 30 minutos. Camino con farolillos entre cedros."
+          },
+          {
+            "time": "12:30–13:30",
+            "title": "Comida en Moto-Hakone",
+            "text": "No tengo un local verificado en Moto-Hakone: elegid sobre la marcha. Cerca está el museo Narukawa (extra), con cafetería con vistas."
+          },
+          {
+            "time": "13:45–14:30",
+            "title": "Parque Onshi Hakone",
+            "text": "10–15 minutos andando desde Moto-Hakone. Vistas del lago y, con suerte, del Fuji.",
+            "suggestion": "Con las nubes el Fuji no se ve: si el día amanece despejado, haced el parque antes de comer."
+          },
+          {
+            "time": "14:45–",
+            "title": "Hacia Odawara y Kioto",
+            "text": "De Moto-Hakone a Odawara en autobús: ≈ 50 minutos, ≈ 1.510 ¥ según Japan Guide. Desde Odawara hay Shinkansen (no todos paran allí).",
+            "suggestion": "No he verificado trenes a Kioto ni la hora de check-in. Reservad con margen y mirad el siguiente tramo en la guía de Kioto."
+          }
+        ],
+        "transport": "Autobús Hakone Tozan, barco por el lago y Shinkansen desde Odawara. El Hakone Free Pass puede compensar si hacéis bus + barco; sumad los precios antes.",
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Hakone+Onsen+Yuyado+Yamanoshou&destination=Odawara+Station&waypoints=Togendai+Port%7CMoto-Hakone+Port%7CHakone+Shrine&travelmode=transit"
+      }
+    }
+  ]
 }

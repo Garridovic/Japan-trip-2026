@@ -2,13 +2,13 @@
   "id": "hakone",
   "timezone": "Asia/Tokyo",
   "pageTitle": "Hakone · 10–11 diciembre 2026",
-  "description": "Ficha de Hakone (10–11 diciembre 2026): alojamiento, mapa y previsión del tiempo. Todavía sin guía.",
+  "description": "Guía de Hakone (10–11 diciembre 2026): día de llegada por Sengokuhara, lago Ashi y santuario el 11, comida y visitas extra. Primera versión.",
   "hero": {
-    "subtitle": "Aún sin guía de Hakone: de momento solo están el alojamiento, el mapa y la previsión del tiempo.",
+    "subtitle": "Una noche en un ryokan de Sengokuhara: arte y pampas el día de llegada, lago Ashi y su santuario antes de seguir a Kioto. Primera versión: revisad horarios antes de ir.",
     "meta": [
       "10–11 diciembre 2026",
       "1 noche",
-      "Contenido en preparación"
+      "Base: Sengokuhara"
     ],
     "hotel": {
       "name": "Hakone Onsen Yuyado Yamanoshou",
@@ -17,14 +17,35 @@
   },
   "map": {
     "center": [
-      35.26652,
-      139.00905
+      35.235,
+      139.015
     ],
-    "zoom": 14,
+    "zoom": 12,
     "queryContext": "Hakone, Japan",
-    "legendSummary": "Leyenda del mapa",
-    "dayFilters": [],
+    "legendSummary": "Leyenda del mapa · color por jornada",
+    "dayFilters": [
+      {
+        "value": "10",
+        "label": "10 dic",
+        "short": "10 dic",
+        "color": "#c45a4a",
+        "legend": "10 dic · Sengokuhara: arte y pampas"
+      },
+      {
+        "value": "11",
+        "label": "11 dic",
+        "short": "11 dic",
+        "color": "#3f70a5",
+        "legend": "11 dic · lago Ashi, santuario y parque"
+      }
+    ],
     "alternativeCategories": [
+      {
+        "id": "extra",
+        "label": "Visitas extra",
+        "color": "#8554a4",
+        "legend": "Visitas extra opcionales"
+      },
       {
         "id": "templos",
         "label": "Templos y santuarios",

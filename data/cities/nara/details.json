@@ -12,20 +12,109 @@
     "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
   },
   {
-    "id": "todaiji",
-    "description": "Templo del Gran Buda (Daibutsuden). Sellos (goshuin) comprobados en su web oficial, 300 ¥ en cada sala. Visita opcional; coordenada orientativa.",
+    "id": "kofukuji",
+    "description": "Uno de los grandes templos de Nara. Según Japan Guide: los terrenos están abiertos las 24 horas; el interior de los edificios y el museo abren de 9:00 a 17:00 (última entrada 16:45). Entradas: 900 ¥ el Museo del Tesoro Nacional, 500 ¥ el Salón Dorado Central, 500 ¥ el Salón Dorado Oriental y 1.600 ¥ los tres.",
     "photos": [],
     "directions": {
-      "search": "https://www.google.com/maps/search/?api=1&query=34.689,135.8398",
-      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.689,135.8398&travelmode=transit",
-      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.689,135.8398&travelmode=walking"
+      "search": "https://www.google.com/maps/search/?api=1&query=34.68297,135.83187",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68297,135.83187&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68297,135.83187&travelmode=walking"
     },
     "sources": [
+      {
+        "label": "Japan Guide · Kofukuji Temple",
+        "url": "https://www.japan-guide.com/e/e4101.html"
+      }
+    ],
+    "verificationNote": "Horarios y precios de Japan Guide; no cotejados con la web oficial. Coordenada contrastada con OpenStreetMap."
+  },
+  {
+    "id": "nara-park",
+    "description": "Parque en el centro de Nara donde se encuentran Tōdai-ji, Kasuga Taisha, Kofuku-ji y el Museo Nacional. Más de mil ciervos viven sueltos y se consideran mensajeros de los dioses. Se venden galletas para ellos por unos 200 ¥; algunos hacen una reverencia para pedirlas. Son mansos, pero pueden ponerse agresivos si creen que les vais a dar comida: no los provoquéis con las galletas en la mano. Japan Guide: a 5 minutos andando de la estación Kintetsu Nara y a unos 20 de JR Nara.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.6829,135.8546",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.6829,135.8546&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.6829,135.8546&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Nara Park",
+        "url": "https://www.japan-guide.com/e/e4103.html"
+      }
+    ],
+    "verificationNote": "El parque no tiene horario (acceso libre). Pin aproximado (centro del parque en OpenStreetMap); los ciervos están sobre todo cerca de Kofuku-ji y Tōdai-ji."
+  },
+  {
+    "id": "todaiji",
+    "description": "Templo fundado en el año 752. El Daibutsuden (sala del Gran Buda) alberga un Buda de bronce de 15 metros. Según Japan Guide, el Daibutsuden abre de 8:00 a 17:00 de noviembre a marzo, sin días de cierre, y cuesta 800 ¥. Junto a la gran puerta Nandaimon se encuentran los guardianes Nio. También hay un pilar con un agujero del tamaño de la nariz del Buda: quien lo atraviesa se dice que alcanza la iluminación. Desde Kintetsu Nara es un paseo de unos 30 minutos (Japan Guide). Sello (goshuin) comprobado en su web oficial.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.68824,135.8397",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68824,135.8397&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68824,135.8397&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Todaiji Temple",
+        "url": "https://www.japan-guide.com/e/e4100.html"
+      },
       {
         "label": "Sello (goshuin) en la web oficial",
         "url": "https://www.todaiji.or.jp/sutra-and-goshuin/goshuin/"
       }
     ],
-    "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
+    "verificationNote": "Horario de invierno y precio de Japan Guide. Coordenada contrastada con OpenStreetMap (centro del templo). Sello comprobado en la web oficial; comprobad el horario del mostrador."
+  },
+  {
+    "id": "naramachi",
+    "description": "El antiguo barrio de comerciantes de Nara conserva casas tradicionales (machiya), almacenes, boutiques y cafés en callejones estrechos. Japan Guide cita el templo Gangoji (9:00–17:00, entrada hasta 16:30, 500 ¥) y la «Casa de celosías» Koshi-no-Ie (9:00–17:00; cierra los lunes y el día tras festivos y del 26 de dic al 5 de ene). El 17 y el 18 de diciembre (jueves y viernes) no caen en cierre.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.6776,135.8313",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.6776,135.8313&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.6776,135.8313&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Naramachi",
+        "url": "https://www.japan-guide.com/e/e4108.html"
+      }
+    ],
+    "verificationNote": "Pin en Gangoji (OpenStreetMap); el barrio es un paseo, no un punto único. Horarios de Japan Guide."
+  },
+  {
+    "id": "kasuga",
+    "description": "Gran santuario al este del parque de Nara. Según Japan Guide: abre de 7:00 a 17:00 de noviembre a febrero, sin días de cierre; la zona interior abre de 9:00 a 16:00 (a veces cierra) y cuesta 700 ¥; el exterior es gratuito. Desde Kintetsu Nara son unos 30 minutos andando o autobús (≈ 250 ¥, parada Kasuga Taisha Honden). El museo (500 ¥) abre de 10:00 a 17:00.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.68223,135.8459",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.68223,135.8459&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.68223,135.8459&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Kasuga Taisha",
+        "url": "https://www.japan-guide.com/e/e4102.html"
+      }
+    ],
+    "verificationNote": "Horarios y precios de Japan Guide; otras páginas hablan de cierres del salón principal hacia el 20 de diciembre, fuera de vuestras fechas pero sin confirmar. Coordenada contrastada con OpenStreetMap (honden)."
+  },
+  {
+    "id": "toshodaiji",
+    "description": "Templo fundado en 759 por el monje chino Ganjin. Según Japan Guide abre de 8:30 a 17:00 (última entrada 16:30), sin días de cierre, y cuesta 1.000 ¥. Queda a unos 15–20 minutos de Kintetsu Nara en tren o autobús (≈ 300 yen): una salida de media mañana.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=34.67574,135.78535",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=34.67574,135.78535&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=34.67574,135.78535&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Toshodaiji Temple",
+        "url": "https://www.japan-guide.com/e/e4106.html"
+      }
+    ],
+    "verificationNote": "Horario y precio de Japan Guide. Con equipaje y la salida hacia Tokio, el día 18 no sobra tiempo: solo si salís tarde."
   }
 ]

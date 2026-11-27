@@ -12,20 +12,202 @@
     "verificationNote": "La dirección y el mapa son los de vuestro alojamiento."
   },
   {
-    "id": "hakonejinja",
-    "description": "Santuario junto al lago Ashi con su torii en el agua. Sello (goshuin) comprobado en su web oficial: mostrador 8:15–17:00. Visita opcional; coordenada orientativa.",
+    "id": "pola",
+    "description": "Museo de arte con pintura moderna y contemporánea (Cézanne, Monet, Picasso, Renoir según Japan Guide) en un edificio de hormigón y cristal casi todo bajo tierra, rodeado de un bosque de hayas. Según Japan Guide: abre de 9:00 a 17:00 (última entrada 16:30), entrada 2.200 ¥ y visita de 45–60 minutos. Cierra algún día suelto al cambiar la exposición.",
     "photos": [],
     "directions": {
-      "search": "https://www.google.com/maps/search/?api=1&query=35.2037,139.0258",
-      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.2037,139.0258&travelmode=transit",
-      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.2037,139.0258&travelmode=walking"
+      "search": "https://www.google.com/maps/search/?api=1&query=35.25666,139.0212",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.25666,139.0212&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.25666,139.0212&travelmode=walking"
     },
     "sources": [
+      {
+        "label": "Japan Guide · POLA Museum",
+        "url": "https://www.japan-guide.com/e/e5214.html"
+      },
+      {
+        "label": "OpenStreetMap · coordenadas (Nominatim)",
+        "url": "https://www.openstreetmap.org/"
+      }
+    ],
+    "verificationNote": "Horario y precio de Japan Guide (no los he cotejado con la web del museo). Hay días de cierre irregulares por cambio de exposición: mirad el calendario oficial. Coordenada contrastada con OpenStreetMap."
+  },
+  {
+    "id": "pampas",
+    "description": "Gran ladera de pampa japonesa (susuki) en Sengokuhara. Es famosa en otoño, cuando se vuelve dorada y plateada; en invierno la hierba se seca y se pone marrón, así que no esperéis el color de octubre. Un único camino sube por el campo hasta un mirador y está a pocos pasos de la parada de autobús Sengoku Kogen (línea T). Es la zona de vuestro ryokan, así que cabe con luz de tarde.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.26206,139.00244",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.26206,139.00244&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.26206,139.00244&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Sengokuhara Pampas Grass Field",
+        "url": "https://www.japan-guide.com/e/e5218.html"
+      }
+    ],
+    "verificationNote": "No he encontrado horario: es un camino al aire libre. Pin aproximado (centro de «すすきの原» en OpenStreetMap); comprobadlo en Google Maps."
+  },
+  {
+    "id": "glass",
+    "description": "Edificios de estilo italiano con colección de más de 100 piezas de cristal veneciano y un jardín con esculturas de cristal. Según Japan Guide: abre de 10:00 a 17:30 (última entrada 17:00), entrada 1.800 ¥ y visita de 1–2 horas; cierra once días en enero, fuera de vuestras fechas. Está cerca del ryokan (≈ 0,8 km en línea recta según las coordenadas).",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.26618,139.01767",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.26618,139.01767&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.26618,139.01767&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Hakone Glass no Mori",
+        "url": "https://www.japan-guide.com/e/e5215.html"
+      }
+    ],
+    "verificationNote": "Horario y precio de Japan Guide; confirmad en la web oficial. Si hacéis Pola y el campo de pampas el día 10, probablemente no cabe también el cristal."
+  },
+  {
+    "id": "togendai",
+    "description": "Embarcadero al norte del lago Ashi desde donde salen los barcos hacia Moto-Hakone y Hakone-machi (25–40 min, 1.700 ¥ solo ida según Japan Guide). Desde la zona de Sengokuhara se llega en autobús en pocos minutos (la parada Sengoku Kogen a Togendai son unos 5 minutos y 390 ¥ según Japan Guide). Importante: el teleférico entre Sounzan y Owakudani está cerrado del 7 al 24 de diciembre de 2026 y el tramo Owakudani–Togendai hasta el 26 de febrero de 2027, con autobuses sustitutos; así que este día se llega a Togendai en autobús.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.23756,138.99457",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.23756,138.99457&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.23756,138.99457&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Lake Ashinoko",
+        "url": "https://www.japan-guide.com/e/e5201.html"
+      },
+      {
+        "label": "Japan Guide · Hakone Ropeway",
+        "url": "https://www.japan-guide.com/e/e5223.html"
+      }
+    ],
+    "verificationNote": "No he verificado el horario invernal de los barcos ni si el 11 de dic hay trayecto de mañana: consultadlo en Hakone Sightseeing Boats antes de ir. Coordenada contrastada con OpenStreetMap."
+  },
+  {
+    "id": "motohakone",
+    "description": "Pueblecito en el extremo sur del lago Ashi, donde acaba el crucero. Japan Guide recomienda el entorno de Moto-Hakone como uno de los mejores puntos para ver el lago con el Fuji de fondo; la visibilidad suele ser mejor en las estaciones frías y a primera y última hora. Tampoco hay garantía: las nubes tapan el Fuji a menudo.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.20283,139.0306",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.20283,139.0306&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.20283,139.0306&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Lake Ashinoko",
+        "url": "https://www.japan-guide.com/e/e5201.html"
+      }
+    ],
+    "verificationNote": "Coordenada contrastada con OpenStreetMap (puerto de Moto-Hakone). El Fuji no se ve siempre."
+  },
+  {
+    "id": "hakonejinja",
+    "description": "Santuario escondido en un bosque denso, con un camino de escalones y farolillos desde el torii del lago hasta el edificio principal. Japan Guide lo describe como especialmente bello con niebla. Está a 5–10 minutos andando del embarcadero de Moto-Hakone, siempre abierto, sin días de cierre y con entrada gratuita; la visita lleva unos 30 minutos. El torii del agua (Heiwa no Torii) está a unos 250 m al sur. Sello (goshuin) comprobado en su web oficial.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.20397,139.02558",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.20397,139.02558&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.20397,139.02558&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Hakone Shrine",
+        "url": "https://www.japan-guide.com/e/e5204.html"
+      },
       {
         "label": "Sello (goshuin) en la web oficial",
         "url": "https://www.hakonejinja.or.jp/hakone/amulet.html"
       }
     ],
-    "verificationNote": "Sello comprobado en la web oficial. Comprueba el horario del mostrador antes de ir."
+    "verificationNote": "Horario y entrada de Japan Guide. Coordenadas del santuario y del torii contrastadas con OpenStreetMap. Los sellos (goshuin) los trata otro apartado de la guía. Sello comprobado en la web oficial; comprobad el horario del mostrador."
+  },
+  {
+    "id": "onshi",
+    "description": "Parque en el cabo entre Moto-Hakone y Hakone-machi con senderos y miradores sobre el lago Ashi y, si hay visibilidad, el Fuji. Era el palacio de verano de la familia imperial. Según Japan Guide: abierto siempre (el edificio cierra de noche), entrada gratuita y 30–60 minutos de visita; se llega a pie en 10–15 minutos desde Moto-Hakone o Hakone-machi.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.19632,139.02596",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.19632,139.02596&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.19632,139.02596&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Hakone Detached Palace",
+        "url": "https://www.japan-guide.com/e/e5207.html"
+      }
+    ],
+    "verificationNote": "Horario del edificio sin verificar. Coordenada contrastada con OpenStreetMap."
+  },
+  {
+    "id": "narukawa",
+    "description": "Museo de arte nihonga (pintura de estilo japonés) con un salón panorámico con cafetería que da al lago y, en días claros, a la silueta del Fuji y al torii de Hakone. Según Japan Guide: 9:00–17:00, sin días de cierre, entrada 1.500 ¥ y visita de 30–45 minutos. Queda justo enfrente del embarcadero de Moto-Hakone.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.20003,139.03119",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.20003,139.03119&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.20003,139.03119&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Narukawa Art Museum",
+        "url": "https://www.japan-guide.com/e/e5221.html"
+      }
+    ],
+    "verificationNote": "Horario y precio de Japan Guide; confirmadlo en la web oficial."
+  },
+  {
+    "id": "sekisho",
+    "description": "Reconstrucción (terminada en 2007) del puesto de control de la antigua carretera Tokaido, con puertas, vallas, casas de oficiales y una torre de vigilancia, más un pequeño museo cerca. Entre Moto-Hakone y Hakone-machi hay un tramo de la antigua carretera con cedros. Japan Guide no da aquí horarios ni precios.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.19221,139.02635",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.19221,139.02635&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.19221,139.02635&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Old Tokaido and Hakone Checkpoint",
+        "url": "https://www.japan-guide.com/e/e5205.html"
+      }
+    ],
+    "verificationNote": "No he verificado horarios ni precios de la reconstrucción ni del museo."
+  },
+  {
+    "id": "openair",
+    "description": "Esculturas al aire libre entre montañas, sala Picasso, torre con vidrieras y pie-baño termal al aire libre. Según Japan Guide: 9:00–17:00 (última entrada 16:30), sin días de cierre, entrada 2.000 ¥ (1.800 ¥ comprando online) y 1–3 horas de visita. Queda al otro lado, hacia Gora: no encaja con el día del lago salvo que sustituyáis Pola.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.24428,139.05208",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.24428,139.05208&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.24428,139.05208&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Hakone Open Air Museum",
+        "url": "https://www.japan-guide.com/e/e5208.html"
+      }
+    ],
+    "verificationNote": "Horario y precio de Japan Guide; no lo he comparado con la web oficial. Coordenada contrastada con OpenStreetMap."
+  },
+  {
+    "id": "gora",
+    "description": "Parque de estilo francés con fuente, jardín de rosas, invernaderos y casa de té. Según Japan Guide: 9:00–17:00 (16:30 de diciembre a febrero), entrada 650 ¥, 20–60 minutos; cierres irregulares.",
+    "photos": [],
+    "directions": {
+      "search": "https://www.google.com/maps/search/?api=1&query=35.24864,139.04525",
+      "transit": "https://www.google.com/maps/dir/?api=1&destination=35.24864,139.04525&travelmode=transit",
+      "walking": "https://www.google.com/maps/dir/?api=1&destination=35.24864,139.04525&travelmode=walking"
+    },
+    "sources": [
+      {
+        "label": "Japan Guide · Gora Park",
+        "url": "https://www.japan-guide.com/e/e5216.html"
+      }
+    ],
+    "verificationNote": "Horario y precio de Japan Guide; coordenada contrastada con OpenStreetMap."
   }
 ]

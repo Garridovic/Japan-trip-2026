@@ -1,0 +1,53 @@
+{
+  "kicker": "Dos paradas junto al hotel",
+  "title": "Comer en Nara",
+  "lead": "Mochi artesano y sushi envuelto en hoja de caqui, cerca de Sanjo-dori.",
+  "intro": "Selección corta, tomada de la guía oficial de turismo de Nara (Nara City Tourism Association): solo incluyo locales que ahí se nombran y cuya ubicación he podido contrastar. Sin horarios verificados: confirmadlos antes de ir.",
+  "highlightsLabel": "Comidas típicas de Nara",
+  "highlights": [
+    {
+      "title": "Kakinoha-zushi",
+      "text": "Sushi de caballa o salmón envuelto en hoja de caqui; la hoja da aroma y conserva el pescado."
+    },
+    {
+      "title": "Yomogi mochi",
+      "text": "Mochi de artemisa relleno de pasta de judía roja; el de Nakatanidou se maja a toda velocidad."
+    },
+    {
+      "title": "Narazuke",
+      "text": "Encurtidos conservados en posos de sake, con más de 1.300 años de historia."
+    },
+    {
+      "title": "Cha-gayu",
+      "text": "Arroz en caldo de hojicha (té tostado), desayuno tradicional de Nara, con encurtidos."
+    }
+  ],
+  "dayFilters": [
+    {
+      "value": "todos",
+      "label": "Todos los días"
+    },
+    {
+      "value": "17",
+      "label": "17 dic"
+    }
+  ],
+  "typeFilters": [
+    {
+      "value": "todos",
+      "label": "Todos"
+    },
+    {
+      "value": "mochi",
+      "label": "Mochi y dulces"
+    },
+    {
+      "value": "sushi",
+      "label": "Kakinoha-zushi"
+    }
+  ],
+  "note": {
+    "label": "Importante:",
+    "text": "Primera versión. No he confirmado horarios ni precios en las webs de cada local; comprobadlos en Google Maps antes de ir."
+  }
+}

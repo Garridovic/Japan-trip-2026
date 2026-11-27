@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "id": "food-01",
+    "name": "Nakatanidou",
+    "lat": 34.68193,
+    "lng": 135.82886,
+    "day": "17",
+    "type": "restaurant",
+    "foodCategory": "mochi",
+    "desc": "Tienda de yomogi mochi en Sanjo-dori, famosa por majar el mochi a toda velocidad delante del cliente.",
+    "query": "Nakatanidou Nara",
+    "foodTypeLabel": "Mochi · Sanjo-dori",
+    "dayLabel": "17 dic · paseo tras llegar",
+    "note": "Citada por la guía oficial de turismo de Nara. Horario y precios sin verificar. Coordenada de OpenStreetMap.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nakatanidou+Nara",
+    "links": [
+      {
+        "label": "Turismo de Nara · gastronomía ↗",
+        "url": "https://narashikanko.or.jp/en/gourmet"
+      }
+    ]
+  },
+  {
+    "id": "food-02",
+    "name": "Kakinohazushi Hompo Tanaka",
+    "lat": 34.68403,
+    "lng": 135.82882,
+    "day": "17",
+    "type": "restaurant",
+    "foodCategory": "sushi",
+    "desc": "Casa de kakinoha-zushi (sushi en hoja de caqui) en la galería comercial Higashimuki.",
+    "query": "Kakinohazushi Hompo Tanaka Nara",
+    "foodTypeLabel": "Kakinoha-zushi · Higashimuki",
+    "dayLabel": "17 dic · comida",
+    "note": "Citada por la guía oficial de turismo de Nara entre los lugares de kakinoha-zushi. Horario y precios sin verificar; si no tienen mesa, también se vende para llevar. Coordenada de OpenStreetMap.",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kakinohazushi+Hompo+Tanaka+Nara",
+    "links": [
+      {
+        "label": "Turismo de Nara · gastronomía ↗",
+        "url": "https://narashikanko.or.jp/en/gourmet"
+      }
+    ]
+  }
+]

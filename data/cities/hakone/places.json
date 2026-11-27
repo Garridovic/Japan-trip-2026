@@ -10,22 +10,127 @@
     "query": "Hakone Onsen Yuyado Yamanoshou Hakone"
   },
   {
-    "id": "hakonejinja",
-    "name": "Hakone Jinja",
-    "lat": 35.2037,
-    "lng": 139.0258,
+    "id": "pola",
+    "name": "Museo POLA",
+    "lat": 35.25666,
+    "lng": 139.0212,
+    "day": "10",
+    "type": "itinerary",
+    "desc": "Museo de arte moderno medio enterrado en un bosque de hayas, a un paso de Sengokuhara.",
+    "query": "Pola Museum of Art Hakone"
+  },
+  {
+    "id": "pampas",
+    "name": "Campo de pampas de Sengokuhara",
+    "lat": 35.26206,
+    "lng": 139.00244,
+    "day": "10",
+    "type": "itinerary",
+    "desc": "Colina cubierta de susuki (pampa) con un camino único; en diciembre estará seca y marrón.",
+    "query": "Sengokuhara Susuki Grassland Hakone",
+    "pinApproximate": true
+  },
+  {
+    "id": "glass",
+    "name": "Hakone Glass no Mori (extra)",
+    "lat": 35.26618,
+    "lng": 139.01767,
     "day": "extra",
     "type": "alternative",
-    "altCategory": "templos",
-    "desc": "Santuario junto al lago Ashi con su torii en el agua. Sello (goshuin) comprobado en su web oficial: mostrador 8:15–17:00. Visita opcional; coordenada orientativa.",
+    "desc": "Museo de cristal veneciano con jardín y esculturas de cristal, a unos 800 m del ryokan.",
+    "query": "Hakone Glass no Mori Museum",
+    "altCategory": "extra"
+  },
+  {
+    "id": "togendai",
+    "name": "Embarcadero de Togendai",
+    "lat": 35.23756,
+    "lng": 138.99457,
+    "day": "11",
+    "type": "itinerary",
+    "desc": "Punto de salida del crucero por el lago Ashi (barcos tipo galeón pirata).",
+    "query": "Togendai Port Lake Ashi Hakone"
+  },
+  {
+    "id": "motohakone",
+    "name": "Moto-Hakone y vistas del Fuji",
+    "lat": 35.20283,
+    "lng": 139.0306,
+    "day": "11",
+    "type": "itinerary",
+    "desc": "Final del crucero: pueblo a orillas del lago, con vistas al lago y, si hay claridad, al Fuji.",
+    "query": "Moto-Hakone Port Hakone"
+  },
+  {
+    "id": "hakonejinja",
+    "name": "Santuario Hakone y torii del lago",
+    "lat": 35.20397,
+    "lng": 139.02558,
+    "day": "11",
+    "type": "itinerary",
+    "desc": "Santuario entre cedros con el gran torii dentro del agua del lago Ashi.",
     "query": "Hakone Shrine Hakone",
-    "proximity": {
-      "kind": "temple",
-      "radius": 120
-    },
     "stamp": {
       "kind": "goshuin",
       "source": "https://www.hakonejinja.or.jp/hakone/amulet.html"
+    },
+    "proximity": {
+      "kind": "temple",
+      "radius": 120
     }
+  },
+  {
+    "id": "onshi",
+    "name": "Parque Onshi Hakone (Palacio Rikyu)",
+    "lat": 35.19632,
+    "lng": 139.02596,
+    "day": "11",
+    "type": "itinerary",
+    "desc": "Parque en un cabo del lago con vistas al lago y al Fuji; antiguo palacio de verano imperial.",
+    "query": "Onshi Hakone Park"
+  },
+  {
+    "id": "narukawa",
+    "name": "Museo Narukawa (extra)",
+    "lat": 35.20003,
+    "lng": 139.03119,
+    "day": "extra",
+    "type": "alternative",
+    "desc": "Museo de pintura nihonga con un salón-mirador sobre el lago y el Fuji, frente al embarcadero de Moto-Hakone.",
+    "query": "Narukawa Art Museum Hakone",
+    "altCategory": "extra"
+  },
+  {
+    "id": "sekisho",
+    "name": "Hakone Sekisho y avenida de cedros (extra)",
+    "lat": 35.19221,
+    "lng": 139.02635,
+    "day": "extra",
+    "type": "alternative",
+    "desc": "Reconstrucción del control de caminos del Tokaido y avenida de cedros junto al lago.",
+    "query": "Hakone Sekisho Checkpoint",
+    "altCategory": "extra"
+  },
+  {
+    "id": "openair",
+    "name": "Museo al Aire Libre de Hakone (extra)",
+    "lat": 35.24428,
+    "lng": 139.05208,
+    "day": "extra",
+    "type": "alternative",
+    "desc": "Parque de esculturas con sala Picasso y la torre-vidriera Symphonic Sculpture.",
+    "query": "Hakone Open-Air Museum",
+    "altCategory": "extra"
+  },
+  {
+    "id": "gora",
+    "name": "Parque Gora (extra)",
+    "lat": 35.24864,
+    "lng": 139.04525,
+    "day": "extra",
+    "type": "alternative",
+    "desc": "Parque de estilo francés con invernadero tropical y casa de té, sobre la estación de Gora.",
+    "query": "Gora Park Hakone",
+    "altCategory": "extra"
   }
 ]
