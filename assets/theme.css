@@ -951,7 +951,7 @@ a.secondary, a.map-link, .poi-action-links a, .text-link { display: inline-flex;
 .admin-current { margin: 0; padding: 8px 10px; border-radius: 10px; background: var(--surface-2, rgba(0,0,0,.05)); font-size: .875rem; }
 
 /* Ayudas de primer uso (coach marks) */
-.onb-tip { position: fixed; z-index: 1500; left: 12px; right: 12px; max-width: 360px; margin: 0 auto; box-sizing: border-box; padding: 14px; border-radius: 16px; background: #1f2a30; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.35); font-size: .9375rem; line-height: 1.4; }
+.onb-tip { position: fixed; z-index: 1500; left: 12px; width: min(360px, calc(100vw - 24px)); margin: 0; box-sizing: border-box; padding: 14px; border-radius: 16px; background: #1f2a30; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.35); font-size: .9375rem; line-height: 1.4; }
 .onb-tip strong { display: block; font-size: 1rem; }
 .onb-tip p { margin: 6px 0 10px; color: #e8eef1; }
 .onb-tip::before { content: ""; position: absolute; left: var(--onb-arrow, 24px); width: 14px; height: 14px; background: #1f2a30; transform: rotate(45deg); }

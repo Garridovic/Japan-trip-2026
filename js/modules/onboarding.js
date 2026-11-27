@@ -69,18 +69,40 @@ export function initOnboarding({ win = window, storage = null, tripStart = '', t
 
   function close() { tip?.node.remove(); tip?.highlight?.classList.remove('onb-highlight'); win.removeEventListener('resize', tip?.place); doc.removeEventListener('scroll', tip?.place, true); tip = null; }
 
+  /** The strip of screen the tip may use: below the header and above the bottom bar. */
+  function safeArea() {
+    const top = Math.max(8, doc.getElementById('top-bar')?.getBoundingClientRect().bottom ?? 0) + 8;
+    const bar = doc.getElementById('app-bar')?.getBoundingClientRect();
+    const bottom = (bar && bar.height > 0 ? bar.top : win.innerHeight) - 8;
+    return { top, bottom };
+  }
+
+  /** Brings the target on screen (it may be thousands of pixels down the page) with room for the tip below it. */
+  function reveal(target, tipHeight) {
+    const { top, bottom } = safeArea();
+    const rect = target.getBoundingClientRect();
+    if (rect.top >= top && rect.bottom + tipHeight + 12 <= bottom) return;
+    win.scrollBy({ top: rect.top - top - 12, behavior: 'instant' });
+  }
+
   function place() {
     if (!tip) return;
-    const rect = tip.target.getBoundingClientRect();
-    const room = win.innerHeight - rect.bottom;
     const node = tip.node;
-    node.style.top = '0px';
+    const { top: min, bottom: max } = safeArea();
+    node.style.maxHeight = `${Math.max(120, max - min)}px`;
+    const rect = tip.target.getBoundingClientRect();
     const height = node.offsetHeight;
-    const below = room > height + 24 || rect.top < height + 24;
-    const top = below ? Math.min(rect.bottom + 10, win.innerHeight - height - 70) : Math.max(8, rect.top - height - 10);
-    node.style.top = `${Math.max(8, top)}px`;
+    node.style.overflowY = node.scrollHeight > height + 1 ? 'auto' : 'visible'; // scroll inside only when there is truly no room (keeps the arrow visible otherwise)
+    const below = max - rect.bottom - 10 >= height || rect.top - min - 10 < height;
+    const wanted = below ? rect.bottom + 10 : rect.top - height - 10;
+    node.style.top = `${Math.min(Math.max(wanted, min), Math.max(min, max - height))}px`;
     node.dataset.side = below ? 'below' : 'above';
-    const arrow = Math.min(Math.max(rect.left + rect.width / 2 - 16 - 12, 14), node.offsetWidth - 30);
+    // Horizontally: centred under (or over) the target, kept inside the screen. On a phone the tip is as wide as the screen, so it just sits at the margin.
+    const width = node.offsetWidth;
+    const center = rect.left + rect.width / 2;
+    const left = Math.min(Math.max(center - width / 2, 12), Math.max(12, win.innerWidth - 12 - width));
+    node.style.left = `${left}px`;
+    const arrow = Math.min(Math.max(center - left - 7, 16), width - 30);
     node.style.setProperty('--onb-arrow', `${arrow}px`);
   }
 
@@ -98,6 +120,7 @@ export function initOnboarding({ win = window, storage = null, tripStart = '', t
       h('strong', {}, flow.title), h('p', {}, flow.text), h('div', { class: 'onb-actions' }, buttons));
     doc.body.append(node);
     target.classList.add('onb-highlight');
+    reveal(target, node.offsetHeight);
     tip = { node, target, highlight: target, place: () => win.requestAnimationFrame(place) };
     place();
     win.addEventListener('resize', tip.place);
