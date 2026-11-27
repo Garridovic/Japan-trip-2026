@@ -3,57 +3,50 @@
   "year": 2026,
   "dates": "8–10 y 18–22 diciembre",
   "hotel": "HOTEL AMANEK Asakusa Sakurabashi",
-  "summaryNote": "Primera versión: itinerario sugerido por mí a partir de Japan Guide, GO TOKYO y las webs oficiales de cada lugar. Las horas de llegada (8 dic) y de salida (22 dic) no las conozco, así que esos días son un borrador flexible. Los horarios son de fuentes y pueden variar: confirmad antes de ir.",
+  "summaryNote": "Primera versión: itinerario sugerido por mí a partir de Japan Guide, GO TOKYO y las webs oficiales de cada lugar. Vuelos de Iberia: llegada el 8 dic a las 18:30 y salida el 22 dic a las 22:10 (horas locales según la captura de Victor, por confirmar). Los horarios son de fuentes y pueden variar: confirmad antes de ir.",
   "days": [
     {
       "key": "8",
       "date": "2026-12-08",
       "label": "8 diciembre",
-      "route": "Llegada · Asakusa",
-      "focus": "Llegada, hotel y paseo corto por Asakusa",
+      "route": "Llegada a Narita · hotel · cena",
+      "focus": "Aterrizaje por la tarde y cena cerca del hotel",
       "quick": {
         "date": "Mar · 8 dic",
-        "zone": "Asakusa",
-        "title": "Llegada y primer paseo",
+        "zone": "Narita · Asakusa",
+        "title": "Llegada y cena",
         "route": [
+          "Narita",
           "Hotel",
-          "Kaminarimon",
-          "Nakamise",
-          "Sensō-ji",
-          "Asakusa Jinja"
+          "Cena cerca"
         ],
-        "note": "Plan flexible: depende de la hora de llegada"
+        "note": "Aterrizáis a las 18:30: noche de descanso"
       },
       "detail": {
         "dayOfWeek": "mar",
-        "title": "Llegada y paseo corto por Asakusa",
-        "summary": "Un primer día suave por el jet lag, todo a pie desde el hotel.",
-        "lead": "Borrador mío: no sé a qué hora aterrizáis. Si llegáis tarde, dejad todo esto para la noche del 18 o para mañana. El sol se pone hacia las 16:30 y la sala principal del Sensō-ji cierra a las 17:00 (los terrenos siguen abiertos).",
+        "title": "Llegada a Tokio y cena cerca del hotel",
+        "summary": "Aterrizáis a las 18:30 tras ~14 h de vuelo: hoy solo toca llegar, cenar y dormir.",
+        "lead": "Vuelo IB0281 MAD→NRT: sale el lun 7 dic a las 20:20 y llega el mar 8 a las 18:30 (según la captura de Victor; leo ambas horas como hora local de cada aeropuerto: por confirmar). Con migración, equipaje y tren, llegar al hotel hacia las 21:00–22:00 es una estimación mía, sin verificar.",
         "stops": [
           {
-            "time": "Llegada",
-            "title": "Aeropuerto → hotel y descanso",
-            "text": "Hora de llegada y trayecto sin verificar. El hotel está en 6-35-8 Asakusa.",
-            "suggestion": "Si llegáis cansados, ducha, cena cerca y a dormir: mañana es el día largo."
+            "time": "18:30–20:30",
+            "title": "Aterrizaje en Narita, migración y equipaje",
+            "text": "Hora de aterrizaje: 18:30 según el billete (hora local, por confirmar). El tiempo de trámites y de cola no está verificado."
           },
           {
-            "time": "Tarde",
-            "title": "1. Kaminarimon y Nakamise",
-            "text": "La puerta del farol rojo y la calle de tiendas hasta el templo; está a unos 600–700 m en línea recta del hotel (calculado con las coordenadas)."
+            "time": "20:30–22:00",
+            "title": "Narita → hotel (Asakusa)",
+            "text": "Trayecto en tren/metro sin verificar en esta guía; el hotel está en 6-35-8 Asakusa. Preparad la ruta y la tarjeta IC antes de salir.",
+            "suggestion": "Si llegáis tarde y agotados, un taxi (modo taxi de la app) puede merecer la pena; no he verificado su precio."
           },
           {
-            "time": "Tarde",
-            "title": "2. Sensō-ji y Asakusa Jinja",
-            "text": "Los terrenos están siempre abiertos y son gratuitos. Cada uno tiene su ficha de sello (goshuin) en el mapa.",
-            "suggestion": "Si queréis el sello, pedidlo en el Yōkōdō (Sensō-ji) y en la ventanilla del santuario (Asakusa Jinja, 500 ¥); comprobad el horario del mostrador."
-          },
-          {
-            "time": "Noche",
-            "title": "Cena por Asakusa",
-            "text": "Opciones en «Comer en Tokio»; tempura/tendon es lo más típico de la zona."
+            "time": "22:00",
+            "title": "Cena cerca del hotel y a dormir",
+            "text": "Opciones en «Comer en Tokio»; muchas cocinas cierran pronto, así que cenad algo sencillo cerca.",
+            "suggestion": "Si os queda energía, Kaminarimon y Sensō-ji (terrenos siempre abiertos) están a unos 600–700 m del hotel (calculado con las coordenadas); si no, mañana o el 18."
           }
         ],
-        "transport": "A pie desde el hotel.",
+        "transport": "Desde Narita al hotel; sin verificar.",
         "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Kaminarimon+Asakusa&travelmode=transit"
       }
     },
@@ -329,37 +322,43 @@
       "key": "22",
       "date": "2026-12-22",
       "label": "22 diciembre",
-      "route": "Despedida de Tokio",
-      "focus": "Últimas compras y salida",
+      "route": "Última jornada · salida a Narita",
+      "focus": "Día libre para compras y salida hacia el aeropuerto por la tarde",
       "quick": {
         "date": "Mar · 22 dic",
-        "zone": "Asakusa",
-        "title": "Última mañana",
+        "zone": "Asakusa · compras",
+        "title": "Último día libre",
         "route": [
-          "Hotel",
-          "Compras de última hora",
-          "Salida"
+          "Check-out",
+          "Compras o Asakusa",
+          "Salida a Narita"
         ],
-        "note": "La hora de salida depende del vuelo"
+        "note": "Vuelo a las 22:10: salir hacia Narita por la tarde"
       },
       "detail": {
         "dayOfWeek": "mar",
-        "title": "Última mañana y salida",
-        "summary": "Sin visitas fijas: el día lo manda la hora del vuelo.",
-        "lead": "Borrador mío: no sé la hora del vuelo. El 22 es el check-out del hotel; planificad el trayecto al aeropuerto según el vuelo, con margen.",
+        "title": "Último día: compras y salida a Narita",
+        "summary": "Casi todo el día libre: el vuelo sale a las 22:10.",
+        "lead": "Vuelo IB0282 NRT→MAD: sale el mar 22 dic a las 22:10 y llega a Madrid a las 05:45 del día 23 (según la captura de Victor; hora local de cada aeropuerto, por confirmar). Estimación mía: salir hacia Narita entre las 17:30 y las 19:00, según el tren y lo que tardéis en facturar; sin verificar.",
         "stops": [
           {
             "time": "Mañana",
-            "title": "Compras de última hora o paseo por Asakusa",
-            "text": "Nakamise, Ginza o Akihabara (ver horarios arriba) si hay tiempo."
+            "title": "Check-out y equipaje",
+            "text": "Las noches del 18 al 22 son en este hotel: preguntad en recepción si pueden guardar las maletas hasta la tarde (no verificado)."
           },
           {
-            "time": "Según vuelo",
-            "title": "Check-out y salida al aeropuerto",
-            "text": "Trayecto y horas sin verificar."
+            "time": "Mañana–tarde",
+            "title": "Últimas compras o paseo",
+            "text": "Nakamise y Asakusa (a pie), Ameyoko o Akihabara o Ginza (horarios en sus fichas). Tsukiji abre los martes, pero ya está planificado el 21.",
+            "suggestion": "Dejad el último tramo para comprar lo que falte y volved al hotel con margen."
+          },
+          {
+            "time": "17:30–19:00",
+            "title": "Salida hacia Narita",
+            "text": "Hora orientativa de salida; confirmad el trayecto y la hora de facturación de Iberia (normalmente se recomienda llegar con antelación a un vuelo internacional)."
           }
         ],
-        "transport": "Según el aeropuerto y la hora del vuelo.",
+        "transport": "Tren/metro hasta Narita; sin verificar.",
         "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=HOTEL+AMANEK+Asakusa+Sakurabashi&destination=Tokyo+Station&travelmode=transit"
       }
     }
