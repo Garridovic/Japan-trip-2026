@@ -53,12 +53,6 @@
         "legend": "Alternativa del 11 · trail Moto-Hakone → Hatajuku"
       },
       {
-        "id": "trail",
-        "label": "Trail antiguo Tokaido",
-        "color": "#268577",
-        "legend": "Alternativa del 11 · trail Moto-Hakone → Hatajuku"
-      },
-      {
         "id": "templos",
         "label": "Templos y santuarios",
         "color": "#bd8a9d",
