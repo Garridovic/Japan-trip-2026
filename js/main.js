@@ -60,15 +60,22 @@ async function startAccount(proximity) {
   try {
     const { AUTH_CONFIG } = await import('../assets/auth-config.js');
     if (!AUTH_CONFIG.enabled) return null;
+    // The SDK (60 KB) is requested together with the account modules instead of after them: only reached when the account is enabled.
+    const sdk = import('../assets/vendor/auth0-spa-js.production.esm.js').catch(() => {}); // warms the cache; auth.js imports the same URL
     const { initAccount } = await import('./modules/account.js');
+    await sdk;
     return await initAccount({ config: AUTH_CONFIG, userData: userData(), proximity });
   } catch (error) { console.warn('[account] disabled:', error); return null; }
 }
 
 async function start() {
   const [journey, global] = await Promise.all([loadJourney(), loadGlobalContent()]);
-  await userData().load(); // with a sync backend connected (see user-data.js) the stored values are in place before any store reads them
   const cities = enabledCities(journey);
+  // Start downloading the first city now: the account step below (SDK, stored data) used to run first, so the city files only began after it.
+  // loadCity caches the request, so showCity() below reuses it; a failure here is retried there.
+  const firstCityId = resolveActiveCity(journey, requestedCityFromSearch(window.location.search)).cityId;
+  loadCity(firstCityId, cities.find((city) => city.id === firstCityId)).catch(() => {});
+  await userData().load(); // with a sync backend connected (see user-data.js) the stored values are in place before any store reads them
   const proximity = createProximity({ journey }); // optional "¿Estás en…?" card; off until the user accepts the consent sheet
   const account = await startAccount(proximity); // optional Google sign-in; null (and invisible) while disabled or unavailable
   const visitedMarks = visitedStore();

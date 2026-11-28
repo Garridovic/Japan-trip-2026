@@ -8,7 +8,7 @@ test('Kyoto loads its map, markers, tabs and full version', async ({ page }) => 
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
-  await page.goto('/');
+  await page.goto('/?tab=mapa'); // the map lives in its own guide tab
   await expect(page.locator('#city-map')).toBeVisible();
   await expect(page.locator('#city-map')).toHaveAttribute('data-city', 'kyoto');
   await expect(page.locator(SVG_MARKERS)).toHaveCount(visitCount, { timeout: 20_000 });
