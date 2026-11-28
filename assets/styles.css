@@ -165,8 +165,6 @@
     .map-filter-label { color:var(--muted); font-size:.75rem; font-weight:850; letter-spacing:.08em; text-transform:uppercase; margin:0 0 6px; }
     .map-filter-status { color:var(--muted); font-size:.875rem; margin:-2px 0 13px; }
     .map-toolbar { align-items:center; }
-    .restaurant-map-marker { background:transparent; border:0; }
-    .restaurant-map-marker span { display:block; width:14px; height:14px; border:2px solid #fff; border-radius:3px; background:var(--marker-color); transform:rotate(45deg); box-shadow:0 1px 5px rgba(0,0,0,.35); }
     .legend i.restaurant-shape { background:#c45a4a; border:2px solid #fff; border-radius:2px; transform:rotate(45deg); box-shadow:0 0 0 1px #aab4b8; }
     .legend i.visit-shape { border:2px solid #fff; box-shadow:0 0 0 1px #aab4b8; }
     .leaflet-popup-content { min-width:190px; }

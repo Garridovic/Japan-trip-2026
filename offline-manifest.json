@@ -1,7 +1,7 @@
 {
-  "version": "4bb1e05758",
+  "version": "a6bda5a10e",
   "sizes": {
-    "required": 1243412,
+    "required": 1286027,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -15,6 +15,9 @@
     "assets/theme.css",
     "assets/vendor/auth0-spa-js.LICENSE",
     "assets/vendor/auth0-spa-js.production.esm.js",
+    "assets/vendor/leaflet-markercluster/LICENSE",
+    "assets/vendor/leaflet-markercluster/MarkerCluster.css",
+    "assets/vendor/leaflet-markercluster/leaflet.markercluster.js",
     "assets/vendor/leaflet/LICENSE",
     "assets/vendor/leaflet/images/layers-2x.png",
     "assets/vendor/leaflet/images/layers.png",
@@ -100,6 +103,7 @@
     "js/modules/journey.js",
     "js/modules/lodging-ui.js",
     "js/modules/lodging.js",
+    "js/modules/map-cluster.js",
     "js/modules/map-filters.js",
     "js/modules/map-offline.js",
     "js/modules/map-search-ui.js",

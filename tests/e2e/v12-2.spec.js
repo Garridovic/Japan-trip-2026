@@ -31,7 +31,7 @@ test.describe('visited places', () => {
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await openPopup(page);
     await page.locator('.popup-visit-button').click();
-    const opacities = await page.locator(SVG_MARKERS).evaluateAll((paths) => paths.map((path) => Number(getComputedStyle(path).fillOpacity)));
+    const opacities = await page.locator(`${SVG_MARKERS} span`).evaluateAll((shapes) => shapes.map((shape) => Number(getComputedStyle(shape).opacity)));
     expect(opacities.filter((value) => value < 0.5)).toHaveLength(1);
     await page.locator('[data-map-only="pendientes"]').click();
     await expect(page.locator('#map-filter-status')).toContainText('Pendientes');

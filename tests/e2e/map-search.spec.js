@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { kyoto, SVG_MARKERS } from './helpers.js';
 
-const DIM = `${SVG_MARKERS}[fill-opacity="0.18"], #city-map .is-search-dim`;
+const DIM = '#city-map .is-search-dim';
 const input = (page) => page.locator('#map-search-input');
 const rows = (page) => page.locator('#map-search-drop .map-search-row-item');
 const openMap = async (page) => {

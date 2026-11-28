@@ -244,9 +244,6 @@ body[data-view="mapa"] { overflow: hidden; }
 .map-search-action { min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--ink); font: inherit; font-size: .875rem; font-weight: 800; cursor: pointer; }
 .map-search-action.is-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .map-search-row-item:focus-visible, .map-search-foot:focus-visible, .map-search-action:focus-visible, .map-search-clear:focus-visible { outline: 3px solid var(--net); outline-offset: -3px; }
-.restaurant-map-marker span { transition: opacity .15s, transform .15s; }
-.restaurant-map-marker.is-search-dim span { opacity: .2; transform: rotate(45deg) scale(.6); }
-.restaurant-map-marker.is-search-hit span { transform: rotate(45deg) scale(1.35); box-shadow: 0 0 0 3px var(--accent), 0 2px 8px rgba(0,0,0,.35); }
 .map-offline-fab[data-state="complete"] { color: var(--ok); }
 .map-offline-fab[data-state="saving"], .map-offline-fab[data-state="partial"] { color: var(--warn); }
 .map-offline-fab[data-state="error"] { color: var(--err); }
@@ -308,7 +305,6 @@ body[data-view="mapa"] .poi-detail { inset: auto 0 0 0; max-width: 760px; max-he
 @media (prefers-reduced-motion: reduce) { .map-sheet, body[data-view="mapa"] .poi-detail { animation: none; } }
 
 /* ====== Puntos visitados ====== */
-.restaurant-map-marker.is-visited span { opacity: .35; }
 .visited-toggle { min-height: 44px; margin: 0 0 18px; padding: 0 16px; }
 .visited-toggle[aria-pressed="true"] { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
 .popup-visit-button { display: block; width: 100%; min-height: 40px; margin: 0 0 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); color: var(--ink); font: inherit; font-size: .82rem; font-weight: 800; text-align: left; padding: 0 10px; cursor: pointer; }
@@ -1015,3 +1011,44 @@ a.secondary, a.map-link, .poi-action-links a, .text-link { display: inline-flex;
 /* While any sheet is open nothing behind may scroll, bounce or pull to refresh */
 html:has(.map-sheet:not([hidden]), .weather-sheet:not([hidden]), .theme-popover:not([hidden]), .offline-popover:not([hidden]), .poi-modal:not([hidden]), .collapsible-filters.is-sheet[open]) { overscroll-behavior: none; }
 body:has(.theme-popover:not([hidden]), .offline-popover:not([hidden]), .poi-modal:not([hidden]), .collapsible-filters.is-sheet[open])::after, .weather-scrim, .poi-modal-backdrop { touch-action: none; }
+
+/* Map points: every point is a 44 × 44 px tap area (invisible) with its shape drawn in the middle. */
+.poi-marker { display: grid; place-items: center; background: transparent; border: 0; border-radius: 50%; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.poi-marker:focus-visible { outline: 3px solid var(--net); outline-offset: -6px; }
+.poi-marker span { display: block; box-sizing: border-box; width: 18px; height: 18px; border: 2px solid #fff; border-radius: 50%; background: var(--marker-color); box-shadow: 0 1px 4px rgba(0,0,0,.35); transition: opacity .15s, transform .15s; }
+.poi-marker.is-event span { width: 20px; height: 20px; }
+.poi-marker.is-hotel span { width: 24px; height: 24px; border-width: 3px; }
+.poi-marker.is-restaurant span { width: 16px; height: 16px; border-radius: 3px; transform: rotate(45deg); }
+.poi-marker.is-visited span { opacity: .35; }
+.poi-marker.is-search-dim span { opacity: .2; transform: scale(.6); }
+.poi-marker.is-restaurant.is-search-dim span { transform: rotate(45deg) scale(.6); }
+.poi-marker.is-search-hit span { opacity: 1; transform: scale(1.35); border-color: var(--accent); border-width: 3px; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+.poi-marker.is-restaurant.is-search-hit span { transform: rotate(45deg) scale(1.35); }
+/* Groups of nearby points: a dark numbered circle (red stays for what is chosen). Tapping zooms until they split. */
+.poi-cluster { display: grid; place-items: center; background: transparent; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.poi-cluster span { display: grid; place-items: center; box-sizing: border-box; min-width: 38px; height: 38px; padding: 0 6px; border: 3px solid #fff; border-radius: 19px; background: #22303c; color: #fff; font-size: .9rem; font-weight: 850; font-variant-numeric: tabular-nums; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+.poi-cluster:focus-visible { outline: 3px solid var(--net); outline-offset: -2px; border-radius: 50%; }
+@media (prefers-reduced-motion: reduce) { .leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-spider-leg { transition: none !important; } }
+
+/* Touch targets (UX review, Nov 2026): 48 px where people tap most (Material 48 dp; iOS asks for 44 pt).
+   The header keeps 44 px: four buttons and the city must fit a 320 px phone. */
+#city-view > nav a, .text-link { min-height: 48px; }
+.filter, .phrase-chip, .dish-views .filter, .map-toolbar .filter, .map-sheet .map-toolbar .filter, .stamp-form .filter, .app-notice .filter,
+.update-card .filter, .account-actions .filter, .onb-actions .filter, .account-how .filter, .offline-actions .filter,
+.lodging-toolbar > .filter, .lodging-backup-actions .filter { min-height: 48px; }
+.map-view-pill { min-height: 48px; }
+.map-fab { width: 48px; height: 48px; }
+.map-search-field { min-height: 48px; }
+.map-search-field input { height: 46px; }
+.map-search-clear { height: 46px; }
+.map-search-drop { top: 58px; }
+#city-map .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 44px; font-size: 22px; }
+.map-view #city-map .leaflet-control-zoom a { width: 48px; height: 48px; line-height: 48px; }
+footer a { display: inline-flex; align-items: center; min-height: 44px; }
+/* 320 px: a long zone label moves under the date instead of breaking it in two lines */
+.quick-top { flex-wrap: wrap; row-gap: 6px; }
+.quick-top .date { white-space: nowrap; }
+.quick-top .zone { margin-left: auto; }
+/* Desktop map: the search keeps a readable width, and the version label no longer covers the zoom buttons */
+@media (min-width: 768px) { .map-view-controls { right: auto; width: min(560px, calc(100% - 20px)); } }
+body[data-view="mapa"] .version-indicator { display: none; }

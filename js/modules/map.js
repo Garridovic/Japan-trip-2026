@@ -9,9 +9,9 @@ import { visitedStore, isVisitable, countVisited } from './visited.js';
 import { distanceKm, formatDistance, formatFarDistance, distanceIfFarFromCity } from './geo.js';
 import { buildMapIndex, searchPoints } from './map-search.js';
 import { emptyFilters, toggleValue, matchesFilters, singleRouteDay, activeFilterList, describeFilters } from './map-filters.js';
+import { clusteringEnabled, clusterOptions, clusterLabel, clusterName, HIT_SIZE } from './map-cluster.js';
 
 const HOTEL_COLOR = '#273d70';
-const SEARCH_COLOR = '#B03020'; // the app's red: chosen / tappable
 const FALLBACK_COLOR = '#64748b';
 const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
 
@@ -20,7 +20,32 @@ export function initMap({ openDetail }) {
   const map = L.map(mapElement, { scrollWheelZoom: false });
   // crossOrigin lets the service worker keep the tiles you have seen, so the map still has a background offline.
   L.tileLayer(TILE_URL, { maxZoom: 19, attribution: OSM_ATTRIBUTION, crossOrigin: 'anonymous' }).addTo(map);
-  const markerLayer = L.featureGroup().addTo(map);
+  const reducedMotionNow = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Nearby points join into a numbered group that splits as the map zooms in (Leaflet.markercluster, vendored for offline use).
+  const clustered = clusteringEnabled() && typeof L.markerClusterGroup === 'function';
+  const markerLayer = (clustered
+    ? L.markerClusterGroup({
+      ...clusterOptions({ reducedMotion: reducedMotionNow() }),
+      iconCreateFunction: (cluster) => {
+        const count = cluster.getChildCount();
+        return L.divIcon({ className: 'poi-cluster', html: `<span aria-hidden="true">${clusterLabel(count)}</span>`, iconSize: [HIT_SIZE, HIT_SIZE], iconAnchor: [HIT_SIZE / 2, HIT_SIZE / 2] });
+      }
+    })
+    : L.featureGroup()).addTo(map);
+  if (clustered) {
+    mapElement.dataset.clustered = 'true';
+    markerLayer.on('animationend spiderfied unspiderfied', () => labelClusters());
+    map.on('zoomend moveend', () => labelClusters());
+  }
+  /** Screen readers and long-press tooltips get the group's size in words. */
+  function labelClusters() {
+    mapElement.querySelectorAll('.poi-cluster').forEach((element) => {
+      const count = Number(element.textContent.replace('+', '')) || 0;
+      element.setAttribute('role', 'button');
+      element.setAttribute('aria-label', clusterName(count));
+      element.title = clusterName(count);
+    });
+  }
   const userLocationLayer = L.layerGroup().addTo(map);
 
   const visited = visitedStore();
@@ -97,29 +122,31 @@ export function initMap({ openDetail }) {
     );
   }
 
-  const restaurantIcon = (color, done) => L.divIcon({
-    className: `restaurant-map-marker${done ? ' is-visited' : ''}`,
-    html: `<span style="--marker-color:${color}" aria-hidden="true"></span>`,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10]
-  });
+  /** Every point is a 44 px tap area with its shape drawn in the middle: circle (visit), bigger circle (event, hotel) or diamond (restaurant). */
+  function pointIcon(point) {
+    const done = point.type !== 'hotel' && visited.has(cityId, point.id);
+    const state = searchState(point);
+    const classes = ['poi-marker', `is-${point.type === 'restaurant' ? 'restaurant' : point.type === 'hotel' ? 'hotel' : point.type === 'event' ? 'event' : 'visit'}`,
+      point.type === 'restaurant' ? 'restaurant-map-marker' : 'visit-map-marker'];
+    if (done) classes.push('is-visited');
+    if (state === 'hit') classes.push('is-search-hit');
+    if (state === 'dim') classes.push('is-search-dim');
+    return L.divIcon({
+      className: classes.join(' '),
+      html: `<span style="--marker-color:${markerColorForPoint(point)}" aria-hidden="true"></span>`,
+      iconSize: [HIT_SIZE, HIT_SIZE],
+      iconAnchor: [HIT_SIZE / 2, HIT_SIZE / 2]
+    });
+  }
+  const baseZ = (point) => (point.type === 'hotel' ? 300 : point.type === 'restaurant' ? 250 : 200);
 
   function buildMarker(point) {
-    const color = markerColorForPoint(point);
-    const marker = point.type === 'restaurant'
-      ? L.marker([point.lat, point.lng], {
-        icon: restaurantIcon(color, visited.has(cityId, point.id)),
-        zIndexOffset: 250
-      })
-      : L.circleMarker([point.lat, point.lng], {
-        radius: point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7,
-        color: '#fff', weight: point.type === 'hotel' ? 3 : 2, fillColor: color, fillOpacity: 0.95
-      });
+    const marker = L.marker([point.lat, point.lng], { icon: pointIcon(point), zIndexOffset: baseZ(point), title: point.name, alt: point.name });
     // Keep popups clear of the zoom buttons (top left): they used to cover the popup text.
     marker.bindPopup(buildPopup(point), { maxWidth: 200, autoPanPaddingTopLeft: [72, 24], autoPanPaddingBottomRight: [24, 24] });
     // In the full-screen map the place goes to the bottom card instead of a popup.
     marker.on('popupopen', () => { if (inMapView()) { marker.closePopup(); selectPoint(point); } });
-    marker.bindTooltip(point.name, { direction: 'top', offset: [0, -7] });
+    marker.bindTooltip(point.name, { direction: 'top', offset: [0, -12] });
     return marker;
   }
 
@@ -128,8 +155,6 @@ export function initMap({ openDetail }) {
     const marker = markerByKey.get(cityKey(cityId, point.id));
     if (!marker) return;
     const done = visited.has(cityId, point.id);
-    if (point.type === 'restaurant') marker.setIcon(restaurantIcon(markerColorForPoint(point), done));
-    else if (point.type !== 'hotel') marker.setStyle({ fillOpacity: done ? 0.3 : 0.95 });
     marker.setTooltipContent(done ? `✓ ${point.name}` : point.name);
     paintSearchMarker(point);
   }
@@ -139,21 +164,11 @@ export function initMap({ openDetail }) {
   function paintSearchMarker(point) {
     const marker = markerByKey.get(cityKey(cityId, point.id));
     if (!marker) return;
-    const state = searchState(point);
-    if (point.type === 'restaurant') {
-      const element = marker.getElement?.();
-      element?.classList.toggle('is-search-hit', state === 'hit');
-      element?.classList.toggle('is-search-dim', state === 'dim');
-      marker.setZIndexOffset(state === 'hit' ? 900 : 250);
-      return;
-    }
-    const base = point.type === 'hotel' ? 9 : point.type === 'event' ? 8 : 7;
-    const done = visited.has(cityId, point.id);
-    const fillOpacity = state === 'dim' ? 0.18 : point.type === 'hotel' ? 0.95 : done ? 0.3 : 0.95;
-    marker.setStyle(state === 'hit'
-      ? { radius: base + 4, color: SEARCH_COLOR, weight: 4, opacity: 1, fillOpacity: 0.95 }
-      : { radius: state === 'dim' ? 4 : base, color: '#fff', weight: state === 'dim' ? 1 : point.type === 'hotel' ? 3 : 2, opacity: state === 'dim' ? 0.35 : 1, fillOpacity });
-    if (state === 'hit') marker.bringToFront?.();
+    // Visited and search state live in the icon's classes, so a point inside a group keeps them when it comes out.
+    // Only a changed look replaces the icon: rebuilding 60 icons on every refresh would slow the map's own animations.
+    const icon = pointIcon(point);
+    if (marker.options.icon?.options.className !== icon.options.className) marker.setIcon(icon);
+    marker.setZIndexOffset(searchState(point) === 'hit' ? 900 : baseZ(point));
   }
   const paintSearch = () => points.forEach(paintSearchMarker);
 
@@ -197,7 +212,7 @@ export function initMap({ openDetail }) {
   }
 
   let flyNext = false; // set by setCity({ fly }) for the one refresh that moves the map to the new city
-  const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotion = reducedMotionNow;
 
   function refreshMapPoints() {
     const visiblePoints = filteredPoints();
@@ -314,7 +329,7 @@ export function initMap({ openDetail }) {
     nearbyList.replaceChildren(...ordered.map(({ point, distance }) => {
       const button = h('button', { type: 'button', onclick: () => {
         if (!markerLayer.hasLayer(markerByKey.get(cityKey(cityId, point.id)))) applyFilters(emptyFilters());
-        map.setView([point.lat, point.lng], 16);
+        map.setView([point.lat, point.lng], Math.max(16, map.getZoom()));
         openDetail(point.id);
       } }, point.name, h('small', {}, point.desc));
       return h('li', {},
@@ -440,7 +455,14 @@ export function initMap({ openDetail }) {
     /** Shows or hides the day route; returns whether it is on. */
     setRoute(on) { routeOn = Boolean(on); paintRoute(); announce(); return routeOn; },
     /** Opens the card of a place (used by the carousel). */
-    select(id) { const point = points.find((item) => item.id === id); if (!point) return; map.panTo([point.lat, point.lng]); selectPoint(point); },
+    select(id) {
+      const point = points.find((item) => item.id === id);
+      if (!point) return;
+      const marker = markerByKey.get(cityKey(cityId, point.id));
+      // A point inside a group: zoom just enough to show it on its own, then open its card.
+      if (clustered && marker && markerLayer.hasLayer(marker) && !marker.getElement?.()) markerLayer.zoomToShowLayer(marker, () => selectPoint(point));
+      else { map.panTo([point.lat, point.lng]); selectPoint(point); }
+    },
     /** Removes one active filter: key 'day' | 'kind' | 'only' and its value (without a value, the whole group). */
     clearFilter(key, value) {
       const group = { day: 'days', kind: 'kinds', only: 'only' }[key];

@@ -27,6 +27,7 @@ test('the committed offline manifest lists the whole app and every listed file e
   const manifest = await readJson('offline-manifest.json');
   assert.match(manifest.version, /^[0-9a-f]{10}$/);
   for (const needed of ['index.html', 'js/main.js', 'assets/styles.css', 'assets/vendor/leaflet/leaflet.js', 'assets/vendor/leaflet/leaflet.css',
+    'assets/vendor/leaflet-markercluster/leaflet.markercluster.js', 'assets/vendor/leaflet-markercluster/MarkerCluster.css',
     'data/journey.json', 'data/version.json', 'data/global/phrases.json', 'data/global/dishes.json', 'manifest.webmanifest']) {
     assert.ok(manifest.required.includes(needed), `${needed} must be cached for offline use`);
   }

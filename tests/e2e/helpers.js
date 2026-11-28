@@ -12,7 +12,7 @@ export const kyoto = {
   itinerary: readJson('data/cities/kyoto/itinerary.json')
 };
 
-export const SVG_MARKERS = '.leaflet-overlay-pane svg path';
+export const SVG_MARKERS = '.visit-map-marker'; // every place that is not a restaurant (visits, events, hotel): 44 px tap areas
 export const RESTAURANT_MARKERS = '.restaurant-map-marker';
 
 /** A minimal fictional city used only by tests. It reuses the id "fushimi" on purpose. */

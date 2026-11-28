@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { mockWeather } from './helpers.js';
+import { mockWeather, SVG_MARKERS } from './helpers.js';
 
 const tokyo = (iso) => new Date(`${iso}+09:00`);
 
@@ -197,7 +197,7 @@ test.describe('V14.2.2 fixes', () => {
   test('map popups open clear of the zoom buttons', async ({ page }) => {
     await page.goto('/?city=nara&tab=mapa');
     await page.locator('#city-map').scrollIntoViewIfNeeded();
-    const marker = page.locator('.leaflet-overlay-pane path').first();
+    const marker = page.locator(SVG_MARKERS).first();
     await expect(marker).toBeAttached({ timeout: 20_000 });
     await marker.dispatchEvent('click');
     const popup = page.locator('.leaflet-popup-content-wrapper');

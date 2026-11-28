@@ -180,6 +180,9 @@ for (const width of [390, 320]) {
       expect(zoom.y).toBeGreaterThanOrEqual(tools.y + tools.height - 1);
       expect(zoom.y).toBeGreaterThan(filters.y + filters.height);
       expect(zoom.x + zoom.width).toBeLessThanOrEqual(width);
+      // Leaflet ignores a zoom tap while the map is still fitting the city after opening: wait until it stands still.
+      await expect(page.locator('#city-map')).not.toHaveClass(/leaflet-zoom-anim/);
+      await expect.poll(async () => { const first = await level(); await page.waitForTimeout(300); return first !== null && first === await level(); }).toBe(true);
       const before = await level();
       await page.locator('#view-mapa .leaflet-control-zoom-in').click();
       if (before) await expect.poll(level).not.toBe(before);
