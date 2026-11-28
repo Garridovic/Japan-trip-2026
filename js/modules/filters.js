@@ -15,10 +15,7 @@ export function renderFood(food, restaurants, queryContext = '') {
     FOOD_CONTAINERS.forEach((id) => byId(id).replaceChildren());
     return;
   }
-  byId('food-kicker').textContent = food.kicker;
   byId('food-title').textContent = food.title;
-  byId('food-lead').textContent = food.lead;
-  byId('food-intro').textContent = food.intro;
   const highlights = byId('food-highlights');
   highlights.setAttribute('aria-label', food.highlightsLabel);
   highlights.replaceChildren(...food.highlights.map((item) =>

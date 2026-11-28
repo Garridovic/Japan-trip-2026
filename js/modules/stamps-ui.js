@@ -65,9 +65,9 @@ export function initStamps(cities, { storage = userStorage(), load = fetchJson, 
     const groups = cityPlaces.map((city) => ({ city, places: stampPlaces(city.places) })).filter(({ places }) => places.length);
     select.replaceChildren(h('option', { value: '' }, 'Sin lugar'),
       ...groups.map(({ city, places }) => h('optgroup', { label: city.name },
-        places.map((place) => h('option', { value: `${city.id}:${place.id}` }, `${place.name} · Aquí hay sello real`)))));
+        places.map((place) => h('option', { value: `${city.id}:${place.id}` }, place.name)))));
     byId('stamps-map').hidden = groups.length === 0;
-    byId('stamps-verified').textContent = groups.length ? `Aquí hay sello real en ${groups.reduce((sum, { places }) => sum + places.length, 0)} lugares de la guía. Si encuentras otro, apúntalo sin lugar.` : '';
+    byId('stamps-verified').textContent = groups.length ? `${groups.reduce((sum, { places }) => sum + places.length, 0)} lugares de la guía tienen sello.` : '';
   }
 
   function render() {

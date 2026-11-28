@@ -8,9 +8,7 @@ export async function initChecklist(data, { storage = userStorage() } = {}) {
   if (!data?.items?.length) { section.hidden = true; return null; }
   validateChecklist(data).forEach((problem) => console.warn(`[checklist] ${problem}`));
   section.hidden = false;
-  byId('checklist-kicker').textContent = data.kicker;
   byId('checklist-title').textContent = data.title;
-  byId('checklist-lead').textContent = data.lead;
   const store = createChecklistStore(storage);
   const list = byId('checklist-groups');
   const count = byId('checklist-count');
@@ -51,6 +49,14 @@ export async function initChecklist(data, { storage = userStorage() } = {}) {
     openGroups.add('mis'); // open before adding: the store re-renders as soon as it saves
     if (store.add(input.value)) input.value = ''; else render();
     input.focus();
+  });
+  // Deleting is a separate mode: the ✕ next to every task made it easy to delete one while ticking it.
+  const editButton = byId('checklist-edit');
+  editButton.addEventListener('click', () => {
+    const editing = !section.classList.contains('is-editing');
+    section.classList.toggle('is-editing', editing);
+    editButton.setAttribute('aria-pressed', String(editing));
+    editButton.textContent = editing ? 'Listo' : 'Editar';
   });
   byId('checklist-reset').addEventListener('click', () => { if (window.confirm('¿Quitar todas las marcas? Tus cosas añadidas se quedan.')) store.uncheckAll(); });
   render();

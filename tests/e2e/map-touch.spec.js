@@ -114,3 +114,57 @@ test.describe('touch targets of 44 and 48 px', () => {
     await expect(page.locator('#version-indicator')).toBeVisible();
   });
 });
+
+for (const width of [390, 320]) {
+  test.describe(`map card at ${width} px`, () => {
+    test.use(phone(width));
+
+    test('a place opened from the search sits above the card, and the card has three icon actions', async ({ page }) => {
+      await page.goto('/?view=mapa');
+      await expect(page.locator(SVG_MARKERS).first()).toBeAttached({ timeout: 20_000 });
+      await page.locator('#map-search-input').fill('nishiki');
+      await page.locator('#map-search-drop .map-search-row-item', { hasText: 'Nishiki' }).first().click();
+      const card = page.locator('#map-card');
+      await expect(card).toBeVisible();
+      await expect(card.locator('.popup-title')).toContainText('Nishiki');
+      const actions = card.locator('.map-card-action');
+      expect(await actions.count()).toBeGreaterThanOrEqual(2);
+      expect(await actions.count()).toBeLessThanOrEqual(3);
+      for (const action of await actions.all()) {
+        const box = await action.boundingBox();
+        expect(box.height).toBeGreaterThanOrEqual(48);
+        expect(box.width).toBeGreaterThanOrEqual(48);
+      }
+      await expect(card.getByRole('link', { name: 'Cómo llegar con Google Maps' })).toHaveAttribute('href', /^https:\/\//);
+      // QA V14.19.0: the chosen point used to end up under the card.
+      const name = (await card.locator('.popup-title').innerText()).trim();
+      const hit = page.locator(`${POINTS}[title="${name}"]`).first();
+      await expect.poll(async () => {
+        const [point, top] = [await hit.boundingBox(), (await card.boundingBox()).y];
+        return point && point.y + point.height / 2 < top - 8;
+      }, { timeout: 5_000 }).toBe(true);
+      expect((await hit.boundingBox()).y).toBeGreaterThan((await page.locator('#map-search-field').boundingBox()).y);
+    });
+
+    test('the name of a place opens its sheet', async ({ page }) => {
+      await page.goto('/?view=mapa');
+      await expect(page.locator(SVG_MARKERS).first()).toBeAttached({ timeout: 20_000 });
+      await page.locator(SVG_MARKERS).nth(1).dispatchEvent('click');
+      const title = page.locator('#map-card button.popup-title');
+      await expect(title).toHaveText(kyoto.places[1].name);
+      expect((await title.boundingBox()).height).toBeGreaterThanOrEqual(44);
+      await title.click();
+      await expect(page.locator('#poi-title, .poi-detail-header').first()).toBeVisible();
+    });
+  });
+}
+
+test('the guide has no map tab and no instruction paragraphs under its titles', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible({ timeout: 20_000 });
+  await expect(page.locator('.nav-inner a[href="#mapa"]')).toBeHidden();
+  await expect(page.locator('.section-head .kicker')).toHaveCount(0);
+  await expect(page.locator('.section-head > p')).toHaveCount(0);
+  await expect(page.locator('footer')).not.toContainText('data/');
+});

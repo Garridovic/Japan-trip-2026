@@ -11,9 +11,7 @@ export function initLodging(data, { today = todayInJapan(), clipboard = navigato
   const section = byId('viaje');
   if (!data?.stays?.length) { section.hidden = true; return null; }
   section.hidden = false;
-  byId('lodging-kicker').textContent = data.kicker;
   byId('lodging-title').textContent = data.title;
-  byId('lodging-lead').textContent = data.lead;
   byId('lodging-privacy').textContent = data.privacyNote;
 
   const totalNights = data.stays.reduce((sum, stay) => sum + nights(stay.checkIn, stay.checkOut), 0);

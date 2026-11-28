@@ -9,7 +9,7 @@ import { visitedStore, isVisitable, countVisited } from './visited.js';
 import { distanceKm, formatDistance, formatFarDistance, distanceIfFarFromCity } from './geo.js';
 import { buildMapIndex, searchPoints } from './map-search.js';
 import { emptyFilters, toggleValue, matchesFilters, singleRouteDay, activeFilterList, describeFilters } from './map-filters.js';
-import { clusteringEnabled, clusterOptions, clusterLabel, clusterName, HIT_SIZE } from './map-cluster.js';
+import { clusteringEnabled, clusterOptions, clusterLabel, clusterName, HIT_SIZE, LOOSE_FROM_ZOOM } from './map-cluster.js';
 
 const HOTEL_COLOR = '#273d70';
 const FALLBACK_COLOR = '#64748b';
@@ -97,6 +97,10 @@ export function initMap({ openDetail }) {
   function paintVisitButton(button, point) {
     const done = visited.has(cityId, point.id);
     button.setAttribute('aria-pressed', String(done));
+    if (button.dataset.variant === 'card') {
+      button.setAttribute('aria-label', done ? 'Visitado. Toca para quitar la marca' : 'Marcar como visitado');
+      return; // the icon fills in through CSS (aria-pressed)
+    }
     button.textContent = done ? '✓ Visitado · quitar marca' : 'Marcar como visitado';
   }
   function buildVisitButton(point) {
@@ -104,6 +108,46 @@ export function initMap({ openDetail }) {
     visitButtons.set(point.id, button);
     paintVisitButton(button, point);
     return button;
+  }
+
+  // Icons of the map card actions (static markup, no data inside).
+  const ICONS = {
+    go: '<path d="M3 11l18-8-8 18-2-8-8-2z"/>',
+    done: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    google: '<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+    taxi: '<path d="M5 16v-5l2-5h10l2 5v5M5 16h14M7 19v-3M17 19v-3M9 3h6"/>'
+  };
+  function cardAction(tag, props, icon, label) {
+    const element = h(tag, { ...props, class: `map-card-action ${props.class ?? ''}`.trim() }, h('span', { class: 'map-card-icon', 'aria-hidden': 'true' }), h('span', { class: 'map-card-label' }, label));
+    element.querySelector('.map-card-icon').innerHTML = `<svg viewBox="0 0 24 24">${ICONS[icon]}</svg>`;
+    return element;
+  }
+
+  /** Bottom card of the full-screen map: the name (opens the place sheet), one line, and three actions with icons. */
+  function buildCard(point) {
+    const isRestaurant = point.type === 'restaurant';
+    const title = isRestaurant
+      ? h('div', { class: 'popup-title' }, point.name)
+      : h('button', { type: 'button', class: 'popup-title popup-detail-button', 'aria-label': `${point.name}: ver ficha del lugar`, onclick: () => openDetail(point.id) }, point.name);
+    let middle = null;
+    if (isVisitable(point)) {
+      middle = cardAction('button', { type: 'button', class: 'popup-visit-button', dataset: { variant: 'card' }, onclick: () => visited.toggle(cityId, point.id) }, 'done', 'Visitado');
+      visitButtons.set(point.id, middle);
+      paintVisitButton(middle, point);
+    } else if (point.type === 'hotel') {
+      middle = taxiButton({ name: point.name, city: config.queryContext?.split(',')[0], className: 'map-card-action taxi-button', label: '' });
+      middle.append(h('span', { class: 'map-card-icon', 'aria-hidden': 'true' }), h('span', { class: 'map-card-label' }, 'Taxi'));
+      middle.querySelector('.map-card-icon').innerHTML = `<svg viewBox="0 0 24 24">${ICONS.taxi}</svg>`;
+    }
+    return h('div', { class: 'map-card-content' },
+      title,
+      point.desc && h('div', { class: 'popup-meta' }, point.desc),
+      h('div', { class: 'map-card-actions' },
+        cardAction('a', { href: googleDirectionsUrl(point), target: '_blank', rel: 'noopener', class: 'is-primary', 'aria-label': 'Cómo llegar con Google Maps' }, 'go', 'Cómo llegar'),
+        middle,
+        cardAction('a', { href: googleSearchUrl(point), target: '_blank', rel: 'noopener', 'aria-label': 'Ver en Google Maps' }, 'google', 'Google Maps')
+      )
+    );
   }
 
   function buildPopup(point) {
@@ -145,7 +189,7 @@ export function initMap({ openDetail }) {
     // Keep popups clear of the zoom buttons (top left): they used to cover the popup text.
     marker.bindPopup(buildPopup(point), { maxWidth: 200, autoPanPaddingTopLeft: [72, 24], autoPanPaddingBottomRight: [24, 24] });
     // In the full-screen map the place goes to the bottom card instead of a popup.
-    marker.on('popupopen', () => { if (inMapView()) { marker.closePopup(); selectPoint(point); } });
+    marker.on('popupopen', () => { if (inMapView()) { marker.closePopup(); selectPoint(point); revealAboveCard(point, { onlyIfCovered: true }); } });
     marker.bindTooltip(point.name, { direction: 'top', offset: [0, -12] });
     return marker;
   }
@@ -201,6 +245,22 @@ export function initMap({ openDetail }) {
       icon: L.divIcon({ className: 'route-number', html: `<span style="--marker-color:${color}">${i + 1}</span>`, iconSize: [22, 22], iconAnchor: [11, 11] })
     })));
   }
+  /**
+   * Moves the map so the chosen point sits in the free space above the bottom card (it used to end up under it).
+   * zoom: the zoom to show it at (default: the current one). onlyIfCovered: leave the map alone when the point is already clear.
+   */
+  function revealAboveCard(point, { zoom = map.getZoom(), onlyIfCovered = false } = {}) {
+    const card = document.getElementById('map-card');
+    const covered = card && !card.hidden ? card.offsetHeight + 16 : 0;
+    const latlng = L.latLng(point.lat, point.lng);
+    if (onlyIfCovered) {
+      const y = map.latLngToContainerPoint(latlng).y;
+      if (y < map.getSize().y - covered - 24 && y > 120) return;
+    }
+    const centre = map.unproject(map.project(latlng, zoom).add([0, covered / 2]), zoom);
+    map.setView(centre, zoom, { animate: !reducedMotionNow() });
+  }
+
   /** Bottom card of the full-screen map: the place, its actions and the nearest places as a carousel. */
   function selectPoint(point) {
     const nearest = points
@@ -208,7 +268,7 @@ export function initMap({ openDetail }) {
       .map((other) => ({ other, km: distanceKm(point, other) }))
       .sort((a, b) => a.km - b.km).slice(0, 6)
       .map(({ other, km }) => ({ point: other, label: formatDistance(km) }));
-    document.dispatchEvent(new CustomEvent('map:select', { detail: { point, content: buildPopup(point), nearby: nearest } }));
+    document.dispatchEvent(new CustomEvent('map:select', { detail: { point, content: buildCard(point), nearby: nearest } }));
   }
 
   let flyNext = false; // set by setCity({ fly }) for the one refresh that moves the map to the new city
@@ -458,10 +518,9 @@ export function initMap({ openDetail }) {
     select(id) {
       const point = points.find((item) => item.id === id);
       if (!point) return;
-      const marker = markerByKey.get(cityKey(cityId, point.id));
-      // A point inside a group: zoom just enough to show it on its own, then open its card.
-      if (clustered && marker && markerLayer.hasLayer(marker) && !marker.getElement?.()) markerLayer.zoomToShowLayer(marker, () => selectPoint(point));
-      else { map.panTo([point.lat, point.lng]); selectPoint(point); }
+      selectPoint(point); // opens the card first, so its height is known
+      // Street level (every group is split there) with the point above the card, never under it.
+      revealAboveCard(point, { zoom: Math.min(map.getMaxZoom(), Math.max(map.getZoom(), LOOSE_FROM_ZOOM)) });
     },
     /** Removes one active filter: key 'day' | 'kind' | 'only' and its value (without a value, the whole group). */
     clearFilter(key, value) {

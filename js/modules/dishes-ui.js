@@ -30,9 +30,7 @@ export function initDishes(data, credits = [], { storage = safeStorage(), speech
   const categoryLabels = new Map(data.categories.map(({ id, label }) => [id, label]));
   const state = { category: ALL, protein: ALL, query: '', view: 'photos' };
 
-  byId('dishes-kicker').textContent = data.kicker;
   byId('dishes-title').textContent = data.title;
-  byId('dishes-lead').textContent = data.lead;
   byId('dishes-disclaimer').textContent = data.disclaimer;
   section.hidden = false;
 

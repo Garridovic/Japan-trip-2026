@@ -270,8 +270,8 @@ test('an invalid ?view= is cleaned from the URL and the tab is dropped when chan
   await page.goto('/?view=bad');
   await expect(page.locator('#city-view')).toBeVisible();
   await expect(page).not.toHaveURL(/view=/);
-  await page.locator('.nav-inner a[href="#mapa"]').click();
-  await expect(page).toHaveURL(/tab=mapa/);
+  await page.locator('.nav-inner a[href="#detalle"]').click();
+  await expect(page).toHaveURL(/tab=detalle/);
   await page.locator('[data-view-target="frases"]').click();
   await expect(page).toHaveURL(/view=frases$/);
   await expect(page).not.toHaveURL(/tab=/);

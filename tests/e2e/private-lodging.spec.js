@@ -89,7 +89,6 @@ test('only the Viaje view can be saved as PDF: the button exists there and calls
   await fill(page);
   await page.getByRole('button', { name: 'Descargar PDF' }).click();
   expect(await page.evaluate(() => window.__prints)).toBe(1);
-  await expect(page.locator('.lodging-pdf-hint')).toContainText('Guardar como PDF');
 });
 
 test('the print view contains only the Viaje view, with the private data written out', async ({ page }) => {

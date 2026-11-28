@@ -61,7 +61,7 @@ test.describe('optional account (Auth0, Google)', () => {
     await expect(page.locator('#account-greeting')).toBeHidden();
     await expect(page.locator('#account-invite')).toBeVisible();
     await page.locator('#account-button').click();
-    await expect(page.locator('#account-popover')).toContainText('sin sesión');
+    await expect(page.locator('#account-popover')).toContainText('Entra con Google para ver');
     await expect(page.locator('#account-popover')).toContainText('PINs y las reservas');
     await page.keyboard.press('Escape');
     await page.locator('#account-invite').getByRole('button', { name: 'Ahora no' }).click();

@@ -22,9 +22,7 @@ export function initPhrases(data, { storage = safeStorage(), speech = createSpee
   const categoryLabels = new Map(data.categories.map(({ id, label }) => [id, label]));
   const state = { category: ALL_CATEGORY, query: '' };
 
-  byId('phrases-kicker').textContent = data.kicker;
   byId('phrases-title').textContent = data.title;
-  byId('phrases-lead').textContent = data.lead;
   section.hidden = false;
 
   // ----- audio availability -----

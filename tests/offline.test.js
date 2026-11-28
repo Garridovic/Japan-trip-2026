@@ -176,7 +176,7 @@ test('the popover facts show the copy date, the space used and a real file count
   assert.match(rows['Copia guardada'], /^V11\.5\.0 · /);
   assert.equal(rows['Archivos'], '270 de 270');
   assert.equal(rows['Espacio usado'], '≈ 18 MB');
-  assert.equal(rows['Mapa guardado'], '12 teselas');
+  assert.equal(rows['Mapa guardado'], 'Sí');
   const partial = Object.fromEntries(facts({ kind: 'essentials' }, report({ warm: 107 }), 'V11.5.0'));
   assert.equal(partial['Archivos'], '163 de 270');
   assert.equal(partial['Espacio usado'], '≈ 5 MB');

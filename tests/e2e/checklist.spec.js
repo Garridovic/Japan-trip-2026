@@ -25,6 +25,9 @@ test.describe('checklist in Viaje', () => {
     await page.reload();
     await page.locator('#checklist-groups details[data-group="mis"]').evaluate((el) => { el.open = true; });
     await expect(page.locator('.checklist-item', { hasText: 'Cámara de fotos' })).toBeVisible();
+    await expect(page.locator('.checklist-item', { hasText: 'Cámara de fotos' }).getByRole('button', { name: /Quitar/ })).toBeHidden(); // deleting needs «Editar»
+    await page.locator('#checklist-edit').click();
+    await expect(page.locator('#checklist-edit')).toHaveText('Listo');
     await page.locator('.checklist-item', { hasText: 'Cámara de fotos' }).getByRole('button', { name: /Quitar/ }).click();
     await expect(page.locator('.checklist-item', { hasText: 'Cámara de fotos' })).toHaveCount(0);
   });

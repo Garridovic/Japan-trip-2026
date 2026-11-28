@@ -5,17 +5,17 @@ test.describe('sellos (V14)', () => {
     await page.goto('/?view=viaje');
     await expect(page.locator('#sellos h2')).toHaveText('Mis sellos');
     await expect(page.locator('#stamps-total')).toHaveText('0 sellos');
-    await expect(page.locator('#stamps-verified')).toContainText('Aquí hay sello real en 18 lugares');
+    await expect(page.locator('#stamps-verified')).toContainText('18 lugares de la guía tienen sello');
     const options = page.locator('#stamp-place option');
     await expect(options).toHaveCount(19); // "Sin lugar" + 18
     await expect(page.locator('#stamp-place option', { hasText: 'Castillo Nijō' })).toHaveCount(0);
-    await expect(page.locator('#stamp-place option', { hasText: 'Kinkaku-ji' })).toHaveText(/Aquí hay sello real/);
+    await expect(page.locator('#stamp-place option', { hasText: 'Kinkaku-ji' })).toHaveText('Kinkaku-ji'); // only places with a real stamp are listed, so no label is needed
   });
 
   test('add a stamp with a label and a place, undo removing it, and it survives a reload', async ({ page }) => {
     await page.goto('/?view=viaje');
     await page.locator('#stamp-label').fill('Dorado');
-    await page.locator('#stamp-place').selectOption({ label: 'Kinkaku-ji · Aquí hay sello real' });
+    await page.locator('#stamp-place').selectOption({ label: 'Kinkaku-ji' });
     await page.locator('#stamp-form').evaluate((form) => form.requestSubmit());
     await expect(page.locator('#stamps-total')).toHaveText('1 sello');
     await expect(page.locator('.stamp .stamp-name')).toHaveText('Dorado');

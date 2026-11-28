@@ -66,23 +66,23 @@ export function zoomRange(plan) {
  */
 export function describeSaveState(state, { online = true, city = 'la ciudad', range = [MIN_ZOOM, 15] } = {}) {
   const mb = estimateMegabytes(state.total);
-  const zooms = `zoom ${range[0]}–${range[1]}`;
+  const percent = (saved) => Math.floor((100 * saved) / Math.max(1, state.total)); // people understand «80 %», not «teselas»
   switch (state.kind) {
     case 'saving': return { text: `Guardando el mapa… ${state.done}/${state.total}`, button: 'Guardando…', disabled: true, tone: 'busy' };
     case 'complete': return {
-      text: `✓ Mapa guardado: ${state.total} teselas (${zooms}, ≈ ${mb} MB). Se ve sin conexión alrededor de ${city}; fuera de esa zona el fondo del mapa saldrá en blanco.`,
+      text: `✓ Mapa de ${city} guardado (≈ ${mb} MB): se ve sin conexión. Fuera de la ciudad el fondo saldrá en blanco.`,
       button: '✓ Mapa guardado · comprobar', disabled: !online, tone: 'ok'
     };
     case 'partial': return {
-      text: online ? `Mapa guardado a medias: ${state.saved} de ${state.total} teselas. Pulsa «Completar mapa» para terminar.` : `Mapa guardado a medias (${state.saved} de ${state.total} teselas). Con conexión podrás completarlo.`,
+      text: online ? `Mapa guardado al ${percent(state.saved)} %. Pulsa «Completar mapa» para terminar.` : `Mapa guardado al ${percent(state.saved)} %. Con conexión podrás completarlo.`,
       button: '↻ Completar mapa', disabled: !online, tone: 'partial'
     };
     case 'error': return {
-      text: `No se pudieron guardar ${state.failed} de ${state.total} teselas (comprueba la conexión o inténtalo en un rato). Guardadas: ${state.saved}. Vuelve a pulsar para completar.`,
+      text: `No se pudo guardar todo el mapa (${percent(state.saved)} % guardado). Comprueba la conexión y vuelve a pulsar.`,
       button: '↻ Completar mapa', disabled: !online, tone: 'error'
     };
     default: return {
-      text: online ? `Mapa sin guardar. Pulsa para guardar unas ${state.total} teselas (≈ ${mb} MB) alrededor de ${city} y verlo sin conexión.` : 'Sin conexión: el mapa se podrá guardar cuando vuelvas a tener internet.',
+      text: online ? `Mapa sin guardar. Guárdalo (≈ ${mb} MB) para ver ${city} sin conexión.` : 'Sin conexión: el mapa se podrá guardar cuando vuelvas a tener internet.',
       button: `⬇ Guardar mapa (≈ ${mb} MB)`, disabled: !online, tone: 'none'
     };
   }

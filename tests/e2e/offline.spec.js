@@ -337,15 +337,15 @@ test.describe('"Guardar mapa" control', () => {
       await page.evaluate(async () => { await caches.delete('japan-tiles-v1'); window.dispatchEvent(new Event('online')); });
       return (await statusText(page).textContent()) || '';
     }, { timeout: 15_000 }).toContain('Mapa sin guardar');
-    await expect(statusText(page)).toContainText(/unas \d+ teselas \(≈ \d+ MB\) alrededor de Kioto/);
+    await expect(statusText(page)).toContainText(/Guárdalo \(≈ \d+ MB\) para ver Kioto sin conexión/);
     await expect(save(page)).toHaveText(/⬇ Guardar mapa \(≈ \d+ MB\)/);
     await save(page).click();
     await expect(save(page)).toBeDisabled();
     await expect(page.locator('#save-offline-progress')).toBeVisible();
     await expect(statusText(page)).toContainText(/Guardando el mapa… \d+\/\d+/);
-    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
-    await expect(statusText(page)).toContainText(/\(zoom 11–15, ≈ \d+ MB\)/);
-    await expect(statusText(page)).toContainText('alrededor de Kioto');
+    await expect(statusText(page)).toContainText(/^✓ Mapa de .+ guardado/, { timeout: 60_000 });
+    await expect(statusText(page)).toContainText(/\(≈ \d+ MB\)/);
+    await expect(statusText(page)).toContainText('Mapa de Kioto');
     await expect(save(page)).toHaveAttribute('data-state', 'complete');
     await expect(page.locator('#save-offline-progress')).toBeHidden();
     expect(server.requests).toBeGreaterThan(20);
@@ -357,26 +357,26 @@ test.describe('"Guardar mapa" control', () => {
     expect(await loadedTiles(page)).toBe(0);
     server.up = true;
     await save(page).click();
-    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
+    await expect(statusText(page)).toContainText(/^✓ Mapa de .+ guardado/, { timeout: 60_000 });
     await context.setOffline(true);
     await page.goto('/?city=kyoto&tab=mapa');
     await expect(page.locator(SVG_MARKERS)).toHaveCount(kyoto.places.length, { timeout: 20_000 });
     await expect.poll(() => loadedTiles(page), { timeout: 10_000 }).toBeGreaterThan(2);
     // The saved state is remembered after a reload and shown again.
-    await expect(statusText(page)).toContainText('✓ Mapa guardado:');
+    await expect(statusText(page)).toContainText(/^✓ Mapa de .+ guardado/);
   });
 
   test('failed tiles are reported, the rest is kept, and pressing again completes the map', async ({ page, context }) => {
     const server = await tileServer(context, { up: true, failing: (url) => /\/13\//.test(url) });
     await ready(page);
     await save(page).click();
-    await expect(statusText(page)).toContainText(/No se pudieron guardar \d+ de \d+ teselas/, { timeout: 60_000 });
-    await expect(statusText(page)).toContainText(/Guardadas: \d+/);
+    await expect(statusText(page)).toContainText(/No se pudo guardar todo el mapa \(\d+ % guardado\)/, { timeout: 60_000 });
+    await expect(statusText(page)).toContainText(/\d+ % guardado/);
     await expect(save(page)).toHaveText('↻ Completar mapa');
     await expect(save(page)).toHaveAttribute('data-state', 'error');
     server.failing = () => false;
     await save(page).click();
-    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
+    await expect(statusText(page)).toContainText(/^✓ Mapa de .+ guardado/, { timeout: 60_000 });
   });
 
   test('offline the button explains it needs a connection and does nothing', async ({ page, context }) => {
@@ -404,7 +404,7 @@ test.describe('"Guardar mapa" control', () => {
     // the tiles seen while browsing are kept, but the city is not saved until you ask
     await expect(save(page)).not.toHaveAttribute('data-state', 'complete');
     await save(page).click();
-    await expect(statusText(page)).toContainText('✓ Mapa guardado:', { timeout: 60_000 });
+    await expect(statusText(page)).toContainText(/^✓ Mapa de .+ guardado/, { timeout: 60_000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
     await selectCity(page, 'Kioto');
     await expect(save(page)).not.toHaveAttribute('data-state', 'complete'); // Kioto was not saved: the control does not claim it was

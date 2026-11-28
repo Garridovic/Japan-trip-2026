@@ -148,7 +148,8 @@ export function initGuideTabs({ win = window, doc = document, onChange = () => {
     select(idOf(link), { source: 'click' });
   }));
   strip.addEventListener('keydown', (event) => {
-    const list = available();
+    // Tabs reachable only by URL (the guide map, now that the full-screen map has it all) are skipped by the arrows.
+    const list = available().filter((id) => id === active || !linkOf(id)?.hasAttribute('data-url-only'));
     const index = list.indexOf(active);
     const moves = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: list.length - 1 };
     if (!(event.key in moves) || index < 0) return;

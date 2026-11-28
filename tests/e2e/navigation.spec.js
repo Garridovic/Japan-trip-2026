@@ -15,9 +15,9 @@ test.describe('guide tabs (one section per tab)', () => {
   test('each tab shows only its own section, in any order, and there is no Fuentes tab', async ({ page }) => {
     await page.goto('/?city=kyoto');
     await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible();
-    await expect(page.locator('.nav-inner [role="tab"]')).toHaveText(['Vista rápida', 'Mapa', 'Día a día', 'Comer', 'Otros lugares', 'Consejos']);
+    await expect(page.locator('.nav-inner [role="tab"]:visible')).toHaveText(['Vista rápida', 'Día a día', 'Comer', 'Otros lugares', 'Consejos']); // no Mapa tab: the full-screen map has it all
     expect(await panels(page)).toEqual(['resumen']);
-    for (const id of [...ids, 'mapa', 'resumen']) {
+    for (const id of [...ids.filter((id) => id !== 'mapa'), 'resumen']) {
       await page.locator(`.nav-inner a[href="#${id}"]`).click();
       await expect(page.locator(`.nav-inner a[href="#${id}"]`)).toHaveAttribute('aria-selected', 'true');
       expect(await panels(page)).toEqual([id]);
@@ -47,9 +47,9 @@ test.describe('guide tabs (one section per tab)', () => {
   });
 
   test('arrow keys move between tabs', async ({ page }) => {
-    await page.goto('/?city=kyoto&tab=mapa');
+    await page.goto('/?city=kyoto&tab=resumen');
     await expect(page.locator('#quick-grid .quick-card').first()).toBeAttached();
-    await page.locator('.nav-inner a[href="#mapa"]').focus();
+    await page.locator('.nav-inner a[href="#resumen"]').focus();
     await page.keyboard.press('ArrowRight');
     await expect(page.locator('.nav-inner a[href="#detalle"]')).toHaveAttribute('aria-selected', 'true');
     await expect(page.locator('.nav-inner a[href="#detalle"]')).toBeFocused();
@@ -62,7 +62,7 @@ test('the tab goes in the URL without adding history entries, and Back leaves th
   await page.goto('/?city=kyoto');
   await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible();
   const before = await page.evaluate(() => history.length);
-  await page.locator('.nav-inner a[href="#mapa"]').click();
+  await page.locator('.nav-inner a[href="#detalle"]').click();
   await page.locator('.nav-inner a[href="#comer"]').click();
   await expect(page).toHaveURL(/\?city=kyoto&tab=comer$/);
   expect(await page.evaluate(() => history.length)).toBe(before);
@@ -158,7 +158,7 @@ test('clicking a tab does not let the app reset the scroll afterwards', async ({
   await page.goto('/?city=kyoto');
   await expect(page.locator('#quick-grid .quick-card').first()).toBeVisible();
   await page.evaluate(() => window.scrollTo({ top: 700, behavior: 'instant' }));
-  await page.locator('nav a[href="#mapa"]').click();
+  await page.locator('nav a[href="#detalle"]').click();
   await page.waitForTimeout(500); // the layout of the new tab settles
   const y = await page.evaluate(() => Math.round(window.scrollY));
   await page.waitForTimeout(600);

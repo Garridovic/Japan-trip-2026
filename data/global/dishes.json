@@ -2,7 +2,7 @@
   "kicker": "Para entender la carta",
   "title": "Platos y comidas",
   "lead": "Identifica un plato por su foto o por su nombre japonés.",
-  "disclaimer": "La información de carne, pescado y alérgenos es orientativa: cambia según el local y la receta. Si tienes alergia o no comes algo, díselo siempre al personal.",
+  "disclaimer": "Carne, pescado y alérgenos son orientativos: si tienes alergia o no comes algo, díselo siempre al personal.",
   "proteinLabels": {
     "carne": "Lleva carne",
     "pescado": "Pescado o marisco",

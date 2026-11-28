@@ -30,9 +30,7 @@ async function render(practical, cities, load, section) {
   }));
   validateTips(practical, cityTips).forEach((problem) => console.warn(`[tips] ${problem}`));
   const groups = groupTips(practical, cityTips, cities);
-  byId('tips-practical-kicker').textContent = practical.kicker;
   byId('tips-practical-title').textContent = practical.title;
-  byId('tips-practical-lead').textContent = practical.lead ?? '';
   byId('tips-groups').replaceChildren(...groups.map((group) =>
     h('details', { class: 'tips-group', dataset: { tipsGroup: group.id } },
       h('summary', {}, h('span', {}, group.label), h('span', { class: 'tips-count' }, String(group.items.length))),

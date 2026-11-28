@@ -28,16 +28,16 @@ test('the plan covers the zoom levels the map really opens at, for every city', 
 
 test('texts say what is saved, how big it is and what to do next', () => {
   const opts = { city: 'Osaka', range: [11, 15] };
-  assert.match(describeSaveState({ kind: 'none', total: 100 }, opts).text, /Mapa sin guardar.*100 teselas \(≈ 2 MB\).*Osaka/);
+  assert.match(describeSaveState({ kind: 'none', total: 100 }, opts).text, /Mapa sin guardar\. Guárdalo \(≈ 2 MB\) para ver Osaka sin conexión/);
   assert.equal(describeSaveState({ kind: 'none', total: 100 }, opts).button, '⬇ Guardar mapa (≈ 2 MB)');
   assert.equal(describeSaveState({ kind: 'saving', done: 5, total: 100 }, opts).text, 'Guardando el mapa… 5/100');
   assert.equal(describeSaveState({ kind: 'saving', done: 5, total: 100 }, opts).disabled, true);
   const done = describeSaveState({ kind: 'complete', total: 100 }, opts);
-  assert.match(done.text, /^✓ Mapa guardado: 100 teselas \(zoom 11–15, ≈ 2 MB\)\. Se ve sin conexión alrededor de Osaka/);
+  assert.match(done.text, /^✓ Mapa de Osaka guardado \(≈ 2 MB\): se ve sin conexión/);
   assert.equal(done.tone, 'ok');
-  assert.match(describeSaveState({ kind: 'partial', saved: 40, total: 100 }, opts).text, /40 de 100 teselas.*Completar mapa/);
+  assert.match(describeSaveState({ kind: 'partial', saved: 40, total: 100 }, opts).text, /guardado al 40 %.*Completar mapa/);
   const failed = describeSaveState({ kind: 'error', saved: 90, failed: 10, total: 100 }, opts);
-  assert.match(failed.text, /No se pudieron guardar 10 de 100 teselas/);
+  assert.match(failed.text, /No se pudo guardar todo el mapa \(90 % guardado\)/);
   assert.equal(failed.button, '↻ Completar mapa');
   const offline = describeSaveState({ kind: 'none', total: 100 }, { ...opts, online: false });
   assert.match(offline.text, /Sin conexión: el mapa se podrá guardar/);
@@ -68,7 +68,7 @@ test('saving the map stores every tile, reports progress and finishes with a cle
   await button.listeners.click();
   assert.equal(store.size, 4);
   assert.equal(button.dataset.state, 'complete');
-  assert.match(status.textContent, /✓ Mapa guardado: 4 teselas \(zoom 11–14/);
+  assert.match(status.textContent, /^✓ Mapa de .* guardado/);
   assert.equal(progress.hidden, true);
 });
 
@@ -85,7 +85,7 @@ test('a later visit recognises what is already saved (complete, or partial) with
   half.store.set(tileUrl(12, 2, 2), {});
   await half.saver.setPlan(smallPlan, 'Kioto');
   assert.equal(half.button.dataset.state, 'partial');
-  assert.match(half.status.textContent, /2 de 4 teselas/);
+  assert.match(half.status.textContent, /guardado al 50 %/);
   await half.button.listeners.click();
   assert.equal(half.calls.length, 2, 'only the missing tiles are requested');
   assert.equal(half.button.dataset.state, 'complete');
@@ -98,7 +98,7 @@ test('failed tiles are retried once, then reported honestly and can be completed
   await button.listeners.click();
   assert.equal(calls.filter((url) => url === bad).length, 2, 'one retry');
   assert.equal(button.dataset.state, 'error');
-  assert.match(status.textContent, /No se pudieron guardar 1 de 4 teselas.*Guardadas: 3/);
+  assert.match(status.textContent, /No se pudo guardar todo el mapa \(75 % guardado\)/);
   assert.equal(button.textContent, '↻ Completar mapa');
 });
 

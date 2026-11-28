@@ -8,7 +8,7 @@ test('the dishes section is global and shows every dish with names and ingredien
   await page.goto('/?view=platos');
   await expect(page.locator('.dish-card')).toHaveCount(total);
   await expect(page.locator('[data-view-target="platos"]')).toBeVisible();
-  await expect(page.locator('#dishes-disclaimer')).toContainText('orientativa');
+  await expect(page.locator('#dishes-disclaimer')).toContainText('orientativos');
   const card = page.locator('.dish-card[data-dish-id="ramen"]');
   await expect(card.locator('.dish-ja')).toHaveText('ラーメン');
   await expect(card.locator('.dish-romaji')).toHaveText('rāmen');
@@ -64,7 +64,7 @@ test('opening a dish shows it full screen with warning, credit and audio', async
   await expect(sheet).toBeVisible();
   await expect(sheet.locator('.phrase-show-ja')).toHaveText('お好み焼き');
   await expect(sheet.locator('.dish-show-photo')).toBeVisible();
-  await expect(sheet.locator('.dish-show-disclaimer')).toContainText('orientativa');
+  await expect(sheet.locator('.dish-show-disclaimer')).toContainText('orientativos');
   await expect(sheet.locator('.dish-allergen').first()).toBeVisible();
   await expect(sheet.locator('.dish-credit a')).toHaveAttribute('href', /commons\.wikimedia\.org\/wiki\/File:/);
   await sheet.getByRole('button', { name: /Escuchar/ }).click();

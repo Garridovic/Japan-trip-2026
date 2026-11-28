@@ -1052,3 +1052,26 @@ footer a { display: inline-flex; align-items: center; min-height: 44px; }
 /* Desktop map: the search keeps a readable width, and the version label no longer covers the zoom buttons */
 @media (min-width: 768px) { .map-view-controls { right: auto; width: min(560px, calc(100% - 20px)); } }
 body[data-view="mapa"] .version-indicator { display: none; }
+/* The guide's own map tab is gone from the strip (the full-screen map does everything); old ?tab=mapa links still open it. */
+#city-view > nav a[data-url-only]:not([aria-selected="true"]) { display: none; }
+/* Map card (UX review A3): name that opens the sheet, one line, and three icon actions instead of four stacked buttons. */
+.map-card-content { display: flex; flex-direction: column; gap: 6px; }
+.map-card .map-card-content .popup-title { margin: 0; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; font-size: 1.05rem; font-weight: 800; text-align: left; }
+.map-card button.popup-title { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; cursor: pointer; }
+.map-card button.popup-title::after { content: "›"; color: var(--accent-text); font-size: 1.3rem; line-height: 1; }
+.map-card .map-card-content .popup-meta { margin: 0; color: var(--muted); font-size: .9rem; }
+.map-card-actions { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; margin-top: 6px; }
+.map-card .map-card-action { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 56px; margin: 0; padding: 6px 4px; border: 0; border-radius: 16px; background: var(--surface-2); color: var(--ink); font: inherit; font-size: .8rem; font-weight: 750; text-decoration: none; text-align: center; cursor: pointer; }
+.map-card .map-card-action.is-primary { background: var(--accent); color: var(--accent-ink, #fff); }
+.map-card-icon svg { display: block; width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.map-card .popup-visit-button[aria-pressed="true"] { background: var(--ok-soft, var(--surface-2)); color: var(--ok, var(--ink)); }
+.map-card .map-card-action:focus-visible, .map-card button.popup-title:focus-visible { outline: 3px solid var(--net); outline-offset: 2px; }
+.map-card-body { padding-right: 0; }
+.map-card-body > .map-card-content > .popup-title { margin-right: 44px; } /* room for the close button */
+.map-card-body > .map-card-content { flex-direction: column; flex-wrap: nowrap; align-items: stretch; }
+.map-card-body > .map-card-content > .popup-title { align-self: flex-start; }
+/* Checklist (UX review B3): the ✕ and «Quitar todas las marcas» only show in «Editar» mode. */
+#checklist .checklist-head { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; text-align: left; }
+#checklist .checklist-head > div { flex: 1; min-width: 0; }
+.checklist:not(.is-editing) .checklist-remove, .checklist:not(.is-editing) .checklist-reset { display: none; }
+.checklist-edit[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }

@@ -120,7 +120,6 @@ function renderConnections(journey, cityId) {
 function renderTips(tips) {
   setSectionVisible('practico', Boolean(tips?.items?.length));
   if (!tips?.items?.length) return byId('notes-grid').replaceChildren();
-  byId('tips-kicker').textContent = tips.kicker;
   byId('tips-title').textContent = tips.title;
   byId('notes-grid').replaceChildren(...tips.items.map((tip) =>
     h('article', { class: 'note-card' }, h('h3', {}, tip.title), h('p', {}, tip.text))

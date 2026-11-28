@@ -193,7 +193,7 @@ export async function initAccount({ config, userData, win = window, storage = nu
     if (!user) {
       screen(
         section('Tu cuenta',
-          h('p', {}, 'Estás usando la guía sin sesión y funciona entera. Si entras con Google, tus visitados, favoritos y checklist se guardan en la nube y los ves en todos tus dispositivos.'),
+          h('p', {}, 'Entra con Google para ver tus visitados, favoritos y checklist en todos tus dispositivos.'),
           privacy(),
           h('div', { class: 'account-actions' },
             signInButton(),

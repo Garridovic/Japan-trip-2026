@@ -188,7 +188,7 @@
     <nav aria-label="Navegación principal">
       <div class="nav-inner">
         <a href="#resumen">Vista rápida</a>
-        <a href="#mapa">Mapa</a>
+        <a href="#mapa" data-url-only>Mapa</a>
         <a href="#detalle">Día a día</a>
         <a href="#comer" data-nav-section="comer">Comer</a>
         <a href="#alternativas" data-nav-section="alternativas">Otros lugares</a>
@@ -201,16 +201,13 @@
       <p class="app-status" id="app-status" role="status" aria-live="polite">Cargando la guía…</p>
 
       <section id="resumen">
-        <div class="section-head">
-          <div><div class="kicker">Primero, el vistazo general</div><h2>El recorrido en orden</h2></div>
-          <p class="muted small">Pulsa «Ver detalle» para horarios, consejos y desplazamientos.</p>
-        </div>
+        <div class="section-head"><div><h2>El recorrido en orden</h2></div></div>
         <div class="quick-grid" id="quick-grid"></div>
         <p class="muted small summary-note" id="quick-note" hidden></p>
       </section>
 
       <section id="mapa">
-        <div class="section-head"><div><div class="kicker">Explora por proximidad</div><h2>Mapa de <span data-city-name>…</span> y puntos de interés</h2></div><p class="muted small">Filtra por día o categoría. Puedes localizarte desde el móvil para ver qué tienes más cerca.</p></div>
+        <div class="section-head"><div><h2>Mapa de <span data-city-name>…</span></h2></div></div>
         <details class="collapsible-filters map-filters" id="map-filters" data-open-on-wide>
           <summary>Filtros del mapa</summary>
         <details class="map-filter-group" open>
@@ -239,7 +236,7 @@
         <div class="map-layout">
           <div class="map-panel">
             <div id="city-map" role="application" aria-label="Mapa interactivo con hoteles, visitas y lugares de interés"></div>
-            <div class="map-panel-foot">Mapa © OpenStreetMap · Toca un círculo para abrir una visita o un diamante para abrir un restaurante. Desde cada ficha puedes consultar el lugar o iniciar la navegación en Google Maps. Para usar GPS, abre esta página HTTPS en Safari (iPhone) o Chrome (Android) y concede permiso.</div>
+            <div class="map-panel-foot">Mapa © OpenStreetMap</div>
             <div class="map-offline">
               <button type="button" class="filter" id="save-offline-map">⬇ Guardar mapa</button>
               <progress id="save-offline-progress" max="1" value="0" hidden aria-label="Progreso del guardado del mapa"></progress>
@@ -248,34 +245,27 @@
           </div>
           <aside class="nearby-panel">
             <h3>¿Qué hay cerca de mí?</h3>
-            <p class="nearby-status" id="nearby-status">Pulsa «Mi ubicación» para ver tu posición y ordenar los lugares más próximos. La posición se procesa en este navegador y no se guarda.</p>
+            <p class="nearby-status" id="nearby-status">Tu posición no sale de este móvil.</p>
             <div class="location-actions">
               <button class="locate-button" id="locate-me" type="button">⌖ Mi ubicación</button>
               <button class="follow-button" id="follow-me" type="button" aria-pressed="false">◎ Seguir ubicación</button>
             </div>
-            <p class="location-hint">«Seguir ubicación» actualiza tu posición mientras caminas. Puedes detenerlo cuando quieras.</p>
-            <ol class="nearby-list" id="nearby-list"><li><span class="muted small">Al activar tu ubicación, aparecerán aquí los lugares más cercanos y un acceso directo para llegar con Google Maps.</span></li></ol>
+            <ol class="nearby-list" id="nearby-list"></ol>
           </aside>
         </div>
       </section>
 
       <section id="detalle">
-        <div class="section-head"><div><div class="kicker">Horarios orientativos</div><h2>Plan día a día</h2></div></div>
+        <div class="section-head"><div><h2>Plan día a día</h2></div></div>
         <div class="day-list" id="day-list"></div>
         <div id="connection-notes"></div>
       </section>
 
       <section id="comer" hidden>
-        <div class="section-head">
-          <div><div class="kicker" id="food-kicker"></div><h2 id="food-title"></h2></div>
-          <p class="muted small" id="food-lead"></p>
-        </div>
-        <p class="food-intro" id="food-intro"></p>
+        <div class="section-head"><div><h2 id="food-title"></h2></div></div>
         <div class="food-highlights" id="food-highlights"></div>
         <div class="food-filter-block">
-          <div class="food-filter-label">Filtrar por jornada</div>
           <div class="food-toolbar" id="food-day-filters" role="group" aria-label="Filtrar lugares para comer por jornada"></div>
-          <div class="food-filter-label">Filtrar por tipo de comida</div>
           <div class="food-toolbar" id="food-type-filters" role="group" aria-label="Filtrar lugares para comer por tipo"></div>
         </div>
         <p class="muted small" id="food-count" aria-live="polite"></p>
@@ -284,20 +274,20 @@
       </section>
 
       <section id="alternativas" hidden>
-        <div class="section-head"><div><div class="kicker">Para improvisar o sustituir visitas</div><h2>Otros lugares de interés</h2></div></div>
+        <div class="section-head"><div><h2>Otros lugares de interés</h2></div></div>
         <div class="extras-toolbar" id="extras-toolbar" role="group" aria-label="Filtrar lugares por categoría"></div>
         <div class="extras-grid" id="extras-grid"></div>
       </section>
 
       <section id="practico" hidden>
-        <div class="section-head"><div><div class="kicker" id="tips-kicker"></div><h2 id="tips-title"></h2></div></div>
+        <div class="section-head"><div><h2 id="tips-title"></h2></div></div>
         <div class="notes-grid" id="notes-grid"></div>
       </section>
 
     </main>
 
     <footer>
-      <div class="footer-inner"><span id="footer-label"></span><span>Guía de viaje compartida · contenido editable en <code>data/</code></span><span id="footer-kml" hidden>Exportación opcional: <a id="footer-kml-link" download>descargar puntos KML</a></span></div>
+      <div class="footer-inner"><span id="footer-label"></span><span id="footer-kml" hidden>Exportación opcional: <a id="footer-kml-link" download>descargar puntos KML</a></span></div>
     </footer>
   </div>
 
@@ -306,7 +296,7 @@
       <aside class="account-invite" id="account-invite" hidden></aside>
 
       <section id="sellos" class="stamps" hidden>
-        <div class="section-head"><div><div class="kicker">Tu libro de sellos</div><h2>Mis sellos</h2></div><p class="muted small">Apunta cada sello que consigas: goshuin en templos y santuarios, gojōin en castillos. Ponle un nombre o una nota si quieres.</p></div>
+        <div class="section-head"><div><h2>Mis sellos</h2></div></div>
         <div class="stamps-summary"><strong class="stamps-total" id="stamps-total" aria-live="polite"></strong><div class="stamps-cities" id="stamps-cities"></div></div>
         <form class="stamp-form" id="stamp-form">
           <label class="visually-hidden" for="stamp-label">Nombre o nota del sello</label>
@@ -322,7 +312,7 @@
       </section>
 
       <section id="checklist" class="checklist" hidden>
-        <div class="section-head"><div><div class="kicker" id="checklist-kicker"></div><h2 id="checklist-title"></h2></div><p class="muted small" id="checklist-lead"></p></div>
+        <div class="section-head checklist-head"><div><h2 id="checklist-title"></h2></div><button type="button" class="filter checklist-edit" id="checklist-edit" aria-pressed="false">Editar</button></div>
         <div class="checklist-summary"><strong id="checklist-count" aria-live="polite"></strong><div class="checklist-bar" id="checklist-bar" role="progressbar" aria-label="Progreso de la checklist" aria-valuemin="0"></div></div>
         <div class="checklist-groups" id="checklist-groups"></div>
         <form class="checklist-form" id="checklist-form">
@@ -334,12 +324,12 @@
       </section>
 
       <section id="consejos" class="tips-practical" hidden>
-        <div class="section-head"><div><div class="kicker" id="tips-practical-kicker"></div><h2 id="tips-practical-title"></h2></div><p class="muted small" id="tips-practical-lead"></p></div>
+        <div class="section-head"><div><h2 id="tips-practical-title"></h2></div></div>
         <div class="tips-groups" id="tips-groups"></div>
       </section>
 
       <section id="viaje" hidden>
-        <div class="section-head"><div><div class="kicker" id="lodging-kicker"></div><h2 id="lodging-title"></h2></div><p class="muted small" id="lodging-lead"></p></div>
+        <div class="section-head"><div><h2 id="lodging-title"></h2></div></div>
         <p class="lodging-print-title" id="lodging-print-title">Viaje a Japón · diciembre 2026 · alojamientos<br><small>Documento personal con datos privados: no lo compartas.</small></p>
         <p class="muted small" id="lodging-count" aria-live="polite"></p>
         <div class="lodging-toolbar" id="lodging-toolbar">
@@ -355,7 +345,6 @@
             <p class="small" id="lodging-backup-status" role="status" aria-live="polite"></p>
           </details>
         </div>
-        <p class="muted small lodging-pdf-hint">«Descargar PDF» abre la vista de impresión de esta pantalla: elige «Guardar como PDF» (en iPhone: Compartir › Guardar en Archivos).</p>
         <div class="lodging-list" id="lodging-list"></div>
         <p class="phrase-notice lodging-privacy" id="lodging-privacy"></p>
         <div class="update-card">
@@ -371,7 +360,7 @@
   <div class="app-view" id="view-frases" data-view="frases" hidden>
     <main>
       <section id="frases" hidden>
-        <div class="section-head"><div><div class="kicker" id="phrases-kicker"></div><h2 id="phrases-title"></h2></div><p class="muted small" id="phrases-lead"></p></div>
+        <div class="section-head"><div><h2 id="phrases-title"></h2></div></div>
         <p class="phrase-notice" id="phrases-notice" role="status" hidden></p>
         <div class="phrase-search">
           <label class="phrase-search-label" for="phrases-search">Buscar en español, japonés o romaji</label>
@@ -392,7 +381,7 @@
   <div class="app-view" id="view-platos" data-view="platos" hidden>
     <main>
       <section id="platos" hidden>
-        <div class="section-head"><div><div class="kicker" id="dishes-kicker"></div><h2 id="dishes-title"></h2></div><p class="muted small" id="dishes-lead"></p></div>
+        <div class="section-head"><div><h2 id="dishes-title"></h2></div></div>
         <p class="phrase-notice" id="dishes-disclaimer"></p>
         <div class="phrase-search">
           <label class="phrase-search-label" for="dishes-search">Buscar por nombre (español, japonés o romaji)</label>

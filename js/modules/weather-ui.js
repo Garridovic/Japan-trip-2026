@@ -89,7 +89,7 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
     strip.style.setProperty('--days', String(cells.length));
     const missing = cells.length - days.length;
     const waiting = `${missing === 1 ? 'un día más aparecerá' : `${missing} días más aparecerán`} cuando haya previsión`;
-    if (stored) note.textContent = `Open-Meteo · ${ageText(stored.fetchedAt, now().getTime())}${missing ? ` · ${waiting}` : ''}`;
+    if (stored) note.textContent = `Open-Meteo · ${ageText(stored.fetchedAt, now().getTime())}`; // days without a forecast already show «—»
     else if (loading) note.textContent = 'Cargando la previsión…';
     else if (navigator.onLine === false) note.textContent = `Sin internet y aún sin previsión guardada${missing ? ` · ${waiting}` : ''}`;
     else if (range(trip).from > range(trip).to) note.textContent = `Open-Meteo prevé unos 15 días · ${waiting}`; // the trip is further away than the forecast reaches

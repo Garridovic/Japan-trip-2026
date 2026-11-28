@@ -79,7 +79,7 @@ export function facts(state, report, appVersion) {
     const saved = (report.sizes.required + report.sizes.optional) + (report.missing.warm === 0 ? report.sizes.warm : 0);
     rows.push(['Espacio usado', `≈ ${formatMegabytes(saved)}`]);
     rows.push(['Archivos', `${report.totals.required + report.totals.optional + report.totals.warm - report.missing.required - report.missing.optional - report.missing.warm} de ${report.totals.required + report.totals.optional + report.totals.warm}`]);
-    rows.push(['Mapa guardado', report.tiles ? `${report.tiles} teselas` : 'solo lo que veas con conexión']);
+    rows.push(['Mapa guardado', report.tiles ? 'Sí' : 'solo lo que veas con conexión']);
   }
   return rows;
 }
