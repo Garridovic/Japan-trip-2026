@@ -3,6 +3,7 @@ import { byId, h, externalLink } from './dom.js';
 import { findPoint, findDetail } from './city-index.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { visitedStore, isVisitable } from './visited.js';
+import { enableSheetDrag } from './sheet-drag.js';
 
 export function initDetails() {
   const modal = byId('poi-modal');
@@ -118,6 +119,7 @@ export function initDetails() {
     document.querySelector('.poi-back').focus();
   }
 
+  enableSheetDrag(modal.querySelector('.poi-detail'), { close, regions: [modal.querySelector('.poi-detail-header')] });
   document.querySelectorAll('[data-close-detail]').forEach((button) => button.addEventListener('click', close));
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
   byId('poi-photo-prev').addEventListener('click', () => { photoIndex = (photoIndex - 1 + photos.length) % photos.length; renderPhoto(); });

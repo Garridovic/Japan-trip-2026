@@ -10,6 +10,7 @@ import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { shownLabel } from './map-filters.js';
 import { staysOf } from './journey.js';
 import { dateRange, daysBetween, nightsLabel } from './trip-status.js';
+import { enableSheetDrag } from './sheet-drag.js';
 
 export const SHEETS = {
   filters: 'Filtros',
@@ -108,6 +109,7 @@ export function initMapView({ map, doc = document, cities = [], onCity = () => {
 
   buttons.forEach((button) => button.addEventListener('click', () => showSheet(button.dataset.mapSheet)));
   byId('map-sheet-close').addEventListener('click', () => closeSheet());
+  enableSheetDrag(sheet, { close: () => closeSheet(), regions: [sheet.querySelector('.map-sheet-header')], scroller: sheet.querySelector('.map-sheet-body') });
   doc.addEventListener('keydown', (event) => { if (event.key === 'Escape' && openSheet && doc.getElementById('poi-modal')?.hidden) closeSheet(); });
 
   // Active filters never grow on the map: the Filtros button turns red with their number and a single pill says

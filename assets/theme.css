@@ -997,3 +997,21 @@ a.secondary, a.map-link, .poi-action-links a, .text-link { display: inline-flex;
 @media (max-width: 359px) {
   .progress-card .progress-sub { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.25; }
 }
+
+/* Drag-to-close for every bottom sheet (js/modules/sheet-drag.js). The handle and the header take the touch (touch-action:none),
+   so the page behind neither scrolls nor pulls to refresh; the handle is a 44 px target with the grey bar inside. */
+.sheet-grab, .map-sheet-grab, .weather-grab { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: auto; height: 44px; margin: 0; padding: 0; border-radius: 0; background: transparent; flex: none; cursor: grab; }
+.sheet-grab::before { content: ""; width: 40px; height: 5px; border-radius: 3px; background: var(--line); }
+.sheet-drag-area { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.sheet-drag-area:active { cursor: grabbing; }
+.map-sheet-grab, .weather-grab { margin-bottom: -8px; }
+.theme-popover, .offline-popover, .collapsible-filters.is-sheet[open] { padding-top: 0; overscroll-behavior: contain; }
+.theme-popover > .sheet-grab, .offline-popover > .sheet-grab, .collapsible-filters.is-sheet[open] > .sheet-grab { margin: 0 -16px -8px; }
+.poi-detail > .sheet-grab { position: sticky; top: 0; z-index: 4; margin: 0; background: var(--surface); }
+.poi-detail > .sheet-grab + .poi-detail-header { top: 44px; }
+.map-sheet, .weather-sheet, .poi-detail { overscroll-behavior: contain; }
+.collapsible-filters.is-sheet[open] > .sheet-grab ~ .sheet-close { top: 44px; }
+.is-dragging { will-change: transform; }
+/* While any sheet is open nothing behind may scroll, bounce or pull to refresh */
+html:has(.map-sheet:not([hidden]), .weather-sheet:not([hidden]), .theme-popover:not([hidden]), .offline-popover:not([hidden]), .poi-modal:not([hidden]), .collapsible-filters.is-sheet[open]) { overscroll-behavior: none; }
+body:has(.theme-popover:not([hidden]), .offline-popover:not([hidden]), .poi-modal:not([hidden]), .collapsible-filters.is-sheet[open])::after, .weather-scrim, .poi-modal-backdrop { touch-action: none; }

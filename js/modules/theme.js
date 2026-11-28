@@ -1,6 +1,8 @@
 // Colour theme: "auto" follows the phone (prefers-color-scheme), "light" / "dark" force it.
 // The choice lives in localStorage ("theme"). An inline script in index.html applies it before the first paint (no flash);
 // this module only wires the header button and its popover. Colours themselves live in assets/theme.css.
+import { enableSheetDrag } from './sheet-drag.js';
+
 export const THEME_KEY = 'theme';
 export const THEMES = ['auto', 'light', 'dark'];
 export const THEME_LABELS = { auto: 'automática', light: 'clara', dark: 'oscura' };
@@ -54,6 +56,7 @@ export function initTheme({ win = window, doc = document } = {}) {
     else button.focus();
   };
 
+  enableSheetDrag(popover, { close: () => setOpen(false), win });
   show(storage ? readTheme(storage) : normalizeTheme(root.dataset.theme));
   button.addEventListener('click', () => setOpen(popover.hidden));
   options.forEach((option) => option.addEventListener('click', () => {

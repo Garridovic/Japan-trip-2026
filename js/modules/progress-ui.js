@@ -12,6 +12,7 @@ import { DISH_FAVORITES_KEY, DISH_TRIED_KEY } from './dishes.js';
 import { FAVORITES_STORAGE_KEY } from './phrases.js';
 import { tripMoment } from './today.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
+import { enableSheetDrag } from './sheet-drag.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 const RING_LENGTH = 2 * Math.PI * 15.5;
@@ -116,6 +117,7 @@ export function initProgress({ cities, global, storage = userStorage(), load = f
     slide.querySelector('.progress-open')?.focus();
   }
   byId('progress-close').addEventListener('click', () => closeSheet());
+  enableSheetDrag(sheet, { close: () => closeSheet(), regions: [sheet.querySelector('.weather-sheet-head')] });
   scrim.addEventListener('click', () => closeSheet());
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !sheet.hidden) closeSheet(); });
 

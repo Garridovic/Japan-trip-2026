@@ -2,6 +2,7 @@
 // shows its state in a header chip and offers a small popover (download everything, retry, check, delete).
 // Recovery fallback: ?reset-offline.
 import { OFFLINE_TEXTS } from './offline-texts.js';
+import { enableSheetDrag } from './sheet-drag.js';
 export const RESET_PARAM = 'reset-offline';
 
 /** Wifi or ethernet are the only links where downloading the bigger photos by itself is polite. */
@@ -146,6 +147,7 @@ export async function initOffline({ win = window, doc = document } = {}) {
   };
   chip.addEventListener('click', () => setOpen(popover.hidden));
   $('offline-close').addEventListener('click', () => setOpen(false));
+  enableSheetDrag(popover, { close: () => setOpen(false), win });
   doc.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !popover.hidden) setOpen(false); });
   doc.addEventListener('click', (event) => { if (!popover.hidden && !popover.contains(event.target) && !chip.contains(event.target)) { popover.hidden = true; chip.setAttribute('aria-expanded', 'false'); } });
 

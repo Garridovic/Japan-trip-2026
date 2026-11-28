@@ -1,7 +1,7 @@
 {
-  "version": "ebc650aff5",
+  "version": "4bb1e05758",
   "sizes": {
-    "required": 1232422,
+    "required": 1243412,
     "optional": 3612410,
     "warm": 12657692
   },
@@ -122,6 +122,7 @@
     "js/modules/render.js",
     "js/modules/search-ui.js",
     "js/modules/search.js",
+    "js/modules/sheet-drag.js",
     "js/modules/speech.js",
     "js/modules/stamps-ui.js",
     "js/modules/stamps.js",

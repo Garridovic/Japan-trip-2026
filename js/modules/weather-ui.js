@@ -5,6 +5,7 @@ import { addDays, localISO, weekdayShort, dateShort } from './trip-status.js';
 import { openOverlay, releaseOverlay } from './overlay-history.js';
 import { swipeDirection } from './swipe.js';
 import { userStorage } from './user-data.js';
+import { enableSheetDrag } from './sheet-drag.js';
 
 export const FORECAST_DAYS = 15; // Open-Meteo answers for today + 15 days at most
 
@@ -154,6 +155,7 @@ export function initWeather({ storage = userStorage(), fetcher, now = () => new 
     strip.querySelector(`[data-date="${selected}"]`)?.focus();
   }
   byId('weather-close').addEventListener('click', () => closeSheet());
+  enableSheetDrag(sheet, { close: () => closeSheet(), regions: [sheet.querySelector('.weather-sheet-head')] });
   scrim.addEventListener('click', () => closeSheet());
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !sheet.hidden) closeSheet(); });
   const step = (direction) => {

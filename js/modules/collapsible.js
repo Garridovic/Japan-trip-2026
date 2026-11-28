@@ -1,3 +1,4 @@
+import { enableSheetDrag } from './sheet-drag.js';
 // Filter panels that start collapsed on phones (so the content comes first) and open on wide screens.
 export const WIDE_QUERY = '(min-width: 700px)';
 
@@ -50,6 +51,7 @@ export function initFilterSheets(doc = document) {
     close.innerHTML = CLOSE_ICON;
     close.addEventListener('click', () => { details.open = false; details.querySelector('summary')?.focus(); });
     details.append(close);
+    enableSheetDrag(details, { close: () => { details.open = false; details.querySelector('summary')?.focus(); } });
     doc.addEventListener('click', (event) => {
       if (details.open && !event.composedPath().includes(details)) details.open = false; // composedPath: a chip the sheet just re-rendered is already detached
     });
