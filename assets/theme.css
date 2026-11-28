@@ -1075,3 +1075,8 @@ body[data-view="mapa"] .version-indicator { display: none; }
 #checklist .checklist-head > div { flex: 1; min-width: 0; }
 .checklist:not(.is-editing) .checklist-remove, .checklist:not(.is-editing) .checklist-reset { display: none; }
 .checklist-edit[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+/* QA V14.20.0: a restaurant card keeps one line under its name; the name links to its Google Maps page */
+.map-card .map-card-content .popup-meta.is-one-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.map-card a.popup-title { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; text-decoration: none; }
+.map-card a.popup-title::after { content: "↗"; color: var(--accent-text); font-size: 1rem; }
+.map-card a.popup-title:focus-visible { outline: 3px solid var(--net); outline-offset: 2px; }

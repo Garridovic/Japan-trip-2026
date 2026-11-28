@@ -54,9 +54,8 @@ export function initLodging(data, { today = todayInJapan(), clipboard = navigato
         control.value = values[id] ?? '';
         control.addEventListener('input', () => { store.set(stay.id, id, control.value); refreshPrint(); });
         return h('label', { class: 'lodging-field', for: inputId }, h('span', {}, label), control);
-      }),
-      h('p', { class: 'muted small' }, 'Se guarda al escribir, solo en este dispositivo. No se sube a ningún sitio ni está en la web.')
-    );
+      })
+    ); // «solo en este móvil» is already in the summary: no extra line under every stay
   };
 
   const renderList = () => byId('lodging-list').replaceChildren(...data.stays.map((stay) => {

@@ -32,6 +32,7 @@ export function initMap({ openDetail }) {
       }
     })
     : L.featureGroup()).addTo(map);
+  const isOnMap = (point) => markerLayer.hasLayer(markerByKey.get(cityKey(cityId, point.id)));
   if (clustered) {
     mapElement.dataset.clustered = 'true';
     markerLayer.on('animationend spiderfied unspiderfied', () => labelClusters());
@@ -126,8 +127,9 @@ export function initMap({ openDetail }) {
   /** Bottom card of the full-screen map: the name (opens the place sheet), one line, and three actions with icons. */
   function buildCard(point) {
     const isRestaurant = point.type === 'restaurant';
+    // A restaurant has no sheet of its own in the guide: its name opens its Google Maps page, which is its real «ficha».
     const title = isRestaurant
-      ? h('div', { class: 'popup-title' }, point.name)
+      ? h('a', { class: 'popup-title popup-detail-link', href: point.mapsUrl ?? googleSearchUrl(point), target: '_blank', rel: 'noopener', 'aria-label': `${point.name}: ver ficha en Google Maps` }, point.name)
       : h('button', { type: 'button', class: 'popup-title popup-detail-button', 'aria-label': `${point.name}: ver ficha del lugar`, onclick: () => openDetail(point.id) }, point.name);
     let middle = null;
     if (isVisitable(point)) {
@@ -141,11 +143,13 @@ export function initMap({ openDetail }) {
     }
     return h('div', { class: 'map-card-content' },
       title,
-      point.desc && h('div', { class: 'popup-meta' }, point.desc),
+      isRestaurant
+        ? h('div', { class: 'popup-meta is-one-line' }, point.foodTypeLabel ?? point.desc)
+        : point.desc && h('div', { class: 'popup-meta' }, point.desc),
       h('div', { class: 'map-card-actions' },
         cardAction('a', { href: googleDirectionsUrl(point), target: '_blank', rel: 'noopener', class: 'is-primary', 'aria-label': 'Cómo llegar con Google Maps' }, 'go', 'Cómo llegar'),
         middle,
-        cardAction('a', { href: googleSearchUrl(point), target: '_blank', rel: 'noopener', 'aria-label': 'Ver en Google Maps' }, 'google', 'Google Maps')
+        !isRestaurant && cardAction('a', { href: googleSearchUrl(point), target: '_blank', rel: 'noopener', 'aria-label': 'Ver en Google Maps' }, 'google', 'Google Maps')
       )
     );
   }
@@ -286,7 +290,7 @@ export function initMap({ openDetail }) {
     paintSearch();
     const fitPoints = searchHits ? visiblePoints.filter((point) => searchHits.has(point.id)) : visiblePoints;
     if (visiblePoints.length) {
-      const bounds = searchHits ? L.latLngBounds(fitPoints.map((point) => [point.lat, point.lng])) : markerLayer.getBounds();
+      const bounds = L.latLngBounds(fitPoints.map((point) => [point.lat, point.lng]));
       if (userLatLng) {
         const nearest = Math.min(...fitPoints.map((point) => distanceKm(userLatLng, point)));
         if (nearest < 15) bounds.extend([userLatLng.lat, userLatLng.lng]);
@@ -388,7 +392,7 @@ export function initMap({ openDetail }) {
       .slice(0, 7);
     nearbyList.replaceChildren(...ordered.map(({ point, distance }) => {
       const button = h('button', { type: 'button', onclick: () => {
-        if (!markerLayer.hasLayer(markerByKey.get(cityKey(cityId, point.id)))) applyFilters(emptyFilters());
+        if (!isOnMap(point)) applyFilters(emptyFilters());
         map.setView([point.lat, point.lng], Math.max(16, map.getZoom()));
         openDetail(point.id);
       } }, point.name, h('small', {}, point.desc));

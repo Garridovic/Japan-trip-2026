@@ -10,9 +10,9 @@ const withGroups = (page) => page.addInitScript(() => localStorage.setItem('map-
 
 /** Boxes of the points and groups that are on screen. */
 const onScreen = (page) => page.evaluate(() => [...document.querySelectorAll('#city-map .poi-marker, #city-map .poi-cluster')]
-  .map((element) => element.getBoundingClientRect())
-  .filter((box) => box.width && box.bottom > 0 && box.top < innerHeight && box.right > 0 && box.left < innerWidth)
-  .map((box) => ({ x: box.x + box.width / 2, y: box.y + box.height / 2, w: box.width, h: box.height })));
+  .map((element) => ({ box: element.getBoundingClientRect(), hotel: element.classList.contains('is-hotel') }))
+  .filter(({ box }) => box.width && box.bottom > 0 && box.top < innerHeight && box.right > 0 && box.left < innerWidth)
+  .map(({ box, hotel }) => ({ x: box.x + box.width / 2, y: box.y + box.height / 2, w: box.width, h: box.height, hotel })));
 
 test('every point is a 44 px tap area with its shape drawn inside', async ({ page }) => {
   await page.goto('/?tab=mapa');
@@ -167,4 +167,47 @@ test('the guide has no map tab and no instruction paragraphs under its titles', 
   await expect(page.locator('.section-head .kicker')).toHaveCount(0);
   await expect(page.locator('.section-head > p')).toHaveCount(0);
   await expect(page.locator('footer')).not.toContainText('data/');
+});
+
+test.describe('QA V14.20.0', () => {
+  test.use(phone(390));
+
+  test('with groups on, the hotel is reachable from the search and its card opens the taxi screen', async ({ page }) => {
+    await withGroups(page);
+    await page.goto('/?view=mapa');
+    await expect(page.locator(GROUPS).first()).toBeVisible({ timeout: 20_000 });
+    await page.locator('#map-search-input').fill('agora');
+    await page.locator('#map-search-drop .map-search-row-item', { hasText: 'Agora' }).first().click();
+    const hotel = page.locator(`${POINTS}.is-hotel`);
+    await expect(hotel).toBeInViewport(); // street level: every group is split, the hotel is loose and above the card
+    await expect(page.locator('#map-card .popup-title')).toContainText('Agora');
+    const taxi = page.locator('#map-card .taxi-button');
+    await expect(taxi).toBeVisible();
+    expect((await taxi.boundingBox()).height).toBeGreaterThanOrEqual(48);
+    await taxi.click();
+    await expect(page.locator('#taxi-show .taxi-es')).toContainText('Agora Kyoto Karasuma');
+  });
+
+  test('a restaurant card has one line and its name opens its Google Maps page', async ({ page }) => {
+    await page.goto('/?view=mapa');
+    await expect(page.locator(RESTAURANT_MARKERS).first()).toBeAttached({ timeout: 20_000 });
+    await page.locator(RESTAURANT_MARKERS).first().dispatchEvent('click');
+    const card = page.locator('#map-card');
+    await expect(card).toBeVisible();
+    const title = card.locator('a.popup-title');
+    await expect(title).toHaveText(kyoto.restaurants[0].name);
+    await expect(title).toHaveAttribute('href', /^https:\/\/www\.google\.com\/maps/);
+    const meta = card.locator('.popup-meta');
+    await expect(meta).toHaveText(kyoto.restaurants[0].foodTypeLabel);
+    const lineHeight = await meta.evaluate((element) => parseFloat(getComputedStyle(element).lineHeight) || 20);
+    expect((await meta.boundingBox()).height).toBeLessThan(lineHeight * 1.6);
+    await expect(card.locator('.map-card-action')).toHaveCount(2); // Cómo llegar + Visitado: the name already opens Google Maps
+  });
+
+  test('«Dónde dormimos» does not repeat the private-data line under every stay', async ({ page }) => {
+    await page.goto('/?view=viaje');
+    await expect(page.locator('.lodging-card').first()).toBeVisible({ timeout: 20_000 });
+    await expect(page.locator('#lodging-list')).not.toContainText('Se guarda al escribir');
+    await expect(page.locator('.lodging-backup')).toContainText('para pasarlos a otro móvil');
+  });
 });

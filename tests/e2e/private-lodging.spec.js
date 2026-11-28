@@ -24,7 +24,7 @@ test('each stay has private fields with a clear privacy notice', async ({ page }
   await expect(page.locator('.lodging-private')).toHaveCount(6);
   await expect(card(page, 'osaka').locator('.lodging-private > summary')).toContainText('solo en este móvil');
   await card(page, 'osaka').locator('.lodging-private > summary').click();
-  await expect(card(page, 'osaka').locator('.lodging-private')).toContainText('No se sube a ningún sitio ni está en la web');
+  await expect(card(page, 'osaka').locator('.lodging-private')).not.toContainText('No se sube'); // the summary already says it: no line repeated under every stay
   for (const label of ['PIN o código de acceso', 'Número de reserva', 'Notas (opcional)']) await expect(card(page, 'osaka').getByLabel(label)).toBeVisible();
 });
 
